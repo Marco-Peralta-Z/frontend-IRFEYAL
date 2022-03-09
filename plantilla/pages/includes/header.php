@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="../../css/main.css">
      
-    <!-- Custom styles for this template NAVBAR -->
-    <link href="../../componentes/navbar.css" rel="stylesheet">
 </head>
 
 <body>
