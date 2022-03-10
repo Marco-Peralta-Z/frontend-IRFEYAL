@@ -139,6 +139,3 @@
     </main>
 
     <?php include '../includes/footer.php' ?>
-    <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
-    <script src="script-home.js"></script>
-    
