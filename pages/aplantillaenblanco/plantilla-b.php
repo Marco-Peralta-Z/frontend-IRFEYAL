@@ -59,4 +59,4 @@
     </main>
 
     <?php include '../includes/footer.php' ?>
-    <!-- EL SCRIPT DE ESTA SECCION SE ENCUENTRA EN LA CARPETA PRINCIPAL JS-->
+    <script src="script-plantilla.js"></script>
