@@ -63,8 +63,8 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Nombre</th>
-              <th scope="col">Last</th>
-              <th scope="col">boton</th>
+              <th scope="col">Apellido</th>
+              <th scope="col"> </th>
             </tr>
           </thead>
           <tbody id="contenidoPersonas">
