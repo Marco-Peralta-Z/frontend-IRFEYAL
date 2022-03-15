@@ -124,6 +124,19 @@
                             </nav>
                         </div>
                         <!-- FIN COLLAPSE PLANTILLA-------------------------------------------------------------->
+                        
+                        <!-- INICIO MEET EJEMPLO -------------------------------------------------------------->
+                         <a class="nav-link collapsed"  href="#" data-bs-toggle="collapse" data-bs-target="#PMEET" aria-expanded="false" aria-controls="PMEET">
+                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            EJEMPLO DOS
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="PMEET" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="../ejemplomeet/ejemplomeet.php" >EJEMPLO MEET</a>
+                            </nav>
+                        </div>
+                        <!--   ------------------FIN MEET EJEMPLO -->
                         <!-- INICIO COLLAPSE MODULO GESTION DE INVENTARIO-------------------------------------------------------------->
                         <a class="nav-link collapsed" id="btnMGIM" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMGIM" aria-expanded="false" aria-controls="collapseMGIM">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
@@ -132,7 +145,7 @@
                         </a>
                         <div class="collapse" id="collapseMGIM" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="../gestiondekits/aprobaciones.php" id="btnModulos">Aprobaciones</a>
+                                <a class="nav-link" href="../inventarios/aprobaciones.php" id="btnModulos">Aprobaciones</a>
                                 <a class="nav-link" href="../gestiondekits/modulos.php" id="btnModulos">Modulos</a>
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAprobacion" aria-expanded="false" aria-controls="pagesCollapseAprobacion">
                                     Kits de modulos
@@ -161,10 +174,6 @@
 
 
                         <!--FIN NUEVAS LINKS IRFEYAL---------------------------------------------------------->
-
-
-
-
 
 
                         <!-- END collapse------------------------------------------------------------------------->

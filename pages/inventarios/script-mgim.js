@@ -152,7 +152,6 @@ eliminar.click(() => {
 /* FUNCION PARA CARGAR LA TABLA */
 /*  */
 function cargarTabla(tbody) {
-  const btn = '<td><button type="+"""+"button"+"""+"        >Success</button></td>';
   $.ajax({
     /* GET para traer informacion de la BD */
     type: "GET",
