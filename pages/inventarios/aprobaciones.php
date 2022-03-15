@@ -4,9 +4,9 @@
         <div class="container-fluid px-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h1>GESTION DE INVENTARIO DE MODULOS</h1>
+                    <h1>GESTION DE INVENTARIO DE </h1>
                     <p class="mb-0">
-                        This page is an example of using static navigation. By removing the
+                        This page is an example of using static navigation. 
                         <code>.sb-nav-fixed</code>
                         class from the
                         <code>body</code>
