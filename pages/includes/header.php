@@ -102,15 +102,15 @@
                         <!-- /.nav-collapse ------------------------------------------------------------------------->
                         <!--INICIO NUEVAS LINKS IRFEYAL-------------------------------------------------------------->
                         <!-- INICIO COLLAPSE PLANTILLA-------------------------------------------------------------->
-                        <a class="nav-link collapsed"  href="#" data-bs-toggle="collapse" data-bs-target="#PLANTILLA" aria-expanded="false" aria-controls="PLANTILLA">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#PLANTILLA" aria-expanded="false" aria-controls="PLANTILLA">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             PLANTILLA
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="PLANTILLA" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="../aplantillaenblanco/plantilla-a.php" >Plantilla A</a>
-                                <a class="nav-link" href="../aplantillaenblanco/plantilla-b.php" >Plantilla B</a>
+                                <a class="nav-link" href="../aplantillaenblanco/plantilla-a.php">Plantilla A</a>
+                                <a class="nav-link" href="../aplantillaenblanco/plantilla-b.php">Plantilla B</a>
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePLANTILLAB" aria-expanded="false" aria-controls="pagesCollapseAprobacion">
                                     COLLAPSE 2 PLANTILLA
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -124,37 +124,49 @@
                             </nav>
                         </div>
                         <!-- FIN COLLAPSE PLANTILLA-------------------------------------------------------------->
-                        
+
                         <!-- INICIO MEET EJEMPLO -------------------------------------------------------------->
-                         <a class="nav-link collapsed"  href="#" data-bs-toggle="collapse" data-bs-target="#PMEET" aria-expanded="false" aria-controls="PMEET">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#PMEET" aria-expanded="false" aria-controls="PMEET">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             EJEMPLO DOS
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="PMEET" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="../ejemplomeet/ejemplomeet.php" >EJEMPLO MEET</a>
+                                <a class="nav-link" href="../ejemplomeet/ejemplomeet.php">EJEMPLO MEET</a>
                             </nav>
                         </div>
                         <!--   ------------------FIN MEET EJEMPLO -->
+
                         <!-- INICIO COLLAPSE MODULO GESTION DE INVENTARIO-------------------------------------------------------------->
                         <a class="nav-link collapsed" id="btnMGIM" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMGIM" aria-expanded="false" aria-controls="collapseMGIM">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Inventario de Modulos
+                            Inventarios
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseMGIM" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="../inventarios/aprobaciones.php" id="btnModulos">Aprobaciones</a>
-                                <a class="nav-link" href="../gestiondekits/modulos.php" id="btnModulos">Modulos</a>
+                                
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAprobacion" aria-expanded="false" aria-controls="pagesCollapseAprobacion">
-                                    Kits de modulos
+                                    Inventario de modulos
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
                                 <div class="collapse" id="pagesCollapseAprobacion" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionAprobacion">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="../gestiondekits/ingreso-kits.php" id="btnIngresoKit">Ingresos de kits</a>
+                                    <a class="nav-link" href="../inventarios/aprobaciones-modulos.php" id="btnModulos">Aprobaciones Modulos</a>
+                                        <a class="nav-link" href="../gestiondekits/modulos.php" id="btnModulos">Mantenimiento modulos</a>
+                                        <a class="nav-link" href="../gestiondekits/modulos.php" id="btnModulos">Entrega de modulos</a>
                                         <a class="nav-link" href="../gestiondekits/reportes.php">Reportes</a>
+                                    </nav>
+                                </div>
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseInvenArti" aria-expanded="false" aria-controls="pagesCollapseInvenArti">
+                                    Inventario de articulos
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseInvenArti" aria-labelledby="headingOne" data-bs-parent="#sideNavInveArti">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="../inventarios/aprobaciones.php" id="btnModulos">Aprobaciones Articulos</a>
+                                        <a class="nav-link" href="../gestiondekits/modulos.php" id="btnModulos">Modulos</a>
                                     </nav>
                                 </div>
                             </nav>

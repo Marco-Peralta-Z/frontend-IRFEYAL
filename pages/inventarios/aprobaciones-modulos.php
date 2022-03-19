@@ -4,43 +4,37 @@
         <div class="container-fluid px-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h1>GESTION DE INVENTARIO DE </h1>
+                    <h1>Aprobaciones</h1>
                     <p class="mb-0">
-                        This page is an example of using static navigation. 
-                        <code>.sb-nav-fixed</code>
-                        class from the
-                        <code>body</code>
-                        , the top navigation and side navigation will become static on scroll. Scroll down this page to see an example.
+                        Aprobaciones de modulos
                     </p>
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                        <a class="navbar-brand" href="#">Navbar</a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                            <ul class="navbar-nav">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Features</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Pricing</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Dropdown link
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
+                    <div>
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <div class="container-fluid">
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Mantenimiento modulos
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+
+
+
                     <div class="container p-3">
                         <h3 style=" font-weight: bold;">APROBACIONES DE INGRESE Y EGRESO DE KITS</h3>
                         <!--  -->
@@ -53,8 +47,7 @@
                                     <th scope="col">Detalle aprobacion</th>
                                     <th scope="col">Fecha aprobacion</th>
                                     <th scope="col">Fecha control</th>
-                                    <th scope="col">Actualizar</th>
-                                    <th scope="col">Eliminar</th>
+                                    <th scope="col">Detalles</th>
                                 </tr>
                             </thead>
 
@@ -66,7 +59,7 @@
                         </table>
 
 
-                        <!-- -->
+                        <!-- 
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-5">
@@ -91,6 +84,7 @@
                                 </div>
                             </div>
                         </div>
+                        -->
                     </div>
                 </div>
             </div>
@@ -99,4 +93,5 @@
     </main>
 
     <?php include '../includes/footer.php' ?>
+    
     <script src="script-mgim.js"></script>

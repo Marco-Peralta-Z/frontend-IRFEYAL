@@ -17,6 +17,7 @@ var eliminar = $("#eliminar");
 /* Lo primero que ejecuta al cargar la pagina */
 $(document).ready(() => {
   /* Envio la tabla a la funcion */
+  console.log("erro")
   cargarTabla(tbody);
 });
 /*  */
