@@ -58,4 +58,4 @@
     </main>
 
     <?php include '../includes/footer.php' ?>
-    <script src="script-ejemplomeet.js"></script>
+    <script src="../../js/ejemplomeet-script.js"></script>

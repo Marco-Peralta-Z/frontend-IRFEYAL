@@ -17,7 +17,7 @@ var eliminar = $("#eliminar");
 /* Lo primero que ejecuta al cargar la pagina */
 $(document).ready(() => {
   /* Envio la tabla a la funcion */
-  console.log("erro")
+  console.log("error actualizado segunda vez")
   cargarTabla(tbody);
 });
 /*  */
@@ -176,9 +176,7 @@ function cargarTabla(tbody) {
           td(item.fechaAprobacion),
           td(item.fechaControl),
           '<td style="padding:0;" ><button type="button" id="btnActulizar" class="btn btn-success"'+ 
-          'style="background-color:green; color:white; ">Actualizar</button></td>',
-          '<td style="padding:0;" ><button type="button" id="btnActulizar" class="btn btn-danger"'+ 
-          'style="background-color:red; color:white; ">Eliminar</button></td>',
+          'style="background-color:green; color:white; ">Detalles</button></td>',
           /* ejm
            td(item.cedula)
            td(item.rol)

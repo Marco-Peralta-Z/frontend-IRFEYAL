@@ -94,4 +94,4 @@
 
     <?php include '../includes/footer.php' ?>
     
-    <script src="script-mgim.js"></script>
+    <script src="../../js/inventarios-script.js"></script>

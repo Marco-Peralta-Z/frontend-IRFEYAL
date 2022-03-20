@@ -59,4 +59,4 @@
     </main>
 
     <?php include '../includes/footer.php' ?>
-    <script src="script-plantilla.js"></script>
+    <script src="../../js/palantilla-script.js"></script>

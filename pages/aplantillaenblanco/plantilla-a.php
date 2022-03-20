@@ -16,3 +16,4 @@
     </main>
 
 <?php include '../includes/footer.php' ?>
+<script src="../../js/palantilla-script.js"></script>
