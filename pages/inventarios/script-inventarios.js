@@ -169,7 +169,7 @@ function cargarTabla(tbody) {
       /* recorro */
       $.each(data, function (i, item) {
         /* cargo la info en tr */
-        var tr = $("<tr></tr>").append(
+        var tr = $(`<tr taskId="${item.aprobacionId}"></tr>`).append(
           /* item, toma el nombre de la columna de la BD; en este caso solo saco el id y el nombre*/
           td(item.aprobacionId),
           td(item.observacionAproba),
@@ -177,7 +177,7 @@ function cargarTabla(tbody) {
           td(item.detalleControl),
           td(item.fechaAprobacion),
           td(item.fechaControl),
-          '<td><button  type="button" class="btn btn-primary mostrarModal" data-toggle="modal" data-target="#exampleModalCenter" >Detalles</button></td>',
+          '<td><button  type="button" class="btn btn-primary mostrarModal" data-toggle="modal" data-target="#exampleModalCenter">Detalles</button></td>',
           /* ejm
            td(item.cedula)
            td(item.rol)
@@ -193,16 +193,26 @@ function cargarTabla(tbody) {
     },
   });
 }
+var contador = 1;
+var validarColumna = 1;
 /* FUNCION QUE USO SIMPRE PARA TRABAJAR CON TABLAS */
 var td = function (texto) {
+  if (contador == validarColumna) {
+    validarColumna = (validarColumna + 5);
+    return $(`<td class="idAprobacion"></td>`).text(texto);
+  }
+  contador = (contador + 1);
   return $("<td></td>").text(texto);
 };
 
 //----------------------------------  BOTONES -------------------------
+const modal = document.querySelector('.modal');
 $(document).on("click", '.mostrarModal', function () {
   let e = $(this)[0].parentElement.parentElement;
-  $(e)
-  console.log("elemento cli",e)
+  let id = $(e).attr('taskId');
+  console.log("id extraido ", id);
+  modal.classList.add('modal--show')
+
 })
 
 
