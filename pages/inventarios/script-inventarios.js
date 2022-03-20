@@ -177,7 +177,7 @@ function cargarTabla(tbody) {
           td(item.detalleControl),
           td(item.fechaAprobacion),
           td(item.fechaControl),
-          '<td><button id="btnMostrarModal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" >Detalles</button></td>',
+          '<td><button  type="button" class="btn btn-primary mostrarModal" data-toggle="modal" data-target="#exampleModalCenter" >Detalles</button></td>',
           /* ejm
            td(item.cedula)
            td(item.rol)
@@ -198,41 +198,51 @@ var td = function (texto) {
   return $("<td></td>").text(texto);
 };
 
+//----------------------------------  BOTONES -------------------------
+$(document).on("click", '.mostrarModal', function () {
+  let e = $(this)[0].parentElement.parentElement;
+  $(e)
+  console.log("elemento cli",e)
+})
+
+
+
+
 $(document).ready(function () {
   $('#btnMostrarModal').click(function () {
-      console.log("aprobaciones")
+    console.log("aprobaciones")
   });
 });
 
 $(document).ready(function () {
-    $('#btnAprobaciones').click(function () {
-        $("#contenidoMGIM").load("aprobaciones.php");
-        console.log("aprobaciones")
-    });
+  $('#btnAprobaciones').click(function () {
+    $("#contenidoMGIM").load("aprobaciones.php");
+    console.log("aprobaciones")
+  });
 });
 $(document).ready(function () {
-    $('#btnModulos').click(function () {
-        $("#contenidoMGIM").load("modulos.php");
-        console.log("modulos")
-    });
+  $('#btnModulos').click(function () {
+    $("#contenidoMGIM").load("modulos.php");
+    console.log("modulos")
+  });
 });
 $(document).ready(function () {
-    $('#btnKits').click(function () {
-        $("#contenidoMGIM").load("kits.php");
-        console.log("modulos")
-    });
+  $('#btnKits').click(function () {
+    $("#contenidoMGIM").load("kits.php");
+    console.log("modulos")
+  });
 });
 $(document).ready(function () {
-    $('#btnEntregaKits').click(function () {
-        $("#contenidoMGIM").load("entrega-kit.php");
-        console.log("modulos")
-    });
+  $('#btnEntregaKits').click(function () {
+    $("#contenidoMGIM").load("entrega-kit.php");
+    console.log("modulos")
+  });
 });
 $(document).ready(function () {
-    $('#btnReportes').click(function () {
-        $("#contenidoMGIM").load("reporte-mgim.php");
-        console.log("modulos")
-    });
+  $('#btnReportes').click(function () {
+    $("#contenidoMGIM").load("reporte-mgim.php");
+    console.log("modulos")
+  });
 });
 
 
