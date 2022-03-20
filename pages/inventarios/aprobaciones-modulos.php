@@ -1,26 +1,19 @@
 <?php include '../includes/header.php' ?>
 <div id="layoutSidenav_content">
-    <style>
-        .modal--show {
-            opacity: 1;
-            pointer-events: unset;
-        }
-    </style>
+    <link href="css-inventarios.css" rel="stylesheet" />
     <main>
         <div class="container-fluid px-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h1>Aprobaciones</h1>
-                    <p class="mb-0">
-                        Aprobaciones de modulos
-                    </p>
+                    <h1>Inventario de modulos</h1>
                     <div>
                         <nav class="navbar navbar-expand-lg navbar-light bg-light">
                             <div class="container-fluid">
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <a class="nav-link dropdown-toggle" 
+                                             href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Mantenimiento modulos
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -91,32 +84,15 @@
                             </div>
                         </div>
                         -->
-                    </div>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    ...
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
+                        <section class="modalDetalle ">
+                            <div class="modal__container">
+                                <h2 class="modal__title">Detalle de la aprobacion</h2>
+                                <p class="modal__paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti nobis nisi quibusdam doloremque expedita quae ipsam accusamus quisquam quas, culpa tempora. Veniam consectetur deleniti maxime.</p>
+                                <a href="#" class="modal__close">Cerrar Modal</a>
                             </div>
-                        </div>
+                        </section>
                     </div>
-
-
-
-
 
                 </div>
             </div>

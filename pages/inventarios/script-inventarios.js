@@ -205,17 +205,32 @@ var td = function (texto) {
   return $("<td></td>").text(texto);
 };
 
-//----------------------------------  BOTONES -------------------------
-const modal = document.querySelector('.modal');
+//----------------------------------  BOTONES MANEJO DE MODAL -------------------------
+const modal = document.querySelector('.modalDetalle');
+const closeModal = document.querySelector('.modal__close');
 $(document).on("click", '.mostrarModal', function () {
   let e = $(this)[0].parentElement.parentElement;
   let id = $(e).attr('taskId');
   console.log("id extraido ", id);
+
+
+
+
+
+
+
+
+
+  
   modal.classList.add('modal--show')
 
-})
+});
 
-
+closeModal.addEventListener('click', (e)=>{
+  e.preventDefault();
+  modal.classList.remove('modal--show');
+});
+//---------------------------------    NAVEGACION   ---------------------------------------------
 
 
 $(document).ready(function () {
