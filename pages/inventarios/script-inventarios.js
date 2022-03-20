@@ -1,3 +1,4 @@
+
 /* 
 Trabajo con JQuey, arrow function Y Ajax para consumir la API REST
 */
@@ -13,6 +14,7 @@ var guardar = $("#guardar");
 var actualizar = $("#actualizar");
 var buscar = $("#buscar");
 var eliminar = $("#eliminar");
+var mostrarModal = $("#btnMostrarModal");
 
 /* Lo primero que ejecuta al cargar la pagina */
 $(document).ready(() => {
@@ -175,8 +177,7 @@ function cargarTabla(tbody) {
           td(item.detalleControl),
           td(item.fechaAprobacion),
           td(item.fechaControl),
-          '<td style="padding:0;" ><button type="button" id="btnActulizar" class="btn btn-success"'+ 
-          'style="background-color:green; color:white; ">Detalles</button></td>',
+          '<td><button id="btnMostrarModal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" >Detalles</button></td>',
           /* ejm
            td(item.cedula)
            td(item.rol)
@@ -196,6 +197,12 @@ function cargarTabla(tbody) {
 var td = function (texto) {
   return $("<td></td>").text(texto);
 };
+
+$(document).ready(function () {
+  $('#btnMostrarModal').click(function () {
+      console.log("aprobaciones")
+  });
+});
 
 $(document).ready(function () {
     $('#btnAprobaciones').click(function () {
@@ -227,3 +234,5 @@ $(document).ready(function () {
         console.log("modulos")
     });
 });
+
+

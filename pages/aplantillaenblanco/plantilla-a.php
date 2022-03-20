@@ -16,4 +16,4 @@
     </main>
 
 <?php include '../includes/footer.php' ?>
-<script src="../../js/script-plantillas.js"></script>
+<script src="script-plantillas.js"></script>

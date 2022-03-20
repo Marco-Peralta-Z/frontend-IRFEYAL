@@ -27,7 +27,7 @@
                                             </ul>
                                         </li>
                                     </ul>
-                                    
+
                                 </div>
                             </div>
                         </nav>
@@ -87,11 +87,12 @@
                         -->
                     </div>
                 </div>
-            </div>
 
+
+            </div>
         </div>
     </main>
 
     <?php include '../includes/footer.php' ?>
-    
-    <script src="../../js/inventarios-script.js"></script>
+
+    <script src="script-inventarios.js"></script>
