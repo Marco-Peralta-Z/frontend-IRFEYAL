@@ -129,6 +129,26 @@
                         </div>
                         <!-- FIN COLLAPSE PLANTILLA-------------------------------------------------------------->
 
+
+                         <!-- INICIO COLLAPSE GESTION DE TUTORIAS --------------------------------------------->
+                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#TUTORIAS" aria-expanded="false" aria-controls="TUTORIAS">
+                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            Gestion de Tutorías
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+
+
+                        <div class="collapse" id="TUTORIAS" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="../gestiontutorias/registro.php">Registro de Notas</a>
+                            </nav>
+                        </div>
+
+
+
+                        <!-- FIN COLLAPSE GESTION DE TUTORIAS -------------------------------------->
+
+
                         <!-- INICIO MEET EJEMPLO -------------------------------------------------------------->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#PMEET" aria-expanded="false" aria-controls="PMEET">
                             <div class="sb-nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-collapse" viewBox="0 0 16 16">
