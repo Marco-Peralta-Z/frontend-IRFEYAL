@@ -151,6 +151,40 @@ eliminar.click(() => {
     },
   });
 });
+
+var contador = 1;
+var validarColumna = 1;
+/* FUNCION QUE USO SIMPRE PARA TRABAJAR CON TABLAS */
+var td = function (texto) {
+  if (contador == validarColumna) {
+    validarColumna = (validarColumna + 5);
+    return $(`<td class="idAprobacion"></td>`).text(texto);
+  }
+  contador = (contador + 1);
+  return $("<td></td>").text(texto);
+};
+
+//----------------------------------  BOTONES MANEJO DE MODAL -------------------------
+const modal = document.querySelector('.modalDetalle');
+const closeModal = document.querySelector('.modal__close');
+$(document).on("click", '.mostrarModal', function () {
+  let e = $(this)[0].parentElement.parentElement;
+  let id = $(e).attr('taskId');
+  console.log("id extraido ", id);
+
+
+  modal.classList.add('modal--show')
+
+});
+
+closeModal.addEventListener('click', (e) => {
+  e.preventDefault();
+  modal.classList.remove('modal--show');
+});
+
+
+
+
 /*  */
 /* FUNCION PARA CARGAR LA TABLA */
 /*  */
@@ -193,43 +227,6 @@ function cargarTabla(tbody) {
     },
   });
 }
-var contador = 1;
-var validarColumna = 1;
-/* FUNCION QUE USO SIMPRE PARA TRABAJAR CON TABLAS */
-var td = function (texto) {
-  if (contador == validarColumna) {
-    validarColumna = (validarColumna + 5);
-    return $(`<td class="idAprobacion"></td>`).text(texto);
-  }
-  contador = (contador + 1);
-  return $("<td></td>").text(texto);
-};
-
-//----------------------------------  BOTONES MANEJO DE MODAL -------------------------
-const modal = document.querySelector('.modalDetalle');
-const closeModal = document.querySelector('.modal__close');
-$(document).on("click", '.mostrarModal', function () {
-  let e = $(this)[0].parentElement.parentElement;
-  let id = $(e).attr('taskId');
-  console.log("id extraido ", id);
-
-
-
-
-
-
-
-
-
-  
-  modal.classList.add('modal--show')
-
-});
-
-closeModal.addEventListener('click', (e)=>{
-  e.preventDefault();
-  modal.classList.remove('modal--show');
-});
 //---------------------------------    NAVEGACION   ---------------------------------------------
 
 

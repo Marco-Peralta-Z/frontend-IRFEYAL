@@ -1,8 +1,5 @@
+$(document).ready(() => {
+    console.log("Hola irfeyal")
+});
 
-$(document).ready(function () {
-    $('#btnAprobaciones').click(function () {
-        $("#contenidoPrincipal").load("../mgim/aprobaciones.php");
-        console.log("H O M E ")
-    });
-  });
 

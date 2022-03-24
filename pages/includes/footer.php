@@ -16,6 +16,7 @@
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/jquery.js"></script>
 <script src="../../js/scripts.js"></script>
-</body>
+<script src="../../js/navegacion.js"></script>
 
+</body>
 </html>
