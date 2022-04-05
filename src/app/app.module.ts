@@ -30,10 +30,19 @@ import { TooltipModule } from 'primeng/tooltip';
 import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AsignaturaService } from './Servicio/parametrizacion/asignatura.service';
 import {MegaMenuModule} from 'primeng/megamenu';
-import {MenubarModule} from 'primeng/menubar'
+import {MenubarModule} from 'primeng/menubar';
+import { HeaderComponent } from './header/header.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { HomeComponent } from './home/home.component';
+import { DashboardComponent } from './dashboard/dashboard.component'
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    SidenavComponent,
+    HomeComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule, KeyFilterModule,MegaMenuModule,
