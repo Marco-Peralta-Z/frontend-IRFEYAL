@@ -30,13 +30,11 @@
               "src/assets"
             ],
             "styles": [
-<<<<<<< HEAD
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-=======
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeicons/primeicons.css",
->>>>>>> 4ca3bae4d2df9419bc9fd23405a26d7753746618
+
               "src/styles.css"
             ],
             "scripts": [
