@@ -26,6 +26,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MaterialModule } from './material/material.module';
+import { PrimeNgModule } from './prime-ng/prime-ng.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MaterialModule } from './material/material.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule, 
-    MaterialModule, 
+    MaterialModule,
+    PrimeNgModule, 
     AppRoutingModule
   ],
   providers: [AsignaturaService, DatePipe, { provide: LocationStrategy, useClass: HashLocationStrategy }],
