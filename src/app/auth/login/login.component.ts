@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
     panel = true;
     public isError = false;
     items: MenuItem[] = new Array();
@@ -188,7 +189,7 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        this.panel = false;
+        this.router.navigate(['./main']);
 
     }
 

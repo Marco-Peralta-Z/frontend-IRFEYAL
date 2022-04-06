@@ -21,26 +21,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AsignaturaService } from './Servicio/parametrizacion/asignatura.service';
 
-import { HeaderComponent } from './header/header.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
-import { HomeComponent } from './home/home.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { MaterialModule } from './material/material.module';
-import { PrimeNgModule } from './prime-ng/prime-ng.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    SidenavComponent,
-    HomeComponent,
-    DashboardComponent
+ 
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule, 
-    MaterialModule,
-    PrimeNgModule, 
+    BrowserAnimationsModule,  
     AppRoutingModule
   ],
   providers: [AsignaturaService, DatePipe, { provide: LocationStrategy, useClass: HashLocationStrategy }],
