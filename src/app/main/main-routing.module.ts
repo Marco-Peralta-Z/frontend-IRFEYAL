@@ -8,11 +8,8 @@ import { GestorComponent } from './gestor/gestor.component';
 const routes: Routes=[
   {
     path:'',
+    component:GestorComponent,
     children:[
-      {
-        path:'main',
-        component:GestorComponent
-      },
       {
         path:'home',
         component:HomeComponent
@@ -23,7 +20,7 @@ const routes: Routes=[
       },
       {
         path: '**',
-        redirectTo:'main'
+        redirectTo:''
       }
     ]
   }
