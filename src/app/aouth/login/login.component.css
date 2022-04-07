@@ -1,4 +1,27 @@
-body 
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+  }
+  
+  mat-drawer {
+    width: 280px;
+    
+  }
+  mat-drawer-container {
+    height: 100%;
+    overflow: auto;
+    overscroll-behavior-y: contain;
+  }
+  
+  mat-drawer {
+    background: #233257;
+    
+  }
+
+
+  body 
 {
 
 /* Ubicación de la imagen 
@@ -119,3 +142,5 @@ i{
     margin: 2px 20px;
     cursor: pointer;
 }
+
+

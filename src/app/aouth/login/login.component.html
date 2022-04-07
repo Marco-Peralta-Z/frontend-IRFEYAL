@@ -1,0 +1,86 @@
+<div *ngIf="this.logeado">
+
+    <body>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center ">
+
+                </div>
+            </div>
+            <div class="padre">
+                <div class="form-signin">
+
+                    <div class="loginEncabezado col-center centrarTexto d-flex  mb-4">
+                        <h1 class="h3 mb-3 font-weight-normal">Inicio de Sesión</h1>
+                    </div>
+                    <div class="loginContenido">
+                        <div class="alert alert-danger" role="alert" *ngIf="isError">
+                            Usuario o Contraseña incorrecta!
+                        </div>
+                        <br>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text material-icons" id="basic-addon1">
+                                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <span class="p-float-label">
+                                <input type="text" id="inputtext-left" pInputText class="form-control" name="user">
+                                <label for="inputtext-left">Usuario</label>
+
+
+                            </span>
+                        </div>
+                        <br>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fa fa-key" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <span class="p-float-label">
+                                <input type="password" id="inputtext-left" pInputText class="form-control" name="clave">
+                                <label for="inputtext-left">Contraseña</label>
+                            </span>
+                        </div>
+
+                        <span id="result">
+
+                        </span>
+                        <div class="checkbox mb-3">
+                            <label>
+
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="loginPie">
+                        <button id="login" name="login" class="btn btn-lg btn-primary btn-block"
+                            (click)="login()" >Iniciar</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </body>
+
+</div>
+
+<div *ngIf="!logeado">
+    <mat-drawer-container >
+        <mat-drawer mode="side" [opened]="sideBarOpen">
+            <app-sidenav></app-sidenav>
+        </mat-drawer>
+        <mat-drawer-content>
+            <app-header (toggleSidebarForMe)="sideBarToggler()"></app-header>
+            <router-outlet></router-outlet>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>

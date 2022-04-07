@@ -1,86 +1,31 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-usuario.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'app-sidenav',
+    templateUrl: './sidenav.component.html',
+    styleUrls: ['./sidenav.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class SidenavComponent implements OnInit {
 
-  constructor() { }
-    panel = true;
-    public isError = false;
-    items: MenuItem[] = new Array();
+    constructor(private router: Router, private userServis: ServiceUsuarioService) { }
+    items: MenuItem[] = [];
+    authValidate: boolean = false;
+    ngOnInit() {
+        this.authValidate = Boolean(this.userServis.dato);
 
-    ngOnInit(): void {
-        // this.router.navigate(['']);
         this.items = [
             {
-                label: 'Parametrizacion',
-                icon: 'fa fa-briefcase',
-                items: [
-                    {
-                        label: 'Mallas',
-                        icon: 'fa fa-file-text',
-                        items: [
-                            {
-                                label: 'Agregar Malla',
-                                icon: 'fa fa-file-text-o'
-                            },
-                            {
-                                label: 'Ver Mallas',
-                                icon: 'fa fa-eye',
-                                items: [
-                                    {
-                                        label: "Mallas Activos"
-                                    },
-                                    {
-                                        label: "Todo"
-                                    }
-                                ]
-                            }
-
-                        ]
-                    }, {
-                        label: 'Periodos',
-                        icon: 'fa fa-graduation-cap',
-                        items: [
-
-                            {
-                                label: 'Ver Periodos',
-                                icon: 'fa fa-eye',
-                                items: [
-                                    {
-                                        label: "Peridos Activos"
-                                    },
-                                    {
-                                        label: "Peridos Todos"
-                                    }
-                                ]
-                            }
-
-                        ]
-                    },
-                    {
-                        label: 'Asignaturas',
-                        icon: 'fa fa-book',
-                        items: [
-                            {
-                                label: 'Agregar Asignaturas',
-                                icon: 'fa fa-file-text-o'
-                            },
-                            {
-                                label: 'Ver Asignaturas',
-                                icon: 'fa fa-eye'
-                            }
-
-
-
-                        ]
-                    }
-
-                ]
+                label: 'Home',
+                icon: 'pi pi-fw pi-home',
+                routerLink: 'home'
+            },
+            {
+                label: 'Dasboard',
+                icon: 'pi pi-fw pi-book',
+                routerLink: 'dashboard'
             },
             {
                 label: 'Edit',
@@ -101,8 +46,7 @@ export class LoginComponent implements OnInit {
                     {
                         label: 'Justify',
                         icon: 'pi pi-fw pi-align-justify'
-                    },
-
+                    }
                 ]
             },
             {
@@ -117,7 +61,6 @@ export class LoginComponent implements OnInit {
                     {
                         label: 'Delete',
                         icon: 'pi pi-fw pi-user-minus',
-
                     },
                     {
                         label: 'Search',
@@ -156,8 +99,7 @@ export class LoginComponent implements OnInit {
                             {
                                 label: 'Delete',
                                 icon: 'pi pi-fw pi-calendar-minus'
-                            },
-
+                            }
                         ]
                     },
                     {
@@ -173,23 +115,13 @@ export class LoginComponent implements OnInit {
                 ]
             },
             {
-                label: 'Quit',
-                icon: 'pi pi-fw pi-power-off'
+               separator:true
+            },
+            {
+               label:'Quit',
+               icon:'pi pi-fw pi-power-off'
             }
-        ];
-    }
-
-
-    onIsError(): void {
-        this.isError = true;
-        setTimeout(() => {
-            this.isError = false;
-        }, 4000);
-    }
-
-    login() {
-        this.panel = false;
-
+        ]
     }
 
 }
