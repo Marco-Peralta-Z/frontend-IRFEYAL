@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-<<<<<<< HEAD
+
 import { LoginComponent } from './aouth/login/login.component';
 import { HeaderComponent } from './modulos/header/header.component';
 import { SidenavComponent } from './modulos/sidenav/sidenav.component';
@@ -16,22 +16,7 @@ const routes: Routes = [
   { path: 'sidenav', component: SidenavComponent },
   { path: 'login', pathMatch: 'full', component: LoginComponent },
   { path: '**', pathMatch: 'full', component: Error404Component }
-=======
-
-
-const routes: Routes = [
-  {
-    path:'auth',
-    loadChildren:() =>import('./auth/auth.module').then(m => m.AuthModule)
-  },
-  {
-    path:'main',
-    loadChildren:() =>import('./main/main.module').then(m => m.MainModule)
-  }
->>>>>>> c2a466a106516fb1ee616bb59338ba91ef11f4c8
-
-];
-
+]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
