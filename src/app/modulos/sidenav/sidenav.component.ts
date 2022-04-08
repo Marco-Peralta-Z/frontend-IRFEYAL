@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+<<<<<<< HEAD:src/app/modulos/sidenav/sidenav.component.ts
 import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-usuario.service';
+=======
+import { Router } from '@angular/router';
+>>>>>>> c2a466a106516fb1ee616bb59338ba91ef11f4c8:src/app/auth/login/login.component.ts
 
 @Component({
     selector: 'app-sidenav',
@@ -10,11 +14,18 @@ import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-us
 })
 export class SidenavComponent implements OnInit {
 
+<<<<<<< HEAD:src/app/modulos/sidenav/sidenav.component.ts
     constructor(private router: Router, private userServis: ServiceUsuarioService) { }
     items: MenuItem[] = [];
     authValidate: boolean = false;
     ngOnInit() {
         this.authValidate = Boolean(this.userServis.dato);
+=======
+  constructor(private router: Router) { }
+    panel = true;
+    public isError = false;
+    items: MenuItem[] = new Array();
+>>>>>>> c2a466a106516fb1ee616bb59338ba91ef11f4c8:src/app/auth/login/login.component.ts
 
         this.items = [
             {
@@ -121,7 +132,24 @@ export class SidenavComponent implements OnInit {
                label:'Quit',
                icon:'pi pi-fw pi-power-off'
             }
+<<<<<<< HEAD:src/app/modulos/sidenav/sidenav.component.ts
         ]
+=======
+        ];
+    }
+
+
+    onIsError(): void {
+        this.isError = true;
+        setTimeout(() => {
+            this.isError = false;
+        }, 4000);
+    }
+
+    login() {
+        this.router.navigate(['./main']);
+
+>>>>>>> c2a466a106516fb1ee616bb59338ba91ef11f4c8:src/app/auth/login/login.component.ts
     }
 
 }
