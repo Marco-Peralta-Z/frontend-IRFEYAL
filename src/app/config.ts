@@ -3,8 +3,9 @@ export let Path = {
     url: 'http://localhost:4200/assets/'
 }
 
-//Edpoing para rutas de consultas a Spring
+//Edpoing para rutas de consultas a firebase
 
 export let Api = {
-    url: 'http://localhost:9070/'
+    url: 'https://marketplace-f34ed-default-rtdb.firebaseio.com/'
 }
+//Endpint para rutas de categorias a firebase

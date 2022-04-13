@@ -6,25 +6,20 @@
             </button>
             <div class="row mr-2 ml-auto">
                 <ul>
-
-                    <button mat-button [matMenuTriggerFor]="menu"
-                        class="user mt-2 d-flex align-items-center fa fa-sort-desc">
-                        <p-chip label="{{Username}}" image="assets/img/user.png" styleClass="mr-2 custom-chip"
-                            class="user-image  p-2">
-                        </p-chip>
-
-                    </button>
-
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="cerrarSesion()">
-
-                            <a href=" ">
-                                <i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesion
-                            </a>
-
+                    <li>
+                        <button mat-button [matMenuTriggerFor]="menu" class="user mt-2 d-flex align-items-center">
+                            <img src="assets/img/user.png" class="user-image mr-1 p-2">
+                            {{Username}}
+                            <mat-icon class="user-image-icon ml-1">keyboard_arrow_down</mat-icon>
                         </button>
-                    </mat-menu>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="cerrarSesion()">
+                                <mat-icon>exit_to_app</mat-icon>
+                                <a href="index.html"> Cerrar Sesion</a>
 
+                            </button>
+                        </mat-menu>
+                    </li>
                 </ul>
             </div>
         </mat-toolbar-row>
