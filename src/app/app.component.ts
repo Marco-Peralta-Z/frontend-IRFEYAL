@@ -10,10 +10,5 @@ import { ServiceUsuarioService } from './Servicio/roles_Usuario/service-usuario.
 })
 export class AppComponent {
     title = 'frond_ifreyal';
-<<<<<<< HEAD
-    
-=======
 
-
->>>>>>> c2a466a106516fb1ee616bb59338ba91ef11f4c8
 }

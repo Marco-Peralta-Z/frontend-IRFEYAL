@@ -1,24 +1,16 @@
-.page {
-    color: white;
-    padding: 0 1rem;
-    background: #f1f5f9;
-    &__box {
-      min-height: 120px;
-      background: #1e293b;
-      margin: 0 -1rem;
-      font-size: 36px;
+@import "../../../assets/scss/pages.scss";
+.product-item {
+    .product-item-content {
+        border: 1px solid var(--surface-d);
+        border-radius: 3px;
+        margin: .3rem;
+        text-align: center;
+        padding: 2rem 0;
     }
-    &__content {
-      min-height: calc(100vh - 178px);
-      border-radius: 10px;
-      margin-top: -2rem;
-      background: white;
-      color: black;
-      font-size: 2rem;
-      &-data {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
+
+    .product-image {
+        width: 30%;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
     }
-  }
+}
+
