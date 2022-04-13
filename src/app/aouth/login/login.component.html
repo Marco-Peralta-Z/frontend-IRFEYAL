@@ -33,8 +33,6 @@
                             <span class="p-float-label">
                                 <input type="text" id="inputtext-left" pInputText class="form-control" name="user">
                                 <label for="inputtext-left">Usuario</label>
-
-
                             </span>
                         </div>
                         <br>
@@ -62,7 +60,7 @@
 
                     <div class="loginPie">
                         <button id="login" name="login" class="btn btn-lg btn-primary btn-block"
-                            (click)="login()" >Iniciar</button>
+                            (click)="login()">Iniciar</button>
 
                     </div>
 
@@ -74,7 +72,7 @@
 </div>
 
 <div *ngIf="!logeado">
-    <mat-drawer-container >
+    <mat-drawer-container>
         <mat-drawer mode="side" [opened]="sideBarOpen">
             <app-sidenav></app-sidenav>
         </mat-drawer>

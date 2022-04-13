@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-
 import { SplitterModule } from 'primeng/splitter';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { DialogModule } from 'primeng/dialog';
-import {MegaMenuModule} from 'primeng/megamenu';
-import {MenubarModule} from 'primeng/menubar';
+import { MegaMenuModule } from 'primeng/megamenu';
+import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
@@ -17,27 +14,47 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { BlockUIModule } from 'primeng/blockui';
 import { FocusTrapModule } from 'primeng/focustrap';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { CarouselModule } from 'primeng/carousel';
+import { SidebarModule } from 'primeng/sidebar';
+import { ChipModule } from 'primeng/chip';
+
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+
+import { TreeModule } from 'primeng/tree';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { ImageModule } from 'primeng/image';
+import { TimelineModule } from 'primeng/timeline';
+import { CardModule } from 'primeng/card';
+import {ListboxModule} from 'primeng/listbox';
 
 
 @NgModule({
-  
-  exports:[
-    SplitterModule,
-    PanelMenuModule,
-    DialogModule,
-    MegaMenuModule,
-    MenubarModule,
-    InputTextModule,
-    ButtonModule,
-    ToastModule,
-    OverlayPanelModule,
+
+  exports: [
+    SplitterModule, AvatarModule, AvatarGroupModule,
+    PanelMenuModule, TreeModule, MessagesModule,
+    DialogModule, ChipModule, MultiSelectModule,
+    MegaMenuModule, TieredMenuModule, MessageModule,
+    MenubarModule, CarouselModule, ImageModule,
+    InputTextModule, TriStateCheckboxModule,
+    ButtonModule, CalendarModule, TimelineModule,
+    ToastModule, DropdownModule, CardModule,
+    OverlayPanelModule,ListboxModule,
     DividerModule,
     TooltipModule,
     KeyFilterModule,
     BlockUIModule,
     FocusTrapModule,
+    SidebarModule,
     SplitButtonModule
   ]
-  
+
 })
 export class PrimeNgModule { }

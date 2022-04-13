@@ -5,22 +5,23 @@ import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-us
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 
   @Output() toggleSidebarForMe: EventEmitter<any> = new EventEmitter();
   constructor(private router: Router, private userServis: ServiceUsuarioService) { }
+  
   authValidate: boolean = false;
   Username: String = "";
+
   ngOnInit(): void {
-
-
     let v = localStorage.getItem("Username")
     this.Username = String(v);
-    this.authValidate=Boolean(this.userServis.dato);
+    this.authValidate = Boolean(this.userServis.dato);
 
   }
+  
   toggleSidebar() {
     this.toggleSidebarForMe.emit();
   }
