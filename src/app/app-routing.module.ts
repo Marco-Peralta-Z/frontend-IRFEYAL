@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+<<<<<<< HEAD
+=======
+
+>>>>>>> db32c24a1792b069b6ace7a8c44c20146e446c6d
 import { LoginComponent } from './aouth/login/login.component';
 import { HeaderComponent } from './modulos/header/header.component';
 import { SidenavComponent } from './modulos/sidenav/sidenav.component';
@@ -16,9 +20,13 @@ const routes: Routes = [
 
   //Toda ruta se debere inicializar por encima de esta ruta
   { path: '**', pathMatch: 'full', component: Error404Component }
+<<<<<<< HEAD
 
 ];
 
+=======
+]
+>>>>>>> db32c24a1792b069b6ace7a8c44c20146e446c6d
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
