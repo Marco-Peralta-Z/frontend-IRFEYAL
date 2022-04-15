@@ -18,6 +18,8 @@ import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { CategoriaComponent } from './pages/modulo_inventario/categoria/categoria.component';
+import { ArticuloComponent } from './pages/modulo_inventario/articulo/articulo.component';
 
 
 
@@ -28,7 +30,9 @@ import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/commo
     Error404Component,
     LoginComponent,
     HeaderComponent,
-    SidenavComponent
+    SidenavComponent,
+    CategoriaComponent,
+    ArticuloComponent
   ],
   imports: [
     BrowserModule,

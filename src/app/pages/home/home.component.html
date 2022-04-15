@@ -1,39 +1,38 @@
 <div class="container-fluid page">
   <div class="d-flex page__box p-3 mt-2">Resumen del Administrativo</div>
-  <div class="page__content shadow p-3 position-relative">
+  <div class="page__content shadow p-3 ">
 
-    <div class="card">
-      <p-card>
-        <p-carousel [value]="items" align="alternate" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1"
-          [circular]="true" [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions">
+    <!--Inicio Contenido-->
+    <p-card>
+      <p-carousel [value]="items" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1" [circular]="true"
+        [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions">
 
-          <ng-template pTemplate="header">
-            <h5></h5>
-          </ng-template>
-          <ng-template let-i pTemplate="item">
-            <div class="product-item">
-              <div class="product-item-content">
-                <div class="mb-4">
 
-                  <div class="{{i.icon}} product-image" style="font-size:60px;"></div>
+        <ng-template let-i pTemplate="item">
+          <div class="product-item">
+            <div class="product-item-content">
 
-                </div>
-                <div>
-                  <div class="node-header">
-                    {{i.label}}
-                    <p-listbox [options]="i.items" [(ngModel)]="selecMenu" routerLink="" optionLabel="label"
-                      (onClick)="RedicMenu()">
+              <p-fieldset legend=" {{i.label}}">
+
+
+                <div class="{{i.icon}} product-image" style="font-size:50px;"></div>
+
+
+                <div class="car-buttons mt-5" *ngIf="i.items!=null">
+                  <p-scrollPanel [style]="{width: '300px', height: '160px'}">
+                    <p-listbox [options]="i.items" [(ngModel)]="selecMenu" optionLabel="label" (onClick)="RedicMenu()">
                     </p-listbox>
+                  </p-scrollPanel>
 
-                  </div>
                 </div>
-              </div>
+              </p-fieldset>
             </div>
-          </ng-template>
-        </p-carousel>
-      </p-card>
-    </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </p-card>
 
-
+    <!--Find Contenido-->
   </div>
+
 </div>

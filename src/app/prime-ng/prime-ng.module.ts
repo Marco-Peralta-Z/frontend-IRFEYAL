@@ -17,7 +17,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { CarouselModule } from 'primeng/carousel';
 import { SidebarModule } from 'primeng/sidebar';
 import { ChipModule } from 'primeng/chip';
-
+import { ScrollTopModule } from 'primeng/scrolltop';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { TieredMenuModule } from 'primeng/tieredmenu';
@@ -32,9 +32,14 @@ import { MessageModule } from 'primeng/message';
 import { ImageModule } from 'primeng/image';
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
-import {ListboxModule} from 'primeng/listbox';
+import { ListboxModule } from 'primeng/listbox';
+import { DataViewModule } from 'primeng/dataview';
+import { TableModule } from 'primeng/table';
+import { FieldsetModule } from 'primeng/fieldset';
+import { SpeedDialModule } from 'primeng/speeddial';
+import { ProgressBarModule } from 'primeng/progressbar';
 
-
+import {ScrollPanelModule} from 'primeng/scrollpanel';
 @NgModule({
 
   exports: [
@@ -46,11 +51,11 @@ import {ListboxModule} from 'primeng/listbox';
     InputTextModule, TriStateCheckboxModule,
     ButtonModule, CalendarModule, TimelineModule,
     ToastModule, DropdownModule, CardModule,
-    OverlayPanelModule,ListboxModule,
-    DividerModule,
-    TooltipModule,
-    KeyFilterModule,
-    BlockUIModule,
+    OverlayPanelModule, ListboxModule,
+    DividerModule, DataViewModule, SpeedDialModule,
+    TooltipModule, TableModule, ProgressBarModule,
+    KeyFilterModule, FieldsetModule,ScrollPanelModule,
+    BlockUIModule, ScrollTopModule,
     FocusTrapModule,
     SidebarModule,
     SplitButtonModule

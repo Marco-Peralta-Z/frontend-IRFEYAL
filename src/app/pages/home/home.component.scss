@@ -1,7 +1,8 @@
 @import "../../../assets/scss/pages.scss";
+
 .product-item {
     .product-item-content {
-        border: 1px solid var(--surface-d);
+       // border: 1px solid var(--surface-d);
         border-radius: 3px;
         margin: .3rem;
         text-align: center;
@@ -10,7 +11,23 @@
 
     .product-image {
         width: 30%;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+        border-radius: 5px;
+        //box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
     }
 }
 
+:host ::ng-deep .custom-scrolltop{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 4px;
+    background-color: var(--primary-color);
+
+    &:hover {
+        background-color: var(--primary-color);
+    }
+
+    .p-scrolltop-icon {
+        font-size: 1rem;
+        color: var(--primary-color-text);
+    }
+}

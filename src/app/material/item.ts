@@ -18,13 +18,18 @@ export let item = {
         },
         
         {
-            label: 'Seguridad y Roles',
+            label: 'Inventario',
             icon: 'pi pi-fw pi-book',
             items: [
                 {
-                    label: 'Agregar',
+                    label: 'Categoria',
                     icon: 'fa fa-plus-square',
-                    routerLink: 'dashboard'
+                    routerLink: 'inventario/categoria'
+                },
+                {
+                    label:'Articulo',
+                    icon:'fa fa-book',
+                    routerLink:'inventario/articulo'
                 }
             ]
         }
