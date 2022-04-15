@@ -1,146 +1,56 @@
+@import '../../../assets/scss/login.scss';
+
 :host {
     display: flex;
     flex-direction: column;
     height: 100%;
 
-  }
-  
-  mat-drawer {
+}
+
+mat-drawer {
     width: 280px;
-    
-  }
-  mat-drawer-container {
+
+}
+
+mat-drawer-container {
     height: 100%;
     overflow: auto;
     overscroll-behavior-y: contain;
-  }
-  
-  mat-drawer {
+}
+
+mat-drawer {
     background: #233257;
-    
-  }
+
+}
 
 
-  body 
-{
+body {
 
-/* Ubicación de la imagen 
+    /* Ubicación de la imagen 
 */
 
-/* Para dejar la imagen de fondo centrada, vertical y
+    /* Para dejar la imagen de fondo centrada, vertical y
 horizontalmente */
 
-background-position: center center;
+    background-position: center center;
 
-/* Para que la imagen de fondo no se repita */
+    /* Para que la imagen de fondo no se repita */
 
-background-repeat: no-repeat;
+    background-repeat: no-repeat;
 
-/* La imagen se fija en la ventana de visualización para que la altura de la imagen no supere a la del contenido */
+    /* La imagen se fija en la ventana de visualización para que la altura de la imagen no supere a la del contenido */
 
-background-attachment: fixed;
+    background-attachment: fixed;
 
-/* La imagen de fondo se reescala automáticamente con el cambio del ancho de ventana del navegador */
+    /* La imagen de fondo se reescala automáticamente con el cambio del ancho de ventana del navegador */
 
-background-size: cover;
+    background-size: cover;
 
-/* Se muestra un color de fondo mientras se está cargando la imagen
+    /* Se muestra un color de fondo mientras se está cargando la imagen
 de fondo o si hay problemas para cargarla */
 
 
 }
 
-
-
-/*.center-block {
-    background-color: orange;
-}*/
-
-.col-center
-{
-/*  float: none;
-  margin-left: auto;
-  margin-right: auto;*/
-  text-align:center;
-  /*line-height:50px;*/
-  color:#fff;
-}
-
-html,body,.container
-{
-    height:100%;
-}
-.loginEncabezado
-{
-    padding-top: 15px;
-    background-color:#1F5DC1;
-    height: 62px;
-    -webkit-box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.28); 
-    box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.28);
-}
-.loginContenido
-{    
-    padding-left: 30px;
-    padding-right: 30px;
-    background-color: white;
-}
-
-.btn.form-control
-{
-    background-color: #468DF0;
-    height: 50px;
-    color:#fff;
-}
-
-.btn.form-control:hover 
-{
-    background-color: #0B51C5;
-    cursor:default;
-    color:#fff;
-
-}  
-.padre
-{
-    /*height para reponsive altura;*/
-    height: 80%;
-    display: table-row;
-    /*IMPORTANTE*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}    
-.centrarTexto
-{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.fondoLogo
-{
-    background: url(/src/assets/img/fondo_logo.png) no-repeat center center;
-    height: 112px;
-}
-
-   
-.form-signin 
-{
-    width: 100%;
-    background-color: white;
-    max-width: 350px;
-/*    padding: 15px;*/
-    margin: 0 auto;
-    -webkit-box-shadow: 0px 0px 23px 3px rgba(43,25,5,0.77); 
-    box-shadow: 0px 0px 23px 3px rgba(43,25,5,0.77);
-}
-.loginPie
-{
-    background-color: #468DF0;
-}
-
-i{
-    margin: 2px 20px;
-    cursor: pointer;
-}
 
 
