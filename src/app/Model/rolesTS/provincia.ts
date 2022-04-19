@@ -1,3 +1,8 @@
-export class provincia{
-    
+export class provincia {
+
+    idProvincia: number = 0;
+
+    provincia: string = "";
+
+
 }

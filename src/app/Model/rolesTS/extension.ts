@@ -1,15 +1,13 @@
 import { direccion } from "./direccion";
 import { empresa } from "./empresa";
 
-export class extension{
+export class extension {
 
+    id_extension: number = 0;
 
+    nombre_extension: string = "";
 
-id_extension:number=0;
+    direccion: direccion = new direccion;
 
-nombre_extension:string="";
-
-direccion:direccion=new direccion;
-	
-empresa:empresa=new empresa ;
+    empresa: empresa = new empresa;
 }
