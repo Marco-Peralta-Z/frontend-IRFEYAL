@@ -20,7 +20,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { CategoriaComponent } from './pages/modulo_inventario/categoria/categoria.component';
 import { ArticuloComponent } from './pages/modulo_inventario/articulo/articulo.component';
-
+import { ParametrizacionRoutingModule } from './Routing/parametrizacion/parametrizacion-routing.module';
+import { ErrorRoutingModule } from './Routing/error/error-routing.module';
+import { AsistenciaRoutingModule } from './Routing/asistencia/asistencia-routing.module';
+import { DocumentacionAcademicosRoutingModule } from './Routing/documentacion-academicos/documentacion-academicos-routing.module';
+import { InventariosRoutingModule } from './Routing/inventarios/inventarios-routing.module';
+import { MatriculasRoutingModule } from './Routing/matriculas/matriculas-routing.module';
+import { PagosRoutingModule } from './Routing/pagos/pagos-routing.module';
+import { RolesRoutingModule } from './Routing/roles/roles-routing.module';
+import { SecretariaRoutingModule } from './Routing/secretaria/secretaria-routing.module';
+import { TutoriasRoutingModule } from './Routing/tutorias/tutorias-routing.module';
 
 
 @NgModule({
@@ -38,6 +47,7 @@ import { ArticuloComponent } from './pages/modulo_inventario/articulo/articulo.c
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    ParametrizacionRoutingModule,
     PrimeNgModule,
     MatSidenavModule,
     MatToolbarModule,
@@ -46,7 +56,16 @@ import { ArticuloComponent } from './pages/modulo_inventario/articulo/articulo.c
     MatMenuModule,
     MatListModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ErrorRoutingModule,
+    AsistenciaRoutingModule,
+    DocumentacionAcademicosRoutingModule,
+    InventariosRoutingModule,
+    MatriculasRoutingModule,
+    PagosRoutingModule,
+    RolesRoutingModule,
+    SecretariaRoutingModule,
+    TutoriasRoutingModule
   ],
   providers: [DatePipe, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
