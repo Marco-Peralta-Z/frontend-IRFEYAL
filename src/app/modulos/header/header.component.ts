@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
 
   @Output() toggleSidebarForMe: EventEmitter<any> = new EventEmitter();
   constructor(private router: Router, private userServis: ServiceUsuarioService) { }
-  
+  menuacti:boolean=true;
   authValidate: boolean = false;
   Username: String = "";
 
@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit {
   }
   
   toggleSidebar() {
+    this.menuacti=!this.menuacti;
     this.toggleSidebarForMe.emit();
   }
 

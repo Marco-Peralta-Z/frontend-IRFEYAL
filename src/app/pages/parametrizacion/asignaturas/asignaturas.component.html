@@ -1,0 +1,55 @@
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2">Asignaturas</div>
+    <div class="page__content shadow p-3 ">
+
+        <!--Inicio Contenido-->
+
+        <div class="card">
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"></button>
+
+                </ng-template>
+
+                <ng-template pTemplate="right">
+
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="asigemp" [rows]="10" [paginator]="true" responsiveLayout="scroll" dataKey="id"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Mallas Curriculares"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">Lista de Asignaturas</h5>
+
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Asignatura</th>
+                        <th>Cedula Docente</th>
+                        <th>Nombres del Docente</th>
+                        <th>Correo del Docente</th>
+                        <th>Extension del Docente</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-ap>
+                    <tr>
+                        <td>{{ap.id_asignatura.descripcion}}</td>
+                        <td>{{ap.id_empleado.persona.cedula}}</td>
+                        <td>{{ap.id_empleado.persona.apellido}} {{ap.id_empleado.persona.nombre}}</td>
+                        <td>{{ap.id_empleado.CorreoElectronico.correo}}</td>
+                        <td>{{ap.id_empleado.extension.nombre_extension}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        <!--En total se encontro {{malla ? malla.length : 0 }} Mallas Curriculares.-->
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+        <!--Fin Contenido-->
+    </div>
+</div>

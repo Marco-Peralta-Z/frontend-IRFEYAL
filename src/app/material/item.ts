@@ -10,9 +10,19 @@ export let item = {
             icon: 'pi pi-fw pi-book',
             items: [
                 {
-                    label: 'Agregar',
-                    icon: 'fa fa-plus-square',
-                    routerLink: 'parametrizacion'
+                    label: 'Periodo',
+                    icon: 'fa fa-indent',
+                    routerLink: 'parametrizacion/periodo'
+                },
+                {
+                    label: 'Malla',
+                    icon: 'fa fa-file-text',
+                    routerLink: 'parametrizacion/malla'
+                },
+                {
+                    label: 'Asignaturas',
+                    icon: 'fa fa-book',
+                    routerLink: 'parametrizacion/asignatura'
                 }
             ]
         },

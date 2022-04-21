@@ -1,9 +1,15 @@
 <div *ngIf="authValidate">
     <mat-toolbar>
         <mat-toolbar-row class="justify-content-between">
-            <button mat-icon-button (click)="toggleSidebar()">
-                <mat-icon>menu</mat-icon>
-            </button>
+            <div *ngIf="menuacti">
+                <button pButton pRipple type="button" icon="fa fa-chevron-left"
+                    class="p-button-rounded " (click)="toggleSidebar()"></button>
+            </div>
+
+            <div *ngIf="!menuacti">
+                <button pButton pRipple type="button" icon="fa fa-chevron-right"
+                    class="p-button-rounded " (click)="toggleSidebar()"></button>
+            </div>
             <div class="row mr-2 ml-auto">
                 <ul>
 
@@ -16,13 +22,14 @@
                     </button>
 
                     <mat-menu #menu="matMenu">
+                        <a href=" ">
                         <button mat-menu-item (click)="cerrarSesion()">
 
-                            <a href=" ">
+                           
                                 <i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesion
-                            </a>
+                           
 
-                        </button>
+                        </button> </a>
                     </mat-menu>
 
                 </ul>

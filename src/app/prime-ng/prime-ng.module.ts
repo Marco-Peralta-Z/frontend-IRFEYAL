@@ -38,8 +38,12 @@ import { TableModule } from 'primeng/table';
 import { FieldsetModule } from 'primeng/fieldset';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ProgressBarModule } from 'primeng/progressbar';
-
+import {ToolbarModule} from 'primeng/toolbar';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
+import {StepsModule} from 'primeng/steps';
+import {ToggleButtonModule} from 'primeng/togglebutton';
+
+
 @NgModule({
 
   exports: [
@@ -55,9 +59,9 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
     DividerModule, DataViewModule, SpeedDialModule,
     TooltipModule, TableModule, ProgressBarModule,
     KeyFilterModule, FieldsetModule,ScrollPanelModule,
-    BlockUIModule, ScrollTopModule,
-    FocusTrapModule,
-    SidebarModule,
+    BlockUIModule, ScrollTopModule,ToggleButtonModule,
+    FocusTrapModule,ToolbarModule,
+    SidebarModule,StepsModule,
     SplitButtonModule
   ]
 

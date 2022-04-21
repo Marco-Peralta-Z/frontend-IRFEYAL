@@ -1,0 +1,91 @@
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2">Mallas Curriculares</div>
+    <div class="page__content shadow p-3 ">
+
+        <!--Inicio Contenido-->
+
+        <div class="card">
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"></button>
+                    <!--<button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger"
+                        (click)="deleteSelectedProducts()"
+                        [disabled]="!selectedProducts || !selectedProducts.length"></button>-->
+                </ng-template>
+
+                <ng-template pTemplate="right">
+
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="perdiodoList" [rows]="10" [paginator]="true" responsiveLayout="scroll" dataKey="id"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Mallas Curriculares"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">Lista de Perdiodo</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <!--<input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Search..." />-->
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Actividad</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Costo Mensualidad</th>
+                        <th>Costo Matricula </th>
+                        <th>Descripcion Malla </th>
+                        <th>Materias Asignadas</th>
+                        <th style="width: 8rem">
+                            <div class="flex justify-content-center align-items-center">
+                                Estado
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-p>
+                    <tr>
+                        <td>
+                            {{p.actividades}}
+                        </td>
+                        <td>
+                            {{p.fecha_activiti | date: 'MM/dd/yyyy'}}
+                        </td>
+                        <td>
+                            {{p.fecha_activiti | date: 'MM/dd/yyyy'}}
+                        </td>
+                        <td>
+                            {{p.costo_mensualidad}}
+                        </td>
+                        <td>
+                            {{p.costo_matricula}}
+                        </td>
+                        <td style="text-align: justify;">
+                            {{p.id_malla.descripcion}}
+                        </td>
+                        <td>
+                            <div class="flex justify-content-center align-items-center">
+                                <button pButton pRipple type="button" icon="fa fa-eye"
+                                    class="p-button-rounded p-button-warning p-button-text"></button>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                           <td >
+                                <p-toggleButton [(ngModel)]="p.id_malla.estado" onLabel="Activo" offLabel="Expirado" onIcon="pi pi-check" offIcon="pi pi-times" [style]="{'width': '10em'}"></p-toggleButton>
+                            </td> 
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        En total se encontro {{malla ? malla.length : 0 }} Mallas Curriculares.
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+        <!--Fin Contenido-->
+    </div>
+</div>

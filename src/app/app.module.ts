@@ -30,6 +30,10 @@ import { PagosRoutingModule } from './Routing/pagos/pagos-routing.module';
 import { RolesRoutingModule } from './Routing/roles/roles-routing.module';
 import { SecretariaRoutingModule } from './Routing/secretaria/secretaria-routing.module';
 import { TutoriasRoutingModule } from './Routing/tutorias/tutorias-routing.module';
+import { PeriodoComponent } from './pages/parametrizacion/periodo/periodo.component';
+import { MallaComponent } from './pages/parametrizacion/malla/malla.component';
+import { AsignaturasComponent } from './pages/parametrizacion/asignaturas/asignaturas.component';
+import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component';
 
 
 @NgModule({
@@ -41,7 +45,11 @@ import { TutoriasRoutingModule } from './Routing/tutorias/tutorias-routing.modul
     HeaderComponent,
     SidenavComponent,
     CategoriaComponent,
-    ArticuloComponent
+    ArticuloComponent,
+    PeriodoComponent,
+    MallaComponent,
+    AsignaturasComponent,
+    CursosComponent
   ],
   imports: [
     BrowserModule,
