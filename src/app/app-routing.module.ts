@@ -11,13 +11,9 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'header', component: HeaderComponent },
   { path: 'sidenav', component: SidenavComponent },
-<<<<<<< Updated upstream
   {path:'tutorias',loadChildren:() => import('./Routing/tutorias/tutorias.module').then(m => m.TutoriasModule)},
-  
-=======
   {path:'matriculaModule', 
   loadChildren:() =>import('./Routing/matriculas/matriculas.module').then(m => m.MatriculasModule)},
->>>>>>> Stashed changes
   { path: 'login', pathMatch: 'full', component: LoginComponent }
   
 ];
