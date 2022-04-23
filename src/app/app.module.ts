@@ -38,7 +38,6 @@ import { DataTablesModule } from "angular-datatables";
 import { ActividadesRegistroComponent } from './pages/tutorias/actividadesRegistro/actividadesRegistro.component';
 import { DeudasConsultaComponent } from './pages/tutorias/deudasConsulta/deudasConsulta.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,11 +49,16 @@ import { DeudasConsultaComponent } from './pages/tutorias/deudasConsulta/deudasC
     HeaderComponent,
     SidenavComponent,
     CategoriaComponent,
+<<<<<<< Updated upstream
     ArticuloComponent,
     PeriodoComponent,
     MallaComponent,
     AsignaturasComponent,
     CursosComponent
+=======
+    ArticuloComponent
+
+>>>>>>> Stashed changes
   ],
   imports: [
     BrowserModule,
