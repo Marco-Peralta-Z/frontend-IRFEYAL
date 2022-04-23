@@ -42,6 +42,22 @@ export let item = {
                     routerLink:'inventario/articulo'
                 }
             ]
+        },
+        {
+            label: 'Tutorias',
+            icon: 'pi pi-fw pi-book',
+            items: [
+                {
+                    label: 'Registro De Actividades',
+                    icon: 'fa fa-plus-square',
+                    routerLink: 'tutorias/tutorias/actividadesRegistro'
+                },
+                {
+                    label:'Consulta De Deudas',
+                    icon:'fa fa-book',
+                    routerLink:'tutorias/tutorias/deudasConsulta'
+                }
+            ]
         }
 
     ]

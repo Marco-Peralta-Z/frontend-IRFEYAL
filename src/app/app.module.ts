@@ -34,11 +34,16 @@ import { PeriodoComponent } from './pages/parametrizacion/periodo/periodo.compon
 import { MallaComponent } from './pages/parametrizacion/malla/malla.component';
 import { AsignaturasComponent } from './pages/parametrizacion/asignaturas/asignaturas.component';
 import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component';
+import { DataTablesModule } from "angular-datatables";
+import { ActividadesRegistroComponent } from './pages/tutorias/actividadesRegistro/actividadesRegistro.component';
+import { DeudasConsultaComponent } from './pages/tutorias/deudasConsulta/deudasConsulta.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    ActividadesRegistroComponent,
+    DeudasConsultaComponent,
     HomeComponent,
     Error404Component,
     LoginComponent,
@@ -53,6 +58,7 @@ import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component
   ],
   imports: [
     BrowserModule,
+    DataTablesModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     ParametrizacionRoutingModule,

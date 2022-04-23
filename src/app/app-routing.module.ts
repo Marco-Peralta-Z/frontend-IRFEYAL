@@ -11,6 +11,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'header', component: HeaderComponent },
   { path: 'sidenav', component: SidenavComponent },
+  {path:'tutorias',loadChildren:() => import('./Routing/tutorias/tutorias.module').then(m => m.TutoriasModule)},
+  
   { path: 'login', pathMatch: 'full', component: LoginComponent }
 ];
 
