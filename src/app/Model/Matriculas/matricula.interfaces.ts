@@ -8,7 +8,7 @@ import { Estudiante } from './estudiante.interface';
 
 export interface Matricula{
     id_matricula?:number;
-    fechaMatricula?:string;
+    fechaMatricula?:Date;
     id_periodo: Periodo;
     curso: Curso;
     modalidad:Modalidad;

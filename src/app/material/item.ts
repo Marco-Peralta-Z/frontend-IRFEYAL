@@ -65,7 +65,7 @@ export let item = {
             items: [
                 {
                     label: 'Listar Matriculas',
-                    icon: 'fa fa-plus-square',
+                    icon: 'pi pi-list',
                     routerLink: 'matriculaModule/listarMatriculas'
                 },
                 {

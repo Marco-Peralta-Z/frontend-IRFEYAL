@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,7 +37,11 @@ import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component
 import { DataTablesModule } from "angular-datatables";
 import { ActividadesRegistroComponent } from './pages/tutorias/actividadesRegistro/actividadesRegistro.component';
 import { DeudasConsultaComponent } from './pages/tutorias/deudasConsulta/deudasConsulta.component';
-
+// Cambio de idioma 
+import localeES  from '@angular/common/locales/es-EC';
+import {registerLocaleData} from '@angular/common';
+registerLocaleData(localeES);
+// ------------------------------------
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +85,8 @@ import { DeudasConsultaComponent } from './pages/tutorias/deudasConsulta/deudasC
     SecretariaRoutingModule,
     TutoriasRoutingModule
   ],
-  providers: [DatePipe, { provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [DatePipe, { provide: LocationStrategy, useClass: HashLocationStrategy},
+              {provide:LOCALE_ID,useValue: 'es-EC'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

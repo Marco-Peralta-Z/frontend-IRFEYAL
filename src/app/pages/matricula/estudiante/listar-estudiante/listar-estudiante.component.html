@@ -13,11 +13,11 @@
             </ng-template>
             <ng-template pTemplate="body" let-estudiante>
                 <tr>
-                    <td>{{estudiante.id_persona.nombre}}</td>
-                    <td>{{estudiante.id_persona.apellido}}</td>
+                    <td>{{estudiante.id_persona.nombre | titlecase}}</td>
+                    <td>{{estudiante.id_persona.apellido | titlecase}}</td>
                     <td>{{estudiante.id_persona.cedula}}</td>
-                    <td>{{estudiante.id_persona.fechaNacimiento}}</td>
-                    <td>{{estudiante.id_persona.genero.genero}}</td>
+                    <td>{{estudiante.id_persona.fechaNacimiento | date: 'MMMM dd, yyyy'}}</td>
+                    <td>{{estudiante.id_persona.genero.genero | titlecase}}</td>
                 </tr>
             </ng-template>
         </p-table>
