@@ -43,7 +43,6 @@ export let item = {
                 }
             ]
         },
-<<<<<<< Updated upstream
         {
             label: 'Tutorias',
             icon: 'pi pi-fw pi-book',
@@ -57,9 +56,10 @@ export let item = {
                     label:'Consulta De Deudas',
                     icon:'fa fa-book',
                     routerLink:'tutorias/tutorias/deudasConsulta'
-=======
-        
-        {
+                }
+            ]
+        },
+         {
             label: 'Matriculas',
             icon: 'pi pi-fw pi-book',
             items: [
@@ -77,14 +77,11 @@ export let item = {
                     label:'Listar Estudiantes',
                     icon:'fa fa-book',
                     routerLink:'matriculaModule/eee'
->>>>>>> Stashed changes
                 }
             ]
         }
-
     ]
 }
-
 export let responsive = {
     responsiveOptions: [
         {

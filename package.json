@@ -30,7 +30,6 @@
     "primeicons": "^5.0.0",
     "primeng": "^13.3.2",
     "rxjs": "~7.5.0",
-    "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -47,6 +46,7 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "tslib": "^2.4.0",
     "typescript": "~4.6.2"
   }
 }

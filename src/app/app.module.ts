@@ -49,16 +49,13 @@ import { DeudasConsultaComponent } from './pages/tutorias/deudasConsulta/deudasC
     HeaderComponent,
     SidenavComponent,
     CategoriaComponent,
-<<<<<<< Updated upstream
     ArticuloComponent,
     PeriodoComponent,
     MallaComponent,
     AsignaturasComponent,
-    CursosComponent
-=======
+    CursosComponent,
     ArticuloComponent
 
->>>>>>> Stashed changes
   ],
   imports: [
     BrowserModule,
@@ -79,7 +76,6 @@ import { DeudasConsultaComponent } from './pages/tutorias/deudasConsulta/deudasC
     AsistenciaRoutingModule,
     DocumentacionAcademicosRoutingModule,
     InventariosRoutingModule,
-    MatriculasRoutingModule,
     PagosRoutingModule,
     RolesRoutingModule,
     SecretariaRoutingModule,
