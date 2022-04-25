@@ -29,18 +29,34 @@ export let item = {
         
         {
             label: 'Inventario',
-            icon: 'pi pi-fw pi-book',
+            icon: 'fa fa-book',
             items: [
                 {
-                    label: 'Categoria',
-                    icon: 'fa fa-plus-square',
-                    routerLink: 'inventario/categoria'
+                    label: 'Inventario Modulos',
+                    icon: 'pi pi-fw pi-book',
+                    routerLink:'inventariosModule/kit',
+                    items: [
+                        {
+                            label:'Mantenimiento Kits',
+                            icon:'fa fa-book',
+                            routerLink:'inventariosModule/kit'
+                        }
+                    ]
                 },
                 {
-                    label:'Articulo',
-                    icon:'fa fa-book',
-                    routerLink:'inventario/articulo'
-                }
+                    label: 'Inventario Articulos',
+                    icon: 'fa fa-book',
+                    routerLink:'inventariosModule/kit',
+                    items: [
+                        {
+                            label:'Mantenimiento articulos',
+                            icon:'fa fa-book',
+                            routerLink:'inventariosModule/articulo'
+                        },
+                       
+                    ]
+                },
+                
             ]
         },
         {

@@ -18,8 +18,9 @@ import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { CategoriaComponent } from './pages/modulo_inventario/categoria/categoria.component';
-import { ArticuloComponent } from './pages/modulo_inventario/articulo/articulo.component';
+import { CategoriaComponent } from './pages/inventarios/invnetarioarticulos/categoria/categoria.component';
+import { ArticuloComponent } from './pages/inventarios/invnetarioarticulos/articulo/articulo.component';
+import { KitComponent } from './pages/inventarios/inventariomodulos/kit/kit.component';
 import { ParametrizacionRoutingModule } from './Routing/parametrizacion/parametrizacion-routing.module';
 import { ErrorRoutingModule } from './Routing/error/error-routing.module';
 import { AsistenciaRoutingModule } from './Routing/asistencia/asistencia-routing.module';
@@ -40,6 +41,7 @@ import { DeudasConsultaComponent } from './pages/tutorias/deudasConsulta/deudasC
 // Cambio de idioma 
 import localeES  from '@angular/common/locales/es-EC';
 import {registerLocaleData} from '@angular/common';
+
 registerLocaleData(localeES);
 // ------------------------------------
 @NgModule({
@@ -54,6 +56,7 @@ registerLocaleData(localeES);
     SidenavComponent,
     CategoriaComponent,
     ArticuloComponent,
+    KitComponent,
     PeriodoComponent,
     MallaComponent,
     AsignaturasComponent,

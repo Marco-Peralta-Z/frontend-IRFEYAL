@@ -14,7 +14,9 @@ const routes: Routes = [
 
   {path:'tutorias',loadChildren:() => import('./Routing/tutorias/tutorias.module').then(m => m.TutoriasModule)},
   
-
+  {path:'inventariosModule',
+  loadChildren:() => import('./Routing/inventarios/inventarios.module').then(m => m.InventariosModule)},
+  
   {path:'matriculaModule', 
   loadChildren:() =>import('./Routing/matriculas/matriculas.module').then(m => m.MatriculasModule)},
   
