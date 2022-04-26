@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Aprobacion } from 'src/app/Model/Inventarios/Aprobacion';
 import { CategoriaService } from 'src/app/Servicio/modulo_invetario/categoria.service';
-import { Aprobacion } from 'src/app/Model/Inventarios/aprobaciones';
-import { AprobacionesService } from 'src/app/Servicio/modulo_invetario/endpoints';
+import { AprobacionesService } from 'src/app/Servicio/modulo_invetario/AprobacioneService';
 @Component({
   selector: 'app-kit',
   templateUrl: './kit.component.html',

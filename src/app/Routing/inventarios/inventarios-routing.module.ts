@@ -4,6 +4,7 @@ import { ArticuloComponent } from 'src/app/pages/inventarios/invnetarioarticulos
 
 import { KitComponent } from 'src/app/pages/inventarios/inventariomodulos/kit/kit.component';
 import { CategoriaComponent } from 'src/app/pages/inventarios/invnetarioarticulos/categoria/categoria.component';
+import { AprobacionesCmponent } from 'src/app/pages/inventarios/inventariomodulos/listar-aprobaciones/aprobacion.component';
 
 const routes: Routes = [
   //Aqui Rutas
@@ -12,6 +13,7 @@ const routes: Routes = [
     {path:'categoria',component:CategoriaComponent},
     {path:'articulo',component:ArticuloComponent},
     {path:'kit',component:KitComponent},
+    {path:'aprobaciones',component:AprobacionesCmponent},
 ]}];
 
 @NgModule({

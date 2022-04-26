@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Asignatura } from 'src/app/Model/Parametrizacion/Asignatura';
-import { Aprobacion } from 'src/app/Model/Inventarios/aprobaciones'; 
+import { Aprobacion } from 'src/app/Model/Inventarios/Aprobacion'; 
 import { Api } from 'src/app/config';
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,6 @@ export class AprobacionesService {
 
   url = 'http://localhost:9070';
 
-
-  
 
   //Extraer un listado de Asignatura metodo get
   getListAsignaturas() {

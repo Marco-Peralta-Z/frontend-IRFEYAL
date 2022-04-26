@@ -40,6 +40,11 @@ export let item = {
                             label:'Mantenimiento Kits',
                             icon:'fa fa-book',
                             routerLink:'inventariosModule/kit'
+                        },
+                        {
+                            label:'Aprobaciones',
+                            icon:'fa fa-book',
+                            routerLink:'inventariosModule/aprobaciones'
                         }
                     ]
                 },

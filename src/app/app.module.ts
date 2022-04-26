@@ -21,6 +21,7 @@ import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/commo
 import { CategoriaComponent } from './pages/inventarios/invnetarioarticulos/categoria/categoria.component';
 import { ArticuloComponent } from './pages/inventarios/invnetarioarticulos/articulo/articulo.component';
 import { KitComponent } from './pages/inventarios/inventariomodulos/kit/kit.component';
+import { AprobacionesCmponent } from './pages/inventarios/inventariomodulos/listar-aprobaciones/aprobacion.component';
 import { ParametrizacionRoutingModule } from './Routing/parametrizacion/parametrizacion-routing.module';
 import { ErrorRoutingModule } from './Routing/error/error-routing.module';
 import { AsistenciaRoutingModule } from './Routing/asistencia/asistencia-routing.module';
@@ -54,6 +55,7 @@ registerLocaleData(localeES);
     LoginComponent,
     HeaderComponent,
     SidenavComponent,
+    AprobacionesCmponent,
     CategoriaComponent,
     ArticuloComponent,
     KitComponent,

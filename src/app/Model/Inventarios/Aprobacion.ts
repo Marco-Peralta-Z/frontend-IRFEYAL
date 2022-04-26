@@ -8,5 +8,5 @@ export class Aprobacion {
     detalleControl: string='';
     fechaAprobacion: string='';
     fechaControl: string='';
-    empleado: empleado= new empleado;
+    id_empleado_admin: empleado= new empleado;
 }
