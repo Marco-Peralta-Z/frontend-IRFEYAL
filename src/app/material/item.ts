@@ -82,22 +82,40 @@ export let item = {
         },
          {
             label: 'Matriculas',
-            icon: 'pi pi-fw pi-book',
+            icon: 'pi pi-folder',
             items: [
                 {
-                    label: 'Listar Matriculas',
+                    label: 'Matricula',
                     icon: 'pi pi-list',
-                    routerLink: 'matriculaModule/listarMatriculas'
+                    items:[
+                        {
+                            label: 'crear',
+                            icon: 'pi pi-plus',
+                            routerLink: 'matriculaModule/listarMatriculas',
+                        },
+                        {
+                            label:'Listar',
+                            icon:'fa fa-book',
+                            routerLink: 'matriculaModule/listarMatriculas',
+                        } 
+                    ]
                 },
                 {
-                    label:'Listar Estudiantes',
-                    icon:'fa fa-book',
-                    routerLink:'matriculaModule/listarEstudiantes'
-                },
-                {
-                    label:'Listar Estudiantes',
-                    icon:'fa fa-book',
-                    routerLink:'matriculaModule/eee'
+                    label:'Estudiantes',
+                    icon:'pi pi-users',
+                    items:[
+                        {
+                            label: 'Registrar',
+                            icon: 'pi pi-plus',
+                            routerLink:'matriculaModule/agregarEstudiante'
+                        },
+                        {
+                            label:'Listar',
+                            icon:'fa fa-book',
+                            routerLink:'matriculaModule/listarEstudiantes'
+                        } 
+                    ]
+                   
                 }
             ]
         }

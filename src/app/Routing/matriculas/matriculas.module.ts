@@ -7,6 +7,7 @@ import { AgregarEstudianteComponent } from '../../pages/matricula/estudiante/agr
 import { ListarMatriculaComponent } from '../../pages/matricula/matricula/listar-matricula/listar-matricula.component';
 import { AgregarMatriculaComponent } from '../../pages/matricula/matricula/agregar-matricula/agregar-matricula.component';
 import { PrimeNgModule } from '../../prime-ng/prime-ng.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -20,6 +21,7 @@ import { PrimeNgModule } from '../../prime-ng/prime-ng.module';
   imports: [
     CommonModule,
     PrimeNgModule,
+    FormsModule,
     MatriculasRoutingModule
     
   ]

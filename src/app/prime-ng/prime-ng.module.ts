@@ -42,7 +42,8 @@ import {ToolbarModule} from 'primeng/toolbar';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import {StepsModule} from 'primeng/steps';
 import {ToggleButtonModule} from 'primeng/togglebutton';
-
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {TabViewModule} from 'primeng/tabview';
 
 @NgModule({
 
@@ -62,7 +63,7 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
     BlockUIModule, ScrollTopModule,ToggleButtonModule,
     FocusTrapModule,ToolbarModule,
     SidebarModule,StepsModule,
-    SplitButtonModule
+    SplitButtonModule, AutoCompleteModule,TabViewModule
   ]
 
 })
