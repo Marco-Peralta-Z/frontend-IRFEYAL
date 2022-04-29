@@ -37,6 +37,7 @@ import { TableModule } from 'primeng/table';
 import { FieldsetModule } from 'primeng/fieldset';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ProgressBarModule } from 'primeng/progressbar';
+<<<<<<< HEAD
 import { ToolbarModule } from 'primeng/toolbar';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { StepsModule } from 'primeng/steps';
@@ -57,6 +58,15 @@ import { AccordionModule } from 'primeng/accordion';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputMaskModule } from 'primeng/inputmask';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
+=======
+import {ToolbarModule} from 'primeng/toolbar';
+import {ScrollPanelModule} from 'primeng/scrollpanel';
+import {StepsModule} from 'primeng/steps';
+import {ToggleButtonModule} from 'primeng/togglebutton';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {TabViewModule} from 'primeng/tabview';
+
+>>>>>>> 33ea178d1a9887652ee410e7564eb99003c65213
 @NgModule({
 
   exports: [
@@ -73,6 +83,7 @@ import {ConfirmPopupModule} from 'primeng/confirmpopup';
     OverlayPanelModule, ListboxModule, SlideMenuModule,
     DividerModule, DataViewModule, SpeedDialModule,
     TooltipModule, TableModule, ProgressBarModule,
+<<<<<<< HEAD
     KeyFilterModule, FieldsetModule, ScrollPanelModule,
     BlockUIModule, ScrollTopModule, ToggleButtonModule,
     FocusTrapModule, ToolbarModule, TabViewModule,
@@ -80,6 +91,13 @@ import {ConfirmPopupModule} from 'primeng/confirmpopup';
     SplitButtonModule, StyleClassModule, PasswordModule,
     TabMenuModule,CheckboxModule, InputTextareaModule,
     ConfirmDialogModule,PickListModule,MatIconModule
+=======
+    KeyFilterModule, FieldsetModule,ScrollPanelModule,
+    BlockUIModule, ScrollTopModule,ToggleButtonModule,
+    FocusTrapModule,ToolbarModule,
+    SidebarModule,StepsModule,
+    SplitButtonModule, AutoCompleteModule,TabViewModule
+>>>>>>> 33ea178d1a9887652ee410e7564eb99003c65213
   ]
 
 })

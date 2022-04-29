@@ -1,0 +1,49 @@
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2">Consulta De Deudas</div>
+    <div class="page__content shadow p-3 position-relative" >
+        <div class="">
+            
+            <div class="container">
+                <div class="center">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4" style="margin-left: auto;margin-right: auto;">
+                            <div class="container-1">
+                                <input type="search" class=" form-control" name="" id="search" placeholder="Ingrese el numero de cedula a consultar"  >
+                                <button type="submit" class="btn btn-dark" style="margin-top: 15px; margin-bottom: 60px;margin-left: 115px;" (click)="llenarCuadro()">Buscar</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-10" style="margin-left: auto;margin-right: auto;">
+                                <table id="dtBasicExample" class="table table-striped table-bordered table dataTable" role="grid" style="width: 100%;" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="th-sm">Cédula</th>
+                                            <th class="th-sm">Nombre</th>
+                                            <th class="th-sm">Cantidad</th>
+                                            <th class="th-sm">Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{cedula}}</td>
+                                            <td>{{nombre}}</td>
+                                            <td>{{cantidad}}</td>
+                                            <td>{{estado}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><br><br><br><br><br>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4" style="margin-left: auto;margin-right: auto;">
+                                <button type="submit" class="btn btn-dark" (click)="vaciarCuadro()">Nueva Consulta</button>
+                                <button type="submit" class="btn btn-dark" style="margin-left: 35px;" (click)="regresarHome()">Regresar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
