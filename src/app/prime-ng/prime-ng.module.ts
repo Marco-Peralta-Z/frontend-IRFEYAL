@@ -21,7 +21,6 @@ import { ScrollTopModule } from 'primeng/scrolltop';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { TieredMenuModule } from 'primeng/tieredmenu';
-
 import { TreeModule } from 'primeng/tree';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
@@ -38,15 +37,31 @@ import { TableModule } from 'primeng/table';
 import { FieldsetModule } from 'primeng/fieldset';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ProgressBarModule } from 'primeng/progressbar';
-import {ToolbarModule} from 'primeng/toolbar';
-import {ScrollPanelModule} from 'primeng/scrollpanel';
-import {StepsModule} from 'primeng/steps';
-import {ToggleButtonModule} from 'primeng/togglebutton';
-
-
+import { ToolbarModule } from 'primeng/toolbar';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { StepsModule } from 'primeng/steps';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { SlideMenuModule } from 'primeng/slidemenu';
+import { TabViewModule } from 'primeng/tabview';
+import { StyleClassModule } from 'primeng/styleclass';
+import { SkeletonModule } from 'primeng/skeleton';
+import { PasswordModule } from 'primeng/password';
+import {TabMenuModule} from 'primeng/tabmenu';
+import { CheckboxModule } from 'primeng/checkbox';
+import { PickListModule } from 'primeng/picklist';
+import { MatIconModule } from '@angular/material/icon';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DragDropModule } from 'primeng/dragdrop';
+import { AccordionModule } from 'primeng/accordion';
+import { FileUploadModule } from 'primeng/fileupload';
+import { InputMaskModule } from 'primeng/inputmask';
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
 @NgModule({
 
   exports: [
+    InputMaskModule,ConfirmPopupModule,
+    DragDropModule,AccordionModule ,FileUploadModule ,
     SplitterModule, AvatarModule, AvatarGroupModule,
     PanelMenuModule, TreeModule, MessagesModule,
     DialogModule, ChipModule, MultiSelectModule,
@@ -55,14 +70,16 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
     InputTextModule, TriStateCheckboxModule,
     ButtonModule, CalendarModule, TimelineModule,
     ToastModule, DropdownModule, CardModule,
-    OverlayPanelModule, ListboxModule,
+    OverlayPanelModule, ListboxModule, SlideMenuModule,
     DividerModule, DataViewModule, SpeedDialModule,
     TooltipModule, TableModule, ProgressBarModule,
-    KeyFilterModule, FieldsetModule,ScrollPanelModule,
-    BlockUIModule, ScrollTopModule,ToggleButtonModule,
-    FocusTrapModule,ToolbarModule,
-    SidebarModule,StepsModule,
-    SplitButtonModule
+    KeyFilterModule, FieldsetModule, ScrollPanelModule,
+    BlockUIModule, ScrollTopModule, ToggleButtonModule,
+    FocusTrapModule, ToolbarModule, TabViewModule,
+    SidebarModule, StepsModule, SkeletonModule,
+    SplitButtonModule, StyleClassModule, PasswordModule,
+    TabMenuModule,CheckboxModule, InputTextareaModule,
+    ConfirmDialogModule,PickListModule,MatIconModule
   ]
 
 })

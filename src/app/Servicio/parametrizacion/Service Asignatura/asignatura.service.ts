@@ -9,21 +9,24 @@ import { Asignatura_Empleado } from 'src/app/Model/Parametrizacion/Asignatura_Em
 export class AsignaturaService {
 
   constructor(private http: HttpClient) { }
-  private url = Api.url + "asignatura/";
+  private url = Api.url + "asignatura";
 
   getAsignaturas() {
-    return this.http.get<Asignatura[]>(this.url + "views");
+    return this.http.get<Asignatura[]>(this.url);
   }
   createAsignatura(asignatura: Asignatura) {
-    return this.http.post<Asignatura>(this.url + "addAsig", asignatura);
+    return this.http.post<Asignatura>(this.url + "/addAsig", asignatura);
   }
 
   updateAsignatura(asignatura: Asignatura) {
-    return this.http.put<boolean>(this.url + "updateAsig/" + asignatura.id_asignatura, asignatura);
+    return this.http.put<boolean>(this.url + "/updateAsig/" + asignatura.id_asignatura, asignatura);
   }
 
-
   getAsignatura_empleado() {
-    return this.http.get<Asignatura_Empleado[]>(this.url + "asignatura_empleado")
+    return this.http.get<Asignatura_Empleado[]>(this.url + "/asignatura_empleado");
+  }
+
+  deleteAsig(asig: Asignatura) {
+    return this.http.delete<Asignatura>(this.url + "/deleteAsig/" + asig.id_asignatura);
   }
 }

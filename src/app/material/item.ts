@@ -17,16 +17,27 @@ export let item = {
                 {
                     label: 'Malla',
                     icon: 'fa fa-file-text',
-                    routerLink: 'parametrizacion/malla'
+                    routerLink: 'parametrizacion/malla',
+
                 },
                 {
                     label: 'Asignaturas',
                     icon: 'fa fa-book',
-                    routerLink: 'parametrizacion/asignatura'
+                    routerLink: 'parametrizacion/asignatura',
+
                 }
             ]
         },
-        
+        {
+            label: 'Roles y Usuario',
+            icon: 'fa fa-users',
+            items: [{
+                label: 'Usuario',
+                icon: 'fa fa-user',
+                routerLink: 'roles/usuarios'
+            }]
+        },
+
         {
             label: 'Inventario',
             icon: 'pi pi-fw pi-book',
@@ -37,9 +48,9 @@ export let item = {
                     routerLink: 'inventario/categoria'
                 },
                 {
-                    label:'Articulo',
-                    icon:'fa fa-book',
-                    routerLink:'inventario/articulo'
+                    label: 'Articulo',
+                    icon: 'fa fa-book',
+                    routerLink: 'inventario/articulo'
                 }
             ]
         }

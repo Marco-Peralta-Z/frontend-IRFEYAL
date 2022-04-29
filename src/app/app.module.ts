@@ -34,6 +34,7 @@ import { PeriodoComponent } from './pages/parametrizacion/periodo/periodo.compon
 import { MallaComponent } from './pages/parametrizacion/malla/malla.component';
 import { AsignaturasComponent } from './pages/parametrizacion/asignaturas/asignaturas.component';
 import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component';
+import { UsuarioComponent } from './pages/rol_usuario/usuario/usuario.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component
     PeriodoComponent,
     MallaComponent,
     AsignaturasComponent,
-    CursosComponent
+    CursosComponent,
+    UsuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,6 @@ import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component
     MatListModule,
     FormsModule,
     HttpClientModule,
-    ErrorRoutingModule,
     AsistenciaRoutingModule,
     DocumentacionAcademicosRoutingModule,
     InventariosRoutingModule,
@@ -73,7 +74,11 @@ import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component
     PagosRoutingModule,
     RolesRoutingModule,
     SecretariaRoutingModule,
-    TutoriasRoutingModule
+    TutoriasRoutingModule,
+
+    //Importar de encima de este Routin
+    ErrorRoutingModule
+    
   ],
   providers: [DatePipe, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

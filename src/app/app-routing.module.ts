@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'header', component: HeaderComponent },
   { path: 'sidenav', component: SidenavComponent },
   { path: 'login', pathMatch: 'full', component: LoginComponent }
+  
 ];
 
 @NgModule({

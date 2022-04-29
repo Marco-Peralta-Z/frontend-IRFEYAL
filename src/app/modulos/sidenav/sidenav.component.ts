@@ -11,14 +11,15 @@ import { item } from 'src/app/material/item';
 })
 export class SidenavComponent implements OnInit {
 
-    path=Path.url;
     constructor(private router: Router, private userServis: ServiceUsuarioService) { }
+    path = Path.url;
     items: MenuItem[] = [];
     authValidate: boolean = false;
+
     ngOnInit() {
         this.authValidate = Boolean(this.userServis.dato);
 
-       this.items=item.items;
+        this.items = item.items;
     }
 
 
