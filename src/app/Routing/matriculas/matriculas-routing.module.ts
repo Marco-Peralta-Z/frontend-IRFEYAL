@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgregarEstudianteComponent } from '../../pages/matricula/estudiante/agregar-estudiante/agregar-estudiante.component';
 import { ListarEstudianteComponent } from '../../pages/matricula/estudiante/listar-estudiante/listar-estudiante.component';
 import { ListarMatriculaComponent } from '../../pages/matricula/matricula/listar-matricula/listar-matricula.component';
+import { AgregarMatriculaComponent } from '../../pages/matricula/matricula/agregar-matricula/agregar-matricula.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path:'listarEstudiantes',
         component:ListarEstudianteComponent
+      },
+      {
+        path:'agregarMatricula',
+        component:AgregarMatriculaComponent
       },
       {
         path:'listarMatriculas',

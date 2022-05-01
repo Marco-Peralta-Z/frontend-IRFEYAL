@@ -4,8 +4,8 @@ export class usuario {
 
     contrasenia: string = "";
 
-    estUsuario: number = 0;
+    estUsuario: Boolean = new Boolean;
     
-    usuario: usuario = new usuario;
+    usuario: String=new String;
 
 }

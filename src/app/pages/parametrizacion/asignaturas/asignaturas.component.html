@@ -3,8 +3,98 @@
     <div class="page__content shadow p-3 ">
 
         <!--Inicio Contenido-->
+        <p-toast [style]="{marginTop: '80px'}"></p-toast>
+        <p-confirmPopup></p-confirmPopup>
+        <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
 
-        <div class="card">
+        <!--Panel para Asignaturas -->
+        <div class="card" *ngIf="ac1">
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="Nueva Asignatura" (click)="nuevaAsig()" icon="pi pi-plus"
+                        class="p-button-success mr-2"></button>
+
+                </ng-template>
+
+                <ng-template pTemplate="right">
+
+                </ng-template>
+            </p-toolbar>
+            <p-table #dt [value]="listasig" [rows]="5" [paginator]="true" responsiveLayout="scroll" dataKey="id"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Asignatura"
+                [showCurrentPageReport]="true" [globalFilterFields]="['descripcion']" [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">Lista de Asignaturas</h5>
+                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                            placeholder="Search..." />
+
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="descripcion">Asignatura <p-sortIcon field="descripcion"></p-sortIcon>
+                        </th>
+                        <th>Accion</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-a>
+                    <tr>
+                        <td>{{a.descripcion}}</td>
+                        <td> <button pButton pRipple icon="pi pi-pencil" (click)="updateAsig(a)"
+                                class="p-button-rounded p-button-success mr-2"></button>
+                            <button pButton pRipple icon="pi pi-trash" (click)=" deleteAsig(a,$event)"
+                                class="p-button-rounded p-button-warning"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        En total se encontro {{listasig ? listasig.length : 0 }} Asignaturas
+                    </div>
+                </ng-template>
+            </p-table>
+            <p-dialog [(visible)]="panelAsig" [style]="{width: '450px'}" header="Agregar Asignaturas" [modal]="true"
+                styleClass="p-fluid">
+                <ng-template pTemplate="content">
+                    <div class="field">
+                        <label for="name">Ingrese el Nombre de la nueva asignatura</label>
+                        <input type="text" pInputText id="name" [(ngModel)]="asig.descripcion" required autofocus />
+                        <small class="p-error" *ngIf="submitted && !asig.descripcion">Se requiere el nombre de la
+                            Asignatura</small>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple label="Cancel" (click)="cancelar()" icon="pi pi-times"
+                        class="p-button-text"></button>
+                    <button pButton pRipple label="Save" icon="pi pi-check" (click)="saveasignatura()"
+                        class="p-button-text"></button>
+                </ng-template>
+            </p-dialog>
+
+            <p-dialog [(visible)]="panelAsigUpdate" [style]="{width: '450px'}" header="Agregar Asignaturas"
+                [modal]="true" styleClass="p-fluid">
+                <ng-template pTemplate="content">
+                    <div class="field">
+                        <label for="name">Ingrese el Nombre de la nueva asignatura</label>
+                        <input type="text" pInputText id="name" [(ngModel)]="asig.descripcion" required autofocus />
+                        <small class="p-error" *ngIf="submitted && !asig.descripcion">Se requiere el nombre de la
+                            Asignatura</small>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple label="Cancel" (click)="cancelar()" icon="pi pi-times"
+                        class="p-button-text"></button>
+                    <button pButton pRipple label="Save" icon="pi pi-check" (click)="updateAsign()"
+                        class="p-button-text"></button>
+                </ng-template>
+            </p-dialog>
+        </div>
+
+
+
+        <!--Panel para Asignaturas y Docentes-->
+        <div class="card" *ngIf="ac2">
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"></button>
@@ -16,40 +106,84 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="asigemp" [rows]="10" [paginator]="true" responsiveLayout="scroll" dataKey="id"
-                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Mallas Curriculares"
-                [showCurrentPageReport]="true">
+            <p-table #dt [value]="listasig" dataKey="descripcion" responsiveLayout="scroll" [scrollable]="true"
+                scrollHeight="400px" [rows]="5" [paginator]="true" [globalFilterFields]="['descripcion']"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Asignaturas">
                 <ng-template pTemplate="caption">
                     <div class="flex align-items-center justify-content-between">
-                        <h5 class="m-0">Lista de Asignaturas</h5>
-
+                        <h5 class="m-0">Lista de Asignaturas y Docentes</h5>
+                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                            placeholder="Buscar..." />
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>Asignatura</th>
-                        <th>Cedula Docente</th>
+                        <th style="width: 3rem"></th>
+                        <th style="min-width:200px" pSortableColumn="descripcion">Asignatura <p-sortIcon
+                                field="descripcion"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-a let-expanded="expanded">
+                    <tr>
+                        <td>
+                            <button type="button" pButton pRipple [pRowToggler]="a"
+                                class="p-button-text p-button-rounded p-button-plain"
+                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                        <td style="min-width:200px; text-align: left;">{{a.descripcion}}</td>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-a>
+                    <tr>
+                        <td colspan="7">
+                            <div class="p-3">
+                                <p-table [value]="a.empleados" dataKey="persona.cedula">
+                                    <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="persona.cedula">Cedula Docente <p-sortIcon field="persona.cedula">
+                            </p-sortIcon>
+                        </th>
+
                         <th>Nombres del Docente</th>
                         <th>Correo del Docente</th>
                         <th>Extension del Docente</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-ap>
+                <ng-template pTemplate="body" let-docente>
                     <tr>
-                        <td>{{ap.id_asignatura.descripcion}}</td>
-                        <td>{{ap.id_empleado.persona.cedula}}</td>
-                        <td>{{ap.id_empleado.persona.apellido}} {{ap.id_empleado.persona.nombre}}</td>
-                        <td>{{ap.id_empleado.CorreoElectronico.correo}}</td>
-                        <td>{{ap.id_empleado.extension.nombre_extension}}</td>
+
+                        <td>{{docente.persona.cedula}}</td>
+                        <td>{{docente.persona.apellido}} {{docente.persona.nombre}}</td>
+                        <td>{{docente.correoElectronico.correo}}</td>
+                        <td>{{docente.extension.nombre_extension}}</td>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="summary">
-                    <div class="flex align-items-center justify-content-between">
-                        <!--En total se encontro {{malla ? malla.length : 0 }} Mallas Curriculares.-->
-                    </div>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="6">No sea encontrado ningun docente</td>
+                    </tr>
                 </ng-template>
             </p-table>
         </div>
-        <!--Fin Contenido-->
+        </td>
+        </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total se encontro {{listasig ? listasig.length : 0 }} Asignaturas
+            </div>
+        </ng-template>
+        </p-table>
     </div>
+    <!--Panel para Asignaturas y Mallas Curriculares-->
+    <div class="card" *ngIf="ac3">
+        hola3s
+    </div>
+
+
+
+    <!--Fin Contenido-->
+</div>
 </div>

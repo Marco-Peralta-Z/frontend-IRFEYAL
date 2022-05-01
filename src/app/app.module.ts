@@ -30,18 +30,19 @@ import { InventariosRoutingModule } from './Routing/inventarios/inventarios-rout
 import { MatriculasRoutingModule } from './Routing/matriculas/matriculas-routing.module';
 import { PagosRoutingModule } from './Routing/pagos/pagos-routing.module';
 import { RolesRoutingModule } from './Routing/roles/roles-routing.module';
-import { SecretariaRoutingModule } from './Routing/secretaria/secretaria-routing.module';
 import { TutoriasRoutingModule } from './Routing/tutorias/tutorias-routing.module';
 import { PeriodoComponent } from './pages/parametrizacion/periodo/periodo.component';
 import { MallaComponent } from './pages/parametrizacion/malla/malla.component';
 import { AsignaturasComponent } from './pages/parametrizacion/asignaturas/asignaturas.component';
 import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component';
+import { UsuarioComponent } from './pages/rol_usuario/usuario/usuario.component';
 import { DataTablesModule } from "angular-datatables";
 import { ActividadesRegistroComponent } from './pages/tutorias/actividadesRegistro/actividadesRegistro.component';
 import { DeudasConsultaComponent } from './pages/tutorias/deudasConsulta/deudasConsulta.component';
-// Cambio de idioma 
+
 import localeES  from '@angular/common/locales/es-EC';
 import {registerLocaleData} from '@angular/common';
+
 
 registerLocaleData(localeES);
 // ------------------------------------
@@ -63,8 +64,7 @@ registerLocaleData(localeES);
     MallaComponent,
     AsignaturasComponent,
     CursosComponent,
-    ArticuloComponent
-
+    UsuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -81,14 +81,16 @@ registerLocaleData(localeES);
     MatListModule,
     FormsModule,
     HttpClientModule,
-    ErrorRoutingModule,
     AsistenciaRoutingModule,
     DocumentacionAcademicosRoutingModule,
     InventariosRoutingModule,
     PagosRoutingModule,
     RolesRoutingModule,
-    SecretariaRoutingModule,
-    TutoriasRoutingModule
+    TutoriasRoutingModule,
+
+    //Importar de encima de este Routin
+    ErrorRoutingModule
+    
   ],
   providers: [DatePipe, { provide: LocationStrategy, useClass: HashLocationStrategy},
               {provide:LOCALE_ID,useValue: 'es-EC'}],

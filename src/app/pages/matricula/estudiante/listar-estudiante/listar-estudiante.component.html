@@ -9,6 +9,7 @@
                     <th>Cedula</th>
                     <th>Fecha Nacimiento</th>
                     <th>Genero</th>
+                    <th>Genero</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-estudiante>
@@ -18,6 +19,7 @@
                     <td>{{estudiante.id_persona.cedula}}</td>
                     <td>{{estudiante.id_persona.fechaNacimiento | date: 'MMMM dd, yyyy'}}</td>
                     <td>{{estudiante.id_persona.genero.genero | titlecase}}</td>
+                    <td>{{estudiante.telefono.num_celular}}</td>
                 </tr>
             </ng-template>
         </p-table>

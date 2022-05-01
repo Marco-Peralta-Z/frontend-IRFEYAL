@@ -4,7 +4,9 @@ export class telefono {
 
     id_telefono: number = 0;
 
-    num_celular: string = "";
+    numCelular: string = "";
+
+    telefono: string="";
     
     extension: extension = new extension;
 

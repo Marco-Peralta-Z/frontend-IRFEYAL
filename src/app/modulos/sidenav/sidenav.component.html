@@ -4,6 +4,8 @@
     </div>
     <mat-divider></mat-divider>
     <h2 matSubheader class="mt-2">Menu Administrativo</h2>
-  
+    <div class="container col-md-12" style="border-top-width: 3px;">
+    
+        <p-panelMenu [model]="items" [style]="{'width':'250px','border-top-width': '3px'}"></p-panelMenu>
+    </div>
 </mat-nav-list>
-<p-panelMenu [model]="items" [style]="{'width':'250px'}" ></p-panelMenu>

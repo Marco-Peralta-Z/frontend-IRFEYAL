@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { provincia } from '../../../../Model/rolesTS/provincia';
 import { EstudianteService } from '../../../../Servicio/moduloMatricula/estudianteServices/estudiante.service';
+import { Estudiante } from 'src/app/Model/Matriculas/estudiante';
+
+
 
 @Component({
   selector: 'app-agregar-estudiante',
@@ -9,9 +12,17 @@ import { EstudianteService } from '../../../../Servicio/moduloMatricula/estudian
 })
 export class AgregarEstudianteComponent implements OnInit {
   selectedProvincia:  provincia[]=[];
+  estudiante:Estudiante = new Estudiante() ;
   filteredProvincia: provincia[]=[];
+  errores: string[]=[];
   provincias: provincia[]=[];
   activeIndex1: number = 0;
+  cedula: string ="";
+  existe:boolean=true;
+  display: boolean=false;
+  nombre: string ="";
+  mens:string="";
+  campo:string="Cedula incompleta!";
   constructor(private estudianteService: EstudianteService) { }
 
   ngOnInit(): void {
@@ -38,5 +49,24 @@ export class AgregarEstudianteComponent implements OnInit {
 }
 mostrar(){
   console.log(this.selectedProvincia);
+}
+
+buscar(){
+  if (this.cedula !== "") {
+    this.estudianteService.getEstudiantePorCedula(this.cedula.trim())
+  .subscribe(estudiante => {
+    this.estudiante = estudiante
+    this.display=true
+    this.mens="Estudiante Encontrado"
+  },
+  err =>{
+    err.error.mensaje;
+    this.display=true
+    this.mens="Estudiante no Encontrado"
+  });
+  }else{
+    this.campo="No se permite campos vacios"
+  }
+  
 }
 }

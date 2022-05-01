@@ -1,6 +1,6 @@
 @import '../../../assets/scss/login.scss';
 
-:host {
+/*:host {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -16,7 +16,7 @@ mat-drawer-container {
     height: 100%;
     overflow: auto;
     overscroll-behavior-y: contain;
-}
+}*/
 
 mat-drawer {
     background: #233257;
