@@ -1,6 +1,134 @@
 <div class="container-fluid page">
     <div class="d-flex page__box p-3 mt-2">Crear Matricula</div>
     <div class="page__content shadow p-3 position-relative">
-                
+        <br>
+        <span class="p-float-label p-input-icon-right">
+            <input id="float-input" [(ngModel)]="cedula" type="text" pInputText maxlength="10" required>
+            <label for="float-input">Cedula</label>
+        </span>
+        <p-button (click)="buscar()" [disabled]="cedula.length<10" icon="pi pi-search" label="Buscar"></p-button>
+        <span class="form-text text-danger" *ngIf="cedula.length<10 && cedula !==''">
+            {{campo}}
+        </span>
+        <div class="card mt-2">
+            <p-tabView [(activeIndex)]="activeIndex1">
+                <p-tabPanel>
+                    <ng-template pTemplate="header">
+                        <i class="pi pi-credit-card"></i>
+                        <span> Datos Estudiante</span>
+                    </ng-template>
+                    <!-- mostrar la informacion del estudiante buscado -->
+                    <p-accordion [multiple]="true">
+                        <p-accordionTab header="Información Personal" [selected]="true">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="p-float-label mt-3">
+                                        <input id="float-input" type="text" [value]="estudiante.id_persona.cedula"
+                                            pInputText readonly>
+                                        <label for="float-input">Cedula:</label>
+                                    </span>
+
+                                    <span class="p-float-label mt-4">
+                                        <input id="float-input" type="text" [value]="fullName | titlecase" pInputText readonly>
+                                        <label for="float-input">Nombres/Apellidos</label>
+                                    </span>
+                                </div>
+                                <div class="col">
+                                    <span class="p-float-label mt-3">
+                                        <input id="float-input" type="text" 
+                                            [value]="estudiante.id_persona.fechaNacimiento | date" pInputText readonly>
+                                        <label for="float-input">Fecha de Nacimiento:</label>
+                                    </span>
+                                    <span class="p-float-label mt-4">
+                                        <input id="float-input" type="text"
+                                            [value]="estudiante.id_persona.genero.genero | titlecase" pInputText
+                                            readonly>
+                                        <label for="float-input">Genero</label>
+                                    </span>
+                                </div>
+                            </div>
+                        </p-accordionTab>
+                        <p-accordionTab header="Dirección De Domicilio">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="p-float-label mt-3">
+                                    <input id="float-input" type="text" [value]="estudiante.direccion.avPrincipal | titlecase" pInputText readonly>
+                                    <label for="float-input">Calle Principal</label>
+                                </span>
+    
+                                <span class="p-float-label mt-4">
+                                    <input id="float-input" type="text" [value]="estudiante.direccion.avSecundaria | titlecase" pInputText readonly>
+                                    <label for="float-input">Calle Secundaria</label>
+                                </span>
+
+                                </div>
+                                <div class="col">
+                                    <span class="p-float-label mt-3">
+                                    <input id="float-input" type="text" [value]="estudiante.direccion.provincia.provincia | titlecase" pInputText readonly>
+                                    <label for="float-input">Provincia</label>
+                                </span>
+                                <span class="p-float-label mt-4">
+                                    <input id="float-input" type="text" [value]="estudiante.direccion.canton.canton | titlecase" pInputText readonly>
+                                    <label for="float-input">Canton</label>
+                                </span>
+                                <span class="p-float-label mt-4">
+                                    <input id="float-input" type="text" [value]="estudiante.direccion.parroquia.parroquia | titlecase" pInputText readonly>
+                                    <label for="float-input">Parroquia</label>
+                                </span>        
+                                </div>                        
+                            </div>
+                        </p-accordionTab>
+                        <p-accordionTab header="Contactos">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="p-float-label mt-3">
+                                    <input id="float-input" type="text" [value]="estudiante.telefono.telefono" pInputText readonly>
+                                    <label for="float-input">Telefono:</label>
+                                </span>
+    
+                                <span class="p-float-label mt-4">
+                                    <input id="float-input" type="text" [value]="estudiante.telefono.numCelular" pInputText readonly>
+                                    <label for="float-input">Celular</label>
+                                </span>
+                                <span class="p-float-label mt-4">
+                                    <input id="float-input" type="text" [value]="estudiante.correo.correo" pInputText readonly>
+                                    <label for="float-input">Correo Electronico</label>
+                                </span>
+                                  
+                                </div>
+                            </div>
+                        </p-accordionTab>
+                    </p-accordion>
+                </p-tabPanel>
+                <p-tabPanel header="Header II">
+                    <ng-template pTemplate="header">
+                        <i class="pi pi-list"></i>
+                        <span> Requerimientos</span>
+                    </ng-template>
+                    <p></p>
+                </p-tabPanel>
+                <p-tabPanel header="Header III">
+                    <ng-template pTemplate="header">
+                        <i class="pi pi-cog"></i>
+                        <span> Matricula</span>
+                    </ng-template>
+                    <p></p>
+                </p-tabPanel>
+            </p-tabView>
+            <div style="padding: .5em 0 1em 0">
+                <p-button (click)="activeIndex1 = 0" styleClass="p-button-text" label="Activate 1rd"></p-button>
+                <p-button (click)="activeIndex1 = 1" styleClass="p-button-text" label="Activate 2rd"></p-button>
+                <p-button (click)="activeIndex1 = 2" styleClass="p-button-text" label="Activate 3rd"></p-button>
+            </div>
+        </div>
+
+        <!-- <p-dialog header="Busqueda Estudiante" [(visible)]="display" [style]="{width: '50vw'}">
+            <p>{{mens}}</p>
+
+            <ng-template pTemplate="footer">
+                <p-button icon="pi pi-check" (click)="display=false" label="Ok" styleClass="p-button-text">
+                </p-button>
+            </ng-template>
+        </p-dialog>  -->
     </div>
 </div>

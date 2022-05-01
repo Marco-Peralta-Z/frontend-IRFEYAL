@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Matricula } from '../../../../Model/Matriculas/matricula.interfaces';
+import { Matricula } from '../../../../Model/Matriculas/matricula';
 import { MatriculaService } from '../../../../Servicio/moduloMatricula/matriculaServices/matricula.service';
 
 @Component({

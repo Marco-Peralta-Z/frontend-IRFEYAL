@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Matricula } from '../../../Model/Matriculas/matricula.interfaces';
+import { Matricula } from '../../../Model/Matriculas/matricula';
 
 @Injectable({
   providedIn: 'root'
