@@ -1,0 +1,103 @@
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2">Asistencia</div>
+    <div class="page__content shadow p-3 ">
+
+        <!--Inicio Contenido-->
+        <div>
+            <p-dropdown  [options]="paralelos" placeholder="Select a Paralelo" optionLabel="descripcion" filterBy="descripcion" optionValue="id_paralelo" (onChange)="onparalelo($event.value)" [showClear]="true"></p-dropdown>
+            <p-dropdown  [options]="asignaturas" placeholder="Select a Asignatura" optionLabel="descripcion" filterBy="descripcion" optionValue="id_asignatura"  (onChange)="onSelect($event.value)" [showClear]="true"></p-dropdown>
+            <p-dropdown  [options]="periodos" placeholder="Select a Perido" optionLabel="actividades" filterBy="actividades" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  [showClear]="true"></p-dropdown>
+               <p-dropdown [options]="modalidades" placeholder="Select a Modalidad" optionLabel="descripcion" filterBy="descripcion" optionValue="id_modalidad"  (onChange)="onmodalidad($event.value)"  [showClear]="true"></p-dropdown>
+               <p-dropdown [options]="curso" placeholder="Select a  Curso" optionLabel="descripcion" filterBy="descripcion" optionValue="id_curso"   (onChange)="onCurso($event.value)" [showClear]="true"></p-dropdown>
+               <input pInputText type="text" [(ngModel)]="filterValue" (input)="dt1.filterGlobal(filterValue, 'contains')" placeholder="Search..." />
+          </div>
+    
+          <!--Inicio Contenido-->
+         
+           
+         
+          <p-button label="Actualizar" icon="pi pi-search" type="submit"(onClick)="actualizar()"></p-button>
+          <form    (ngSubmit)="submit()" >
+    
+            <p-button label="Registrar"  icon="pi pi-search" type="submit"></p-button>
+           
+            <div class="field col-12 md:col-4">
+                      
+              
+          </div>   
+            <p-table  #dt1 [value]="estudiantes"  [globalFilterFields]="['id_persona.cedula']" styleClass="p-datatable-striped" responsiveLayout="scroll">
+            
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>id</th>
+                  <th>nombre</th>
+                  <th>Apellidos</th>
+                  <th>
+                    <input type="date"  class=”form-date__input” name="fechas1" [(ngModel)]="fecha" >
+                  </th> 
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-product>
+                <tr>
+                  <td>{{ product.id_estudiante }}</td>
+                  <td>{{ product.id_persona.nombre}}</td>
+                  <td>{{ product.id_persona.apellido}}</td>
+                  <td>
+                    <p-checkbox value="product.id_estudiante" inputId="{{product.id_estudiante}}" (onChange)="onNgModelChange(checkElm.inputId,$event.checked)"  name="reviewed" inputId="product.idEstudiante"
+                    [binary]="true" #checkElm>
+                  </p-checkbox>
+                  <input type="hidden" class="estudiantelista" value="{{product.id_estudiante}}">
+    
+                  </td>
+             
+    
+                </tr>
+              </ng-template>
+            </p-table>
+           
+           </form>
+        <!--Fin Contenido-->
+
+
+        <p-dialog [(visible)]="actualizarDialog" [style]="{width: '450px'}" header="Actualizar Asistencia" [modal]="true" styleClass="p-fluid">
+          
+          <p-dropdown  [options]="paralelos" placeholder="Select a Paralelo" optionLabel="descripcion" filterBy="descripcion" optionValue="id_paralelo" (onChange)="onparaleloactualizar($event.value)" [showClear]="true"></p-dropdown>
+          <p-dropdown  [options]="asignaturas" placeholder="Select a Asignatura" optionLabel="descripcion" filterBy="descripcion" optionValue="id_asignatura"  (onChange)="asignaturaactualizar($event.value)" [showClear]="true"></p-dropdown>
+          <p-dropdown  [options]="periodos" placeholder="Select a Perido" optionLabel="actividades" filterBy="actividades" optionValue="id_periodo"  (onChange)="onperiodoactualizar($event.value)"  [showClear]="true"></p-dropdown>
+             <p-dropdown [options]="modalidades" placeholder="Select a Modalidad" optionLabel="descripcion" filterBy="descripcion" optionValue="id_modalidad"  (onChange)="onmodalidadactualizar($event.value)"  [showClear]="true"></p-dropdown>
+             <p-dropdown [options]="curso" placeholder="Select a  Curso" optionLabel="descripcion" filterBy="descripcion" optionValue="id_curso"   (onChange)="onCursoactualizar($event.value)" [showClear]="true"></p-dropdown>
+             <input pInputText type="text" [(ngModel)]="filterValue" (input)="dt1.filterGlobal(filterValue, 'contains')" placeholder="Search..." />
+             <p-button label="Filtrar"  icon="pi pi-search"(onClick)="buscaractualizar()"></p-button>
+             <p-button label="Registrar"  icon="pi pi-search" type="submit"></p-button>
+             <p-table  #dt1 [value]="asistenciaactualizar"  [globalFilterFields]="['id_persona.cedula']" styleClass="p-datatable-striped" responsiveLayout="scroll">
+            
+            <ng-template pTemplate="header">
+              <tr>
+                <th>id</th>
+                <th>nombre</th>
+                <th>Apellidos</th>
+                <th>
+                  <input type="date"  class=”form-date__input” name="fechas1" [(ngModel)]="fecha" >
+                </th> 
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+              <tr>
+                <td>{{ product.idAsistencia }}</td>
+                <td>{{ product.idEstudiante.id_persona.nombre}}</td>
+                <td>{{ product.idEstudiante.id_persona.apellido}}</td>
+                <td>
+                  <p-checkbox value="product.id_estudiante"  checked="product.estadoAsis"  inputId="{{product.idEstudiante}}" (onChange)="onNgModelChange(checkElm.inputId,$event.checked)"  name="reviewed" inputId="product.idEstudiante"
+                  [binary]="true" #checkElm >
+                </p-checkbox>
+                <input type="hidden" class="estudiantelista" value="{{product.idEstudiante}}">
+  
+                </td>
+           
+  
+              </tr>
+            </ng-template>
+          </p-table>
+      </p-dialog>
+    </div>
+</div>

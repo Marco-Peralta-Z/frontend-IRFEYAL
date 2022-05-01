@@ -19,7 +19,9 @@ const routes: Routes = [
   
   {path:'matriculaModule', 
   loadChildren:() =>import('./Routing/matriculas/matriculas.module').then(m => m.MatriculasModule)},
-  
+
+  {path:'asistencia',loadChildren:()=>import('./Routing/asistencia/asistencia.module').then(m => m.AsistenciaModule)},
+ 
   { path: 'login', pathMatch: 'full', component: LoginComponent }
   
 ];

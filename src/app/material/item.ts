@@ -127,6 +127,23 @@ export let item = {
                         }
                     ]
                 }
+             
+            ]
+        },
+        {
+            label: 'Asistencia',
+            icon: 'pi pi-folder',
+            items: [
+                {
+                    label: 'Listar',
+                    icon: 'fa fa-plus-square',
+                    routerLink: 'asistencia/listarAsistencia'
+                },
+                {
+                    label:'Registrar',
+                    icon:'fa fa-book',
+                    routerLink:'asistencia/agregarAsistencia'
+                }
             ]
         }
     ]
