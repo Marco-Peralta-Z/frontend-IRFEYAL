@@ -40,7 +40,7 @@ import { UsuarioComponent } from './pages/rol_usuario/usuario/usuario.component'
 import { DataTablesModule } from "angular-datatables";
 import { ActividadesRegistroComponent } from './pages/tutorias/actividadesRegistro/actividadesRegistro.component';
 import { DeudasConsultaComponent } from './pages/tutorias/deudasConsulta/deudasConsulta.component';
-
+import { ReactiveFormsModule} from '@angular/forms';
 import localeES  from '@angular/common/locales/es-EC';
 import {registerLocaleData} from '@angular/common';
 import { ListarasistenciaComponent } from './pages/modulo_asistencia/listarasistencia/listarasistencia.component';
@@ -96,6 +96,7 @@ registerLocaleData(localeES);
     PagosRoutingModule,
     RolesRoutingModule,
     TutoriasRoutingModule,
+    ReactiveFormsModule,
 
     //Importar de encima de este Routin
     ErrorRoutingModule
