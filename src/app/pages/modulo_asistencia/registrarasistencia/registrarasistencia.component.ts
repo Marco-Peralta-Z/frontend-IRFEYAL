@@ -8,6 +8,7 @@ import { AsistenciaService } from 'src/app/Servicio/asistencia/asistencia.servic
 import swal from 'sweetalert2'; 
 import { empty } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-registrarasistencia',
   templateUrl: './registrarasistencia.component.html',
@@ -23,6 +24,7 @@ export class RegistrarasistenciaComponent implements OnInit {
   asignaturas: any[] = [];
   paralelos: any[] = [];
   curso:any[]=[];
+  showDiv:boolean=false;
   idModalidad: number = 0;
   idAsignatura: number = 0;
   IdPeriodo: number =0;
@@ -45,7 +47,7 @@ export class RegistrarasistenciaComponent implements OnInit {
   idasistencia : number=0;
   Asistencia: Asistencia=new Asistencia();
   valiadarfecha:number=0;
-  constructor(private appService:AsistenciaService) { }
+  constructor(private appService:AsistenciaService,private router:Router) { }
 
   ngOnInit(): void {
     this.appService.getAllAsignatura().subscribe((data:any)=>this.asignaturas=data);
@@ -61,32 +63,36 @@ export class RegistrarasistenciaComponent implements OnInit {
     this.idAsignatura= id;
     this.validarfiltros();
     console.log(this.idAsignatura);
-      this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
-    }
+    this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
+   this.habilitarfecha();
+  }
     onmodalidad(id: any){
       this.idModalidad= id;
       this.validarfiltros();
       console.log(this.fechacontrol.value);
-        this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
-      }
+      this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
+      this.habilitarfecha();
+    }
       onperiodo(id: any){
       this.IdPeriodo= id;
       this.validarfiltros();
       console.log(this.IdPeriodo);
       this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
-      }
+      this.habilitarfecha();
+    }
       onparalelo(id: any){
       this.IdParalelo= id;
       this.validarfiltros();
       console.log(this.IdParalelo);
         this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
+        this.habilitarfecha();
       }
       onCurso(id: any){
         this.IdCurso= id;
         this.validarfiltros();
         console.log(this.IdCurso);
         this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
-
+        this.habilitarfecha();
         }
   
 
@@ -143,6 +149,9 @@ export class RegistrarasistenciaComponent implements OnInit {
    // this.estudiantesfaltando(faltando);
 
    this.valiadarfecha=0;
+
+
+   this.router.navigate(['asistencia/listarAsistencia']);
     }
       }
 
@@ -260,17 +269,22 @@ export class RegistrarasistenciaComponent implements OnInit {
       validarfiltros(){
         if(this.idAsignatura==null){
           this.idAsignatura=0;
+          this.showDiv=false;
        }
        if(this.IdParalelo==null){
+        this.showDiv=false;
         this.IdParalelo=0;
        }
        if(this.IdPeriodo==null){
+        this.showDiv=false;
            this.IdPeriodo=0;
        }
        if(this.idModalidad==null){
+        this.showDiv=false;
         this.idModalidad=0;
        }
        if(this.IdCurso==null){
+        this.showDiv=false;
         this.IdCurso=0;
        }
 
@@ -322,7 +336,13 @@ export class RegistrarasistenciaComponent implements OnInit {
             validarfecha(){  
               this.valiadarfecha=1;
               this.ingresoclase();
-             
+            
+            }
+
+            habilitarfecha(){
+              if(this.idAsignatura>0 && this.idModalidad>0 && this.IdPeriodo>0 && this.IdParalelo>0 && this.IdCurso>0){
+ this.showDiv=true;
+              }
             }
 
            

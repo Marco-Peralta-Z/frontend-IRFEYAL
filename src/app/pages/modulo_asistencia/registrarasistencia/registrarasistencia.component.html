@@ -33,7 +33,9 @@
                   <th>nombre</th>
                   <th>Apellidos</th>
                   <th>
+                    <div *ngIf='showDiv'>
                     <input type="date" [(ngModel)]="fecha"  (change)="validarfecha()" class="form-control" name="fechas1" [formControl]="fechacontrol">
+                    </div>
                   </th> 
                 </tr>
               </ng-template>
@@ -92,7 +94,7 @@
                 <td>{{ product.idEstudiante.id_persona.apellido}}</td>
                 <td>
 
-                <input type="checkbox" [checked]="product.estadoAsis"  [value]="product.idAsistencia" (change)="cambiofalta($event.target.value,$event.target.checked )" >
+                <input type="checkbox"  [checked]="product.estadoAsis"  [value]="product.idAsistencia" (change)="cambiofalta($event.target.value,$event.target.checked )" >
                 <input type="hidden" class="estudiantelista" value="{{product.idEstudiante}}">
   
                 </td>
