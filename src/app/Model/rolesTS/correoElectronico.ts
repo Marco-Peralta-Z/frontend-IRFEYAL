@@ -3,10 +3,10 @@ import { extension } from "./extension";
 export class correoElectronico {
 
 
-    id_correo: number = 0;
+    id_correo?: number;
 
     correo: string = "";
 
-    extension: extension = new extension;
+    extension?: extension ;
 
 }

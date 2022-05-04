@@ -3,11 +3,11 @@ import { empresa } from "./empresa";
 
 export class extension {
 
-    id_extension: number = 0;
+    id_extension?: number;
 
     nombre_extension: string = "";
 
-    direccion: direccion = new direccion;
+    direccion?: direccion;
 
-    empresa: empresa = new empresa;
+    empresa?: empresa;
 }

@@ -48,6 +48,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { PasswordModule } from 'primeng/password';
 import {TabMenuModule} from 'primeng/tabmenu';
 import { CheckboxModule } from 'primeng/checkbox';
+import {RadioButtonModule} from 'primeng/radiobutton';
 import { PickListModule } from 'primeng/picklist';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -80,7 +81,7 @@ import {ConfirmPopupModule} from 'primeng/confirmpopup';
     SidebarModule, StepsModule, SkeletonModule,
     SplitButtonModule, StyleClassModule, PasswordModule,
     TabMenuModule,CheckboxModule, InputTextareaModule,
-    ConfirmDialogModule,PickListModule,MatIconModule
+    ConfirmDialogModule,PickListModule,MatIconModule,RadioButtonModule
   ]
 
 })

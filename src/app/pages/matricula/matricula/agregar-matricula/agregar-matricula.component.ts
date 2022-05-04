@@ -19,6 +19,9 @@ export class AgregarMatriculaComponent implements OnInit {
   cedula: string ="";
   fullName:string ="";
   existe:boolean=true;
+  checked: boolean = false;
+  selectedCities: string[] = [];
+  modalidad: string ="";
   display: boolean=false;
   nombre: string ="";
   mens:string="";

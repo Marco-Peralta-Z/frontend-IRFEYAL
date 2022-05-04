@@ -29,13 +29,14 @@
                                     </span>
 
                                     <span class="p-float-label mt-4">
-                                        <input id="float-input" type="text" [value]="fullName | titlecase" pInputText readonly>
+                                        <input id="float-input" type="text" [value]="fullName | titlecase" pInputText
+                                            readonly>
                                         <label for="float-input">Nombres/Apellidos</label>
                                     </span>
                                 </div>
                                 <div class="col">
                                     <span class="p-float-label mt-3">
-                                        <input id="float-input" type="text" 
+                                        <input id="float-input" type="text"
                                             [value]="estudiante.id_persona.fechaNacimiento | date" pInputText readonly>
                                         <label for="float-input">Fecha de Nacimiento:</label>
                                     </span>
@@ -52,49 +53,60 @@
                             <div class="row">
                                 <div class="col">
                                     <span class="p-float-label mt-3">
-                                    <input id="float-input" type="text" [value]="estudiante.direccion.avPrincipal | titlecase" pInputText readonly>
-                                    <label for="float-input">Calle Principal</label>
-                                </span>
-    
-                                <span class="p-float-label mt-4">
-                                    <input id="float-input" type="text" [value]="estudiante.direccion.avSecundaria | titlecase" pInputText readonly>
-                                    <label for="float-input">Calle Secundaria</label>
-                                </span>
+                                        <input id="float-input" type="text"
+                                            [value]="estudiante.direccion.avPrincipal | titlecase" pInputText readonly>
+                                        <label for="float-input">Calle Principal</label>
+                                    </span>
+
+                                    <span class="p-float-label mt-4">
+                                        <input id="float-input" type="text"
+                                            [value]="estudiante.direccion.avSecundaria | titlecase" pInputText readonly>
+                                        <label for="float-input">Calle Secundaria</label>
+                                    </span>
 
                                 </div>
                                 <div class="col">
                                     <span class="p-float-label mt-3">
-                                    <input id="float-input" type="text" [value]="estudiante.direccion.provincia.provincia | titlecase" pInputText readonly>
-                                    <label for="float-input">Provincia</label>
-                                </span>
-                                <span class="p-float-label mt-4">
-                                    <input id="float-input" type="text" [value]="estudiante.direccion.canton.canton | titlecase" pInputText readonly>
-                                    <label for="float-input">Canton</label>
-                                </span>
-                                <span class="p-float-label mt-4">
-                                    <input id="float-input" type="text" [value]="estudiante.direccion.parroquia.parroquia | titlecase" pInputText readonly>
-                                    <label for="float-input">Parroquia</label>
-                                </span>        
-                                </div>                        
+                                        <input id="float-input" type="text"
+                                            [value]="estudiante.direccion.provincia.provincia | titlecase" pInputText
+                                            readonly>
+                                        <label for="float-input">Provincia</label>
+                                    </span>
+                                    <span class="p-float-label mt-4">
+                                        <input id="float-input" type="text"
+                                            [value]="estudiante.direccion.canton.canton | titlecase" pInputText
+                                            readonly>
+                                        <label for="float-input">Canton</label>
+                                    </span>
+                                    <span class="p-float-label mt-4">
+                                        <input id="float-input" type="text"
+                                            [value]="estudiante.direccion.parroquia.parroquia | titlecase" pInputText
+                                            readonly>
+                                        <label for="float-input">Parroquia</label>
+                                    </span>
+                                </div>
                             </div>
                         </p-accordionTab>
                         <p-accordionTab header="Contactos">
                             <div class="row">
                                 <div class="col">
                                     <span class="p-float-label mt-3">
-                                    <input id="float-input" type="text" [value]="estudiante.telefono.telefono" pInputText readonly>
-                                    <label for="float-input">Telefono:</label>
-                                </span>
-    
-                                <span class="p-float-label mt-4">
-                                    <input id="float-input" type="text" [value]="estudiante.telefono.numCelular" pInputText readonly>
-                                    <label for="float-input">Celular</label>
-                                </span>
-                                <span class="p-float-label mt-4">
-                                    <input id="float-input" type="text" [value]="estudiante.correo.correo" pInputText readonly>
-                                    <label for="float-input">Correo Electronico</label>
-                                </span>
-                                  
+                                        <input id="float-input" type="text" [value]="estudiante.telefono.telefono"
+                                            pInputText readonly>
+                                        <label for="float-input">Telefono:</label>
+                                    </span>
+
+                                    <span class="p-float-label mt-4">
+                                        <input id="float-input" type="text" [value]="estudiante.telefono.numCelular"
+                                            pInputText readonly>
+                                        <label for="float-input">Celular</label>
+                                    </span>
+                                    <span class="p-float-label mt-4">
+                                        <input id="float-input" type="text" [value]="estudiante.correo.correo"
+                                            pInputText readonly>
+                                        <label for="float-input">Correo Electronico</label>
+                                    </span>
+
                                 </div>
                             </div>
                         </p-accordionTab>
@@ -103,22 +115,59 @@
                 <p-tabPanel header="Header II">
                     <ng-template pTemplate="header">
                         <i class="pi pi-list"></i>
-                        <span> Requerimientos</span>
+                        <!-- marcado de requisitos necesarios para matricular -->
+                        <span> Requisitos</span>
                     </ng-template>
-                    <p></p>
+                    <h5>Documentos Receptados:</h5>
+                    <div class="field-checkbox">
+                        <p-checkbox name="group1" value="Ficha de Inscripcion" [(ngModel)]="selectedCities"
+                            inputId="ny">
+                        </p-checkbox>
+                        <label for="ny">Ficha de Inscripcion</label>
+                    </div>
+                    <div class="field-checkbox">
+                        <p-checkbox name="group1" value="Copia de Cédula" [(ngModel)]="selectedCities" inputId="sf">
+                        </p-checkbox>
+                        <label for="sf">Copia de Cédula</label>
+                    </div>
+                    <div class="field-checkbox">
+                        <p-checkbox name="group1" value="Copia certificado de votación" [(ngModel)]="selectedCities"
+                            inputId="la">
+                        </p-checkbox>
+                        <label for="la">Copia certificado de votación</label>
+                    </div>
+                    <div class="field-checkbox">
+                        <p-checkbox name="group1" value="Certificado de matricula" [(ngModel)]="selectedCities"
+                            inputId="ch">
+                        </p-checkbox>
+                        <label for="ch">Certificado de matricula</label>
+                    </div>
+
                 </p-tabPanel>
                 <p-tabPanel header="Header III">
                     <ng-template pTemplate="header">
                         <i class="pi pi-cog"></i>
                         <span> Matricula</span>
                     </ng-template>
-                    <p></p>
+                    <h5>Basic</h5>
+                    <div class="field-radiobutton">
+                        <p-radioButton name="city" value="Chicago" [(ngModel)]="modalidad" inputId="city1"></p-radioButton>
+                        <label for="city1">Chicago</label>
+                    </div>
+                    <div class="field-radiobutton">
+                        <p-radioButton name="city" value="Los Angeles" [(ngModel)]="modalidad" inputId="city2">
+                        </p-radioButton>
+                        <label for="city2">Los Angeles</label>
+                    </div>
                 </p-tabPanel>
             </p-tabView>
             <div style="padding: .5em 0 1em 0">
-                <p-button (click)="activeIndex1 = 0" styleClass="p-button-text" label="Activate 1rd"></p-button>
-                <p-button (click)="activeIndex1 = 1" styleClass="p-button-text" label="Activate 2rd"></p-button>
-                <p-button (click)="activeIndex1 = 2" styleClass="p-button-text" label="Activate 3rd"></p-button>
+                <p-button [disabled]="activeIndex1 == 0" (click)="activeIndex1 = 0"
+                    styleClass="p-button-rounded p-button-secondary ml-2 mr-2 " label="Datos Estudiante"></p-button>
+                <p-button [disabled]="activeIndex1 == 1" (click)="activeIndex1 = 1"
+                    styleClass="p-button-rounded p-button-secondary mr-2" label="Requisitos"></p-button>
+                <p-button [disabled]="activeIndex1 == 2" (click)="activeIndex1 = 2"
+                    styleClass="p-button-rounded p-button-secondary" label="Matricula"></p-button>
             </div>
         </div>
 
