@@ -1,0 +1,288 @@
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2"> Generar Plan de Unidad</div>
+    <div class="page__content shadow p-3 ">
+        <!--Inicio Contenido-->
+        <div class="container-fluid"><br>
+            <div class="row">
+                <div class="col-sm-4" style="text-align:center;">
+                    <button pButton type="button" label="Generar Plan de Unidad" icon="pi pi-plus" class="p-button-text"
+                        (click)="verFormGenerar()"></button>
+                </div>
+                <div class="col-sm-4" style="text-align:center;">
+                    <button pButton type="button" label="Rechazados" icon="pi pi-times"
+                        class="p-button-text p-button-danger" (click)="verTablaRechazados()"></button>
+                </div>
+                <div class="col-sm-4" style="text-align:center;">
+                    <button pButton type="button" label="Aprobados" icon="pi pi-check"
+                        class="p-button-text p-button-success" (click)="verTablaAprobados()"></button>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <form *ngIf="mostrarFormGenerar" [formGroup]="generar_planunidadForm" (ngSubmit)="enviar()">
+            <div class=container-fluid>
+                <strong>
+                    <h1>GENERAR PLAN DE UNIDAD</h1>
+                </strong>
+            </div>
+            <div class="container-fluid border border-dark bg-light">
+                <div class="container-fluid">
+                    <!-- Implementacion del Grid para el diseño del formulario -->
+                    <!-- Implementacion del Enacabezado-->
+                    <div class="row">
+                        <div class="col">
+                        </div>
+                        <div class="col-sm-4">
+                            <label style="text-align:center; font-size:25px; font-weight:bold;">
+                                PLAN DE UNIDAD N°</label>
+                            <label style="text-align:center; font-size:25px; font-weight:bold; margin-left: 10px;"
+                                [hidden]="opcionSelectUnidad == '0'">
+                                {{verSelectUnidad}}</label>
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
+                    <!-- Implementacion del Cuerpo-->
+                    <div class="row">
+                        <!-- Implementacion Parte 1 Seleccion -->
+                        <div class="col-sm-2">
+                            <h3>Elegir Unidad:</h3>
+                            <select name="unidad" id="unidad" class="form-select" formControlName="unidad"
+                                [(ngModel)]="opcionSelectUnidad" (change)="capturarSelectUnidad()">
+                                <option value="0"> </option>
+                                <option [ngValue]="item" *ngFor="let item of unidades">
+                                    {{item.nombre_unidad}}</option>
+                            </select>
+                            <br>
+                            <h3>Elegir Modalidad:</h3>
+                            <select name="modalidad" id="modalidad" class="form-select" formControlName="modalidad"
+                                [(ngModel)]="opcionSelectModalidad" (change)="capturarSelectModalidad()">
+                                <option value="0">
+                                </option>
+                                <option [ngValue]="item" *ngFor="let item of modalidades">{{item.descripcion}}</option>
+                            </select>
+                            <br>
+                            <h3>Elegir Periodo:</h3>
+                            <select name="periodo" id="periodo" class="form-select" formControlName="periodo"
+                                [(ngModel)]="opcionSelectPeriodo" (change)="capturarSelectPeriodo()">
+                                <option value="0"> </option>
+                                <option [ngValue]="item" *ngFor="let item of periodos">Inicio {{item.fecha_inicio}}
+                                </option>
+                            </select>
+                            <br>
+                            <h3>Curso:</h3>
+                            <select name="curso" id="curso" class="form-select" formControlName="curso"
+                                [(ngModel)]="opcionSelectCurso" (change)="capturarSelectCurso()">
+                                <option value="0"> </option>
+                                <option [ngValue]="item" *ngFor="let item of cursos">{{item.descripcion}}
+                                </option>
+                            </select>
+                            <br>
+                            <h3>Paralelo:</h3>
+                            <select name="paralelo" id="paralelo" class="form-select" formControlName="paralelo"
+                                [(ngModel)]="opcionSelectParalelo" (change)="capturarSelectParalelo()">
+                                <option value="0"> </option>
+                                <option [ngValue]="item" *ngFor="let item of paralelos">{{item.descripcion}}
+                                </option>
+                            </select>
+                            <br>
+                            <h3>Elegir Asignatura:</h3>
+                            <select name="asignatura" id="asignatura" class="form-select" formControlName="asignatura"
+                                [(ngModel)]="opcionSelectAsig" (change)="capturarSelectAsig()">
+                                <option value="0"> </option>
+                                <option [ngValue]="item" *ngFor="let item of asignaturas">{{item.descripcion}}</option>
+                            </select>
+                        </div>
+                        <!-- Implementacion Parte 2 Todos los demas campos-->
+                        <div class="col-sm-9 container">
+                            <!-- Dentro de Parte 2, Etiquetas para mostrar algunos datos-->
+                            <div class="row">
+                                <div class="col-sm-6"><br>
+                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                        Docente:</label>
+                                    <!--<label style="font-size:18px; margin-left: 10px;">
+                                        {{variableDocente}}</label>--><br>
+                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                        Modalidad:</label>
+                                    <label style="font-size:18px; margin-left: 10px;"
+                                        [hidden]="opcionSelectModalidad == '0'">
+                                        {{verSelectModalidad}}</label><br>
+                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                        Curso:</label>
+                                    <label style="font-size:18px; margin-left: 10px;"
+                                        [hidden]="opcionSelectCurso == '0'">
+                                        {{verSelectCurso}}</label><br>
+                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                        Asignatura:</label>
+                                    <label style="font-size:18px; margin-left: 10px;"
+                                        [hidden]="opcionSelectAsig == '0'">
+                                        {{verSelectAsigNom}}</label><br>
+                                </div>
+                                <div class="col-sm-6"><br><br>
+                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                        Malla:</label>
+                                    <label style="font-size:18px; margin-left: 10px;"
+                                        [hidden]="opcionSelectPeriodo == '0'">
+                                        {{verSelectPeriodoMalla}}</label><br>
+                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                        Paralelo:</label>
+                                    <label style="font-size:18px; margin-left: 10px;"
+                                        [hidden]="opcionSelectParalelo == '0'">
+                                        {{verSelectParalelo}}</label><br>
+                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                        Codigo de Asignatura:</label>
+                                    <label style="font-size:18px; margin-left: 10px;"
+                                        [hidden]="opcionSelectAsig == '0'">
+                                        {{verSelectAsigId}}</label><br>
+                                </div>
+                            </div>
+                            <br>
+                            <!-- Dentro de Parte 2, 3 columnas para datos principales-->
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h2>Fecha de inicio:</h2>
+                                    <input type="date" class="form-control" name="date" formControlName="fecha_inicio">
+                                </div>
+                                <div class="col-sm-4">
+                                    <h2>Fecha de fin:</h2>
+                                    <input type="date" class="form-control" name="date" formControlName="fecha_fin">
+                                </div>
+                                <div class="col-sm-4">
+                                </div>
+                            </div>
+                            <br>
+                            <!-- Dentro de Parte 2, 2 columanas (titulo y objetivos)-->
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <h2>Titulo de Unidad</h2>
+                                        <textarea class="form-control" formControlName="titulo_unidad"
+                                            rows="2"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <h2>Objetivos especificos de la unidad</h2>
+                                        <textarea class="form-control" formControlName="objetivos" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <!-- Dentro de Parte 2, 2 columanas (contenidos y criterio)-->
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <h2>Contenidos de la unidad</h2>
+                                        <textarea class="form-control" formControlName="contenidos" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <h2>Criterios de evaluacion</h2>
+                                        <textarea class="form-control" formControlName="criterios_evaluacion"
+                                            rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <!-- Dentro de Parte 2, 1 columana (Destrezas)-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <h2>Destrezas con criterio de desempeño</h2>
+                                        <textarea class="form-control" formControlName="destrezas" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div align="center">
+                        <button *ngIf="mostrarBotonEnviar" type="submit" class="btn btn-success btn-lg">Enviar</button>
+                        <button *ngIf="mostrarBotonGuardarCambios" type="button" class="btn btn-secondary"
+                            (click)="cancelaredit()">Cancelar</button>
+                        <button *ngIf="mostrarBotonGuardarCambios" type="button" class="btn btn-primary"
+                            (click)="guardaredit()">Guardar Cambios</button>
+                    </div><br>
+                    <label *ngIf="mostrarAlertaSuccess" type="success" align="center">
+                        Plan de unidad Enviado con exito!
+                    </label>
+                    <label *ngIf="mostrarAlertaDanger" type="danger" align="center">
+                        Error. Plan de unidad no enviado!
+                        Llene todos los campos.
+                    </label>
+                </div>
+                <br>
+            </div>
+            <br>
+        </form>
+        <!--Implementacion de la tabla de planes de unidad aprobados-->
+        <div *ngIf="mostrarAprobados" class="container-fluid px-4">
+            <h1>PLANES DE UNIDAD APROBADOS</h1>
+            <div class="container mt-3 border border-dark bg-light">
+                <table class="table table-bordered table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Asignatura</th>
+                            <th>Titulo</th>
+                            <th>Fecha_Inicio</th>
+                            <th>Fecha_Finaliza</th>
+                            <th>Unidad</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of planunidadaprobados">
+                        <tr>
+                            <td>{{item.id_plan_unidad}}</td>
+                            <td>{{item.asignatura.descripcion}}</td>
+                            <td>{{item.titulo_unidad}}</td>
+                            <td>{{item.fecha_inicio}}</td>
+                            <td>{{item.fecha_fin}}</td>
+                            <td>{{item.unidad.idUnidad}}</td>
+                            <td>{{item.estado}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--Implementacion de la tabla de planes de unidad rechazados-->
+        <div *ngIf="mostrarRechazados" class="container-fluid px-4">
+            <h1>PLANES DE UNIDAD RECHAZADOS</h1>
+            <div class="container mt-3 border border-dark bg-light">
+                <table class="table table-bordered table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Asignatura</th>
+                            <th>Titulo</th>
+                            <th>Fecha_Inicio</th>
+                            <th>Fecha_Finaliza</th>
+                            <th>Unidad</th>
+                            <th>Estado</th>
+                            <th>Editar/Borrar</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of planunidadrechazados">
+                        <tr>
+                            <td>{{item.id_plan_unidad}}</td>
+                            <td>{{item.asignatura.descripcion}}</td>
+                            <td>{{item.titulo_unidad}}</td>
+                            <td>{{item.fecha_inicio}}</td>
+                            <td>{{item.fecha_fin}}</td>
+                            <td>{{item.unidad.idUnidad}}</td>
+                            <td>{{item.estado}}</td>
+                            <td>
+                                <button pButton type="button" icon="pi pi-pencil" label="Editar" class="p-button-text"
+                                    (click)="abrir(item)"></button>
+                                <button pButton type="button" icon="pi pi-trash" class="p-button-text p-button-danger"
+                                    (click)="eliminar(item)"></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--Fin Contenido-->
+    </div>
+</div>
