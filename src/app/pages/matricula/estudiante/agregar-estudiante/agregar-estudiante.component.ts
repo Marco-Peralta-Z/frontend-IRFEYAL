@@ -9,12 +9,14 @@ import { parroquia } from '../../../../Model/rolesTS/parroquia';
 import { pais } from '../../../../Model/rolesTS/pais';
 import { extension } from '../../../../Model/rolesTS/extension';
 import swal from 'sweetalert2';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
   selector: 'app-agregar-estudiante',
   templateUrl: './agregar-estudiante.component.html',
-  styleUrls: ['./agregar-estudiante.component.scss']
+  styleUrls: ['./agregar-estudiante.component.scss'],
+  providers:[MessageService]
 })
 export class AgregarEstudianteComponent implements OnInit {
   estudiante: Estudiante = new Estudiante();
@@ -58,7 +60,7 @@ export class AgregarEstudianteComponent implements OnInit {
 
 
   constructor(private estudianteService: EstudianteService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder, private messageService: MessageService ) { }
 
   ngOnInit(): void {
 
@@ -128,7 +130,8 @@ export class AgregarEstudianteComponent implements OnInit {
   saveEstudiante() {
     if (this.estudentFormulario.invalid) {
       this.estudentFormulario.markAllAsTouched();
-      swal.fire('Error en Formulario', 'Campos erroneos o incompletos', 'error');
+      this.messageService.add({key: 'tc', severity:'error', summary: 'Error en Formulario', detail:  'Campos erroneos o incompletos'});
+      // swal.fire('Error en Formulario', 'Campos erroneos o incompletos', 'error');
       return;
     }
 
@@ -137,11 +140,14 @@ export class AgregarEstudianteComponent implements OnInit {
     console.log(this.estudiante)
     this.estudianteService.postEstudiante(this.estudiante)
       .subscribe(newEstudent => {
-        swal.fire('Nuevo Estudiante', `Nuevo id: ${newEstudent.id_estudiante} creado con exito!`, 'success')
+        this.messageService.add({key: 'tc', severity:'success', summary: 'Nuevo Estudiante', detail: `Nuevo id: ${newEstudent.id_estudiante} creado con exito!`});
+        this.estudentFormulario.reset();
+        // swal.fire('Nuevo Estudiante', `Nuevo id: ${newEstudent.id_estudiante} creado con exito!`, 'success')
 
       });
     }else{
-      swal.fire('Estudiante Encontrado', `El estudiante con cedula: ${this.estudiante.id_persona.cedula}, ya existe`,'error')
+      this.messageService.add({key: 'tc', severity:'warn', summary: 'Estudiante Encontrado', detail:  `El estudiante con cedula: ${this.estudiante.id_persona.cedula}, ya existe`});
+      // swal.fire('Estudiante Encontrado', `El estudiante con cedula: ${this.estudiante.id_persona.cedula}, ya existe`,'error')
     }
     
   }
@@ -149,7 +155,8 @@ export class AgregarEstudianteComponent implements OnInit {
   validaExistenciaEstudiante(): boolean {
     this.estudianteService.getEstudiantePorCedula(this.estudiante.id_persona.cedula.trim())
       .subscribe(estudiante => {
-        swal.fire('Estudiante Encontrado', `El estudiante con cedula: ${this.estudiante.id_persona.cedula}, ya existe`,'error')
+        this.messageService.add({key: 'tc', severity:'warn', summary: 'Estudiante Encontrado', detail: `El estudiante con cedula: ${this.estudiante.id_persona.cedula}, ya existe`});
+        // swal.fire('Estudiante Encontrado', `El estudiante con cedula: ${this.estudiante.id_persona.cedula}, ya existe`,'error')
         return this.existe=true;
       });
     return this.existe=false;

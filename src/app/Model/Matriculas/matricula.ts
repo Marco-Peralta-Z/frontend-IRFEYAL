@@ -9,6 +9,7 @@ import { Estudiante } from './estudiante';
 export class Matricula{
     id_matricula?:number;
     fechaMatricula?:Date;
+    modalidad_estudio: string ="";
     id_periodo: Periodo= new Periodo();
     curso: Curso= new Curso();
     modalidad:Modalidad= new Modalidad();

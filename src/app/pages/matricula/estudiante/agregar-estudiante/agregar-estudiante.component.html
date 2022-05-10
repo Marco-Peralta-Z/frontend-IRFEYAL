@@ -2,6 +2,7 @@
     <div class="d-flex page__box p-3 mt-2">Agregar Estudiante</div>
     <div class="page__content shadow p-3 position-relative">
         <br>
+        <p-toast position="top-right" key="tc"></p-toast>
         <form autocomplete="off" [formGroup]="estudentFormulario"> 
 
             <div class="card">
@@ -51,14 +52,15 @@
                                 </span>
                                 <label class="mt2">Genero:</label> <br>
                                 <p-dropdown [options]="generos" [(ngModel)]="estudiante.id_persona.genero" 
-                                placeholder="Seleccione Genero" optionLabel="genero" [showClear]="true" name="genero" formControlName="genero"></p-dropdown>
+                                placeholder="Seleccione Genero" optionLabel="genero" [showClear]="true" formControlName="genero"></p-dropdown>
+                                
                                 <span class="form-text text-danger" *ngIf="campoValido('genero')">
                                     Este campo es obligatorio!
                                 </span><br>
 
                                 <label class="mt2">Extensión:</label> <br>
                                 <p-dropdown [options]="extensiones" [(ngModel)]="estudiante.id_extension" 
-                                placeholder="Seleccione Genero" optionLabel="nombre_extension" [showClear]="true" name="extension" formControlName="extension"></p-dropdown>
+                                placeholder="Seleccione Extensión" optionLabel="nombre_extension" [showClear]="true" name="extension" formControlName="extension"></p-dropdown>
                                 <span class="form-text text-danger" *ngIf="campoValido('extension')">
                                     Este campo es obligatorio!
                                 </span>

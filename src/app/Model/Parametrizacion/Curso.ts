@@ -2,11 +2,11 @@ import { empleado } from "../rolesTS/empleado";
 
 export class Curso {
     
-    id_curso: Number = 0;
+    id_curso: number = 0;
 
-    descripcion: String = "";
+    descripcion: string = "";
 
-    tipo_curso: String = "";
+    tipo_curso: string = "";
 
     fec_creacion: Date = new Date;
 
