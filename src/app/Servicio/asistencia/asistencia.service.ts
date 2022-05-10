@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Api } from 'src/app/config';
 import { Asistencia } from 'src/app/Model/Asistencia/asistencia';
 import { Clase } from 'src/app/Model/Asistencia/clase';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
+import { DatePipe } from '@angular/common'
 @Injectable({
   providedIn: 'root'
 })
 export class AsistenciaService {
-
-  constructor(private rutaconsulta: HttpClient) { }
+  private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
+  constructor(private rutaconsulta: HttpClient,public datepipe: DatePipe) { }
   url = Api.url + 'asistencia';
 
   getAllAsignatura(){
@@ -45,10 +46,26 @@ export class AsistenciaService {
   
   }
   createclase(clase:Clase):Observable<Clase>{
-    return this.rutaconsulta.post<Clase>(this.url+"/clasesave",clase);
-  
+    return this.rutaconsulta.post<Clase>(this.url+"/clasesave",clase).pipe(
+      map((response:any) => response.cliente as Clase),catchError(e => {
+
+        if (e.status == 400) {
+          return throwError(e);
+        }
+        if (e.error.mensaje) {
+          console.log(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    );
+
   }
-  getfiltrosactualizar(idModalidad: number ,  idPeriodo: number, idParalelo: number,idAsignatura: number, idCurso:number, fecha: Date){
+
+  getfiltrosactualizar(idModalidad: number , idPeriodo: number, idParalelo: number,idAsignatura: number, idCurso:number, fecha: string){
     return this.rutaconsulta.get(this.url+"/buscaractualizar/"+idModalidad+'/'+idPeriodo+'/'+idParalelo+'/'+idAsignatura+'/'+idCurso+'/'+fecha);
+  }
+  
+  updateasistencia(asistencia: Asistencia){
+    return this.rutaconsulta.put<Asistencia>(this.url +"/updateasistencia/"+asistencia.idAsistencia, asistencia);
   }
 }

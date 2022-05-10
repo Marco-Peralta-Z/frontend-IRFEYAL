@@ -26,7 +26,7 @@ export class ListarasistenciaComponent implements OnInit {
     IdParalelo: number =0;
     IdCurso: number =0;
     Estudiante:Estudiante[]=[];
-
+    filterValue:any;
   constructor(private appService:AsistenciaService) {
   
    }
@@ -94,5 +94,7 @@ export class ListarasistenciaComponent implements OnInit {
          }
 
         }
+
+        
 
 }

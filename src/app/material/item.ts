@@ -127,7 +127,7 @@ export let item = {
                         }
                     ]
                 }
-             
+
             ]
         },
         {
@@ -140,12 +140,28 @@ export let item = {
                     routerLink: 'asistencia/listarAsistencia'
                 },
                 {
-                    label:'Registrar',
-                    icon:'fa fa-book',
-                    routerLink:'asistencia/agregarAsistencia'
+                    label: 'Registrar',
+                    icon: 'fa fa-book',
+                    routerLink: 'asistencia/agregarAsistencia'
                 }
             ]
-        }
+        },
+        {
+            label: 'Documentos Academicos',
+            icon: 'pi pi-paperclip',
+            items: [
+                {
+                    label: 'Generar Plan de Unidad',
+                    icon: 'fa fa-plus',
+                    routerLink: 'documentosacademicos/generarplandeunidad'
+                },
+                {
+                    label: 'Revisar Plan de Unidad',
+                    icon: 'fa fa-check-square',
+                    routerLink: 'documentosacademicos/revisarplandeunidad'
+                }
+            ]
+        },
     ]
 }
 export let responsive = {

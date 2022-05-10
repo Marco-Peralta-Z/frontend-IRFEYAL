@@ -13,7 +13,7 @@
                     <div *ngIf='showDiv'>
                       
                         <div class="card">
-                            <p-dataView [value]="Estudiante">
+                            <p-dataView  [value]="Estudiante">
                                 <ng-template let-estudiante pTemplate="listItem">
                                     <div>
                                         <h2> Nombre:</h2>
@@ -50,17 +50,13 @@
                         <p-dropdown  [options]="asignaturas" placeholder="Select a Asignatura" optionLabel="descripcion" filterBy="descripcion" optionValue="id_asignatura"  (onChange)="onSelect($event.value)" [showClear]="true"></p-dropdown>
                         <p-dropdown  [options]="periodos" placeholder="Select a Perido" optionLabel="actividades" filterBy="actividades" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  [showClear]="true"></p-dropdown>
                            <p-dropdown [options]="modalidades" placeholder="Select a Modalidad" optionLabel="descripcion" filterBy="descripcion" optionValue="id_modalidad"  (onChange)="onmodalidad($event.value)"  [showClear]="true"></p-dropdown>
-                 
-                        <span class="p-input-icon-left">
-                          <i class="pi pi-search"></i>
-                          <input pInputText type="text"  placeholder="Search..." />
-                          <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-success p-button-outlined"></button>
+                           <input pInputText type="text" [(ngModel)]="filterValue" (input)="dt2.filterGlobal(filterValue, 'contains')" placeholder="Search..." />
+                        
 
-                      </span>
                       </div>
   
 
-              <p-table [value]="estudiantes" styleClass="p-datatable-striped" responsiveLayout="scroll">
+              <p-table #dt2 [value]="estudiantes" [globalFilterFields]="['id_persona.cedula']" styleClass="p-datatable-striped" responsiveLayout="scroll">
                 <ng-template pTemplate="header">
                   <tr>
                     <th>id</th>
