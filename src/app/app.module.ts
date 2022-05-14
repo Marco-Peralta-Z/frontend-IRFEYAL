@@ -32,6 +32,7 @@ import { MallaComponent } from './pages/parametrizacion/malla/malla.component';
 import { AsignaturasComponent } from './pages/parametrizacion/asignaturas/asignaturas.component';
 import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component';
 import { ArticuloComponent } from './pages/inventarios/invnetarioarticulos/articulo/articulo.component';
+import { KitComponent } from './pages/inventarios/inventariomodulos/kit/kit.component';
 import { UsuarioComponent } from './pages/rol_usuario/usuario/usuario.component';
 import { DataTablesModule } from "angular-datatables";
 import { ActividadesRegistroComponent } from './pages/tutorias/actividadesRegistro/actividadesRegistro.component';
@@ -43,7 +44,6 @@ import { ListarasistenciaComponent } from './pages/modulo_asistencia/listarasist
 import { RegistrarasistenciaComponent } from './pages/modulo_asistencia/registrarasistencia/registrarasistencia.component';
 import { GenerarPlanunidadComponent } from './pages/documentos_academicos/generar-planunidad/generar-planunidad.component';
 import { RevisarPlanunidadComponent } from './pages/documentos_academicos/revisar-planunidad/revisar-planunidad.component';
-
 
 
 registerLocaleData(localeES);
@@ -59,6 +59,7 @@ registerLocaleData(localeES);
     HeaderComponent,
     SidenavComponent,
     ArticuloComponent,
+    KitComponent,
     PeriodoComponent,
     MallaComponent,
     AsignaturasComponent,
