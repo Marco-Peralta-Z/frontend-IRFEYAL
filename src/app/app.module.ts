@@ -18,10 +18,6 @@ import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { CategoriaComponent } from './pages/inventarios/invnetarioarticulos/categoria/categoria.component';
-import { ArticuloComponent } from './pages/inventarios/invnetarioarticulos/articulo/articulo.component';
-import { KitComponent } from './pages/inventarios/inventariomodulos/kit/kit.component';
-import { AprobacionesCmponent } from './pages/inventarios/inventariomodulos/listar-aprobaciones/aprobacion.component';
 import { ParametrizacionRoutingModule } from './Routing/parametrizacion/parametrizacion-routing.module';
 import { ErrorRoutingModule } from './Routing/error/error-routing.module';
 import { AsistenciaRoutingModule } from './Routing/asistencia/asistencia-routing.module';
@@ -35,7 +31,7 @@ import { PeriodoComponent } from './pages/parametrizacion/periodo/periodo.compon
 import { MallaComponent } from './pages/parametrizacion/malla/malla.component';
 import { AsignaturasComponent } from './pages/parametrizacion/asignaturas/asignaturas.component';
 import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component';
-
+import { ArticuloComponent } from './pages/inventarios/invnetarioarticulos/articulo/articulo.component';
 import { UsuarioComponent } from './pages/rol_usuario/usuario/usuario.component';
 import { DataTablesModule } from "angular-datatables";
 import { ActividadesRegistroComponent } from './pages/tutorias/actividadesRegistro/actividadesRegistro.component';
@@ -47,7 +43,6 @@ import { ListarasistenciaComponent } from './pages/modulo_asistencia/listarasist
 import { RegistrarasistenciaComponent } from './pages/modulo_asistencia/registrarasistencia/registrarasistencia.component';
 import { GenerarPlanunidadComponent } from './pages/documentos_academicos/generar-planunidad/generar-planunidad.component';
 import { RevisarPlanunidadComponent } from './pages/documentos_academicos/revisar-planunidad/revisar-planunidad.component';
-
 
 
 
@@ -63,16 +58,12 @@ registerLocaleData(localeES);
     LoginComponent,
     HeaderComponent,
     SidenavComponent,
-    AprobacionesCmponent,
-    CategoriaComponent,
     ArticuloComponent,
-    KitComponent,
     PeriodoComponent,
     MallaComponent,
     AsignaturasComponent,
     CursosComponent,
     UsuarioComponent,
-    ArticuloComponent,
     ListarasistenciaComponent,
     RegistrarasistenciaComponent,
     GenerarPlanunidadComponent,

@@ -45,7 +45,6 @@ export let item = {
                 {
                     label: 'Inventario Modulos',
                     icon: 'pi pi-fw pi-book',
-                    routerLink: 'inventariosModule/kit',
                     items: [
                         {
                             label: 'Mantenimiento Kits',
@@ -62,7 +61,6 @@ export let item = {
                 {
                     label: 'Inventario Articulos',
                     icon: 'fa fa-book',
-                    routerLink: 'inventariosModule/kit',
                     items: [
                         {
                             label: 'Mantenimiento articulos',
