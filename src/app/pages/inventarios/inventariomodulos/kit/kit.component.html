@@ -1,12 +1,19 @@
 <div class="container-fluid page">
-  <div class="d-flex page__box p-3 mt-2">Lista de Articulos</div>
+  <div class="d-flex page__box p-3 mt-2">Mantenimientos kits</div>
   <div class="page__content shadow p-3 position-relative">
 
     <!--Inicio Contenido-->
     <div>
-      <h3>hola kit</h3>
+      <p-menubar [model]="itemsMenu">
+    </p-menubar>
+    <p-card id="contenedor">
+      <tabla-aprobaciones></tabla-aprobaciones>
+    </p-card>
     </div>
     <!--Find Contenido-->
   </div>
 
 </div>
+
+
+<!--Content tabla -->

@@ -44,6 +44,7 @@ import { ListarasistenciaComponent } from './pages/modulo_asistencia/listarasist
 import { RegistrarasistenciaComponent } from './pages/modulo_asistencia/registrarasistencia/registrarasistencia.component';
 import { GenerarPlanunidadComponent } from './pages/documentos_academicos/generar-planunidad/generar-planunidad.component';
 import { RevisarPlanunidadComponent } from './pages/documentos_academicos/revisar-planunidad/revisar-planunidad.component';
+import { TablaAprobacionesKit } from './pages/inventarios/inventariomodulos/componentes/aprobaciones/tabla.component';
 
 
 registerLocaleData(localeES);
@@ -60,6 +61,7 @@ registerLocaleData(localeES);
     SidenavComponent,
     ArticuloComponent,
     KitComponent,
+    TablaAprobacionesKit,
     PeriodoComponent,
     MallaComponent,
     AsignaturasComponent,
