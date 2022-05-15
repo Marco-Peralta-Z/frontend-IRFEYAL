@@ -1,3 +1,47 @@
-<div>
-    <h3>div tabla aprobaciones</h3>
+<div class="mb-3">
+    <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]="isFirstPage()"
+        styleClass="p-button-text"></p-button>
+    <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text"></p-button>
+    <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]="isLastPage()"
+        styleClass="p-button-text"></p-button>
 </div>
+<p-table #dt2 [value]="listaAprobFILTRO" dataKey="id"
+        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['name','country.name','representative.name','status']">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="Filtros($event.target.value,'empleado')" placeholder="Search keyword" />
+                </span>
+            </div>
+        </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Observacion</th>
+            <th>Estado</th>
+            <th>Detalle</th>
+            <th>fechaAprobacion</th>
+            <th>Nombre Empleado</th>
+            <th>Cargo</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-aproba>
+        <tr>
+            <td>{{aproba.observacionAproba}}</td>
+            <td>{{aproba.estadoAproba}}</td>
+            <td>{{aproba.detalleControl}}</td>
+            <td>{{aproba.fechaAprobacion}}</td>
+            <td>{{aproba.id_empleado_admin.id_persona.nombre +' '+ aproba.id_empleado_admin.id_persona.apellido}}</td>
+            <td>{{aproba.id_empleado_admin.cargo}}</td>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+        <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+    </ng-template>
+    <ng-template pTemplate="paginatorright">
+        <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-table>
