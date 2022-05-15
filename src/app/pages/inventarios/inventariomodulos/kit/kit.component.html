@@ -5,10 +5,13 @@
     <!--Inicio Contenido-->
     <div>
       <p-menubar [model]="itemsMenu">
-    </p-menubar>
-    <p-card id="contenedor">
-      <tabla-aprobaciones></tabla-aprobaciones>
-    </p-card>
+      </p-menubar>
+      <p-card id="contenTablaApro" [ngStyle]="{'display':tablaAprobacionesKit}">
+        <tabla-aprobaciones></tabla-aprobaciones>
+      </p-card>
+      <p-card id="contenTablaIngresos" [ngStyle]="{'display':tablaIngresosKit}">
+        <tabla-ingresoskit></tabla-ingresoskit>
+      </p-card>
     </div>
     <!--Find Contenido-->
   </div>
