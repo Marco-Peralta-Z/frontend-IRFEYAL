@@ -1,23 +1,11 @@
-<p-card>
-    <p-tabPanel>
-        <ng-template pTemplate="header">
-            <i class="pi pi-credit-card"></i>
-            <span>Datos Personales</span>
-        </ng-template>
-        <div class="form-group row">
-            <div class="col">
-                <span class="p-float-label mt-3">
-                    <input id="float-input" type="text" [(ngModel)]="nuevoKit.nombrekit"
-                         name="nombrekit" formControlName="cedula" pInputText >
-                    <label for="float-input">Cedula:</label>
-                </span>
-                <span class="form-text text-danger" *ngIf="validarCampo('nombrekit')">
-                    Este campo es obligatorio!
-                </span>
-
-            </div>
-           
+<h1>NUEVO KIT DE MODULOS</h1>
+<div>
+    <div class="col">
+        <div class="field">
+            <label for="username2" class="block">Username</label>
+            {{value}}
+            <small id="username2-help" class="p-error block">Username is not available.</small>
         </div>
-    </p-tabPanel>
+    </div>
 
-</p-card>
+</div>

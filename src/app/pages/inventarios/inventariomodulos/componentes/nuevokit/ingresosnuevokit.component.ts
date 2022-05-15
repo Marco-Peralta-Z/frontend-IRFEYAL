@@ -9,15 +9,21 @@ export class NuevoKitComponent implements OnInit {
 
     nuevoKit: Ingresokit = new Ingresokit();
 
+    @Input ('value') value: string = ''; 
+
 
 
     validarCampo(value: string): boolean {
         if(value.length > 0) {
-            return true;
-        }else{
             return false;
+        }else{
+            return true;
         }
 
+    }
+
+    guardarKit(){
+        console.log('----------aes->',this.nuevoKit.nombrekit);
     }
 
   
