@@ -91,7 +91,6 @@ export class KitComponent implements OnInit {
     showDialog(showChange: string) {
         this.tablaAprobacionesKit = 'none';
         this.tablaIngresosKit = 'none';
-
         if (showChange == 'showTablaAproba') {
             this.tablaAprobacionesKit = 'inline';
         } else {
