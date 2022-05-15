@@ -8,6 +8,7 @@ export class KitComponent implements OnInit {
 
     tablaAprobacionesKit: string = 'none';
     tablaIngresosKit: string = 'none';
+    addKit: string = 'none';
 
 
 
@@ -40,12 +41,13 @@ export class KitComponent implements OnInit {
             ]
         },
         {
-            label: 'Kit',
+            label: 'Mantenimiento Kit',
             icon: 'pi pi-fw pi-plus',
             items: [
                 {
                     label: 'Nuevo kit',
                     icon: 'pi pi-fw pi-plus',
+                    command: () => { this.showDialog('showAddKit') }
                 },
                 {
                     label: 'Actualizar kit',
@@ -91,13 +93,25 @@ export class KitComponent implements OnInit {
     showDialog(showChange: string) {
         this.tablaAprobacionesKit = 'none';
         this.tablaIngresosKit = 'none';
-        if (showChange == 'showTablaAproba') {
-            this.tablaAprobacionesKit = 'inline';
-        } else {
-            if (showChange == 'showTablaIngreso') {
+        this.addKit = 'none';
+
+
+
+        switch (showChange) {
+            case 'showTablaAproba':
+                this.tablaAprobacionesKit = 'inline';
+                break;
+            case 'showTablaIngreso':
                 this.tablaIngresosKit = 'inline';
-            }
+                break;
+            case 'showAddKit':
+                this.addKit = 'inline';
+                break;
         }
+
+
+
+
 
     }
 
