@@ -9,7 +9,7 @@ export let Api = {
     url: 'http://localhost:9070/'
 }
 
-export let AuthConfig = {
-    url: 'http://localhost:9070/',
-    credenciales: ""
+export let AuthConfig  = {
+    credenciales: 'frontirfeyalapp' + ':' + '12345',
+    url: 'http://localhost:9070/'
 }
