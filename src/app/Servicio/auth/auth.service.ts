@@ -63,11 +63,11 @@ export class AuthService {
     this._usuario.usuario = user_name;
     this._usuario.roles = authorities;
 
-    // gurdamos en el sesionstorage
+    // guardamos en el sessionstorage
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
   }
 
-  // guradamos token en el session storage
+  // guardamos token en el session storage
   guardarToken = (access_token: string): void => {
     this._token = access_token;
     sessionStorage.setItem('token', this._token);
@@ -80,6 +80,7 @@ export class AuthService {
     return null;
   }
 
+  // verificamos loggeo
   isAuthenticated = (): boolean => {
     let payload = this.obtenerDatosToken(this.token);
     if ( payload !== null && payload.user_name && payload.user_name.length > 0 ) {
@@ -88,6 +89,7 @@ export class AuthService {
     return false;
   }
 
+  // cerramos session
   logOut = (): void => {
     this._token = null;
     this._usuario = null;
