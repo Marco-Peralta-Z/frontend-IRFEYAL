@@ -15,15 +15,12 @@ export class HeaderComponent implements OnInit {
   @Output() toggleSidebarForMe: EventEmitter<any> = new EventEmitter();
   constructor(
     private router: Router, 
-    private userServis: ServiceUsuarioService,
     private _authService: AuthService,
   ) { }
+
   menuacti:boolean=true;
-  authValidate: boolean = false;
-  Username: String = "";
 
   ngOnInit(): void {
-    this.authValidate = Boolean(this.userServis.dato);
 
   }
 
@@ -41,7 +38,7 @@ export class HeaderComponent implements OnInit {
     setTimeout(() => {
       Swal.close();
       this.router.navigate(['/login']);
-    }, 1000);
+    }, 800);
   }
 
 }
