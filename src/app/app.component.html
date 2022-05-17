@@ -1,6 +1,6 @@
 
 <mat-drawer-container>
-    <mat-drawer mode="side" [opened]="sideBarOpen" >
+    <mat-drawer *ngIf="authService.isAuthenticated()" mode="side"  [opened]="sideBarOpen">
         <app-sidenav *ngIf="authService.isAuthenticated()"></app-sidenav>
     </mat-drawer>
     <mat-drawer-content>

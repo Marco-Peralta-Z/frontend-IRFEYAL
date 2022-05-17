@@ -11,7 +11,7 @@ export class AuthService {
   private _usuario?: usuario | null;
   private _token?: string | null;
   private _baseUrl: string = AuthConfig.url;
-
+  
   constructor(
     private _http: HttpClient,
   ) { }
