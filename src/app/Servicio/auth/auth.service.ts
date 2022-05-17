@@ -46,7 +46,6 @@ export class AuthService {
     })
 
     // datos para la authentificacion
-
     let params = new URLSearchParams();
     params.set('grant_type', 'password');
     params.set('username', cedula);

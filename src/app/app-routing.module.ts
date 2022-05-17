@@ -8,6 +8,10 @@ import { AuthGuard } from './guards/auth.guard';
 import { RolGuard } from './guards/rol.guard';
 
 
+/**
+ * Si desea agregar otro rol de hacerlo asi: "ROLE_" + "nombre del rol de la bd" = 'ROLE_estudiante'
+ * Revisar el import.sql del back la tabla roles
+ */
 const routes: Routes = [
   //Inicio Rutas Principales
   { 

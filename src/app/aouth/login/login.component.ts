@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     path = Path.url;
 
     ngOnInit(): void {
+        //redireccionamos si el usuario esta loggeado
         if ( this._authService.isAuthenticated()){
             this.router.navigate(['home']);
           }
@@ -48,10 +49,9 @@ export class LoginComponent implements OnInit {
         if (this.logInForm.valid) {
             let { cedula, password } = this.logInForm.value;
             this._authService.logIn( cedula, password ).subscribe( response => {
-                console.log(response);
                 this._authService.guardarToken(response.access_token);
                 this._authService.guardarUsuario(response.access_token);
-                this.router.navigate(['home'])
+                this.router.navigate(['/home'])
             }, err => {
                 console.log(err);
                 this.onIsError();
