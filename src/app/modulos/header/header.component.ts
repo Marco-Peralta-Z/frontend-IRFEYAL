@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-usuario.service';
+import { AuthService } from '../../Servicio/auth/auth.service';
+import { usuario } from '../../Model/rolesTS/usuario';
 
 @Component({
   selector: 'app-header',
@@ -10,17 +12,22 @@ import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-us
 export class HeaderComponent implements OnInit {
 
   @Output() toggleSidebarForMe: EventEmitter<any> = new EventEmitter();
-  constructor(private router: Router, private userServis: ServiceUsuarioService) { }
+  constructor(
+    private router: Router, 
+    private userServis: ServiceUsuarioService,
+    private _authService: AuthService,
+  ) { }
   menuacti:boolean=true;
   authValidate: boolean = false;
   Username: String = "";
 
   ngOnInit(): void {
-    let v = localStorage.getItem("Username")
-    this.Username = String(v);
     this.authValidate = Boolean(this.userServis.dato);
 
   }
+
+  usuarioGuardado = (): usuario => this._authService.usuario;
+
   
   toggleSidebar() {
     this.menuacti=!this.menuacti;
@@ -28,7 +35,8 @@ export class HeaderComponent implements OnInit {
   }
 
   cerrarSesion() {
-    this.userServis.dato = false;
+    this._authService.logOut();
+    this.router.navigate(['/login']);
   }
 
 }

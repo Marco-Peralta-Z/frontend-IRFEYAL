@@ -28,7 +28,12 @@ const routes: Routes = [
 
   { path: 'documentosacademicos', loadChildren: () => import('./Routing/documentacion-academicos/documentacion-academicos.module').then(m => m.DocumentacionAcademicosModule) },
 
-  { path: 'login', pathMatch: 'full', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: 'login'
+  }
 
 ];
 

@@ -23,27 +23,15 @@ export class LoginComponent implements OnInit {
     constructor(
         private _formBuilder: FormBuilder,
         private router: Router,
-        private userservi: ServiceUsuarioService,
         private _authService: AuthService,
-        private primengConfig: PrimeNGConfig
     ) { }
 
 
-    logeado: Boolean = new Boolean();
     public isError = false;
     path = Path.url;
-    user: usuario = new usuario;
     ngOnInit(): void {
-        this.primengConfig.ripple = true;
-        this.logeado = true;
-        this.userservi.dato = false;
-        this.router.navigate(['login'])
-        this.sideBarOpen = true;
     }
 
-    sideBarToggler() {
-        this.sideBarOpen = !this.sideBarOpen;
-    }
 
     onIsError(): void {
         this.isError = true;
@@ -52,28 +40,14 @@ export class LoginComponent implements OnInit {
         }, 4000);
     }
 
-    login() {
-        if (this.user.usuario == "") {
-            this.onIsError();
-        } else {
-            this.logeado = false;
-            this.userservi.dato = true;
-            localStorage.setItem("Username", this.user.usuario.toString())
-            this.router.navigate(['home'])
-        }
-
-
-    }
-
     logIn = () => {
         if (this.logInForm.valid) {
             let { cedula, password } = this.logInForm.value;
             this._authService.logIn( cedula, password ).subscribe( response => {
                 console.log(response);
-                this.logeado = false;
                 this._authService.guardarToken(response.access_token);
                 this._authService.guardarUsuario(response.access_token);
-                // this.router.navigate(['home'])
+                this.router.navigate(['home'])
             }, err => {
                 console.log(err);
                 this.onIsError();

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServiceUsuarioService } from './Servicio/roles_Usuario/service-usuario.service';
 import { PrimeNGConfig } from 'primeng/api';
+import { AuthService } from './Servicio/auth/auth.service';
 
 
 @Component({
@@ -12,15 +13,14 @@ import { PrimeNGConfig } from 'primeng/api';
 export class AppComponent {
     title = 'frond_ifreyal';
     sideBarOpen = true;
-    constructor(private router: Router,
-        private primengConfig: PrimeNGConfig) { }
+    constructor(
+        private primengConfig: PrimeNGConfig,
+        public authService: AuthService,
+    ) { }
 
-
-    logeado: Boolean = new Boolean();
 
     ngOnInit(): void {
         this.primengConfig.ripple = true;
-        this.logeado = true;
         this.sideBarOpen = true;
     }
 

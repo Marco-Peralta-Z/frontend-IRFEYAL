@@ -8,8 +8,8 @@ import { AuthConfig } from '../../config';
   providedIn: 'root'
 })
 export class AuthService {
-  private _usuario?: usuario;
-  private _token?: string;
+  private _usuario?: usuario | null;
+  private _token?: string | null;
   private _baseUrl: string = AuthConfig.url;
 
   constructor(
@@ -27,10 +27,11 @@ export class AuthService {
     return new usuario();
   }
   public get token(): string | null {
-    if ( this._token != null ) {
+    if (this._token != null) {
       return this._token;
-    } else if ( this._token == null && sessionStorage.getItem('token') != null ) {
-      return  this._token = JSON.parse(sessionStorage.getItem('token')!);
+    } else if (this._token == null && sessionStorage.getItem('token') != null) {
+      this._token = sessionStorage.getItem('token') || '';
+      return this._token;
     }
     return null;
   }
@@ -72,7 +73,7 @@ export class AuthService {
     sessionStorage.setItem('token', this._token);
   }
 
-  obtenerDatosToken = ( access_token: string ) => {
+  obtenerDatosToken = ( access_token: string|null ) => {
     if( access_token !== null) {
       return JSON.parse(atob(access_token.split('.')[1]));
     }
@@ -80,7 +81,7 @@ export class AuthService {
   }
 
   isAuthenticated = (): boolean => {
-    let payload = this.obtenerDatosToken(this.token!);
+    let payload = this.obtenerDatosToken(this.token);
     if ( payload !== null && payload.user_name && payload.user_name.length > 0 ) {
       return true;
     }
@@ -88,8 +89,8 @@ export class AuthService {
   }
 
   logOut = (): void => {
-    this._token = undefined;
-    this._usuario = undefined;
+    this._token = null;
+    this._usuario = null;
 
     // borramos de la memoria
     sessionStorage.removeItem('usuario');
