@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../Servicio/auth/auth.service';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class AuthGuard implements CanActivate {
     if ( this._authService.isAuthenticated()) {
       if( this.isTokenExpired() ) {
         this._authService.logOut();
+        Swal.fire('Oooops!', 'Sessión caducada','warning');
         this._router.navigate(['login']);
         return false;
       }

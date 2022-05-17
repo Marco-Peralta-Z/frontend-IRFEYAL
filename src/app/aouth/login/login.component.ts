@@ -31,6 +31,9 @@ export class LoginComponent implements OnInit {
     path = Path.url;
 
     ngOnInit(): void {
+        if ( this._authService.isAuthenticated()){
+            this.router.navigate(['home']);
+          }
     }
 
 

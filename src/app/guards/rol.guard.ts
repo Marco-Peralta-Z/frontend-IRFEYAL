@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 import { AuthService } from '../Servicio/auth/auth.service';
 
 @Injectable({
@@ -25,8 +26,9 @@ export class RolGuard implements CanActivate {
       }
     }
     // si no tiene ningun rol requerido cerramos session
-    this._authService.logOut();
-    this._router.navigate(['/login']);
+    console.log('no tiene acceso');
+    Swal.fire('Oooops!', 'acceso denegado','warning');
+    this._router.navigate(['/home']);
     return false;
   }
 
