@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-usuario.service';
 import { AuthService } from '../../Servicio/auth/auth.service';
 import { usuario } from '../../Model/rolesTS/usuario';
 import Swal from 'sweetalert2';

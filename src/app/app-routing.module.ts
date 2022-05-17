@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './aouth/login/login.component';
-import { HeaderComponent } from './modulos/header/header.component';
-import { SidenavComponent } from './modulos/sidenav/sidenav.component';
-import { HomeComponent } from './pages/home/home.component';
+
+// Guards
 import { AuthGuard } from './guards/auth.guard';
 import { RolGuard } from './guards/rol.guard';
+
+import { HeaderComponent } from './modulos/header/header.component';
+import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './aouth/login/login.component';
+import { SidenavComponent } from './modulos/sidenav/sidenav.component';
+
 
 
 /**

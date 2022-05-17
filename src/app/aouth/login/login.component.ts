@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PrimeNGConfig } from 'primeng/api';
 import { Path } from 'src/app/config';
-import { usuario } from 'src/app/Model/rolesTS/usuario';
-import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-usuario.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../Servicio/auth/auth.service';
 import Swal from 'sweetalert2';
+
+import { AuthService } from '../../Servicio/auth/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -20,7 +18,9 @@ export class LoginComponent implements OnInit {
         password: [ '123' , [ Validators.required]]
     });
 
-    sideBarOpen = true;
+    public isError = false;
+
+    public path = Path.url;
     constructor(
         private _formBuilder: FormBuilder,
         private router: Router,
@@ -28,14 +28,12 @@ export class LoginComponent implements OnInit {
     ) { }
 
 
-    public isError = false;
-    path = Path.url;
 
     ngOnInit(): void {
         //redireccionamos si el usuario esta loggeado
         if ( this._authService.isAuthenticated()){
             this.router.navigate(['home']);
-          }
+        }
     }
 
 

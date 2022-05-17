@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { usuario } from '../../Model/rolesTS/usuario';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthConfig } from '../../config';
 import Swal from 'sweetalert2';
+
+
+import { usuario } from '../../Model/rolesTS/usuario';
+import { AuthConfig } from '../../config';
 
 @Injectable({
   providedIn: 'root'
@@ -118,7 +120,7 @@ export class AuthService {
         allowOutsideClick: close,
         showConfirmButton: false,
         backdrop: `
-          rgba(0,0,123,0.4)
+          rgba(0,0,126,0.5)
           left top
           no-repeat
         `,
