@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
 
     public isError = false;
     path = Path.url;
+
     ngOnInit(): void {
     }
 
