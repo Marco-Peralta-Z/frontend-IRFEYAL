@@ -3,6 +3,7 @@ import { usuario } from '../../Model/rolesTS/usuario';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthConfig } from '../../config';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -96,6 +97,7 @@ export class AuthService {
     // borramos de la memoria
     sessionStorage.removeItem('usuario');
     sessionStorage.removeItem('token');
+    
   }
 
   // verificamos que contega el rol permitido
@@ -104,5 +106,25 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+
+  showLoading = (close: boolean, title: string, text: string) => {
+    Swal.fire({
+        title ,
+        text,
+        width: 600,
+        padding: '3em',
+        color: '#716add',
+        allowOutsideClick: close,
+        showConfirmButton: false,
+        backdrop: `
+          rgba(0,0,123,0.4)
+          left top
+          no-repeat
+        `,
+        didOpen: () => {
+            Swal.showLoading()
+        }
+      })
   }
 }

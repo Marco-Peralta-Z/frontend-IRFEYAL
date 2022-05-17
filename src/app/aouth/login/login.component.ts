@@ -6,6 +6,7 @@ import { usuario } from 'src/app/Model/rolesTS/usuario';
 import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-usuario.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../Servicio/auth/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-login',
@@ -42,19 +43,25 @@ export class LoginComponent implements OnInit {
         this.isError = true;
         setTimeout(() => {
             this.isError = false;
-        }, 4000);
+        }, 3000);
     }
 
     logIn = () => {
         if (this.logInForm.valid) {
             let { cedula, password } = this.logInForm.value;
-            this._authService.logIn( cedula, password ).subscribe( response => {
-                this._authService.guardarToken(response.access_token);
-                this._authService.guardarUsuario(response.access_token);
-                this.router.navigate(['/home'])
-            }, err => {
-                console.log(err);
-                this.onIsError();
+            this._authService.showLoading(false, 'Iniciando sesión', 'Espere por favor');
+            this._authService.logIn( cedula, password ).subscribe( {
+                next: (response) => {
+                    this._authService.guardarToken(response.access_token);
+                    this._authService.guardarUsuario(response.access_token);
+                    Swal.close()
+                    this.router.navigate(['/home'])
+                }, 
+                error: (err) => {
+                    console.log(err);
+                    Swal.close()
+                    this.onIsError();
+                }
             });
         } else {
             this.onIsError();

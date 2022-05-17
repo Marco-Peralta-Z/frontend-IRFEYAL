@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-usuario.service';
 import { AuthService } from '../../Servicio/auth/auth.service';
 import { usuario } from '../../Model/rolesTS/usuario';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -35,8 +36,12 @@ export class HeaderComponent implements OnInit {
   }
 
   cerrarSesion() {
+    this._authService.showLoading(false, 'Cerrando sessión', 'Espere por favor');
     this._authService.logOut();
-    this.router.navigate(['/login']);
+    setTimeout(() => {
+      Swal.close();
+      this.router.navigate(['/login']);
+    }, 1000);
   }
 
 }
