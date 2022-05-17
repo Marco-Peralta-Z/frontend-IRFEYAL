@@ -26,7 +26,6 @@ export class RolGuard implements CanActivate {
       }
     }
     // si no tiene ningun rol requerido cerramos session
-    console.log('no tiene acceso');
     Swal.fire('Oooops!', 'acceso denegado','warning');
     this._router.navigate(['/home']);
     return false;
