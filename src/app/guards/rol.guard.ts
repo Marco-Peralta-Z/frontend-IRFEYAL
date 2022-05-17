@@ -16,7 +16,7 @@ export class RolGuard implements CanActivate {
   }
   canActivate(  route: ActivatedRouteSnapshot ): Observable<boolean> | boolean {
     if ( !this._authService.isAuthenticated() ) {
-      this._router.navigate(['login']);
+      this._router.navigate(['/login']);
       return false;
     }
     let role = route.data['role'];

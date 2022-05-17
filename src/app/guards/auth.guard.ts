@@ -19,12 +19,12 @@ export class AuthGuard implements CanActivate {
       if( this.isTokenExpired() ) {
         this._authService.logOut();
         Swal.fire('Oooops!', 'Sessión caducada','warning');
-        this._router.navigate(['login']);
+        this._router.navigate(['/login']);
         return false;
       }
       return true;
     }
-    this._router.navigate(['login']);
+    this._router.navigate(['/login']);
     return false;
   }
 
