@@ -14,8 +14,8 @@ import { AuthService } from '../../Servicio/auth/auth.service';
 export class LoginComponent implements OnInit {
 
     public logInForm: FormGroup = this._formBuilder.group({
-        cedula: [ '0102184322' , [ Validators.required]],
-        password: [ '123' , [ Validators.required]]
+        cedula: [  , [ Validators.required]],
+        password: [  , [ Validators.required]]
     });
 
     public isError = false;
