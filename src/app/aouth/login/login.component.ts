@@ -4,6 +4,8 @@ import { PrimeNGConfig } from 'primeng/api';
 import { Path } from 'src/app/config';
 import { usuario } from 'src/app/Model/rolesTS/usuario';
 import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-usuario.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../Servicio/auth/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -12,10 +14,19 @@ import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-us
 })
 export class LoginComponent implements OnInit {
 
+    public logInForm: FormGroup = this._formBuilder.group({
+        cedula: [ '0102184322' , [ Validators.required]],
+        password: [ '123' , [ Validators.required]]
+    });
+
     sideBarOpen = true;
-    constructor(private router: Router,
+    constructor(
+        private _formBuilder: FormBuilder,
+        private router: Router,
         private userservi: ServiceUsuarioService,
-        private primengConfig: PrimeNGConfig) { }
+        private _authService: AuthService,
+        private primengConfig: PrimeNGConfig
+    ) { }
 
 
     logeado: Boolean = new Boolean();
@@ -52,6 +63,24 @@ export class LoginComponent implements OnInit {
         }
 
 
+    }
+
+    logIn = () => {
+        if (this.logInForm.valid) {
+            let { cedula, password } = this.logInForm.value;
+            this._authService.logIn( cedula, password ).subscribe( response => {
+                console.log(response);
+                this.logeado = false;
+                this._authService.guardarToken(response.access_token);
+                this._authService.guardarUsuario(response.access_token);
+                // this.router.navigate(['home'])
+            }, err => {
+                console.log(err);
+                this.onIsError();
+            });
+        } else {
+            this.onIsError();
+        }
     }
 
 }

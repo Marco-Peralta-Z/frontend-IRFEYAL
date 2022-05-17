@@ -8,3 +8,8 @@ export let Path = {
 export let Api = {
     url: 'http://localhost:9070/'
 }
+
+export let AuthConfig = {
+    url: 'http://localhost:9070/',
+    credenciales: ""
+}

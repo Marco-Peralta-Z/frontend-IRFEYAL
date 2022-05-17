@@ -8,4 +8,5 @@ export class usuario {
     
     usuario: String=new String;
 
+    roles: string [] = [];
 }
