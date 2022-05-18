@@ -18,6 +18,15 @@ export class NuevoKitComponent implements OnInit {
         nombreKit: [, [Validators.required, Validators.minLength(3)]],
         precioKit: [, [Validators.required, Validators.minLength(3)]],
         periodo: [, [Validators.required, Validators.minLength(10)]],
+        //---------------aprobacion---------------
+        observacionAproba: [, [Validators.required, Validators.minLength(3)]],
+        estadoAproba:[, [Validators.required, Validators.minLength(3)]],
+        detalleControl: [, [Validators.required, Validators.minLength(3)]],
+        fechaAprobacion: [, [Validators.required, Validators.minLength(3)]],
+        fechaControl: [, [Validators.required, Validators.minLength(3)]],
+        id_empleado_admin: [, [Validators.required, Validators.minLength(3)]],
+        //-----------------------secretaria 
+        id_secretaria: [, [Validators.required, Validators.minLength(3)]],
     })
 
 
@@ -69,9 +78,7 @@ export class NuevoKitComponent implements OnInit {
 
 
     guardarKit() {
-        if (this.validarTxt() == true) {
-
-        }
+       console.log('guardarKit                --------->', this.nuevoKit);
 
     }
     validarTxt(): boolean {

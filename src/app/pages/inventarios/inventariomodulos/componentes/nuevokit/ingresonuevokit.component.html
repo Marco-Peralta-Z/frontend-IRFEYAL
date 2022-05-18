@@ -24,8 +24,8 @@
             </div>
 
             <div class="field col-12 md:col-4">
-                <p-dropdown [options]="periodosLista" [(ngModel)]="nuevoKit.id_kit.precio_kit" 
-                placeholder="Seleccionar el periodo" optionLabel="periodo" [showClear]="true" name="periodo" formControlName="periodo"></p-dropdown>
+                <p-dropdown inputId="dropdown" [autoDisplayFirst]="false" [options]="periodosLista" [(ngModel)]="nuevoKit.id_kit.periodo" 
+                optionLabel="name" formControlName="periodo"></p-dropdown>
                 <span class="form-text text-danger" *ngIf="campoValido('periodo')">
                     Este campo es obligatorio!
                 </span>
