@@ -58,6 +58,14 @@ const routes: Routes = [
     data: { role: [ 'ROLE_Administrador', 'ROLE_secretaria' ] }
   },
 
+  // agrego modulo de parametrizacion para rederisar
+  {
+    path: 'parametrizacion',
+    loadChildren: () => import('./Routing/parametrizacion/parametrizacion.module').then(m => m.ParametrizacionModule),
+    canActivate: [ AuthGuard, RolGuard ],
+    data: { role: [ 'ROLE_Administrador', 'ROLE_secretaria' ] }
+  },
+
   { 
     path: 'asistencia', 
     loadChildren: () => import('./Routing/asistencia/asistencia.module').then(m => m.AsistenciaModule),
