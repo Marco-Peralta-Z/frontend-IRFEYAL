@@ -2,7 +2,7 @@ import { Malla } from "./Malla";
 
 export class Periodo {
 
-    id_periodo: Number = 0;
+    id_periodo ?: Number;
 
     actividades: String = "";
 
@@ -18,5 +18,5 @@ export class Periodo {
 
     costo_matricula: Number = 0;
 
-    id_malla: Malla = new Malla;
+    malla: Malla = new Malla;
 }

@@ -81,7 +81,11 @@ import {ConfirmPopupModule} from 'primeng/confirmpopup';
     SidebarModule, StepsModule, SkeletonModule,
     SplitButtonModule, StyleClassModule, PasswordModule,
     TabMenuModule,CheckboxModule, InputTextareaModule,
+<<<<<<< HEAD
+    ConfirmDialogModule,PickListModule,MatIconModule
+=======
     ConfirmDialogModule,PickListModule,MatIconModule,RadioButtonModule
+>>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
   ]
 
 })

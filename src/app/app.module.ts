@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,11 @@ import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
+<<<<<<< HEAD
+import { CategoriaComponent } from './pages/modulo_inventario/categoria/categoria.component';
+import { ArticuloComponent } from './pages/modulo_inventario/articulo/articulo.component';
+=======
+>>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
 import { ParametrizacionRoutingModule } from './Routing/parametrizacion/parametrizacion-routing.module';
 import { ErrorRoutingModule } from './Routing/error/error-routing.module';
 import { AsistenciaRoutingModule } from './Routing/asistencia/asistencia-routing.module';
@@ -31,6 +36,9 @@ import { PeriodoComponent } from './pages/parametrizacion/periodo/periodo.compon
 import { MallaComponent } from './pages/parametrizacion/malla/malla.component';
 import { AsignaturasComponent } from './pages/parametrizacion/asignaturas/asignaturas.component';
 import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component';
+<<<<<<< HEAD
+import { UsuarioComponent } from './pages/rol_usuario/usuario/usuario.component';
+=======
 import { ArticuloComponent } from './pages/inventarios/invnetarioarticulos/articulo/articulo.component';
 import { NuevoKitComponent } from './pages/inventarios/inventariomodulos/componentes/nuevokit/ingresosnuevokit.component';
 import { KitComponent } from './pages/inventarios/inventariomodulos/kit/kit.component';
@@ -48,28 +56,34 @@ import { RegistrarasistenciaComponent } from './pages/modulo_asistencia/registra
 import { GenerarPlanunidadComponent } from './pages/documentos_academicos/generar-planunidad/generar-planunidad.component';
 import { RevisarPlanunidadComponent } from './pages/documentos_academicos/revisar-planunidad/revisar-planunidad.component';
 
+>>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
 
-registerLocaleData(localeES);
-// ------------------------------------
+
 @NgModule({
   declarations: [
     AppComponent,
-    ActividadesRegistroComponent,
-    DeudasConsultaComponent,
     HomeComponent,
     Error404Component,
     LoginComponent,
     HeaderComponent,
     SidenavComponent,
+<<<<<<< HEAD
+    CategoriaComponent,
+    ArticuloComponent,
+=======
     ArticuloComponent,
     KitComponent,
     TablaAprobacionesKit,
     IngresosKitComponent,
     NuevoKitComponent,
+>>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
     PeriodoComponent,
     MallaComponent,
     AsignaturasComponent,
     CursosComponent,
+<<<<<<< HEAD
+    UsuarioComponent
+=======
     UsuarioComponent,
     ListarasistenciaComponent,
     RegistrarasistenciaComponent,
@@ -77,10 +91,10 @@ registerLocaleData(localeES);
     RevisarPlanunidadComponent
 
 
+>>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
   ],
   imports: [
     BrowserModule,
-    DataTablesModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     ParametrizacionRoutingModule,
@@ -96,6 +110,7 @@ registerLocaleData(localeES);
     AsistenciaRoutingModule,
     DocumentacionAcademicosRoutingModule,
     InventariosRoutingModule,
+    MatriculasRoutingModule,
     PagosRoutingModule,
     RolesRoutingModule,
     TutoriasRoutingModule,
@@ -105,8 +120,12 @@ registerLocaleData(localeES);
     ErrorRoutingModule
 
   ],
+<<<<<<< HEAD
+  providers: [DatePipe, { provide: LocationStrategy, useClass: HashLocationStrategy }],
+=======
   providers: [DatePipe, { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: LOCALE_ID, useValue: 'es-EC' }],
+>>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
   bootstrap: [AppComponent]
 })
 export class AppModule { }

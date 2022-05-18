@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Api } from 'src/app/config';
 import { Asignatura } from 'src/app/Model/Parametrizacion/Asignatura';
 import { Asignatura_Empleado } from 'src/app/Model/Parametrizacion/Asignatura_Empleado';
+import { empleado } from 'src/app/Model/rolesTS/empleado';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,6 +11,7 @@ export class AsignaturaService {
 
   constructor(private http: HttpClient) { }
   private url = Api.url + "asignatura";
+  private url2 = Api.url + "mapEmpleado";
 
   getAsignaturas() {
     return this.http.get<Asignatura[]>(this.url);
@@ -28,5 +30,11 @@ export class AsignaturaService {
 
   deleteAsig(asig: Asignatura) {
     return this.http.delete<Asignatura>(this.url + "/deleteAsig/" + asig.id_asignatura);
+  }
+
+  //Empleados
+
+  getEmpleados(){
+    return this.http.get<empleado[]>(this.url2+"/empleado")
   }
 }

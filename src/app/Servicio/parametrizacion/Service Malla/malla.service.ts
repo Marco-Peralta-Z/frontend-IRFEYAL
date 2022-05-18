@@ -8,9 +8,9 @@ import { Malla } from 'src/app/Model/Parametrizacion/Malla';
 })
 export class MallaService {
 
-  constructor(private http:HttpClient) { }
-  private url=Api.url+"malla"
-  getAllMalla(){
-    return this.http.get<Malla[]>(this.url+"/views")
+  constructor(private http: HttpClient) { }
+  private url = Api.url + "malla"
+  getAllMalla() {
+    return this.http.get<Malla[]>(this.url )
   }
 }
