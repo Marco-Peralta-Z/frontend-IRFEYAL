@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,10 +18,8 @@ import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { CategoriaComponent } from './pages/inventarios/invnetarioarticulos/categoria/categoria.component';
-import { ArticuloComponent } from './pages/inventarios/invnetarioarticulos/articulo/articulo.component';
-import { KitComponent } from './pages/inventarios/inventariomodulos/kit/kit.component';
-import { AprobacionesCmponent } from './pages/inventarios/inventariomodulos/listar-aprobaciones/aprobacion.component';
+import { CategoriaComponent } from './pages/modulo_inventario/categoria/categoria.component';
+import { ArticuloComponent } from './pages/modulo_inventario/articulo/articulo.component';
 import { ParametrizacionRoutingModule } from './Routing/parametrizacion/parametrizacion-routing.module';
 import { ErrorRoutingModule } from './Routing/error/error-routing.module';
 import { AsistenciaRoutingModule } from './Routing/asistencia/asistencia-routing.module';
@@ -36,47 +34,27 @@ import { PeriodoComponent } from './pages/parametrizacion/periodo/periodo.compon
 import { MallaComponent } from './pages/parametrizacion/malla/malla.component';
 import { AsignaturasComponent } from './pages/parametrizacion/asignaturas/asignaturas.component';
 import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component';
-<<<<<<< HEAD
 import { UsuarioComponent } from './pages/rol_usuario/usuario/usuario.component';
-=======
-import { DataTablesModule } from "angular-datatables";
-import { ActividadesRegistroComponent } from './pages/tutorias/actividadesRegistro/actividadesRegistro.component';
-import { DeudasConsultaComponent } from './pages/tutorias/deudasConsulta/deudasConsulta.component';
-// Cambio de idioma 
-import localeES  from '@angular/common/locales/es-EC';
-import {registerLocaleData} from '@angular/common';
->>>>>>> 33ea178d1a9887652ee410e7564eb99003c65213
 
-registerLocaleData(localeES);
-// ------------------------------------
+
 @NgModule({
   declarations: [
     AppComponent,
-    ActividadesRegistroComponent,
-    DeudasConsultaComponent,
     HomeComponent,
     Error404Component,
     LoginComponent,
     HeaderComponent,
     SidenavComponent,
-    AprobacionesCmponent,
     CategoriaComponent,
     ArticuloComponent,
-    KitComponent,
     PeriodoComponent,
     MallaComponent,
     AsignaturasComponent,
     CursosComponent,
-<<<<<<< HEAD
     UsuarioComponent
-=======
-    ArticuloComponent
-
->>>>>>> 33ea178d1a9887652ee410e7564eb99003c65213
   ],
   imports: [
     BrowserModule,
-    DataTablesModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     ParametrizacionRoutingModule,
@@ -92,6 +70,7 @@ registerLocaleData(localeES);
     AsistenciaRoutingModule,
     DocumentacionAcademicosRoutingModule,
     InventariosRoutingModule,
+    MatriculasRoutingModule,
     PagosRoutingModule,
     RolesRoutingModule,
     SecretariaRoutingModule,
@@ -101,8 +80,7 @@ registerLocaleData(localeES);
     ErrorRoutingModule
     
   ],
-  providers: [DatePipe, { provide: LocationStrategy, useClass: HashLocationStrategy},
-              {provide:LOCALE_ID,useValue: 'es-EC'}],
+  providers: [DatePipe, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

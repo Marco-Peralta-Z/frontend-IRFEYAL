@@ -21,6 +21,6 @@ export class empleado {
 
     CorreoElectronico: correoElectronico = new correoElectronico;
 
-    persona: persona = new persona;
+    id_persona: persona = new persona;
 
 }

@@ -40,104 +40,24 @@ export let item = {
 
         {
             label: 'Inventario',
-            icon: 'fa fa-book',
-            items: [
-                {
-                    label: 'Inventario Modulos',
-                    icon: 'pi pi-fw pi-book',
-                    routerLink:'inventariosModule/kit',
-                    items: [
-                        {
-                            label:'Mantenimiento Kits',
-                            icon:'fa fa-book',
-                            routerLink:'inventariosModule/kit'
-                        },
-                        {
-                            label:'Aprobaciones',
-                            icon:'fa fa-book',
-                            routerLink:'inventariosModule/aprobaciones'
-                        }
-                    ]
-                },
-                {
-                    label: 'Inventario Articulos',
-                    icon: 'fa fa-book',
-                    routerLink:'inventariosModule/kit',
-                    items: [
-                        {
-                            label:'Mantenimiento articulos',
-                            icon:'fa fa-book',
-                            routerLink:'inventariosModule/articulo'
-                        },
-                       
-                    ]
-                },
-                
-            ]
-        },
-        {
-            label: 'Tutorias',
             icon: 'pi pi-fw pi-book',
             items: [
                 {
-                    label: 'Registro De Actividades',
+                    label: 'Categoria',
                     icon: 'fa fa-plus-square',
-                    routerLink: 'tutorias/tutorias/actividadesRegistro'
+                    routerLink: 'inventario/categoria'
                 },
                 {
-<<<<<<< HEAD
                     label: 'Articulo',
                     icon: 'fa fa-book',
                     routerLink: 'inventario/articulo'
-=======
-                    label:'Consulta De Deudas',
-                    icon:'fa fa-book',
-                    routerLink:'tutorias/tutorias/deudasConsulta'
-                }
-            ]
-        },
-         {
-            label: 'Matriculas',
-            icon: 'pi pi-folder',
-            items: [
-                {
-                    label: 'Matricula',
-                    icon: 'pi pi-list',
-                    items:[
-                        {
-                            label: 'crear',
-                            icon: 'pi pi-plus',
-                            routerLink: 'matriculaModule/listarMatriculas',
-                        },
-                        {
-                            label:'Listar',
-                            icon:'fa fa-book',
-                            routerLink: 'matriculaModule/listarMatriculas',
-                        } 
-                    ]
-                },
-                {
-                    label:'Estudiantes',
-                    icon:'pi pi-users',
-                    items:[
-                        {
-                            label: 'Registrar',
-                            icon: 'pi pi-plus',
-                            routerLink:'matriculaModule/agregarEstudiante'
-                        },
-                        {
-                            label:'Listar',
-                            icon:'fa fa-book',
-                            routerLink:'matriculaModule/listarEstudiantes'
-                        } 
-                    ]
-                   
->>>>>>> 33ea178d1a9887652ee410e7564eb99003c65213
                 }
             ]
         }
+
     ]
 }
+
 export let responsive = {
     responsiveOptions: [
         {
