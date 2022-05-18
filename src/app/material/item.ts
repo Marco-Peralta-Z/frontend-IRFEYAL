@@ -40,6 +40,44 @@ export let item = {
 
         {
             label: 'Inventario',
+<<<<<<< HEAD
+=======
+            icon: 'fa fa-book',
+            items: [
+                {
+                    label: 'Inventario Modulos',
+                    icon: 'pi pi-fw pi-book',
+                    items: [
+                        {
+                            label: 'Mantenimiento Kits',
+                            icon: 'fa fa-book',
+                            routerLink: 'inventariosModule/kit'
+                        },
+                        {
+                            label: 'Aprobaciones',
+                            icon: 'fa fa-book',
+                            routerLink: 'inventariosModule/aprobaciones'
+                        }
+                    ]
+                },
+                {
+                    label: 'Inventario Articulos',
+                    icon: 'fa fa-book',
+                    items: [
+                        {
+                            label: 'Mantenimiento articulos',
+                            icon: 'fa fa-book',
+                            routerLink: 'inventariosModule/articulo'
+                        },
+
+                    ]
+                },
+
+            ]
+        },
+        {
+            label: 'Tutorias',
+>>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
             icon: 'pi pi-fw pi-book',
             items: [
                 {
@@ -51,10 +89,87 @@ export let item = {
                     label: 'Articulo',
                     icon: 'fa fa-book',
                     routerLink: 'inventario/articulo'
+<<<<<<< HEAD
                 }
             ]
         }
 
+=======
+                }
+            ]
+        },
+        {
+            label: 'Matriculas',
+            icon: 'pi pi-folder',
+            items: [
+                {
+                    label: 'Matricula',
+                    icon: 'pi pi-list',
+                    items: [
+                        {
+                            label: 'crear',
+                            icon: 'pi pi-plus',
+                            routerLink: 'matriculaModule/agregarMatricula',
+                        },
+                        {
+                            label: 'Listar',
+                            icon: 'fa fa-book',
+                            routerLink: 'matriculaModule/listarMatriculas',
+                        }
+                    ]
+                },
+                {
+                    label: 'Estudiantes',
+                    icon: 'pi pi-users',
+                    items: [
+                        {
+                            label: 'Registrar',
+                            icon: 'pi pi-plus',
+                            routerLink: 'matriculaModule/agregarEstudiante'
+                        },
+                        {
+                            label: 'Listar',
+                            icon: 'fa fa-book',
+                            routerLink: 'matriculaModule/listarEstudiantes'
+                        }
+                    ]
+                }
+
+            ]
+        },
+        {
+            label: 'Asistencia',
+            icon: 'pi pi-folder',
+            items: [
+                {
+                    label: 'Listar',
+                    icon: 'fa fa-plus-square',
+                    routerLink: 'asistencia/listarAsistencia'
+                },
+                {
+                    label: 'Registrar',
+                    icon: 'fa fa-book',
+                    routerLink: 'asistencia/agregarAsistencia'
+                }
+            ]
+        },
+        {
+            label: 'Documentos Academicos',
+            icon: 'pi pi-paperclip',
+            items: [
+                {
+                    label: 'Generar Plan de Unidad',
+                    icon: 'fa fa-plus',
+                    routerLink: 'documentosacademicos/generarplandeunidad'
+                },
+                {
+                    label: 'Revisar Plan de Unidad',
+                    icon: 'fa fa-check-square',
+                    routerLink: 'documentosacademicos/revisarplandeunidad'
+                }
+            ]
+        },
+>>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
     ]
 }
 

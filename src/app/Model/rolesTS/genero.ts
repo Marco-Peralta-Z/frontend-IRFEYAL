@@ -1,8 +1,8 @@
 
 export class genero{
     
-    id_genero : Number=0;
+    id_genero : number=0;
 		
-     genero : String="";
+     genero : string="";
 
 }

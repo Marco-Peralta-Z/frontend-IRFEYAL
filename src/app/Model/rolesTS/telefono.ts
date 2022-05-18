@@ -2,11 +2,13 @@ import { extension } from "./extension";
 
 export class telefono {
 
-    id_telefono: number = 0;
+    id_telefono?: number;
 
-    num_celular: string = "";
+    numCelular: string = "";
+
+    telefono: string="";
     
-    extension: extension = new extension;
+    extension?: extension;
 
 
 }

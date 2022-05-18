@@ -2,13 +2,13 @@ import { genero } from "./genero";
 
 export class persona {
 
-  id_persona: number = 0;
+  id_persona?: number ;
 
   apellido: string = "";
 
-  cedula: String = "";
+  cedula: string = "";
 
-  fechaNacimiento: Date = new Date;
+  fechaNacimiento?: Date;
 
   nombre: string = "";
 

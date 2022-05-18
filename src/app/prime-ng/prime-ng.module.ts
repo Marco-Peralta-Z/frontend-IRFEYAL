@@ -48,19 +48,21 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { PasswordModule } from 'primeng/password';
 import {TabMenuModule} from 'primeng/tabmenu';
 import { CheckboxModule } from 'primeng/checkbox';
+import {RadioButtonModule} from 'primeng/radiobutton';
 import { PickListModule } from 'primeng/picklist';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DragDropModule } from 'primeng/dragdrop';
 import { AccordionModule } from 'primeng/accordion';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputMaskModule } from 'primeng/inputmask';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
 @NgModule({
 
   exports: [
-    InputMaskModule,ConfirmPopupModule,
+    AutoCompleteModule,InputMaskModule,ConfirmPopupModule,
     DragDropModule,AccordionModule ,FileUploadModule ,
     SplitterModule, AvatarModule, AvatarGroupModule,
     PanelMenuModule, TreeModule, MessagesModule,
@@ -79,7 +81,11 @@ import {ConfirmPopupModule} from 'primeng/confirmpopup';
     SidebarModule, StepsModule, SkeletonModule,
     SplitButtonModule, StyleClassModule, PasswordModule,
     TabMenuModule,CheckboxModule, InputTextareaModule,
+<<<<<<< HEAD
     ConfirmDialogModule,PickListModule,MatIconModule
+=======
+    ConfirmDialogModule,PickListModule,MatIconModule,RadioButtonModule
+>>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
   ]
 
 })
