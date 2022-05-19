@@ -1,0 +1,90 @@
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2">Asistencia</div>
+    <div class="page__content shadow p-3 ">
+
+        <!--Inicio Contenido-->
+        <div class="card">
+            <div class="container-fluid px-4">
+                <section class="py-5">
+            <div class="container" style="margin-top: 20px;">
+              <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6" id="miDiv">
+                    <!--mostrar informacion-->
+                    <div *ngIf='showDiv'>
+                      
+                        <div class="card">
+                            <p-dataView  [value]="Estudiante">
+                                <ng-template let-estudiante pTemplate="listItem">
+                                    <div>
+                                        <h2> Nombre:</h2>
+                                        <label class="input-black"> {{estudiante.id_persona.nombre}}</label><br>
+                                        <h2> Apellido:</h2>
+                                        <label class="input-black">  {{estudiante.id_persona.apellido}}</label><br>
+                                        <h2> cedula:</h2>
+                                        <label class="input-black">    {{estudiante.id_persona.cedula}}</label><br>
+                                    </div>
+                                </ng-template>
+                            </p-dataView>
+                        </div>
+                          <p-table [value]="fechas" styleClass="p-datatable-striped" responsiveLayout="scroll">
+                            <ng-template pTemplate="header">
+                              <tr>
+                                <th>asignatura</th>
+                                <th>Fechas</th>
+                                
+                              </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-product>
+                              <tr>
+                                <td>{{ product.idAsignatura.descripcion}}</td>   
+                              <td>{{ product.fecClase}}</td>             
+                              </tr>
+                            </ng-template>
+                          </p-table>
+                     
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div>
+                        <p-dropdown  [options]="paralelos" placeholder="Select a Paralelo" optionLabel="descripcion" filterBy="descripcion" optionValue="id_paralelo" (onChange)="onparalelo($event.value)" [showClear]="true"></p-dropdown>
+                        <p-dropdown  [options]="asignaturas" placeholder="Select a Asignatura" optionLabel="descripcion" filterBy="descripcion" optionValue="id_asignatura"  (onChange)="onSelect($event.value)" [showClear]="true"></p-dropdown>
+                        <p-dropdown  [options]="periodos" placeholder="Select a Perido" optionLabel="actividades" filterBy="actividades" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  [showClear]="true"></p-dropdown>
+                           <p-dropdown [options]="modalidades" placeholder="Select a Modalidad" optionLabel="descripcion" filterBy="descripcion" optionValue="id_modalidad"  (onChange)="onmodalidad($event.value)"  [showClear]="true"></p-dropdown>
+                           <input pInputText type="text" [(ngModel)]="filterValue" (input)="dt2.filterGlobal(filterValue, 'contains')" placeholder="Search..." />
+                        
+
+                      </div>
+  
+
+              <p-table #dt2 [value]="estudiantes" [globalFilterFields]="['id_persona.cedula']" styleClass="p-datatable-striped" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>id</th>
+                    <th>nombre</th>
+                    <th>Apellidos</th>
+                    <th scope="col">Mostrar Informacion</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                  <tr>
+                    <td>{{ product.id_estudiante }}</td>
+                    <td>{{ product.id_persona.nombre}}</td>
+                    <td>{{ product.id_persona.apellido}}</td>
+                    <td><button pButton pRipple type="button" #im label="mostrar" class="p-button-raised" value="{{product.id_estudiante}}" (click)="mostrarinfo(product.id_estudiante)"></button></td>
+                  </tr>
+                </ng-template>
+              </p-table>
+              </div>
+              </div>
+            </div>
+              </section>
+            </div>
+        </div>
+
+
+
+       
+       
+        <!--Fin Contenido-->
+    </div>
+</div>

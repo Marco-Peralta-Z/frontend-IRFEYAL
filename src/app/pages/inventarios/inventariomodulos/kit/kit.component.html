@@ -1,0 +1,26 @@
+<div class="container-fluid page">
+  <div class="d-flex page__box p-3 mt-2">Mantenimientos kits</div>
+  <div class="page__content shadow p-3 position-relative">
+
+    <!--Inicio Contenido-->
+    <div>
+      <p-menubar [model]="itemsMenu">
+      </p-menubar>
+      <p-card id="contenTablaApro" [ngStyle]="{'display':tablaAprobacionesKit}">
+        <tabla-aprobaciones></tabla-aprobaciones>
+      </p-card>
+      <p-card id="contenTablaIngresos" [ngStyle]="{'display':tablaIngresosKit}">
+        <tabla-ingresoskit></tabla-ingresoskit>
+      </p-card>
+      <p-card id="contenTablaIngresos" [ngStyle]="{'display':addKit}">
+        <add-ingresosNuevokit></add-ingresosNuevokit>
+      </p-card>
+
+    </div>
+    <!--Find Contenido-->
+  </div>
+
+</div>
+
+
+<!--Content tabla -->
