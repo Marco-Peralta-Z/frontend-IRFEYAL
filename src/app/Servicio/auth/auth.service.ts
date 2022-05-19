@@ -23,7 +23,7 @@ export class AuthService {
     if ( this._usuario != null ) {
       return this._usuario;
     } else if ( this._usuario == null && sessionStorage.getItem('usuario') != null ) {
-      this._usuario = JSON.parse(sessionStorage.getItem('usuario')!) as usuario;
+      this._usuario = JSON.parse(sessionStorage.getItem('usuario') || '') as usuario;      
       return this._usuario;
     }
 
@@ -104,7 +104,8 @@ export class AuthService {
 
   // verificamos que contega el rol permitido
   hasRole = (role: string): boolean => {
-    if (this._usuario?.roles.includes(role)) {
+    this._usuario = this.usuario;
+    if ( this._usuario != null && this._usuario != undefined && this._usuario?.roles.includes(role)) {
       return true;
     }
     return false;

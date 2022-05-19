@@ -7,15 +7,16 @@
     <p-carousel [value]="items" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1" [circular]="true"
       [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions">
       <ng-template let-i pTemplate="item">
-        <div class="product-item">
+        <div class="product-item" *ngIf="i.visible">
           <div class="product-item-content">
             <p-fieldset legend=" {{i.label}}">
               <div class="{{i.icon}} product-image" style="font-size:50px;"></div>
               <div class="car-buttons mt-5" *ngIf="i.items!=null">
+
                 <p-scrollPanel>
                   <p-listbox  [options]="i.items" [(ngModel)]="selecMenu" optionLabel="label"
                     (onClick)="RedicMenu()">
-                  </p-listbox>
+                  </p-listbox>                 
                   <p-scrollTop target="parent" styleClass="custom-scrolltop" [threshold]="100" icon="pi pi-arrow-up">
                   </p-scrollTop>
                 </p-scrollPanel>

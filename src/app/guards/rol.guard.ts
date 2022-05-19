@@ -21,7 +21,7 @@ export class RolGuard implements CanActivate {
     }
     let role = route.data['role'];
     for (let i = 0; i < role.length; i++) {
-      // vemos si un rol hace mach con los del token
+      // vemos si un rol hace match con los del token
       if ( this._authService.hasRole(role[i])) {
         return true;
       }
