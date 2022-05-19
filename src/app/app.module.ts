@@ -18,11 +18,6 @@ import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
-<<<<<<< HEAD
-import { CategoriaComponent } from './pages/modulo_inventario/categoria/categoria.component';
-import { ArticuloComponent } from './pages/modulo_inventario/articulo/articulo.component';
-=======
->>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
 import { ParametrizacionRoutingModule } from './Routing/parametrizacion/parametrizacion-routing.module';
 import { ErrorRoutingModule } from './Routing/error/error-routing.module';
 import { AsistenciaRoutingModule } from './Routing/asistencia/asistencia-routing.module';
@@ -56,8 +51,6 @@ import { RegistrarasistenciaComponent } from './pages/modulo_asistencia/registra
 import { GenerarPlanunidadComponent } from './pages/documentos_academicos/generar-planunidad/generar-planunidad.component';
 import { RevisarPlanunidadComponent } from './pages/documentos_academicos/revisar-planunidad/revisar-planunidad.component';
 
->>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
-
 
 @NgModule({
   declarations: [
@@ -67,16 +60,6 @@ import { RevisarPlanunidadComponent } from './pages/documentos_academicos/revisa
     LoginComponent,
     HeaderComponent,
     SidenavComponent,
-<<<<<<< HEAD
-    CategoriaComponent,
-    ArticuloComponent,
-=======
-    ArticuloComponent,
-    KitComponent,
-    TablaAprobacionesKit,
-    IngresosKitComponent,
-    NuevoKitComponent,
->>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
     PeriodoComponent,
     MallaComponent,
     AsignaturasComponent,
