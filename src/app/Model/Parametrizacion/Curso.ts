@@ -1,4 +1,5 @@
 import { empleado } from "../rolesTS/empleado";
+import { Paralelo } from "./Paralelo";
 
 export class Curso {
     
@@ -12,5 +13,5 @@ export class Curso {
 
     id_empleado: empleado = new empleado;
 
-    paralelo
+    paralelo:Paralelo[]=[];
 }

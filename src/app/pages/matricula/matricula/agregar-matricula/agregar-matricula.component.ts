@@ -7,12 +7,6 @@ import { Curso } from '../../../../Model/Parametrizacion/Curso';
 import { MatriculaService } from '../../../../Servicio/moduloMatricula/matriculaServices/matricula.service';
 import { MessageService } from 'primeng/api';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Modalidad } from '../../../../Model/Parametrizacion/Modalidad';
-import { Periodo } from '../../../../Model/Parametrizacion/Periodo';
-import { Paralelo } from '../../../../Model/Parametrizacion/Paralelo';
-import { usuario } from '../../../../Model/rolesTS/usuario';
-import { Router } from '@angular/router';
-import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-agregar-matricula',
@@ -24,15 +18,10 @@ export class AgregarMatriculaComponent implements OnInit {
   selectedProvincia: provincia[] = [];
   estudiante: Estudiante = new Estudiante();
   matricula: Matricula = new Matricula();
-  user: usuario = new usuario();
   filteredProvincia: provincia[] = [];
   cursos: Curso[] = [];
-  jornadas: Modalidad[]=[];
-  periodos: Periodo[]=[];
-  paralelos: Paralelo[]=[];
   errores: string[] = [];
   provincias: provincia[] = [];
-  fecha: Date= new Date();
   activeIndex1: number = 0;
   cedula: string = "";
   fullName: string = "";
@@ -46,40 +35,36 @@ export class AgregarMatriculaComponent implements OnInit {
   campo: string = "Cedula incompleta!";
 
   matriculaFormulario: FormGroup = this.fb.group({
-    cedula: [],
-    nameComplete: [, [Validators.required]],
-    nacimiento: [, [Validators.required]],
-    genero: [, [Validators.required]],
+    cedula: [, [Validators.required]],
+    nameComplete: [, Validators.required],
+    nacimiento: [, Validators.required],
+    genero: [, Validators.required],
     Rcedula: [, [Validators.required]],
-    RnameComplete: [, [Validators.required]],
-    Rjornada: [, [Validators.required]],
-    Rcurso: [, [Validators.required]],
-    Rfecha: [, [Validators.required]],
-    Rmodalidad: [, [Validators.required]],
-    Rlectivo: [, [Validators.required]],
-    callePrincipal: [, [Validators.required]],
-    calleSecundaria: [, [Validators.required]],
+    RnameComplete: [, Validators.required],
+    Rnacimiento: [, Validators.required],
+    Rgenero: [, Validators.required],
+    callePrincipal: [, Validators.required],
+    calleSecundaria: [, Validators.required],
     provincia: [, [Validators.required]],
     canton: [, [Validators.required]],
     parroquia: [, [Validators.required]],
     telefono: [, [Validators.required]],
     celular: [, [Validators.required]],
     email: [, [Validators.required]],
-    inscripcion: [,[Validators.required]],
-    copCedula:[,[Validators.required]],
-    copVotacion:[,[Validators.required]],
-    certMatricula:[, [Validators.required]],
-    city:[,],
-    periodo:['',[Validators.required]],
-    curso:['',[Validators.required]],
-    paralelo:['',[Validators.required]],
-    jornada:['',[Validators.required]]
+    inscripcion: [,Validators.required],
+    copCedula:[,Validators.required],
+    copVotacion:[,Validators.required],
+    certMatricula:[, Validators.required],
+    city:[],
+    periodo:[,Validators.required],
+    curso:[,Validators.required],
+    paralelo:[,Validators.required],
+    jornada:[,Validators.required]
   });
 
 
   constructor(private estudianteService: EstudianteService,
     private matriculaService: MatriculaService,
-    private router: Router,
     private messageService: MessageService,
     private fb: FormBuilder) { }
 
@@ -88,7 +73,9 @@ export class AgregarMatriculaComponent implements OnInit {
     this.estudianteService.getProvincias()
       .subscribe(provincia => this.provincias = provincia);
 
-   this.cargarCombox();
+
+    this.matriculaService.getCursos()
+      .subscribe(curso => this.cursos = curso);
   }
 
 
@@ -116,8 +103,6 @@ export class AgregarMatriculaComponent implements OnInit {
       this.estudianteService.getEstudiantePorCedula(this.cedula.trim())
         .subscribe(estudiante => {
           this.estudiante = estudiante
-          this.matricula.estudiante=estudiante;
-          this.matricula.fechaMatricula= new Date();
           this.fullName = this.estudiante.id_persona.nombre + " " + this.estudiante.id_persona.apellido
           this.mens = "Estudiante Encontrado"
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Busqueda', detail: 'Estudiante Encontrado' });
@@ -135,43 +120,5 @@ export class AgregarMatriculaComponent implements OnInit {
       this.campo = "No se permite campos vacios"
     }
 
-  }
-
-
-  guardarMatricula(){
-
-    // if (this.matriculaFormulario.invalid) {
-    //   this.matriculaFormulario.markAllAsTouched();
-    //   this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'El formulario contiene errores' });
-    //   return;
-    // }
-    this.user.id_usuario=2;
-    this.matricula.usuario=this.user;
-    this.matriculaService.postMatricula(this.matricula)
-    .subscribe(newMatricula =>{
-      this.messageService.add({key: 'tc', severity:'success', summary: 'Nueva Matricula', detail: `Nuevo id: ${newMatricula.id_matricula} creado con exito!`});
-      this.activeIndex1=0;
-      this.selectedRequerimientos=[];
-      this.cedula="";
-  
-      // setTimeout(()=>{
-      //   this.matriculaFormulario.reset();
-      // },2500)
-    });
-  }
-
-  cargarCombox(){
-    this.matriculaService.getCursos()
-    .subscribe(curso => this.cursos = curso);
-
-  this.matriculaService.getPeriodos()
-  .subscribe(periodo => this.periodos=periodo);
-
-  this.matriculaService.getParalelos()
-  .subscribe(paralelo => this.paralelos=paralelo);
-  }
-  buscarJornadaPorCurso(){
-    this.matriculaService.getJormadasPorCurso(this.matricula.curso.id_curso)
-    .subscribe(jornadas => this.jornadas=jornadas);
   }
 }

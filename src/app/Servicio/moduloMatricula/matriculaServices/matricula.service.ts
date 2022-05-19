@@ -1,59 +1,23 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Matricula } from '../../../Model/Matriculas/matricula';
 import { Curso } from '../../../Model/Parametrizacion/Curso';
-import { Modalidad } from '../../../Model/Parametrizacion/Modalidad';
-import { Api } from 'src/app/config';
-import { Periodo } from '../../../Model/Parametrizacion/Periodo';
-import { Paralelo } from '../../../Model/Parametrizacion/Paralelo';
-import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MatriculaService {
-private baseUrl: string = Api.url;
-
+private baseUrl: string = environment.baseUrl;
+private baseCursos: string = 'http://localhost:9070/curso'
   constructor(private http: HttpClient) { }
 
   getMatricula():Observable<Matricula[]>{
-    return this.http.get<Matricula[]>(`${this.baseUrl}api/matricula`);
+    return this.http.get<Matricula[]>(`${this.baseUrl}/matricula`);
   }
 
   getCursos():Observable<Curso[]>{
-    return this.http.get<Curso[]>(`${this.baseUrl}curso`);
-  }
-
-  getJornadas():Observable<Modalidad[]>{
-    return this.http.get<Modalidad[]>(`${this.baseUrl}modalidad`);
-  }
-
-  getJormadasPorCurso(id_curso: number):Observable<Modalidad[]>{
-    return this.http.get<Modalidad[]>(`${this.baseUrl}modalidad/getJormadasPorCurso/${id_curso}`);
-  }
-
-  getPeriodos():Observable<Periodo[]>{
-    return this.http.get<Periodo[]>(`${this.baseUrl}periodo`);
-  }
-
-  getParalelos():Observable<Paralelo[]>{
-    return this.http.get<Paralelo[]>(`${this.baseUrl}paralelo`);
-  }
-
-  postMatricula(matricula: Matricula): Observable<Matricula>{
-    return this.http.post<Matricula>(`${this.baseUrl}api/matricula`, matricula).pipe(
-      map((response: any) => response.estudiante as Matricula),
-      catchError(e => {
-        if (e.status == 400) {
-          return throwError(e);
-        }
-        if (e.error.mensaje) {
-          console.log(e.error.mensaje);
-        }
-        return throwError(e);
-      })
-    );
+    return this.http.get<Curso[]>(`${this.baseCursos}`);
   }
 }
