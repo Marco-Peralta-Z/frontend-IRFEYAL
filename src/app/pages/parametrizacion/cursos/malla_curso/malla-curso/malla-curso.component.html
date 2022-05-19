@@ -1,0 +1,47 @@
+<!--Panel para Asignaturas y Docentes-->
+<div class="card">
+
+
+    <p-table #dt [value]="liscursos" dataKey="descripcion" responsiveLayout="scroll" [scrollable]="true"
+        scrollHeight="400px" [rows]="5" [paginator]="true" [globalFilterFields]="['descripcion']"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Asignaturas">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Lista de Cursos y Dirigente</h5>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Buscar..." />
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="min-width:200px" pSortableColumn="descripcion">Curso<p-sortIcon field="descripcion">
+                    </p-sortIcon>
+                </th>
+                <th>Nombres del Dirigente</th>
+                <th>Correo del Dirigente</th>
+                <th>Extension del Dirigente</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-c let-expanded="expanded">
+            <tr>
+
+                <td style="min-width:200px; text-align: left;">{{c.descripcion}}</td>
+                <td>{{c.empleado.id_persona.cedula}}</td>
+                <td>{{c.empleado.id_persona.apellido}} {{c.empleado.id_persona.nombre}}</td>
+                <td>{{c.empleado.correo.correo}}</td>
+                <td>{{c.empleado.extension.nombre_extension}}</td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6">No sea encontrado ningun Curso</td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total se encontro {{liscursos ? liscursos.length : 0 }} Cursos
+            </div>
+        </ng-template>
+    </p-table>

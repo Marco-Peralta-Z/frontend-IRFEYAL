@@ -15,9 +15,10 @@
             </ng-template>
         </p-toolbar>
 
-        <p-table #dt [value]="malla" [rows]="10" [paginator]="true" responsiveLayout="scroll" dataKey="id"
+        <p-table #dt [value]="malla" [rows]="7" [paginator]="true" responsiveLayout="scroll" dataKey="id"
+            scrollHeight="400px" [globalFilterFields]="['descripcion']"
             currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Mallas Curriculares"
-            [showCurrentPageReport]="true">
+            [scrollable]="true" [showCurrentPageReport]="true">
             <ng-template pTemplate="caption">
                 <div class="flex align-items-center justify-content-between">
                     <h5 class="m-0">Lista de las Mallas Curriculares</h5>
@@ -31,7 +32,7 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th>Descripcion Malla </th>
-                    <th>Perdiodos Asignados</th>
+                    <th>Cursos Asignados</th>
                     <th>Materias Asignadas</th>
                     <th style="width: 8rem">
                         <div class="flex justify-content-center align-items-center">
@@ -47,20 +48,19 @@
                     </td>
                     <td>
                         <div class="flex justify-content-center align-items-center">
-                            <button pButton pRipple type="button" icon="fa fa-eye" (click)="op.toggle($event)"
-                                (click)="verPeriodo(m)"
-                                class="p-button-rounded p-button-warning p-button-text"></button>
+                            <button pButton pRipple type="button" icon="fa fa-eye" (click)="verCursos(m)"
+                                class="p-button-rounded p-button-secondary p-button-text"></button>
                         </div>
                     </td>
                     <td>
                         <div class="flex justify-content-center align-items-center">
-                            <button pButton pRipple type="button" icon="fa fa-eye"
-                                class="p-button-rounded p-button-warning p-button-text"></button>
+                            <button pButton pRipple type="button" icon="fa fa-eye" (click)=" verAsignaturas(m)"
+                                class="p-button-rounded p-button-secondary p-button-text"></button>
                         </div>
                     </td>
                     <td>
-                        <p-toggleButton [(ngModel)]="m.estado" onLabel="Activo" offLabel="Expirado" onIcon="pi pi-check"
-                            offIcon="pi pi-times" [style]="{'width': '10em'}"></p-toggleButton>
+                        <p-toggleButton [(ngModel)]="m.estado" onLabel="Activo" offLabel="Expirado" [disabled]="true"
+                            [style]="{'width': '5em'}"></p-toggleButton>
                     </td>
                 </tr>
             </ng-template>
@@ -71,34 +71,7 @@
             </ng-template>
         </p-table>
 
-        <p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '650px'}">
-            <ng-template pTemplate>
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>ACTIVIDADES</th>
-                            <th>COSTO MATRICULA</th>
-                            <th>COSTO MENSUAL</th>
-                            <th>FECHA ACTIVIDAD</th>
-                            <th>FECHA INICIO</th>
-                            <th>FECHA FIN</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{selecperiodo.actividades}}</td>
-                            <td>{{selecperiodo.costo_mensualidad}}</td>
-                            <td>{{selecperiodo.costo_matricula}}</td>
-                            <td>{{selecperiodo.fecha_activiti}}</td>
-                            <td>{{selecperiodo.fecha_inicio}}</td>
-                            <td>{{selecperiodo.fecha_fin}}</td>
-                        </tr>
-                    </tbody>
-                </table>
 
-               
-            </ng-template>
-        </p-overlayPanel>
         <!--Fin Contenido-->
     </div>
 </div>

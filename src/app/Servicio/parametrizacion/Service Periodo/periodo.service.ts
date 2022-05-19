@@ -13,4 +13,8 @@ export class PeriodoService {
   getAllPerdiodo() {
     return this.http.get<Periodo[]>(this.url)
   }
+
+  getPeridoId(id: any) {
+    return this.http.get<Periodo>(this.url +"/"+ id)
+  }
 }

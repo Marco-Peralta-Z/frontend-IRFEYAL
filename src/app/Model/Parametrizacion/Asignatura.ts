@@ -3,11 +3,11 @@ import { Horario } from "./Horario";
 import { Malla } from "./Malla";
 
 export class Asignatura {
-	id_asignatura?: Number;
+	id_asignatura!: Number;
 
-	descripcion!: String ;
+	descripcion!: String;
 
-	fecha_creacion!: Date ;
+	fecha_creacion!: Date;
 
 	empleados!: empleado[];
 

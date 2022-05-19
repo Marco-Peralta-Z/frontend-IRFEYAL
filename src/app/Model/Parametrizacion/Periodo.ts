@@ -2,7 +2,7 @@ import { Malla } from "./Malla";
 
 export class Periodo {
 
-    id_periodo ?: Number;
+    id_periodo !: Number;
 
     actividades: String = "";
 

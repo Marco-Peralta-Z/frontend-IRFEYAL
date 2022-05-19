@@ -1,8 +1,9 @@
 import { Asignatura } from "./Asignatura";
+import { Curso } from "./Curso";
 
 export class Malla {
 
-    id_malla ?: number;
+    id_malla !: number;
 
     estado: Boolean = new Boolean;
 
@@ -10,5 +11,7 @@ export class Malla {
 
     fecha_creacion: Date = new Date;
 
-    asignatura!: Asignatura[];
+    asignaturas: Asignatura[] = new Array;
+
+    listaCursos: Curso[] = [];
 }

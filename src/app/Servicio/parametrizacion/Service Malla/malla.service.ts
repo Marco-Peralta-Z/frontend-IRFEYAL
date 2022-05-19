@@ -11,6 +11,9 @@ export class MallaService {
   constructor(private http: HttpClient) { }
   private url = Api.url + "malla"
   getAllMalla() {
-    return this.http.get<Malla[]>(this.url )
+    return this.http.get<Malla[]>(this.url)
+  }
+  getidMalla(id:any) {
+    return this.http.get<Malla>(this.url+"/"+id)
   }
 }

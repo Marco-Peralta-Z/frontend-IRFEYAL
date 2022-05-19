@@ -4,7 +4,7 @@ import { parroquia } from "./parroquia";
 import { provincia } from "./provincia";
 
 export class direccion{
-    id_direccion?:number;
+    id_direccion:number=0;
 
 	avPrincipal:string="";
 

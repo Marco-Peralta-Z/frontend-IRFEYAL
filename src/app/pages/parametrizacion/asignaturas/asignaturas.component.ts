@@ -39,6 +39,7 @@ export class AsignaturasComponent implements OnInit {
 
 
   ngOnInit(): void {
+    
     this.ac1 = true;
     this.items = [
       {

@@ -16,6 +16,9 @@ export class AsignaturaService {
   getAsignaturas() {
     return this.http.get<Asignatura[]>(this.url);
   }
+  getIdAsignaturas(id:any) {
+    return this.http.get<Asignatura>(this.url+"/"+id);
+  }
   createAsignatura(asignatura: Asignatura) {
     return this.http.post<Asignatura>(this.url + "/addAsig", asignatura);
   }

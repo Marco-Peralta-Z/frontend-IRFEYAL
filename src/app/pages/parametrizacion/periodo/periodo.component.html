@@ -1,5 +1,5 @@
 <div class="container-fluid page">
-    <div class="d-flex page__box p-3 mt-2">Mallas Curriculares</div>
+    <div class="d-flex page__box p-3 mt-2">Periodos Academicos</div>
     <div class="page__content shadow p-3 ">
 
         <!--Inicio Contenido-->
@@ -26,13 +26,14 @@
                         <h5 class="m-0">Lista de Perdiodo</h5>
                         <span class="p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <!--<input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                placeholder="Search..." />-->
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Search..." />
                         </span>
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
+
                         <th>Actividad</th>
                         <th>Fecha Inicio</th>
                         <th>Fecha Fin</th>
@@ -40,9 +41,11 @@
                         <th>Costo Matricula </th>
                         <th>Descripcion Malla </th>
                         <th>Materias Asignadas</th>
+
                         <th style="width: 8rem">
                             <div class="flex justify-content-center align-items-center">
                                 Estado
+                                <p-columnFilter type="boolean" field="malla.estado" display="menu"></p-columnFilter>
                             </div>
                         </th>
                     </tr>
@@ -53,30 +56,29 @@
                             {{p.actividades}}
                         </td>
                         <td>
-                            {{p.fecha_activiti | date: 'MM/dd/yyyy'}}
+                            {{p.fecha_inicio | date: 'MM/dd/yyyy'}}
                         </td>
                         <td>
-                            {{p.fecha_activiti | date: 'MM/dd/yyyy'}}
+                            {{p.fecha_fin | date: 'MM/dd/yyyy'}}
                         </td>
                         <td>
-                            {{p.costo_mensualidad}}
+                            ${{p.costo_mensualidad}}
                         </td>
                         <td>
-                            {{p.costo_matricula}}
+                            ${{p.costo_matricula}}
                         </td>
                         <td style="text-align: justify;">
-                            {{p.id_malla.descripcion}}
+                            {{p.malla.descripcion}}
                         </td>
                         <td>
                             <div class="flex justify-content-center align-items-center">
-                                <button pButton pRipple type="button" icon="fa fa-eye"
-                                    class="p-button-rounded p-button-warning p-button-text"></button>
+                                <button pButton pRipple type="button" icon="fa fa-eye" (click)=" verAsignaturas(p)"
+                                    class="p-button-rounded p-button-secondary p-button-text"></button>
                             </div>
                         </td>
-                        <td class="text-center">
                         <td>
-                            <p-toggleButton [(ngModel)]="p.id_malla.estado" onLabel="Activo" offLabel="Expirado"
-                                onIcon="pi pi-check" offIcon="pi pi-times" [style]="{'width': '10em'}"></p-toggleButton>
+                            <p-toggleButton [(ngModel)]="p.malla.estado" onLabel="Activo" offLabel="Expirado"
+                                [disabled]="true" [style]="{'width': '5em'}"></p-toggleButton>
                         </td>
                     </tr>
                 </ng-template>

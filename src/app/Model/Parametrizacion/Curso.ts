@@ -2,13 +2,15 @@ import { empleado } from "../rolesTS/empleado";
 
 export class Curso {
     
-    id_curso: number = 0;
+    id_curso: Number = 0;
 
-    descripcion: string = "";
+    descripcion: String = "";
 
-    tipo_curso: string = "";
+    tipo_curso: String = "";
 
     fec_creacion: Date = new Date;
 
     id_empleado: empleado = new empleado;
+
+    paralelo
 }

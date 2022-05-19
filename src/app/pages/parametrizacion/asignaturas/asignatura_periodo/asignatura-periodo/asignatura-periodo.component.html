@@ -1,0 +1,78 @@
+<!--Panel para Asignaturas y Docentes-->
+<div class="card">
+  
+
+    <p-table #dt [value]="listasig" dataKey="descripcion" responsiveLayout="scroll" [scrollable]="true"
+        scrollHeight="400px" [rows]="5" [paginator]="true" [globalFilterFields]="['descripcion']"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Asignaturas">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Lista de Asignaturas y Docentes</h5>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Buscar..." />
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem"></th>
+                <th style="min-width:200px" pSortableColumn="descripcion">Asignatura <p-sortIcon field="descripcion">
+                    </p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-a let-expanded="expanded">
+            <tr>
+                <td>
+                    <button type="button" pButton pRipple [pRowToggler]="a"
+                        class="p-button-text p-button-rounded p-button-plain" pTooltip="Ver Docente"
+                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        
+                </td>
+                <td style="min-width:200px; text-align: left;">{{a.descripcion}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-a>
+            <tr>
+                <td colspan="7">
+                    <div class="p-3">
+                        <p-table [value]="a.empleados" dataKey="persona.cedula">
+                            <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="persona.cedula">Cedula Docente <p-sortIcon field="persona.cedula">
+                    </p-sortIcon>
+                </th>
+
+                <th>Nombres del Docente</th>
+                <th>Correo del Docente</th>
+                <th>Extension del Docente</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-docente>
+            <tr>
+
+                <td>{{docente.id_persona.cedula}}</td>
+                <td>{{docente.id_persona.apellido}} {{docente.id_persona.nombre}}</td>
+                <td>{{docente.correo.correo}}</td>
+                <td>{{docente.extension.nombre_extension}}</td>
+                <td>
+               
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6">No sea encontrado ningun docente</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+</td>
+</tr>
+</ng-template>
+<ng-template pTemplate="summary">
+    <div class="flex align-items-center justify-content-between">
+        En total se encontro {{listasig ? listasig.length : 0 }} Asignaturas
+    </div>
+</ng-template>
+</p-table>
+
