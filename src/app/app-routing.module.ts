@@ -8,6 +8,7 @@ import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   //Inicio Rutas Principales
+  //modulos
   { path: 'home', component: HomeComponent },
   { path: 'header', component: HeaderComponent },
   { path: 'sidenav', component: SidenavComponent },
