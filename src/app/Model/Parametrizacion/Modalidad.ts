@@ -2,9 +2,9 @@ export class Modalidad {
 
     id_modalidad: number = 0;
 
-    descripcion: String = "";
+    descripcion: string = "";
 
-    hora_inicio: String = "";
+    hora_inicio: string = "";
 
-    hora_fin: String = "";
+    hora_fin: string = "";
 }

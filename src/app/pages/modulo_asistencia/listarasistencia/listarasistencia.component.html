@@ -23,6 +23,7 @@
                           <h2> cedula:</h2>
                           <label class="input-black"> {{estudiante.id_persona.cedula}}</label><br>
                         </div>
+<<<<<<< HEAD
                       </ng-template>
                     </p-dataView>
                   </div>
@@ -43,6 +44,94 @@
                   </p-table>
 
                 </div>
+=======
+                          <p-table [value]="fechas" styleClass="p-datatable-striped" responsiveLayout="scroll">
+                            <ng-template pTemplate="header">
+                              <tr>
+                                <th>asignatura</th>
+                                <th>Fechas</th>
+                                
+                              </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-product>
+                              <tr>
+                                <td>{{ product.idAsignatura.descripcion}}</td>   
+                              <td>{{ product.fecClase}}</td>             
+                              </tr>
+                            </ng-template>
+                          </p-table>
+
+                          <button pButton pRipple label="Imprimir" icon="pi pi-check"></button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div styleClass="p-fluid">
+
+                        <p-toolbar styleClass="mb-4">
+                        
+                          <div class="col-4">
+                            <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="actividades" filterBy="actividades" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  [showClear]="true"></p-dropdown>
+
+          
+                          </div>
+                          <div class="col-4">
+                            
+                            <p-dropdown [disabled]="showmodalidad"[options]="modalidades" placeholder=" Modalidad" optionLabel="descripcion" filterBy="descripcion" optionValue="id_modalidad"  (onChange)="onmodalidad($event.value)"  [showClear]="true"></p-dropdown>
+
+                          </div>
+                          <div class="col-4">
+                            
+                            <p-dropdown [disabled]="showcurso"[options]="cursos" placeholder=" Curso" optionLabel="descripcion" filterBy="descripcion" optionValue="id_curso"   (onChange)="onCurso($event.value)" [showClear]="true"></p-dropdown>
+
+                          </div>
+                          <div class="col-4">
+                            <p-dropdown [disabled]="showparalelo" [options]="paralelos" placeholder="Paralelo" optionLabel="descripcion" filterBy="descripcion" optionValue="id_paralelo" (onChange)="onparalelo($event.value)" [showClear]="true"></p-dropdown>
+
+          
+                          </div>
+                          
+                          <div class="col-4">
+                            <p-dropdown [disabled]="showasignatura" [options]="asignaturas" placeholder="Asignatura" optionLabel="descripcion" filterBy="descripcion" optionValue="id_asignatura"  (onChange)="onSelect($event.value)" [showClear]="true"></p-dropdown>
+
+          
+                          </div>
+                          <div class="col-4">
+
+          
+                          </div>
+
+                          <input [disabled]="showasignatura" pInputText type="text" [(ngModel)]="filterValue" (input)="dt2.filterGlobal(filterValue, 'contains')" placeholder="Search..." />
+
+                      </p-toolbar>
+                        
+                      
+     
+                        
+                       
+                      </div>
+  
+
+              <p-table #dt2 [value]="estudiantes"  [rows]="10" [paginator]="true"  [globalFilterFields]="['id_persona.cedula','id_persona.nombre']" styleClass="p-datatable-striped" responsiveLayout="scroll"
+              currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} estudiantes"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="id_estudiante">id<p-sortIcon field="id_estudiante"></p-sortIcon></th>
+                    <th pSortableColumn="id_persona.nombre" >Name <p-sortIcon field="id_persona.nombre"></p-sortIcon></th>
+                    <th pSortableColumn="id_persona.apellido">Apellidos <p-sortIcon field="id_persona.apellido"></p-sortIcon></th>
+                    <th scope="col">Mostrar Informacion</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                  <tr>
+                    <td>{{ product.id_estudiante }}</td>
+                    <td>{{ product.id_persona.nombre}}</td>
+                    <td>{{ product.id_persona.apellido}}</td>
+                    <td><button pButton pRipple icon="pi pi-id-card" #im class="p-button-rounded p-button-success mr-2" value="{{product.id_estudiante}}" (click)="mostrarinfo(product.id_estudiante)"></button></td>
+                  </tr>
+                </ng-template>
+              </p-table>
+>>>>>>> 1ebe6a5d3eeb9340f753f6e26491b2731b0b395c
               </div>
               <div class="col-md-6">
                 <div>

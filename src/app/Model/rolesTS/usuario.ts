@@ -1,11 +1,11 @@
 export class usuario {
 
-    id_usuario: number = 0;
+    id_usuario?: number ;
 
     contrasenia: string = "";
 
-    estUsuario: Boolean = new Boolean;
+    estUsuario: boolean =true;
     
-    usuario: String=new String;
+    usuario: string='';
 
 }

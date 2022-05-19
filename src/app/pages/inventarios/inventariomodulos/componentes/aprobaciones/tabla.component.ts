@@ -1,3 +1,4 @@
+/*
 import { Component, OnInit, Input } from '@angular/core';
 import { Aprobacion } from 'src/app/Model/Inventarios/Aprobacion';
 import { AprobacionService } from 'src/app/Servicio/modulo_invetario/AprobacionService';
@@ -74,3 +75,4 @@ export class TablaAprobacionesKit implements OnInit {
         return this.aprobacionesLista ? this.first === 0 : true;
     }
 }
+*/

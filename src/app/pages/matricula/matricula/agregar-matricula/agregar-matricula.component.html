@@ -4,7 +4,7 @@
         <br>
         <p-toast position="top-right" key="tc"></p-toast>
         <span class="p-float-label p-input-icon-right">
-            <input id="float-input" [(ngModel)]="cedula" type="text" pInputText maxlength="10" required>
+            <input id="float-input" [(ngModel)]="cedula" type="text" pInputText maxlength="10" >
             <label for="float-input">Cedula</label>
         </span>
         <p-button (click)="buscar()" [disabled]="cedula.length<10" icon="pi pi-search" label="Buscar"></p-button>
@@ -161,14 +161,14 @@
                                 <div class="row">
                                     <label>Modalidad Estudio</label>
                                     <div class="field-radiobutton">
-                                        <p-radioButton name="city" value="Intensivo" (onClick)="mostrar()"
+                                        <p-radioButton name="city" value="Intensivo"
                                             [(ngModel)]="matricula.modalidad_estudio" formControlName="city"
                                             inputId="city1"></p-radioButton>
                                         <label for="city1" class="mr-2">Intensivo</label>
 
                                     </div>
                                     <div class="field-radiobutton">
-                                        <p-radioButton name="city" value="No Intensivo" (onClick)="mostrar()"
+                                        <p-radioButton name="city" value="No Intensivo"
                                             [(ngModel)]="matricula.modalidad_estudio" formControlName="city"
                                             inputId="city2">
                                         </p-radioButton>
@@ -180,9 +180,9 @@
                                 </div>
                                 <div class="row">
                                     <label class="mt-2">Seleccione Periodo:</label> <br>
-                                    <p-dropdown [options]="cursos" [(ngModel)]="matricula.curso"
+                                    <p-dropdown [options]="periodos" [(ngModel)]="matricula.id_periodo"
                                         placeholder="Seleccione Periodo" formControlName="periodo"
-                                        optionLabel="descripcion">
+                                        optionLabel="actividades">
                                     </p-dropdown>
                                 </div>
 
@@ -192,12 +192,12 @@
                                     <label class="mt-2">Seleccione el Curso:</label>
                                     <p-dropdown [options]="cursos" [(ngModel)]="matricula.curso"
                                         placeholder="Seleccione Curso" formControlName="curso"
-                                        optionLabel="descripcion">
+                                        (onChange)="buscarJornadaPorCurso()" optionLabel="descripcion">
                                     </p-dropdown>
                                 </div>
                                 <div class="row">
                                     <label class="mt-2">Seleccione el Paralelo:</label>
-                                    <p-dropdown [options]="cursos" [(ngModel)]="matricula.curso"
+                                    <p-dropdown [options]="paralelos" [(ngModel)]="matricula.id_paralelo"
                                         placeholder="Seleccione Paralelo" formControlName="paralelo"
                                         optionLabel="descripcion">
                                     </p-dropdown>
@@ -205,7 +205,7 @@
                                 </div>
                                 <div class="row">
                                     <label class="mt-2">Seleccione la Jornada:</label>
-                                    <p-dropdown [options]="cursos" [(ngModel)]="matricula.curso"
+                                    <p-dropdown [options]="jornadas" [(ngModel)]="matricula.modalidad"
                                         placeholder="Seleccione Jornada" formControlName="jornada"
                                         optionLabel="descripcion">
                                     </p-dropdown>
@@ -224,44 +224,69 @@
                             <i class="pi pi-book mr-1"></i>
                             <span> Resumen</span>
                         </ng-template>
-                        <h5>Modalidad Estudio</h5>
                         <div class="row">
                             <div class="col">
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="p-float-label mt-3">
-                                            <input id="float-input" type="text" [value]="estudiante.id_persona.cedula"
-                                                formControlName="Rcedula" pInputText readonly>
-                                            <label for="float-input">Cedula:</label>
-                                        </span>
+                                
+                                    <span class="p-float-label mt-4">
+                                        <input id="float-input" type="text" [value]="estudiante.id_persona.cedula"
+                                            formControlName="Rcedula" pInputText readonly>
+                                        <label for="float-input">Cedula</label>
+                                    </span>
+                                
+                                
+                                    <span class="p-float-label mt-4">
+                                        <input id="float-input" type="text" [value]="matricula.modalidad.descripcion"
+                                            formControlName="Rjornada" pInputText readonly>
+                                        <label for="float-input">Jornada</label>
+                                    </span>
 
+                               
+                                
+                                    <span class="p-float-label mt-4">
+                                        <input id="float-input" type="text" [value]="matricula.curso.descripcion"
+                                            formControlName="Rcurso" pInputText readonly>
+                                        <label for="float-input">Curso</label>
+                                    </span>
+                             
+                                
+                                    <span class="p-float-label mt-4">
+                                        <input id="float-input" type="text" [value]="matricula.fechaMatricula | date"
+                                            formControlName="Rfecha" pInputText readonly>
+                                        <label for="float-input">Fecha de Matricula</label>
+                                    </span>
+                                
+                            </div>
+                                <div class="col">
+                                    
                                         <span class="p-float-label mt-4">
                                             <input id="float-input" type="text" [value]="fullName | titlecase"
                                                 pInputText readonly formControlName="RnameComplete">
                                             <label for="float-input">Nombres/Apellidos</label>
                                         </span>
-                                    </div>
-                                    <div class="col">
-                                        <span class="p-float-label mt-3">
-                                            <input id="float-input" type="text"
-                                                [value]="estudiante.id_persona.fechaNacimiento | date"
-                                                formControlName="Rnacimiento" pInputText readonly>
-                                            <label for="float-input">Fecha de Nacimiento:</label>
-                                        </span>
+                                    
+                                    
                                         <span class="p-float-label mt-4">
                                             <input id="float-input" type="text"
-                                                [value]="estudiante.id_persona.genero.genero | titlecase" pInputText
-                                                readonly formControlName="Rgenero">
-                                            <label for="float-input">Genero</label>
+                                                [value]="matricula.modalidad_estudio| titlecase" pInputText readonly
+                                                formControlName="Rmodalidad">
+                                            <label for="float-input">Modalidad de Estudio</label>
                                         </span>
-                                    </div>
+                                    
+                                    
+                                        <span class="p-float-label mt-4">
+                                            <input id="float-input" type="text"
+                                                [value]="matricula.id_periodo.actividades | titlecase" pInputText
+                                                readonly formControlName="Rlectivo">
+                                            <label for="float-input">Año Lectivo</label>
+                                        </span>
+                                    
                                 </div>
-                            </div>
-                            <div class="col">
+                            
+                            <!-- <div class="col">
                                 <!-- <label class="mt2">Seleccione el Curso:</label> <br>
                                 <p-dropdown [options]="cursos" [(ngModel)]="matricula.curso" placeholder="Seleccione Curso"
                                     optionLabel="descripcion" [showClear]="true"></p-dropdown> -->
-                            </div>
+                            <!-- </div> --> 
                         </div>
 
 
@@ -275,12 +300,12 @@
                 <p-button [disabled]="activeIndex1 == 1" (click)="activeIndex1 = 1"
                     styleClass="p-button-rounded p-button-warning mr-2" icon="pi pi-list"></p-button>
                 <button [disabled]="activeIndex1 == 2 || selectedRequerimientos.length < 4" (click)="activeIndex1 = 2"
-                pButton pRipple type="button" class="p-button-rounded p-button-help"  icon="pi pi-cog"></button>
+                    pButton pRipple type="button" class="p-button-rounded p-button-help" icon="pi pi-cog"></button>
                 <button *ngIf="activeIndex1 != 3" [disabled]="selectedRequerimientos.length<4"
                     (click)="activeIndex1 = 3" pButton pRipple type="button" icon="pi pi-book"
                     class="p-button-rounded p-button-secondary ml-2"></button>
-                <button *ngIf="activeIndex1 == 3" pButton pRipple type="button" icon="pi pi-save"
-                    class="p-button-rounded p-button-success ml-2"></button>
+                <button *ngIf="activeIndex1 == 3 || selectedRequerimientos.length==4"   pButton pRipple type="button" icon="pi pi-save"
+                    (click)="guardarMatricula()" class="p-button-rounded p-button-success ml-2" label="Guardar"></button>
 
             </div>
 
