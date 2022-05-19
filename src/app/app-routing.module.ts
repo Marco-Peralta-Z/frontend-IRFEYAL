@@ -11,6 +11,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'header', component: HeaderComponent },
   { path: 'sidenav', component: SidenavComponent },
+<<<<<<< HEAD
+=======
 
   { path: 'tutorias', loadChildren: () => import('./Routing/tutorias/tutorias.module').then(m => m.TutoriasModule) },
 
@@ -28,6 +30,7 @@ const routes: Routes = [
 
   { path: 'documentosacademicos', loadChildren: () => import('./Routing/documentacion-academicos/documentacion-academicos.module').then(m => m.DocumentacionAcademicosModule) },
 
+>>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
   { path: 'login', pathMatch: 'full', component: LoginComponent }
 
 ];

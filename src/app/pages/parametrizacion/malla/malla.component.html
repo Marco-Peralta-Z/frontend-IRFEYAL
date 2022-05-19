@@ -7,9 +7,7 @@
         <p-toolbar styleClass="mb-4">
             <ng-template pTemplate="left">
                 <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"></button>
-                <!--<button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger"
-                        (click)="deleteSelectedProducts()"
-                        [disabled]="!selectedProducts || !selectedProducts.length"></button>-->
+
             </ng-template>
 
             <ng-template pTemplate="right">
@@ -25,8 +23,8 @@
                     <h5 class="m-0">Lista de las Mallas Curriculares</h5>
                     <span class="p-input-icon-left">
                         <i class="pi pi-search"></i>
-                        <!--<input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                placeholder="Search..." />-->
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder="Search..." />
                     </span>
                 </div>
             </ng-template>
@@ -49,7 +47,8 @@
                     </td>
                     <td>
                         <div class="flex justify-content-center align-items-center">
-                            <button pButton pRipple type="button" icon="fa fa-eye"
+                            <button pButton pRipple type="button" icon="fa fa-eye" (click)="op.toggle($event)"
+                                (click)="verPeriodo(m)"
                                 class="p-button-rounded p-button-warning p-button-text"></button>
                         </div>
                     </td>
@@ -71,6 +70,35 @@
                 </div>
             </ng-template>
         </p-table>
+
+        <p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '650px'}">
+            <ng-template pTemplate>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ACTIVIDADES</th>
+                            <th>COSTO MATRICULA</th>
+                            <th>COSTO MENSUAL</th>
+                            <th>FECHA ACTIVIDAD</th>
+                            <th>FECHA INICIO</th>
+                            <th>FECHA FIN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{selecperiodo.actividades}}</td>
+                            <td>{{selecperiodo.costo_mensualidad}}</td>
+                            <td>{{selecperiodo.costo_matricula}}</td>
+                            <td>{{selecperiodo.fecha_activiti}}</td>
+                            <td>{{selecperiodo.fecha_inicio}}</td>
+                            <td>{{selecperiodo.fecha_fin}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+               
+            </ng-template>
+        </p-overlayPanel>
         <!--Fin Contenido-->
     </div>
 </div>

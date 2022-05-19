@@ -40,6 +40,8 @@ export let item = {
 
         {
             label: 'Inventario',
+<<<<<<< HEAD
+=======
             icon: 'fa fa-book',
             items: [
                 {
@@ -75,17 +77,24 @@ export let item = {
         },
         {
             label: 'Tutorias',
+>>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
             icon: 'pi pi-fw pi-book',
             items: [
                 {
-                    label: 'Registro De Actividades',
+                    label: 'Categoria',
                     icon: 'fa fa-plus-square',
-                    routerLink: 'tutorias/tutorias/actividadesRegistro'
+                    routerLink: 'inventario/categoria'
                 },
                 {
                     label: 'Articulo',
                     icon: 'fa fa-book',
                     routerLink: 'inventario/articulo'
+<<<<<<< HEAD
+                }
+            ]
+        }
+
+=======
                 }
             ]
         },
@@ -160,8 +169,10 @@ export let item = {
                 }
             ]
         },
+>>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
     ]
 }
+
 export let responsive = {
     responsiveOptions: [
         {

@@ -1,11 +1,36 @@
-<h1>NUEVO KIT DE MODULOS</h1>
-<div>
-    <div class="col">
-        <div class="field">
-            <label for="username2" class="block">Username</label>
-            {{value}}
-            <small id="username2-help" class="p-error block">Username is not available.</small>
+<form autocomplete="off" [formGroup]="kitFormulario">
+    <div class="form-group row">
+        <div class="p-fluid grid">
+            <div class="field col-12 md:col-4">
+                <span class="p-float-label mt-4">
+                    <input id="float-input" type="text" [(ngModel)]="nuevoKit.id_kit.nombre_kit" pInputText
+                    name="nombreKit" formControlName="nombreKit" >
+                    <label for="float-input">Nombres:</label>
+                </span>
+                <span class="form-text text-danger" *ngIf="campoValido('nombreKit')">
+                    Este campo es obligatorio!
+                </span>
+
+            </div>
+            <div class="field col-12 md:col-4">
+                <span class="p-float-label mt-4">
+                    <input id="float-input" type="text" [(ngModel)]="nuevoKit.id_kit.precio_kit" pInputText
+                    name="precioKit" formControlName="precioKit" >
+                    <label for="float-input">Nombres:</label>
+                </span>
+                <span class="form-text text-danger" *ngIf="campoValido('precioKit')">
+                    Este campo es obligatorio!
+                </span>
+            </div>
+
+            <div class="field col-12 md:col-4">
+                <p-dropdown inputId="dropdown" [autoDisplayFirst]="false" [options]="periodosLista" [(ngModel)]="nuevoKit.id_kit.periodo" 
+                optionLabel="name" formControlName="periodo"></p-dropdown>
+                <span class="form-text text-danger" *ngIf="campoValido('periodo')">
+                    Este campo es obligatorio!
+                </span>
+            </div>
+            <p-button label="Click" (onClick)="guardarKit()"></p-button>
         </div>
     </div>
-
-</div>
+</form>

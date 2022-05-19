@@ -3,13 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class ServiceTutoriasService {
+export class ServicereporteService {
 
   constructor() { }
-
-  muestramensaje(mensaje:string){
-    alert(mensaje);
-
-  }
-
 }

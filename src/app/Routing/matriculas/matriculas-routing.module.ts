@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+<<<<<<< HEAD
+
+const routes: Routes = [
+  //Aqui Rutas
+=======
 import { AgregarEstudianteComponent } from '../../pages/matricula/estudiante/agregar-estudiante/agregar-estudiante.component';
 import { ListarEstudianteComponent } from '../../pages/matricula/estudiante/listar-estudiante/listar-estudiante.component';
 import { ListarMatriculaComponent } from '../../pages/matricula/matricula/listar-matricula/listar-matricula.component';
@@ -28,6 +33,7 @@ const routes: Routes = [
       }
     ]
   }
+>>>>>>> d708704c4e06365b382dc7d2e79ac898ca26f80e
 ];
 
 @NgModule({

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { data } from 'jquery';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Subscription } from 'rxjs';
@@ -30,48 +31,52 @@ export class AsignaturasComponent implements OnInit {
   asig: Asignatura = new Asignatura;
   ac1: boolean = false;
   ac2: boolean = false;
-  ac3: boolean = false;
   panelAsig: boolean = false;
   panelAsigUpdate: boolean = false;
   submitted: boolean = false;
-  empelados: empleado[] = [];
+  empleados: empleado[] = [];
   asig2: Asignatura = new Asignatura
+
 
   ngOnInit(): void {
     this.ac1 = true;
     this.items = [
       {
-        label: 'Asignaturas', icon: 'pi pi-fw pi-home', command: () => {
-          this.ac1 = true;
-          this.ac2 = false;
-          this.ac3 = false;
+        label: 'Asignaturas', icon: 'fa fa-file-text', command: () => {
+          this.movepanel();
         }
       },
       {
         label: 'Asignaturas y Docentes', icon: 'fa fa-user-md', command: () => {
-          this.ac1 = false;
-          this.ac2 = true;
-          this.ac3 = false;
+          this.movepanel();
         }
-      },
-      {
-        label: 'Asignaturas y Mallas', icon: 'fa fa-file-text', command: () => {
-          this.ac1 = false;
-          this.ac2 = false;
-          this.ac3 = true;
-        }
-      },
+      }
     ];
     this.activeItem = this.items[0];
     this.llenarTabalAsignatura();
+   
 
+  }
+
+  movepanel() {
+    this.ac1 = !this.ac1;
+    this.ac2 = !this.ac2;
   }
 
   llenarTabalAsignatura() {
     this.listasig = new Array;
     this.serviceasig.getAsignaturas().subscribe(data => {
       this.listasig = data;
+      console.log(data)
+    })
+    this.serviceasig.getEmpleados().subscribe(data => {
+      for (let index = 0; index < data.length; index++) {
+        if (data[index].cargo == "tutor") {
+          this.empleados.push(data[index]);
+        }
 
+      }
+      console.log(this.empleados);
     })
   }
 
@@ -144,6 +149,62 @@ export class AsignaturasComponent implements OnInit {
   }
 
   //Asignaturas y Empleados
+
+  paneladddocnete!: boolean;
+  a!: Asignatura;
+  selecempleadodoc!: empleado;
+  selecAsig: Asignatura=new Asignatura;
+
+  asigna(a1: Asignatura) {
+    
+    this.a = a1;
+  }
+
+  actvpanelladddocente() {
+    this.paneladddocnete = true;
+    //this.a = new Asignatura;
+    //this.empleados = new Array;
+    this.selecempleadodoc=new empleado;
+    this.selecAsig = new Asignatura;
+  }
+
+  cancelpanelladddocente() {
+    this.paneladddocnete = false;
+    this.empleados = new Array;
+    this.llenarTabalAsignatura();
+  }
+
+  savedocenteasig() {
+    if (this.selecempleadodoc == null || this.selecempleadodoc == null) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'VERIFIQUE QUE TODOS LOS CAMPOS ESTEN LLENOS' });
+    } else {
+      this.selecAsig.empleados.push(this.selecempleadodoc);
+      console.log(this.selecAsig)
+      this.serviceasig.updateAsignatura(this.selecAsig).subscribe(data => {
+        if (data != null) {
+          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Actualizacion Correcta' });
+          this.cancelpanelladddocente();
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'ERROR AL ACTUALIZAR' });
+        }
+      })
+    }
+  }
+
+  paneldeletedocenteasig(empe: empleado) {
+    for (let index = 0; index < this.a.empleados.length; index++) {
+      if (this.a.empleados[index].id_empleado == empe.id_empleado) {
+        this.a.empleados.splice(index, 1);
+        this.serviceasig.updateAsignatura(this.a).subscribe(data => {
+          if (data != null) {
+            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Docente Eliminado Correctamente' });
+            this.llenarTabalAsignatura();
+          }
+        })
+      }
+
+    }
+  }
 
 
 }

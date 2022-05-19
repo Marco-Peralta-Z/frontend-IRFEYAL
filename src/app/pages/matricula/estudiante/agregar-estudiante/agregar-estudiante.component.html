@@ -52,7 +52,7 @@
                                 </span>
                                 <label class="mt2">Genero:</label> <br>
                                 <p-dropdown [options]="generos" [(ngModel)]="estudiante.id_persona.genero" 
-                                placeholder="Seleccione Genero" optionLabel="genero" [showClear]="true" formControlName="genero"></p-dropdown>
+                                placeholder="Seleccione Genero" optionLabel="genero" formControlName="genero"></p-dropdown>
                                 
                                 <span class="form-text text-danger" *ngIf="campoValido('genero')">
                                     Este campo es obligatorio!
@@ -60,7 +60,7 @@
 
                                 <label class="mt2">Extensión:</label> <br>
                                 <p-dropdown [options]="extensiones" [(ngModel)]="estudiante.id_extension" 
-                                placeholder="Seleccione Extensión" optionLabel="nombre_extension" [showClear]="true" name="extension" formControlName="extension"></p-dropdown>
+                                placeholder="Seleccione Extensión" optionLabel="nombre_extension" name="extension" formControlName="extension"></p-dropdown>
                                 <span class="form-text text-danger" *ngIf="campoValido('extension')">
                                     Este campo es obligatorio!
                                 </span>
@@ -93,7 +93,7 @@
                                 </span>
                                 <label class="mt2">Pais:</label> <br>
                                 <p-dropdown [options]="paises" [(ngModel)]="estudiante.direccion.pais" 
-                                placeholder="Seleccione Pais" optionLabel="pais" [showClear]="true" name="pais" formControlName="pais"></p-dropdown>
+                                placeholder="Seleccione Pais" optionLabel="pais" name="pais" formControlName="pais"></p-dropdown>
                                 <span class="form-text text-danger" *ngIf="campoValido('pais')">
                                     Este campo es obligatorio!
                                 </span>

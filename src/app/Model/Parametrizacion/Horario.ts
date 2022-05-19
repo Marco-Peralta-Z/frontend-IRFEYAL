@@ -2,7 +2,7 @@ import { empleado } from "../rolesTS/empleado";
 import { Asignatura } from "./Asignatura";
 
 export class Horario {
-    
+
     id_horario: Number = 0;
 
     tiempo_inicio: String = "";
@@ -13,7 +13,8 @@ export class Horario {
 
     fecha_creacion: Date = new Date;
 
-    id_asignatura: Asignatura = new Asignatura;
+    id_asignatura!: Asignatura[];
 
     id_empleado: empleado = new empleado;
+
 }
