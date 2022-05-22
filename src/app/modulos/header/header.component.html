@@ -1,4 +1,4 @@
-<div *ngIf="authValidate">
+<div >
     <mat-toolbar>
         <mat-toolbar-row class="justify-content-between">
             <div *ngIf="menuacti">
@@ -16,7 +16,7 @@
                     <button mat-button [matMenuTriggerFor]="menu"
                         class="user mt-2 d-flex align-items-center ">
 
-                        <p-chip label="{{Username}}"  styleClass="mr-2 custom-chip"
+                        <p-chip label="{{usuarioGuardado().usuario}}"  styleClass="mr-2 custom-chip"
                             class="user-image  p-2" icon="fa fa-sort-desc">
                         </p-chip>
 
@@ -24,14 +24,13 @@
 
                     <mat-menu #menu="matMenu">
                         <button pButton pRipple type="button" label="Perfil" class="p-button-text p-button-plain"
-                            icon="pi pi-fw pi-user"></button>
+                            icon="pi pi-fw pi-user">
+                        </button>
 
-                        <a href=" ">
-                            <button pButton pRipple type="button" label="Cerrar Sesion"
+                        <button pButton pRipple type="button" label="Cerrar Sesion"
                                 class="p-button-text p-button-plain" icon="pi pi-fw pi-power-off"
-                                (click)="cerrarSesion()"></button>
-
-                        </a>
+                                (click)="cerrarSesion()">
+                        </button>
                     </mat-menu>
 
                 </ul>

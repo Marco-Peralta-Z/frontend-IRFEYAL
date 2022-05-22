@@ -8,3 +8,9 @@ export let Path = {
 export let Api = {
     url: 'http://localhost:9070/'
 }
+
+// cambiar credenciales para produccion
+export let AuthConfig  = {
+    credenciales: 'frontirfeyalapp' + ':' + '12345',
+    url: 'http://localhost:9070/'
+}

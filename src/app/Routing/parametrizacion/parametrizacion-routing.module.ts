@@ -6,9 +6,14 @@ import { PeriodoComponent } from 'src/app/pages/parametrizacion/periodo/periodo.
 
 const routes: Routes = [
   //Aqui Rutas
-  { path: 'parametrizacion/periodo', component: PeriodoComponent },
-  { path: 'parametrizacion/malla', component: MallaComponent },
-  { path: 'parametrizacion/asignatura', component: AsignaturasComponent }
+  {
+    path : '',
+    children: [
+      { path: 'periodo', component: PeriodoComponent },
+      { path: 'malla', component: MallaComponent },
+      { path: 'asignatura', component: AsignaturasComponent }
+    ]
+  }
   
 ];
 

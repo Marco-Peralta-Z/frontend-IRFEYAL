@@ -1,3 +1,4 @@
+// usar el menu de itemService  este objeto ya no.
 export let item = {
     items: [
         {

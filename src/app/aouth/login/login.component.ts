@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PrimeNGConfig } from 'primeng/api';
 import { Path } from 'src/app/config';
-import { usuario } from 'src/app/Model/rolesTS/usuario';
-import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-usuario.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+
+import { AuthService } from '../../Servicio/auth/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -12,43 +13,56 @@ import { ServiceUsuarioService } from 'src/app/Servicio/roles_Usuario/service-us
 })
 export class LoginComponent implements OnInit {
 
-    sideBarOpen = true;
-    constructor(private router: Router,
-        private userservi: ServiceUsuarioService,
-        private primengConfig: PrimeNGConfig) { }
+    public logInForm: FormGroup = this._formBuilder.group({
+        cedula: [  , [ Validators.required]],
+        password: [  , [ Validators.required]]
+    });
 
-
-    logeado: Boolean = new Boolean();
     public isError = false;
-    path = Path.url;
-    user: usuario = new usuario;
+
+    public path = Path.url;
+    constructor(
+        private _formBuilder: FormBuilder,
+        private router: Router,
+        private _authService: AuthService,
+    ) { }
+
+
+
     ngOnInit(): void {
-        this.primengConfig.ripple = true;
-        this.logeado = true;
-        this.userservi.dato = false;
-        this.router.navigate(['login'])
-        this.sideBarOpen = true;
+        //redireccionamos si el usuario esta loggeado
+        if ( this._authService.isAuthenticated()){
+            this.router.navigate(['home']);
+        }
     }
 
-    sideBarToggler() {
-        this.sideBarOpen = !this.sideBarOpen;
-    }
 
     onIsError(): void {
         this.isError = true;
         setTimeout(() => {
             this.isError = false;
-        }, 4000);
+        }, 3000);
     }
 
-    login() {
-        if (this.user.usuario == "") {
-            this.onIsError();
+    logIn = () => {
+        if (this.logInForm.valid) {
+            let { cedula, password } = this.logInForm.value;
+            this._authService.showLoading(false, 'Iniciando sesión', 'Espere por favor');
+            this._authService.logIn( cedula, password ).subscribe( {
+                next: (response) => {
+                    this._authService.guardarToken(response.access_token);
+                    this._authService.guardarUsuario(response.access_token);
+                    Swal.close()
+                    this.router.navigate(['/home'])
+                }, 
+                error: (err) => {
+                    console.log(err);
+                    Swal.close()
+                    this.onIsError();
+                }
+            });
         } else {
-            this.logeado = false;
-            this.userservi.dato = true;
-            localStorage.setItem("Username", this.user.usuario.toString())
-            this.router.navigate(['home'])
+            this.onIsError();
         }
     }
 
