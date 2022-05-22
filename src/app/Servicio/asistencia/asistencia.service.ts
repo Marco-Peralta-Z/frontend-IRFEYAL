@@ -34,8 +34,8 @@ export class AsistenciaService {
   getInformaciondelestudiante(idEstudiante: number){
     return this.rutaconsulta.get(this.url+"/buscarestudianteid/"+idEstudiante);
   }
-  getInfechasfaltasdelestudiante(idEstudiante: number,idocente: number){
-    return this.rutaconsulta.get(this.url+"/mostrarfechasdefaltas/"+idEstudiante+'/'+idocente);
+  getInfechasfaltasdelestudiante(idEstudiante: number,idocente: number,idasignatura:number,idcurso:number,idparalelo:number,idmodalidad:number,idperiodo:number){
+    return this.rutaconsulta.get(this.url+"/mostrarfechasdefaltas/"+idEstudiante+'/'+idocente+'/'+idasignatura+'/'+idcurso+'/'+idparalelo+'/'+idmodalidad+'/'+idperiodo);
   }
   create(asistencia:Asistencia){
     return this.rutaconsulta.post<Asistencia>(this.url+"/asistenciasave",asistencia);
@@ -67,5 +67,24 @@ export class AsistenciaService {
   
   updateasistencia(asistencia: Asistencia){
     return this.rutaconsulta.put<Asistencia>(this.url +"/updateasistencia/"+asistencia.idAsistencia, asistencia);
+  }
+  listarperiodos(idempleado:number){
+    return this.rutaconsulta.get(this.url+"/Periodos/"+idempleado);
+  }
+  listarmodalidad(idempleado:number,idperiodo : number){
+    return this.rutaconsulta.get(this.url+"/modalidades/"+idempleado+'/'+ idperiodo);
+  }
+  listarcursos(idempleado:number,idmodalidad: number){
+    return this.rutaconsulta.get(this.url+"/cursos/"+idempleado+'/'+ idmodalidad);
+  }
+  listarparalelo(idempleado:number,idcursp: number){
+    return this.rutaconsulta.get(this.url+"/paralelos/"+idempleado+'/'+ idcursp);
+  }
+  listarAsignatura(idempleado:number,idperiodo: number,idcurso:number,idparalelo:number){
+    return this.rutaconsulta.get(this.url+"/asignaturas/"+idempleado+'/'+ idperiodo+'/'+idcurso+'/'+ idparalelo);
+  }
+
+  actualizarclases(clase:Clase){
+    return this.rutaconsulta.put<Clase>(this.url+"/claseactualizar/"+clase.idClase,clase);
   }
 }

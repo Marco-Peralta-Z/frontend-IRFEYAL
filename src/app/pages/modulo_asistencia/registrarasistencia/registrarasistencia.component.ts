@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Asistencia } from 'src/app/Model/Asistencia/asistencia';
 import { Clase } from 'src/app/Model/Asistencia/clase';
@@ -15,10 +15,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./registrarasistencia.component.scss']
 })
 export class RegistrarasistenciaComponent implements OnInit {
+  mydate=Date.now();
   ejem:string='';
   fecha: Date= new Date();
-  fechaactual: Date= new Date();
-  fechaactualnew: Date= new Date();
+  fechaactual: Date= new Date(this.mydate);
+  fechaactualnew: Date= new Date(this.mydate);
   modalidades: any[] = [];
   periodos: any[] = [];
   asignaturas: any[] = [];
@@ -34,6 +35,7 @@ export class RegistrarasistenciaComponent implements OnInit {
   cursosfaltas: any[]=[];
   clase: Clase=new Clase();
   clases: Clase= new Clase();
+ 
   // asistenciaService
   asistenciaactualizar: Asistencia []=[];
   asistencia: Asistencia= new Asistencia();
@@ -43,55 +45,190 @@ export class RegistrarasistenciaComponent implements OnInit {
   filterValue:any;
   actualizarDialog:boolean=false;
   fechacontrol=new FormControl('');
-  fechastring: string = '';
+  fechastring: string = 'yyyy-MM-dd';
   idasistencia : number=0;
   Asistencia: Asistencia=new Asistencia();
   valiadarfecha:number=0;
-  constructor(private appService:AsistenciaService,private router:Router) { }
+  validarcalendario:number=0;
+  //  validar combos
+  showmodalidad:boolean=true;
+  showcurso:boolean=true;
+  showparalelo:boolean=true;
+  showasignatura:boolean=true;
 
+  showmodalidadactu:boolean=true;
+  showcursoactu:boolean=true;
+  showparaleloactu:boolean=true;
+  showasignaturaactu:boolean=true;
+
+  ////combo box actualizar
+  modalidadesactu: any[] = [];
+  periodosactu: any[] = [];
+  asignaturasactu: any[] = [];
+  paralelosactu: any[] = [];
+  cursoactu:any[]=[];
+  controlfecha=new FormControl('');
+  private fechaactualstring:any;
+  convertidor:any;
+  public fechaminima:Date= new Date();
+  public fechastrminima:any;
+ fechausuario:Date=new Date();
+
+  validarfechaingreso:boolean=false;
+  @ViewChild('fechas1') ngOtpInput:any;
+  
+  constructor(private appService:AsistenciaService,private router:Router,public datepipe: DatePipe) { }
+   idempleados: number =1;
   ngOnInit(): void {
-    this.appService.getAllAsignatura().subscribe((data:any)=>this.asignaturas=data);
-    this.appService.getAllModalidad().subscribe((data:any)=>this.modalidades=data);
-    this.appService.getAllParalelo().subscribe((data:any)=>this.paralelos=data);
-    this.appService.getAllPeriodo().subscribe((data:any)=>this.periodos=data);
+    
+    this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodos=data);
+    this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodosactu=data);
     this.appService.buscarclase().subscribe(res=>{this.clase.idClase=res.idClase+1});
-    this.appService.getAllCurso().subscribe((data:any)=>this.curso=data);
+    this.fechaactual=new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate());
+    this.fechaactualstring =this.datepipe.transform(this.fechaactual,"yyyy-MM-dd");
+    this.fechaactualnew=new Date(this.fechaactualstring);
+    //this.fechaminima= new Date(new Date().getFullYear(),new Date().getMonth(), new Date().getDate());
+    //this.fechastrminima=this.datepipe.transform(this.fechaminima,"yyyy-MM-dd");
     this.appService.buscarclase().subscribe((data:any)=>this.clase=data);
   }
 
   onSelect(id: any){
+    this.cursosfaltas=[];
     this.idAsignatura= id;
     this.validarfiltros();
     console.log(this.idAsignatura);
-    this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
-   this.habilitarfecha();
+    if(this.idAsignatura==0){
+     this.estudiantes=[];
+     
+    }
+    if(this.idAsignatura>0){
+      this.habilitarfecha();
+      this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
+     
+    }
+  
   }
     onmodalidad(id: any){
+      this.cursosfaltas=[];
+      this.curso=[];
+      this.paralelos=[];
+      this.IdCurso=0;
+      this.IdParalelo=0;
+      this.asignaturas=[];
+      this.idAsignatura=0;
       this.idModalidad= id;
+      this.showasignatura=true;
+      this.showcurso=true;
+      this.showparalelo=true;
       this.validarfiltros();
       console.log(this.fechacontrol.value);
-      this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
-      this.habilitarfecha();
+      this.showcurso=false;
+      
+      if(this.idModalidad==0){
+        this.showasignatura=true;
+        this.showcurso=true;
+        this.showparalelo=true;
+        this.asignaturas=[];
+        this.curso=[];
+        this.paralelos=[]
+        this.estudiantes=[];
+        this.IdCurso=0;
+        this.IdParalelo=0;
+        this.IdParalelo=0;
+      
+       }
+       this.habilitarfecha();
+      this.appService.listarcursos(this.idempleados, this.idModalidad).subscribe((data:any)=>this.curso=data);
+      
     }
       onperiodo(id: any){
+        this.cursosfaltas=[];
+        this.showasignatura=true;
+        this.showmodalidad=true;
+        this.showcurso=true;
+        this.showparalelo=true;
+        this.asignaturas=[];
+        this.modalidades=[];
+        this.curso=[];
+        this.paralelos=[];
+        this.estudiantes=[];
+        this.IdParalelo=0;
+        this.IdPeriodo=0;
+        this.idModalidad=0;
+        this.idAsignatura=0;
+
       this.IdPeriodo= id;
       this.validarfiltros();
       console.log(this.IdPeriodo);
-      this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
-      this.habilitarfecha();
+      this.showmodalidad=false;
+      this.appService.listarmodalidad(this.idempleados,this.IdPeriodo).subscribe((data:any)=>this.modalidades=data);
+    
+      if(this.IdPeriodo==0){
+        this.showasignatura=true;
+        this.showmodalidad=true;
+        this.showcurso=true;
+        this.showparalelo=true;
+        this.asignaturas=[];
+        this.modalidades=[];
+        this.curso=[];
+        this.paralelos=[];
+        this.estudiantes=[];
+        this.IdParalelo=0;
+        this.IdPeriodo=0;
+        this.idModalidad=0;
+        this.idAsignatura=0; 
+        
+       }
+       this.habilitarfecha();
     }
       onparalelo(id: any){
+        this.cursosfaltas=[];
+        this.asignaturas=[];
+        this.idAsignatura=0;
       this.IdParalelo= id;
       this.validarfiltros();
       console.log(this.IdParalelo);
-        this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
-        this.habilitarfecha();
+      this.showasignatura=false;
+      this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturas=data);
+
+      if(this.IdParalelo==0){
+        this.showasignatura=true;
+        this.asignaturas=[];
+        this.estudiantes=[];
+        this.idAsignatura=0;
+       
+       }
+       this.habilitarfecha();
+
+        
       }
       onCurso(id: any){
+        this.cursosfaltas=[];
+        this.asignaturas=[];
+        this.idAsignatura=0;
+        this.paralelos=[];
+        this.showparalelo=true;
+        this.showasignatura=true;
+        this.IdParalelo=0;
+        
+
         this.IdCurso= id;
         this.validarfiltros();
         console.log(this.IdCurso);
-        this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
+        this.showparalelo=false;
+        this.appService.listarparalelo(this.idempleados,this.IdCurso).subscribe((data:any)=>this.paralelos=data);
+        if(this.IdCurso==0){
+          this.showasignatura=true;
+          this.showparalelo=true;
+          this.paralelos=[];
+          this.asignaturas=[];
+          this.estudiantes=[];
+          this.IdParalelo=0;
+          this.idAsignatura=0;
+          
+         }
+
+      
         this.habilitarfecha();
         }
   
@@ -110,65 +247,74 @@ export class RegistrarasistenciaComponent implements OnInit {
         console.log(this.cursosfaltas);
   
   }
-
+  //ingreso estudiantes 
       submit(){
        if(this.idModalidad == 0 || this.idAsignatura == 0 || this.IdPeriodo ==0  ||  this.IdParalelo ==0 || this.IdCurso==0 ||this.valiadarfecha==0){
         swal.fire(
-          'Por favor ingrese fecha y especifique los filtros',
-          'Reintente'
+          {
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Por favor ingrese fecha y especifique los filtros!',
+           
+          }
         )
        }else{
+         this.ingresoclase();
 
-           
-        console.log(this.fecha);
+        setTimeout(() =>{this.separarestudiantes()}, 1000);
+  ///this.separarestudiantes();  
+  this.valiadarfecha=0;
+  this.router.navigate(['asistencia/listarAsistencia']);
+    }
+      }
+
+     //--------------------separo estudiantes-------------------------
+      separarestudiantes(){
         let lstNumero = document.getElementsByClassName("estudiantelista"),   arrayGuardar = [];
         for (var i = 0; i < lstNumero.length; i++) {
           arrayGuardar[i] = lstNumero[i];
           }
-          let playStore:any[]=[];
+          let auxasistiendo:any[]=[];
 
           let duplicados:any[]=[];
       this.estudiantes.forEach(function(value, key) {
   
-      playStore.push(value.id_estudiante)
+        auxasistiendo.push(value.id_estudiante)
   
       });
       let auxiliarlength= this.estudiantes.length;
       let faltando :any[]=[];
       faltando= this.cursosfaltas.slice();
    
-      
-      const asistiendo = playStore.filter(elemento=>faltando.indexOf(elemento)==-1);
-    console.log("asistiendo :"+asistiendo);     
-    console.log("faltando"+faltando);
-   /// this.ultimoingresado1();
-
-
+    const asistiendo = auxasistiendo.filter(elemento=>faltando.indexOf(elemento)==-1);
+    // estudiantes asistiendo
     this.estuadiantesasistiendo(asistiendo);
-    this.estudiantefalta();
-   // this.estudiantesfaltando(faltando);
-
-   this.valiadarfecha=0;
-
-
-   this.router.navigate(['asistencia/listarAsistencia']);
-    }
+    // estudiantes faltando
+    this.estudiantefalta()
       }
 
+       fechaconversion(){
+        let latest_date =this.datepipe.transform(this.fecha, "yyyy-MM-dd");
+        
+        this.fechacontrol.setValue(latest_date+"T05:00:00.000+00:00");
+       }
 
-       // ingreso clase
+       //---------------------- ingreso clase
        ingresoclase(){
-        this.clases.fecClase=this.fechacontrol.value;
+        console.log(this.clases.fecClase);
         this.clases.id_periodo.id_periodo=this.IdPeriodo;
         this.clases.id_modalidad.id_modalidad=this.idModalidad;
         this.clases.idAsignatura.id_asignatura=this.idAsignatura;
         this.clases.idParalelo.id_paralelo=this.IdParalelo;
        this.clases.idCurso.id_curso=this.IdCurso;
        this.clases.idDocente.id_empleado=1;
+       this.fechaconversion();
+       this.clases.fecClase=this.fechacontrol.value;
         console.log(this.clases);
          this.appService.createclase(this.clases).subscribe(data=>{
           this.auxidclaseultm=data.idClase;
            console.log(this.auxidclaseultm);
+           this.validarcalendario=1;
            return this.auxidclaseultm;
          });
      
@@ -176,11 +322,28 @@ export class RegistrarasistenciaComponent implements OnInit {
          
        }
 
-      ultimoingresado1(){
-        this.appService.buscarclase().subscribe(res=>{this.clase.idClase=res.idClase+1});
-        console.log("ultimo ingreso"+this.clase.idClase);
+
+
+       actualizarclases(){
         
-      }
+        this.clase.idClase=this.auxidclaseultm;
+        this.clase.id_modalidad.id_modalidad=this.idModalidad;
+        this.clase.idAsignatura.id_asignatura=this.idAsignatura;
+        this.clase.idParalelo.id_paralelo=this.IdParalelo;
+       this.clase.idCurso.id_curso=this.IdCurso;
+       this.clase.id_periodo.id_periodo=this.IdPeriodo;
+       this.fechaconversion();
+       this.clases.fecClase=this.fechacontrol.value;
+        console.log(this.clase);
+        
+        this.appService.actualizarclases(this.clase).subscribe( clase => {
+          
+    
+        });
+
+       }
+
+    
 
       estuadiantesasistiendo(asistiendo:any[]){
         if(asistiendo.length>0){
@@ -199,23 +362,23 @@ export class RegistrarasistenciaComponent implements OnInit {
       }
         this.idclaseaux=0;
       }
-      estudiantesfaltando(faltando:any[]){
-        this.ultimoingresado1();
-        if(faltando.length>0){
-        this.idclaseaux= this.auxidclaseultm;
-        this.asistencia.idClase=this.idclaseaux;
-        console.log(this.asistencia);
-        for(var i=0 ;i<=faltando.length; i++){
-          this.numestudiante=faltando[i];
-           this.asistencia.estadoAsis=true;
-           //this.asistencia.idClase=this.idclase;
-          this.asistencia.idEstudiante=this.numestudiante;
-          this.appService.create(this.asistencia)
-          .subscribe(asistencia =>{swal.fire('Asistencia', `Asistencia  creada con éxito!`, 'success')})
-        }
-      }
-      this.idclaseaux=0;
-      }
+     // estudiantesfaltando(faltando:any[]){
+        
+     ///   if(faltando.length>0){
+     ///   this.idclaseaux= this.auxidclaseultm;
+     //   this.asistencia.idClase=this.idclaseaux;
+      ///  console.log(this.asistencia);
+     ///   for(var i=0 ;i<=faltando.length; i++){
+     //     this.numestudiante=faltando[i];
+      //     this.asistencia.estadoAsis=true;
+      //     //this.asistencia.idClase=this.idclase;
+     //     this.asistencia.idEstudiante=this.numestudiante;
+      //    this.appService.create(this.asistencia)
+      //    .subscribe(asistencia =>{swal.fire('Asistencia', `Asistencia  creada con éxito!`, 'success')})
+      //  }
+     // }
+    //  this.idclaseaux=0;
+     // }
      
 
       estudiantefalta(){
@@ -253,7 +416,7 @@ export class RegistrarasistenciaComponent implements OnInit {
           this.actualizararasistencia();
       
         }else{
-          alert("quitar falta");
+     
             this.idasistencia=parseInt(value);
             this.Asistencia.estadoAsis=false;
                 this.Asistencia.idAsistencia=this.idasistencia;
@@ -299,25 +462,77 @@ export class RegistrarasistenciaComponent implements OnInit {
       asignaturaactualizar(id: any){
         this.idAsignatura= id;
         this.validarfiltros();
-        console.log(this.idAsignatura);        }
+        console.log(this.idAsignatura);
+        if(this.idAsignatura==0){
+          this.asistenciaactualizar=[]; 
+
+        }
+       }
         onmodalidadactualizar(id: any){
           this.idModalidad= id;
-          this.validarfiltros();
+
+     
+          this.showcursoactu=false;
+          if(this.idModalidad==0){
+            this.showasignaturaactu=true;
+            this.showcursoactu=true;
+            this.showparaleloactu=true;
+            this.asignaturasactu=[];
+            this.cursoactu=[];
+            this.paralelosactu=[];
+            this.asistenciaactualizar=[]; 
+           }
+           this.validarfiltros();
+           this.appService.listarcursos(this.idempleados, this.idModalidad).subscribe((data:any)=>this.cursoactu=data);
+ 
           console.log(this.idModalidad);
           }
           onperiodoactualizar(id: any){
           this.IdPeriodo= id;
           this.validarfiltros();
+          this.appService.listarmodalidad(this.idempleados,this.IdPeriodo).subscribe((data:any)=>this.modalidadesactu=data);
+          this.showmodalidadactu=false;
+          if(this.IdPeriodo==0){
+            this.showasignaturaactu=true;
+            this.showmodalidadactu=true;
+            this.showcursoactu=true;
+            this.showparaleloactu=true;
+            this.asignaturasactu=[];
+            this.modalidadesactu=[];
+            this.cursoactu=[];
+            this.paralelosactu=[];
+            this.asistenciaactualizar=[]; 
+           }
+           
+
           console.log(this.IdPeriodo);
           }
           onparaleloactualizar(id: any){
           this.IdParalelo= id;
           this.validarfiltros();
+          this.showasignaturaactu=false;
+
+          if(this.IdParalelo==0){
+            this.showasignaturaactu=true;
+            this.asignaturasactu=[];
+            this.asistenciaactualizar=[]; 
+           }
+           this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturasactu=data);
           console.log(this.IdParalelo);
           }
           onCursoactualizar(id: any){
             this.IdCurso= id;
             this.validarfiltros();
+            this.showparaleloactu=false;
+            if(this.IdCurso==0){
+              this.showasignaturaactu=true;
+              this.showparaleloactu=true;
+              this.paralelosactu=[];
+              this.asignaturasactu=[];
+              this.asistenciaactualizar=[]; 
+             }
+            this.appService.listarparalelo(this.idempleados,this.IdCurso).subscribe((data:any)=>this.paralelosactu=data);
+
             console.log(this.IdCurso);
     
             }
@@ -329,19 +544,51 @@ export class RegistrarasistenciaComponent implements OnInit {
             }
             actualizararasistencia(){
               this.appService.updateasistencia(this.Asistencia).subscribe( cliente => {
-                swal.fire('Cliente Actualizado', `Cliente actualizado con éxito!`, 'success')
+                swal.fire('Asistencia Actualizada', `Asistencia actualizada con éxito!`, 'success')
           
               });
             }
             validarfecha(){  
-              this.valiadarfecha=1;
-              this.ingresoclase();
+            
+             //  this.convertidor=document.getElementById("fechas1");
+           //    console.log(this.convertidor.value);
+          //    this.fechaactualnew = new Date(this.convertidor.value+"T05:00:00.000+00:00");
+          this.fechaactualnew = new Date(this.fecha);
+          this.fechaactualnew.setMinutes(this.fechaactualnew.getMinutes()+this.fechaactualnew.getTimezoneOffset());
+              this.convertidor=this.controlfecha.value;
+              console.log(this.fechaactualnew);
+              console.log(this.fechaactual);
+               if(this.fechaactualnew < this.fechaactual){
+                swal.fire(
+                  {
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'ingrese fecha nuevamente ingrese una fecha mayor!',
+                   
+                  }
+
+                );
+               let vaciar= document.getElementById("fechas1");
+                
+                this.valiadarfecha=0;
+               }else{
+                this.valiadarfecha=1;
+               }
+              if(this.validarcalendario==1){
+              //   this.actualizarclases();
+            }else{
+             // this.ingresoclase();
+            }
+            
+              
             
             }
 
             habilitarfecha(){
               if(this.idAsignatura>0 && this.idModalidad>0 && this.IdPeriodo>0 && this.IdParalelo>0 && this.IdCurso>0){
- this.showDiv=true;
+               this.showDiv=true;
+              }else{
+                this.showDiv=false;
               }
             }
 
