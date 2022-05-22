@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatriculasRoutingModule } from './matriculas-routing.module';
+<<<<<<< HEAD
 import { ListarEstudianteComponent } from '../../pages/matricula/estudiante/listar-estudiante/listar-estudiante.component';
 import { AgregarEstudianteComponent } from '../../pages/matricula/estudiante/agregar-estudiante/agregar-estudiante.component';
 import { ListarMatriculaComponent } from '../../pages/matricula/matricula/listar-matricula/listar-matricula.component';
@@ -25,6 +26,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     MatriculasRoutingModule
     
+=======
+
+
+@NgModule({
+  declarations: [],
+  imports: [
+    CommonModule,
+    MatriculasRoutingModule
+>>>>>>> origin
   ]
 })
 export class MatriculasModule { }

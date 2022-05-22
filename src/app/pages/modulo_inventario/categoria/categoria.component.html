@@ -1,0 +1,27 @@
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2">Categoria</div>
+    <div class="page__content shadow p-3 position-relative">
+        <!--Inicio Contenido-->
+        <div *ngIf="load==false">
+            <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+
+        </div>
+
+        <div *ngIf="load!=false">
+            <div class="card" *ngFor="let a of asignatura">
+
+                {{a.descripcion}}
+                <br>
+            </div>
+
+        </div>
+      
+
+
+
+
+
+        <!--Find Contenido-->
+    </div>
+
+</div>

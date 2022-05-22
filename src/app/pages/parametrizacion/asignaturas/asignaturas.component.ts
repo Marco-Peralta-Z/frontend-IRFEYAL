@@ -71,7 +71,6 @@ export class AsignaturasComponent implements OnInit {
     this.listasig = new Array;
     this.serviceasig.getAsignaturas().subscribe(data => {
       this.listasig = data;
-
     })
   }
 

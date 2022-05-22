@@ -13,7 +13,14 @@ export class Horario {
 
     fecha_creacion: Date = new Date;
 
+<<<<<<< HEAD
     id_asignatura: Asignatura = new Asignatura;
 
     id_empleado: empleado = new empleado;
+=======
+    id_asignatura!: Asignatura[];
+
+    id_empleado: empleado = new empleado;
+
+>>>>>>> origin
 }
