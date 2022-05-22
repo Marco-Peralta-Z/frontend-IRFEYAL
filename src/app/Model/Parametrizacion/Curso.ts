@@ -11,9 +11,4 @@ export class Curso {
     fec_creacion: Date = new Date;
 
     id_empleado: empleado = new empleado;
-<<<<<<< HEAD
-=======
-
-    paralelo:Paralelo[]=[];
->>>>>>> origin
 }
