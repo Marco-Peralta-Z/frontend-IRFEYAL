@@ -180,7 +180,7 @@
                                 </div>
                                 <div class="row">
                                     <label class="mt-2">Seleccione Periodo:</label> <br>
-                                    <p-dropdown [options]="periodos" [(ngModel)]="matricula.id_periodo"
+                                    <p-dropdown [options]="periodos" *ngIf="periodos.length>0" [(ngModel)]="matricula.id_periodo"
                                         placeholder="Seleccione Periodo" formControlName="periodo"
                                         optionLabel="actividades">
                                     </p-dropdown>
@@ -190,14 +190,14 @@
                             <div class="col">
                                 <div class="row">
                                     <label class="mt-2">Seleccione el Curso:</label>
-                                    <p-dropdown [options]="cursos" [(ngModel)]="matricula.curso"
+                                    <p-dropdown [options]="cursos" *ngIf="cursos.length>0" [(ngModel)]="matricula.curso"
                                         placeholder="Seleccione Curso" formControlName="curso"
                                         (onChange)="buscarJornadaPorCurso()" optionLabel="descripcion">
                                     </p-dropdown>
                                 </div>
                                 <div class="row">
                                     <label class="mt-2">Seleccione el Paralelo:</label>
-                                    <p-dropdown [options]="paralelos" [(ngModel)]="matricula.id_paralelo"
+                                    <p-dropdown [options]="paralelos" *ngIf="paralelos.length>0" [(ngModel)]="matricula.id_paralelo"
                                         placeholder="Seleccione Paralelo" formControlName="paralelo"
                                         optionLabel="descripcion">
                                     </p-dropdown>
@@ -205,7 +205,7 @@
                                 </div>
                                 <div class="row">
                                     <label class="mt-2">Seleccione la Jornada:</label>
-                                    <p-dropdown [options]="jornadas" [(ngModel)]="matricula.modalidad"
+                                    <p-dropdown [options]="jornadas" *ngIf="jornadas.length>0 " [(ngModel)]="matricula.modalidad"
                                         placeholder="Seleccione Jornada" formControlName="jornada"
                                         optionLabel="descripcion">
                                     </p-dropdown>
@@ -306,7 +306,7 @@
                     class="p-button-rounded p-button-secondary ml-2"></button>
                 <button *ngIf="activeIndex1 == 3 || selectedRequerimientos.length==4"   pButton pRipple type="button" icon="pi pi-save"
                     (click)="guardarMatricula()" class="p-button-rounded p-button-success ml-2" label="Guardar"></button>
-
+                <!-- <button (click)="mostrar()">Mostrar</button> -->
             </div>
 
 
