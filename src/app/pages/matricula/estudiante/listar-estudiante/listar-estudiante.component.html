@@ -1,7 +1,7 @@
 <div class="container-fluid page">
     <div class="d-flex page__box p-3 mt-2">Lista de Estudiantes</div>
     <div class="page__content shadow p-3 position-relative">
-        <p-table [value]="estudiantes" responsiveLayout="scroll">
+        <!-- <p-table [value]="estudiantes" responsiveLayout="scroll">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Nombre</th>
@@ -22,6 +22,125 @@
                     <td>{{estudiante.telefono.numCelular}}</td>
                 </tr>
             </ng-template>
-        </p-table>
+        </p-table> -->
+
+
+        <p-toast></p-toast>
+
+<div class="card">
+        
+
+    <p-table #dt [value]="estudiantes" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"
+        [(selection)]="selectEstudiante" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Lista de Estudiantes</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                
+                <th pSortableColumn="name">Cedula <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="price">Nombre <p-sortIcon field="price"></p-sortIcon></th>
+                <th pSortableColumn="category">Apellido <p-sortIcon field="category"></p-sortIcon></th>
+                <th pSortableColumn="rating">Contacto <p-sortIcon field="rating"></p-sortIcon></th>
+                <th pSortableColumn="inventoryStatus">Direccion <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-estudiante>
+            <tr>
+                <td>{{estudiante.id_persona.cedula }}</td>
+                <!-- <td><img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.name" width="100" class="shadow-4" /></td> -->
+                <td>{{estudiante.id_persona.nombre }}</td>
+                <td>{{estudiante.id_persona.apellido}}</td>
+                <td>{{estudiante.telefono.telefono}}</td>
+                <td>{{estudiante.direccion.avPrincipal}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(estudiante)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(estudiante)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total son {{estudiantes ? estudiantes.length : 0 }} estudiantes.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Información Estudiante" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <!-- <img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.image" class="product-image" *ngIf="product.image"> -->
+        <div class="field">
+            <label for="name">Nombre</label>
+            <input type="text" pInputText id="name" [(ngModel)]="estudiante.id_persona.nombre" required autofocus />
+            <small class="p-error" *ngIf="submitted && !estudiante.id_persona.nombre">Nombre es requerido.</small>
+        </div>
+        <div class="field">
+            <label for="description">Apellido</label>
+            <input type="text" pInputText id="name" [(ngModel)]="estudiante.id_persona.apellido" required />
+            <!-- <textarea id="description" pInputTextarea [(ngModel)]="estudiante.id_persona.cedula" required rows="3" cols="20"></textarea> -->
+        </div>
+        <!-- <div class="field">
+            <label for="inventoryStatus">Inventory Status</label>
+            <p-dropdown [(ngModel)]="estudiante.estadoEstudiantes" inputId="inventoryStatus" [options]="statuses" placeholder="Select">
+                <ng-template let-option pTemplate="item">
+                    <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
+                </ng-template>
+            </p-dropdown>
+        </div> -->
+
+        <div class="field">
+            <label class="mb-3">Contactos</label>
+            <div class="formgrid grid">
+                <div class="field-radiobutton col-6">
+                    <label for="description">Telefono</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="estudiante.telefono.telefono "required />
+                </div>
+                <div class="field-radiobutton col-6">
+                    <label for="description">Celular</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="estudiante.telefono.numCelular "required />
+                </div>
+                <!-- <div class="field-radiobutton col-6">
+                    <p-radioButton id="category2" name="category" value="Clothing" [(ngModel)]="product.category"></p-radioButton>
+                    <label for="category2">Clothing</label>
+                </div>
+                <div class="field-radiobutton col-6">
+                    <p-radioButton id="category3" name="category" value="Electronics" [(ngModel)]="product.category"></p-radioButton>
+                    <label for="category3">Electronics</label>
+                </div>
+                <div class="field-radiobutton col-6">
+                    <p-radioButton id="category4" name="category" value="Fitness" [(ngModel)]="product.category"></p-radioButton>
+                    <label for="category4">Fitness</label>
+                </div>-->
+            </div> 
+        </div>
+
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="price">Price</label>
+                <!-- <p-inputNumber id="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US"></p-inputNumber> -->
+            </div>
+            <div class="field col">
+                <label for="quantity">Quantity</label>
+                <!-- <p-inputNumber id="quantity" [(ngModel)]="product.quantity"></p-inputNumber> -->
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
     </div>
 </div>

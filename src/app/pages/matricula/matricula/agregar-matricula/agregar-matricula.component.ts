@@ -25,13 +25,13 @@ export class AgregarMatriculaComponent implements OnInit {
   matricula: Matricula = new Matricula();
   user: usuario = new usuario();
   filteredProvincia: provincia[] = [];
-  cursos: Curso[] = [];
-  jornadas: Modalidad[]=[];
-  periodos: Periodo[]=[];
-  paralelos: Paralelo[]=[];
+  cursos: Curso[]=[];
+  jornadas: Modalidad[] = [];
+  periodos: Periodo[] = [];
+  paralelos: Paralelo[] = [];
   errores: string[] = [];
   provincias: provincia[] = [];
-  fecha: Date= new Date();
+  fecha: Date = new Date();
   activeIndex1: number = 0;
   cedula: string = "";
   fullName: string = "";
@@ -44,7 +44,31 @@ export class AgregarMatriculaComponent implements OnInit {
   mens: string = "";
   campo: string = "Cedula incompleta!";
 
-  matriculaFormulario: FormGroup = this.fb.group({
+ 
+
+  constructor(private estudianteService: EstudianteService,
+    private matriculaService: MatriculaService,
+    private messageService: MessageService,
+    private fb: FormBuilder) { }
+
+  ngOnInit(): void {
+    this.estudianteService.getProvincias()
+      .subscribe(provincia => this.provincias = provincia);
+     
+    this.matriculaService.getCursos()
+      .subscribe(curso => {
+        this.cursos = curso;
+        
+      });
+    this.matriculaService.getPeriodos()
+      .subscribe(periodo => {this.periodos = periodo});
+
+    this.matriculaService.getParalelos()
+      .subscribe(paralelo => {this.paralelos = paralelo});
+
+  }
+
+ matriculaFormulario: FormGroup = this.fb.group({
     cedula: [],
     nameComplete: [, [Validators.required]],
     nacimiento: [, [Validators.required]],
@@ -64,32 +88,16 @@ export class AgregarMatriculaComponent implements OnInit {
     telefono: [, [Validators.required]],
     celular: [, [Validators.required]],
     email: [, [Validators.required]],
-    inscripcion: [,[Validators.required]],
-    copCedula:[,[Validators.required]],
-    copVotacion:[,[Validators.required]],
-    certMatricula:[, [Validators.required]],
-    city:[,],
-    periodo:['',[Validators.required]],
-    curso:['',[Validators.required]],
-    paralelo:['',[Validators.required]],
-    jornada:['',[Validators.required]]
+    inscripcion: [, [Validators.required]],
+    copCedula: [, [Validators.required]],
+    copVotacion: [, [Validators.required]],
+    certMatricula: [, [Validators.required]],
+    city: [,],
+    periodo: [ ],
+    curso: [],
+    paralelo: [],
+    jornada: []
   });
-
-
-  constructor(private estudianteService: EstudianteService,
-    private matriculaService: MatriculaService,
-    private router: Router,
-    private messageService: MessageService,
-    private fb: FormBuilder) { }
-
-  ngOnInit(): void {
-
-    this.estudianteService.getProvincias()
-      .subscribe(provincia => this.provincias = provincia);
-
-   this.cargarCombox();
-  }
-
 
   filterCountry(event: any) {
     //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
@@ -107,7 +115,7 @@ export class AgregarMatriculaComponent implements OnInit {
 
   }
   mostrar() {
-    console.log(this.modalidad);
+    console.log(this.cursos, this.periodos, this.paralelos);
   }
 
   buscar() {
@@ -115,8 +123,8 @@ export class AgregarMatriculaComponent implements OnInit {
       this.estudianteService.getEstudiantePorCedula(this.cedula.trim())
         .subscribe(estudiante => {
           this.estudiante = estudiante
-          this.matricula.estudiante=estudiante;
-          this.matricula.fechaMatricula= new Date();
+          this.matricula.estudiante = estudiante;
+          this.matricula.fechaMatricula = new Date();
           this.fullName = this.estudiante.id_persona.nombre + " " + this.estudiante.id_persona.apellido
           this.mens = "Estudiante Encontrado"
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Busqueda', detail: 'Estudiante Encontrado' });
@@ -137,40 +145,34 @@ export class AgregarMatriculaComponent implements OnInit {
   }
 
 
-  guardarMatricula(){
+  guardarMatricula() {
 
-    // if (this.matriculaFormulario.invalid) {
-    //   this.matriculaFormulario.markAllAsTouched();
-    //   this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'El formulario contiene errores' });
-    //   return;
-    // }
-    this.user.id_usuario=2;
-    this.matricula.usuario=this.user;
+    if (this.matriculaFormulario.invalid) {
+      this.matriculaFormulario.markAllAsTouched();
+      this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'El formulario contiene errores' });
+      return;
+    }
+    this.user.id_usuario = 2;
+    this.matricula.usuario = this.user;
     this.matriculaService.postMatricula(this.matricula)
-    .subscribe(newMatricula =>{
-      this.messageService.add({key: 'tc', severity:'success', summary: 'Nueva Matricula', detail: `Nuevo id: ${newMatricula.id_matricula} creado con exito!`});
-      this.activeIndex1=0;
-      this.selectedRequerimientos=[];
-      this.cedula="";
-  
-      // setTimeout(()=>{
-      //   this.matriculaFormulario.reset();
-      // },2500)
-    });
+      .subscribe(newMatricula => {
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Nueva Matricula', detail: `Nuevo id: ${newMatricula.id_matricula} creado con exito!` });
+        this.activeIndex1 = 0;
+        this.selectedRequerimientos = [];
+        this.cedula = "";
+
+        // setTimeout(()=>{
+        //   this.matriculaFormulario.reset();
+        // },2500)
+      });
   }
 
-  cargarCombox(){
-    this.matriculaService.getCursos()
-    .subscribe(curso => this.cursos = curso);
+  cargarCombox() {
 
-  this.matriculaService.getPeriodos()
-  .subscribe(periodo => this.periodos=periodo);
 
-  this.matriculaService.getParalelos()
-  .subscribe(paralelo => this.paralelos=paralelo);
   }
-  buscarJornadaPorCurso(){
+  buscarJornadaPorCurso() {
     this.matriculaService.getJormadasPorCurso(this.matricula.curso.id_curso)
-    .subscribe(jornadas => this.jornadas=jornadas);
+      .subscribe(jornadas => this.jornadas = jornadas);
   }
 }
