@@ -3,16 +3,20 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ArticuloComponent } from 'src/app/pages/inventarios/invnetarioarticulos/articulo/articulo.component';
 
-import { KitComponent } from '../../pages/inventarios/kit/kit.component';
-import { ModuloComponent } from '../../pages/inventarios/modulo/modulo.component';
 
 const routes: Routes = [
   //Aqui Rutas
   {
   path:'',
   children:[
-    {path:'kit',component:KitComponent,},
-    {path:'modulo',component:ModuloComponent},
+    { 
+      path:'kit', 
+      loadChildren: () => import('../../pages/inventarios/inventarios-kits/kit/kit.module').then( m => m.KitModule)
+    },
+    {
+      path:'modulo', 
+      loadChildren:  () => import('../../pages/inventarios/inventarios-kits/modulo/modulo.module').then( m => m.ModuloModule)
+    },
     {path:'articulo',component:ArticuloComponent},  
   ] 
 }];

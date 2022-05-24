@@ -82,12 +82,12 @@ export class ItemsService {
                           {
                               label: 'Mantenimiento Kits',
                               icon: 'pi pi-box',
-                              routerLink: 'inventariosModule/kit'
+                              routerLink: 'inventariosModule/kit/listar'
                           },
                           {
                               label: 'Mantenimiento Módulos',
                               icon: 'pi pi-book',
-                              routerLink: 'inventariosModule/modulo'
+                              routerLink: 'inventariosModule/modulo/listar'
                           }
                       ]
                   },

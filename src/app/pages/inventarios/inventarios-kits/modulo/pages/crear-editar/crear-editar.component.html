@@ -1,0 +1,56 @@
+<div class="container">
+    <form>
+        <div class="row">
+            <div class="col-6 p-4">
+                <!-- nombre -->
+                <div class="field">
+                    <label for="nombre" class="block">Nombre Módulo</label>
+                    <input id="nombre" type="text" aria-describedby="nombre-help" class="ng-invalid ng-dirty w-100" pInputText />
+                    <small id="nombre-help" class="p-error block">Nombre requerido</small>
+                </div>
+                <!-- curso -->
+                <div class="field">
+                    <label for="curso" class="block">Curso </label>
+                    <input id="curso" type="text" aria-describedby="curso-help" class="ng-invalid ng-dirty w-100" pInputText />
+                    <small id="curso-help" class="p-error block">curso requerido</small>
+                </div>
+                <!-- cantidad -->
+                <div class="field">
+                    <label for="cantidad" class="block">Cantidad</label>
+                    <input id="cantidad" type="number" aria-describedby="cantidad-help" class="ng-invalid ng-dirty w-100" pInputText />
+                    <small id="cantidad-help" class="p-error block">Cantidad requerida</small>
+                </div>
+            </div>
+            <!-- Modulos -->
+            <div class="col-6 p-4">
+               <!-- numero -->
+                <div class="field">
+                    <label for="numero" class="block">Número</label>
+                    <input id="numero" type="number" aria-describedby="numero-help" class="ng-invalid ng-dirty w-100" pInputText />
+                    <small id="numero-help" class="p-error block">Número requerido</small>
+                </div>
+                <!-- numero modulo -->
+                <div class="field">
+                    <label for="numero-mod" class="block">Número Módulo</label>
+                    <input id="numero-mod" type="text" aria-describedby="numero-mod-help" class="ng-invalid ng-dirty w-100" pInputText />
+                    <small id="numeromod--help" class="p-error block">Número Modulo requerido</small>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-evenly">
+                <button pButton 
+                        pRipple 
+                        type="button" 
+                        label="Cancelar" 
+                        icon="pi pi-times" 
+                        class="p-button-outlined p-button-danger" 
+                        iconPos="right"
+                        routerLink="listar"
+                        >
+                </button>
+                <button pButton pRipple type="submit" label="Cancelar" label="Guardar" icon="pi pi-save" iconPos="right"></button>
+            </div>
+        </div>
+    </form>
+</div>

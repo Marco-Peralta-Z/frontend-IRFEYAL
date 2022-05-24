@@ -37,10 +37,6 @@ import { MallaComponent } from './pages/parametrizacion/malla/malla.component';
 import { AsignaturasComponent } from './pages/parametrizacion/asignaturas/asignaturas.component';
 import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component';
 import { ArticuloComponent } from './pages/inventarios/invnetarioarticulos/articulo/articulo.component';
-import { NuevoKitComponent } from './pages/inventarios/inventariomodulos/componentes/nuevokit/ingresosnuevokit.component';
-import { KitComponent } from './pages/inventarios/inventariomodulos/kit/kit.component';
-import { TablaAprobacionesKit } from './pages/inventarios/inventariomodulos/componentes/aprobaciones/tabla.component';
-import { IngresosKitComponent } from './pages/inventarios/inventariomodulos/componentes/ingresos/ingresoskit.component';
 import { UsuarioComponent } from './pages/rol_usuario/usuario/usuario.component';
 import { DataTablesModule } from "angular-datatables";
 import { ActividadesRegistroComponent } from './pages/tutorias/actividadesRegistro/actividadesRegistro.component';
@@ -67,10 +63,6 @@ registerLocaleData(localeES);
     HeaderComponent,
     SidenavComponent,
     ArticuloComponent,
-    KitComponent,
-    TablaAprobacionesKit,
-    IngresosKitComponent,
-    NuevoKitComponent,
     PeriodoComponent,
     MallaComponent,
     AsignaturasComponent,
@@ -80,7 +72,6 @@ registerLocaleData(localeES);
     RegistrarasistenciaComponent,
     GenerarPlanunidadComponent,
     RevisarPlanunidadComponent,
-
 
   ],
   imports: [
