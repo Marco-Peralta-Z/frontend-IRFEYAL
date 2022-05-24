@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlanunidadService } from './../../../Servicio/documentacion_academica/planunidadServices/planunidad.service';
 import { UnidadService } from './../../../Servicio/documentacion_academica/unidadServices/unidad.service';
-
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -22,15 +22,20 @@ export class GenerarPlanunidadComponent implements OnInit {
   cursos: any;
   paralelos: any;
 
+  aprobado: String = "Aprobado";
+  rechazado: String = "Rechazado";
+
   id: any;
+  id_empleado: number = 1;
+  autoResize: boolean = true;
 
   mostrarFormGenerar: boolean = true;
   mostrarAprobados: boolean = false;
   mostrarRechazados: boolean = false;
   mostrarBotonEnviar: boolean = true;
-  mostrarBotonGuardarCambios: boolean = false;
-  mostrarAlertaSuccess: boolean = false;
-  mostrarAlertaDanger: boolean = false;
+  mostrarCambiosEditar: boolean = false;
+  mostrarbtnTodos: boolean = true;
+  mostrarbtnMisPlanes: boolean = false;
   // Variables para capturar el select de Unidad
   opcionSelectUnidad: any;
   verSelectUnidad: any;
@@ -58,6 +63,9 @@ export class GenerarPlanunidadComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.cargarDatos();
+  }
+  cargarDatos() {
     this.generar_planunidadForm = this.fb.group({
       id_plan_unidad: ['', Validators.required],
       titulo_unidad: ['', Validators.required],
@@ -69,6 +77,7 @@ export class GenerarPlanunidadComponent implements OnInit {
       fecha_fin: ['', Validators.required],
       estado: ['', Validators.required],
       unidad: ['', Validators.required],
+      empleado: ['', Validators.required],
       asignatura: ['', Validators.required],
       curso: ['', Validators.required],
       paralelo: ['', Validators.required],
@@ -93,18 +102,10 @@ export class GenerarPlanunidadComponent implements OnInit {
     },
       error => { console.error(error) }
     );
+    //Cargando datos en las tablas por estado y empleado
+    this.cargarPlanesUnidadEmpleado(this.aprobado);
+    this.cargarPlanesUnidadEmpleado(this.rechazado);
 
-    this.planunidadService.getAllPlanUnidadesAprobados().subscribe(resp => {
-      this.planunidadaprobados = resp;
-    },
-      error => { console.error(error) }
-    );
-
-    this.planunidadService.getAllPlanUnidadesRechazados().subscribe(resp => {
-      this.planunidadrechazados = resp;
-    },
-      error => { console.error(error) }
-    );
     //Captura los cambios en el select de periodo para luego mostrar la asignaturar de acuerdo a la Malla
     this.generar_planunidadForm.get("periodo")?.valueChanges.subscribe(value => {
       if (value != null && value != 0) {
@@ -183,29 +184,58 @@ export class GenerarPlanunidadComponent implements OnInit {
   }
 
   enviar(): void {
-    this.generar_planunidadForm.value.estado = "Pendiente";
-    this.planunidadService.savePlanUnidad(this.generar_planunidadForm.value).subscribe(resp => {
-      //Receteamos el formulario
-      this.generar_planunidadForm.reset();
-      //Receteamos los Etiquetas
-      this.opcionSelectUnidad = 0;
-      this.opcionSelectModalidad = 0;
-      this.opcionSelectAsig = 0;
-      this.opcionSelectPeriodo = 0;
-      this.opcionSelectCurso = 0;
-      this.opcionSelectParalelo = 0;
-      this.opcionSelectAsig = 0;
-      //Mostrar alerta success y ocultar despues de 5 segundos.
-      this.mostrarAlertaSuccess = true;
-      setTimeout(() => this.mostrarAlertaSuccess = false, 5000);
-    },
-      error => {
-        console.error(error)
-        //Mostrar alerta Danger y ocultar despues de 5 segundos.
-        this.mostrarAlertaDanger = true;
-        setTimeout(() => this.mostrarAlertaDanger = false, 5000);
-      }
-    )
+    if (this.generar_planunidadForm.get("fecha_inicio")?.value == "" ||
+      this.generar_planunidadForm.get("fecha_fin")?.value == "" ||
+      this.generar_planunidadForm.get("titulo_unidad")?.value == "" ||
+      this.generar_planunidadForm.get("objetivos")?.value == "" ||
+      this.generar_planunidadForm.get("contenidos")?.value == "" ||
+      this.generar_planunidadForm.get("criterios_evaluacion")?.value == "" ||
+      this.generar_planunidadForm.get("destrezas")?.value == "") {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Plan de Unidad No Enviado, llene todos los campos',
+        showConfirmButton: false,
+        timer: 2500
+      })
+    } else {
+      //Id empleado -provicional
+      this.generar_planunidadForm.value.empleado = "1";
+
+      this.generar_planunidadForm.value.estado = "Pendiente";
+      this.planunidadService.savePlanUnidad(this.generar_planunidadForm.value).subscribe(resp => {
+        //Receteamos el formulario
+        this.generar_planunidadForm.reset();
+        //Receteamos los Etiquetas
+        this.opcionSelectUnidad = 0;
+        this.opcionSelectModalidad = 0;
+        this.opcionSelectAsig = 0;
+        this.opcionSelectPeriodo = 0;
+        this.opcionSelectCurso = 0;
+        this.opcionSelectParalelo = 0;
+        this.opcionSelectAsig = 0;
+        //Alerta success
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Plan de Unidad Enviado con exito!',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      },
+        error => {
+          console.error(error)
+          //Alerta error
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Plan de Unidad No Enviado, llene todos los campos',
+            showConfirmButton: false,
+            timer: 2500
+          })
+        }
+      )
+    }
   }
 
   guardaredit() {
@@ -220,27 +250,65 @@ export class GenerarPlanunidadComponent implements OnInit {
       this.opcionSelectCurso = 0;
       this.opcionSelectParalelo = 0;
       this.opcionSelectAsig = 0;
+      //Mostramos el btn Enviar y ocultamos btn Guardar Cambios y  btn Cancelar
+      this.mostrarBotonEnviar = true;
+      this.mostrarCambiosEditar = false;
+      this.mostrarFormGenerar = false;
+      this.mostrarRechazados = true;
+      //Actualizar tablas
+      this.cargarDatos();
+      //Alerta success
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Plan de Unidad modificado con exito!',
+        showConfirmButton: false,
+        timer: 2500
+      })
     },
-      error => { console.error(error) }
+      error => {
+        console.error(error)
+        //Alerta error
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Plan de Unidad no modificado, ocurrio un error',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }
     )
   }
 
   cancelaredit() {
-    //Receteamos el formulario
-    this.generar_planunidadForm.reset();
-    //Receteamos los Etiquetas
-    this.opcionSelectUnidad = 0;
-    this.opcionSelectModalidad = 0;
-    this.opcionSelectAsig = 0;
-    this.opcionSelectPeriodo = 0;
-    this.opcionSelectCurso = 0;
-    this.opcionSelectParalelo = 0;
-    this.opcionSelectAsig = 0;
-    //Mostramos el btn Enviar y ocultamos btn Guardar Cambios y  btn Cancelar
-    this.mostrarBotonEnviar = true;
-    this.mostrarBotonGuardarCambios = false;
-    this.mostrarFormGenerar = false;
-    this.mostrarRechazados = true;
+    Swal.fire({
+      title: 'Esta seguro?',
+      text: "Cancelar edicion de Plan de Unidad!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Si, Cancelar!',
+      cancelButtonText: 'No, Seguir editando'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //Receteamos el formulario
+        this.generar_planunidadForm.reset();
+        //Receteamos los Etiquetas
+        this.opcionSelectUnidad = 0;
+        this.opcionSelectModalidad = 0;
+        this.opcionSelectAsig = 0;
+        this.opcionSelectPeriodo = 0;
+        this.opcionSelectCurso = 0;
+        this.opcionSelectParalelo = 0;
+        this.opcionSelectAsig = 0;
+        //Mostramos el btn Enviar y ocultamos btn Guardar Cambios y  btn Cancelar
+        this.mostrarBotonEnviar = true;
+        this.mostrarCambiosEditar = false;
+        this.mostrarFormGenerar = false;
+        this.mostrarRechazados = true;
+      }
+    })
   }
 
   abrir(plan_unidad: any) {
@@ -256,6 +324,7 @@ export class GenerarPlanunidadComponent implements OnInit {
       fecha_fin: plan_unidad.fecha_fin,
       estado: plan_unidad.estado,
       unidad: plan_unidad.unidad,
+      empleado: plan_unidad.empleado,
       asignatura: plan_unidad.asignatura,
       curso: plan_unidad.curso,
       paralelo: plan_unidad.paralelo,
@@ -280,7 +349,7 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.verSelectCurso = plan_unidad.curso.descripcion;
     this.verSelectParalelo = plan_unidad.paralelo.descripcion;
     //Mostramos el btn Guardar Cambios y ocultamos btn Enviar
-    this.mostrarBotonGuardarCambios = true;
+    this.mostrarCambiosEditar = true;
     this.mostrarBotonEnviar = false;
     this.mostrarFormGenerar = true;
     this.mostrarRechazados = false;
@@ -288,8 +357,60 @@ export class GenerarPlanunidadComponent implements OnInit {
 
 
   eliminar(planunidad: any) {
-    this.planunidadService.deletePlanUnidad(planunidad.id_plan_unidad).subscribe(resp => {
+    Swal.fire({
+      title: 'Esta seguro?',
+      text: "Eliminar Plan: Unidad " + planunidad.unidad.idUnidad +
+        ' de ' + planunidad.asignatura.descripcion,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.planunidadService.deletePlanUnidad(planunidad.id_plan_unidad).subscribe(resp => {
+          //Actualizar tablas
+          this.cargarDatos();
+        });
+        Swal.fire({
+          icon: 'success',
+          title: 'Eliminado!',
+          text: 'El Plan de unidad ha sido eliminado.',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }
     })
+  }
+
+  // validaciones de campos del formulario
+  validarCampo(valor: string): boolean {
+    return this.generar_planunidadForm.controls[valor].errors!
+      && this.generar_planunidadForm.controls[valor].touched
+  }
+
+  cargarTodosPlanesUnidadAprobados() {
+    this.planunidadService.getAllPlanUnidadesAprobados().subscribe(resp => {
+      this.planunidadaprobados = resp;
+      this.mostrarbtnTodos = false;
+      this.mostrarbtnMisPlanes = true;
+    },
+      error => { console.error(error) }
+    );
+  }
+
+  cargarPlanesUnidadEmpleado(estado: String) {
+    this.planunidadService.getAllPlanUnidadesByEmpleado(this.id_empleado, estado).subscribe(resp => {
+      if (estado == "Aprobado") {
+        this.planunidadaprobados = resp;
+        this.mostrarbtnTodos = true;
+        this.mostrarbtnMisPlanes = false;
+      } else if (estado == "Rechazado") {
+        this.planunidadrechazados = resp;
+      }
+    },
+      error => { console.error(error) }
+    );
   }
 
 

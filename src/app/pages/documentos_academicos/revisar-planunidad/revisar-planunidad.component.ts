@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlanunidadService } from './../../../Servicio/documentacion_academica/planunidadServices/planunidad.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-revisar-planunidad',
@@ -15,8 +16,13 @@ export class RevisarPlanunidadComponent implements OnInit {
   //Variable para mostrar u ocultar el formulario y tabla
   mostrarForm: boolean = false;
   mostrarTablePendientes: boolean = true;
+
+  //Tamaño de textarea
+  autoResize: boolean = true;
+
   //Variables para mostrar los datos en los labels
   verUnidad: any;
+  verEmpleado: String = "";
   verModalidad: any;
   verPeriodoMalla: any;
   verAsigNom: any;
@@ -31,6 +37,10 @@ export class RevisarPlanunidadComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.cargarDatos();
+  }
+
+  cargarDatos(): void {
     this.revisar_planunidadForm = this.fb.group({
       id_plan_unidad: [''],
       titulo_unidad: ['', Validators.required],
@@ -42,6 +52,7 @@ export class RevisarPlanunidadComponent implements OnInit {
       fecha_fin: ['', Validators.required],
       estado: ['', Validators.required],
       unidad: ['', Validators.required],
+      empleado: ['', Validators.required],
       asignatura: ['', Validators.required],
       curso: ['', Validators.required],
       paralelo: ['', Validators.required],
@@ -69,6 +80,7 @@ export class RevisarPlanunidadComponent implements OnInit {
       fecha_fin: plan_unidad.fecha_fin,
       estado: plan_unidad.estado,
       unidad: plan_unidad.unidad,
+      empleado: plan_unidad.empleado,
       asignatura: plan_unidad.asignatura,
       curso: plan_unidad.curso,
       paralelo: plan_unidad.paralelo,
@@ -82,6 +94,7 @@ export class RevisarPlanunidadComponent implements OnInit {
     this.id = plan_unidad.id_plan_unidad;
     //Cargamos los labels
     this.verUnidad = plan_unidad.unidad.idUnidad;
+    this.verEmpleado = plan_unidad.empleado.persona.nombre + " " + plan_unidad.empleado.persona.apellido;
     this.verModalidad = plan_unidad.modalidad.descripcion;
     this.verPeriodoMalla = plan_unidad.periodo.malla.descripcion;
     this.verAsigNom = plan_unidad.asignatura.descripcion;
@@ -91,27 +104,69 @@ export class RevisarPlanunidadComponent implements OnInit {
   }
 
   aprobar() {
-    this.revisar_planunidadForm.value.estado = "Aprobado";
-    this.planunidadService.updatePlanUnidad(this.id, this.revisar_planunidadForm.value).subscribe(resp => {
-      this.revisar_planunidadForm.reset();
-      //Ocultamos el formulario y mostramos la tabla
-      this.mostrarForm = false;
-      this.mostrarTablePendientes = true;
-    },
-      error => { console.error(error) }
-    )
+    Swal.fire({
+      title: 'Esta seguro?',
+      text: "Aprobar Plan de Unidad!",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Confirmar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.revisar_planunidadForm.value.estado = "Aprobado";
+        this.planunidadService.updatePlanUnidad(this.id, this.revisar_planunidadForm.value).subscribe(resp => {
+          this.revisar_planunidadForm.reset();
+          //Ocultamos el formulario y mostramos la tabla
+          this.mostrarForm = false;
+          this.mostrarTablePendientes = true;
+          //Actualizar tabla
+          this.cargarDatos();
+        },
+          error => { console.error(error) }
+        )
+        Swal.fire({
+          icon: 'success',
+          title: 'Aprobado!',
+          text: 'El Plan de unidad ha sido Aprobado.',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }
+    })
   }
 
   rechazar() {
-    this.revisar_planunidadForm.value.estado = "Rechazado";
-    this.planunidadService.updatePlanUnidad(this.id, this.revisar_planunidadForm.value).subscribe(resp => {
-      this.revisar_planunidadForm.reset();
-      //Ocultamos el formulario y mostramos la tabla
-      this.mostrarForm = false;
-      this.mostrarTablePendientes = true;
-    },
-      error => { console.error(error) }
-    )
+    Swal.fire({
+      title: 'Esta seguro?',
+      text: "Rechazar Plan de Unidad!",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Confirmar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.revisar_planunidadForm.value.estado = "Rechazado";
+        this.planunidadService.updatePlanUnidad(this.id, this.revisar_planunidadForm.value).subscribe(resp => {
+          this.revisar_planunidadForm.reset();
+          //Ocultamos el formulario y mostramos la tabla
+          this.mostrarForm = false;
+          this.mostrarTablePendientes = true;
+          //Actualizar tabla
+          this.cargarDatos();
+        },
+          error => { console.error(error) }
+        )
+        Swal.fire({
+          icon: 'success',
+          title: 'Rechazado!',
+          text: 'El Plan de unidad ha sido Rechazado.',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }
+    })
   }
 
   retroceder() {
