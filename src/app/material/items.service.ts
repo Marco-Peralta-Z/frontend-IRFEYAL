@@ -81,13 +81,13 @@ export class ItemsService {
                       items: [
                           {
                               label: 'Mantenimiento Kits',
-                              icon: 'fa fa-book',
-                              routerLink: 'inventariosModule/kit'
+                              icon: 'pi pi-box',
+                              routerLink: 'inventariosModule/kit/listar'
                           },
                           {
-                              label: 'Aprobaciones',
-                              icon: 'fa fa-book',
-                              routerLink: 'inventariosModule/aprobaciones'
+                              label: 'Mantenimiento Módulos',
+                              icon: 'pi pi-book',
+                              routerLink: 'inventariosModule/modulo/listar'
                           }
                       ]
                   },
