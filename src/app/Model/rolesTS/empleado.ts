@@ -23,4 +23,8 @@ export class empleado {
 
     id_persona: persona = new persona();
 
+    constructor(id_empleado?: number) {
+        this.id_empleado = id_empleado || 0;
+    }
+
 }

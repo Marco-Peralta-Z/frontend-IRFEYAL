@@ -1,3 +1,4 @@
+import { empleado } from './empleado';
 export class usuario {
 
     id_usuario: number = 0;
@@ -9,4 +10,6 @@ export class usuario {
     usuario: String=new String;
 
     roles: string [] = [];
+
+    empleado?: empleado ;
 }

@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 
 import { usuario } from '../../Model/rolesTS/usuario';
 import { AuthConfig } from '../../config';
+import { empleado } from 'src/app/Model/rolesTS/empleado';
 
 @Injectable({
   providedIn: 'root'
@@ -59,9 +60,10 @@ export class AuthService {
 
   guardarUsuario = ( access_token: string ): void => {
     let payload = this.obtenerDatosToken( access_token );
-    let {id, user_name, authorities} = payload;
+    let {id, user_name, authorities,id_empleado} = payload;
     this._usuario = new usuario();
     this._usuario.id_usuario = id;
+    this._usuario.empleado  = new empleado(id_empleado);
     this._usuario.usuario = user_name;
     this._usuario.roles = authorities;
 
