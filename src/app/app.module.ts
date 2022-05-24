@@ -79,7 +79,7 @@ registerLocaleData(localeES);
     ListarasistenciaComponent,
     RegistrarasistenciaComponent,
     GenerarPlanunidadComponent,
-    RevisarPlanunidadComponent
+    RevisarPlanunidadComponent,
 
 
   ],
