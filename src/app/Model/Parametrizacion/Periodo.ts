@@ -2,21 +2,21 @@ import { Malla } from "./Malla";
 
 export class Periodo {
 
-    id_periodo: Number = 0;
+    id_periodo: number = 0;
 
     actividades: string = "";
 
-    fecha_activiti: Date = new Date;
+    fecha_actividad?: Date;
 
-    fecha_creacionDate = new Date;
+    fecha_creacion?:Date;
 
-    fecha_inicio: Date = new Date;
+    fecha_inicio?: Date;
 
-    fecha_fin: Date = new Date;
+    fecha_fin?: Date;
 
-    costo_mensualidad: Number = 0;
+    costo_mensualidad: number = 0;
 
-    costo_matricula: Number = 0;
+    costo_matricula: number = 0;
 
-    id_malla: Malla = new Malla;
+    id_malla: Malla = new Malla();
 }

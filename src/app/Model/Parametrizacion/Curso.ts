@@ -8,7 +8,7 @@ export class Curso {
 
     tipo_curso: string = "";
 
-    fec_creacion: Date = new Date;
+    fecha_creacion?: Date ;
 
-    id_empleado: empleado = new empleado;
+    id_empleado: empleado = new empleado();
 }

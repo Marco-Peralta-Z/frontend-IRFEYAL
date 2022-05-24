@@ -2,30 +2,28 @@
     <div class="d-flex page__box p-3 mt-2"> Generar Plan de Unidad</div>
     <div class="page__content shadow p-3 ">
         <!--Inicio Contenido-->
-        <div class="container-fluid"><br>
+        <h1 *ngIf="mostrarCambiosEditar">EDITANDO PLAN DE UNIDAD</h1>
+        <div *ngIf="mostrarBotonEnviar" class="container-fluid"><br>
             <div class="row">
                 <div class="col-sm-4" style="text-align:center;">
-                    <button pButton type="button" label="Generar Plan de Unidad" icon="pi pi-plus" class="p-button-text"
-                        (click)="verFormGenerar()"></button>
+                    <button pButton [disabled]="mostrarFormGenerar == true" type="button" label="Generar Plan de Unidad"
+                        icon="pi pi-plus" class="p-button-text" (click)="verFormGenerar()"></button>
                 </div>
                 <div class="col-sm-4" style="text-align:center;">
-                    <button pButton type="button" label="Rechazados" icon="pi pi-times"
-                        class="p-button-text p-button-danger" (click)="verTablaRechazados()"></button>
+                    <button pButton [disabled]="mostrarRechazados == true" type="button" label="Rechazados"
+                        icon="pi pi-times" class="p-button-text p-button-danger"
+                        (click)="verTablaRechazados()"></button>
                 </div>
                 <div class="col-sm-4" style="text-align:center;">
-                    <button pButton type="button" label="Aprobados" icon="pi pi-check"
-                        class="p-button-text p-button-success" (click)="verTablaAprobados()"></button>
+                    <button pButton [disabled]="mostrarAprobados == true" type="button" label="Aprobados"
+                        icon="pi pi-check" class="p-button-text p-button-success"
+                        (click)="verTablaAprobados()"></button>
                 </div>
             </div>
             <hr>
         </div>
         <form *ngIf="mostrarFormGenerar" [formGroup]="generar_planunidadForm" (ngSubmit)="enviar()">
-            <div class=container-fluid>
-                <strong>
-                    <h1>GENERAR PLAN DE UNIDAD</h1>
-                </strong>
-            </div>
-            <div class="container-fluid border border-dark bg-light">
+            <div class="container-fluid border bg-light">
                 <div class="container-fluid">
                     <!-- Implementacion del Grid para el diseño del formulario -->
                     <!-- Implementacion del Enacabezado-->
@@ -33,9 +31,9 @@
                         <div class="col">
                         </div>
                         <div class="col-sm-4">
-                            <label style="text-align:center; font-size:25px; font-weight:bold;">
+                            <label style="text-align:center; font-size:23px; font-weight:bold;">
                                 PLAN DE UNIDAD N°</label>
-                            <label style="text-align:center; font-size:25px; font-weight:bold; margin-left: 10px;"
+                            <label style="text-align:center; font-size:23px; font-weight:bold; margin-left: 10px;"
                                 [hidden]="opcionSelectUnidad == '0'">
                                 {{verSelectUnidad}}</label>
                         </div>
@@ -142,10 +140,18 @@
                                 <div class="col-sm-4">
                                     <h2>Fecha de inicio:</h2>
                                     <input type="date" class="form-control" name="date" formControlName="fecha_inicio">
+                                    <span class="form-text text-danger" style="font-size:10px;"
+                                        *ngIf="validarCampo('fecha_inicio')">
+                                        Campo obligatorio!
+                                    </span>
                                 </div>
                                 <div class="col-sm-4">
                                     <h2>Fecha de fin:</h2>
                                     <input type="date" class="form-control" name="date" formControlName="fecha_fin">
+                                    <span class="form-text text-danger" style="font-size:10px;"
+                                        *ngIf="validarCampo('fecha_fin')">
+                                        Campo obligatorio!
+                                    </span>
                                 </div>
                                 <div class="col-sm-4">
                                 </div>
@@ -156,14 +162,23 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <h2>Titulo de Unidad</h2>
-                                        <textarea class="form-control" formControlName="titulo_unidad"
-                                            rows="2"></textarea>
+                                        <textarea class="form-control" formControlName="titulo_unidad" [rows]="2"
+                                            pInputTextarea [autoResize]="autoResize"></textarea>
+                                        <span class="form-text text-danger" style="font-size:10px;"
+                                            *ngIf="validarCampo('titulo_unidad')">
+                                            Campo obligatorio!
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <h2>Objetivos especificos de la unidad</h2>
-                                        <textarea class="form-control" formControlName="objetivos" rows="2"></textarea>
+                                        <textarea class="form-control" formControlName="objetivos" [rows]="2"
+                                            pInputTextarea [autoResize]="autoResize"></textarea>
+                                        <span class="form-text text-danger" style="font-size:10px;"
+                                            *ngIf="validarCampo('objetivos')">
+                                            Campo obligatorio!
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -173,14 +188,23 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <h2>Contenidos de la unidad</h2>
-                                        <textarea class="form-control" formControlName="contenidos" rows="3"></textarea>
+                                        <textarea class="form-control" formControlName="contenidos" [rows]="3"
+                                            pInputTextarea [autoResize]="autoResize"></textarea>
+                                        <span class="form-text text-danger" style="font-size:10px;"
+                                            *ngIf="validarCampo('contenidos')">
+                                            Campo obligatorio!
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <h2>Criterios de evaluacion</h2>
-                                        <textarea class="form-control" formControlName="criterios_evaluacion"
-                                            rows="3"></textarea>
+                                        <textarea class="form-control" formControlName="criterios_evaluacion" [rows]="3"
+                                            pInputTextarea [autoResize]="autoResize"></textarea>
+                                        <span class="form-text text-danger" style="font-size:10px;"
+                                            *ngIf="validarCampo('criterios_evaluacion')">
+                                            Campo obligatorio!
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -190,7 +214,12 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <h2>Destrezas con criterio de desempeño</h2>
-                                        <textarea class="form-control" formControlName="destrezas" rows="3"></textarea>
+                                        <textarea class="form-control" formControlName="destrezas" [rows]="3"
+                                            pInputTextarea [autoResize]="autoResize"></textarea>
+                                        <span class="form-text text-danger" style="font-size:10px;"
+                                            *ngIf="validarCampo('destrezas')">
+                                            Campo obligatorio!
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -199,18 +228,11 @@
                     <br>
                     <div align="center">
                         <button *ngIf="mostrarBotonEnviar" type="submit" class="btn btn-success btn-lg">Enviar</button>
-                        <button *ngIf="mostrarBotonGuardarCambios" type="button" class="btn btn-secondary"
+                        <button *ngIf="mostrarCambiosEditar" type="button" class="btn btn-secondary"
                             (click)="cancelaredit()">Cancelar</button>
-                        <button *ngIf="mostrarBotonGuardarCambios" type="button" class="btn btn-primary"
+                        <button *ngIf="mostrarCambiosEditar" type="button" class="btn btn-primary"
                             (click)="guardaredit()">Guardar Cambios</button>
                     </div><br>
-                    <label *ngIf="mostrarAlertaSuccess" type="success" align="center">
-                        Plan de unidad Enviado con exito!
-                    </label>
-                    <label *ngIf="mostrarAlertaDanger" type="danger" align="center">
-                        Error. Plan de unidad no enviado!
-                        Llene todos los campos.
-                    </label>
                 </div>
                 <br>
             </div>
@@ -218,70 +240,133 @@
         </form>
         <!--Implementacion de la tabla de planes de unidad aprobados-->
         <div *ngIf="mostrarAprobados" class="container-fluid px-4">
-            <h1>PLANES DE UNIDAD APROBADOS</h1>
-            <div class="container mt-3 border border-dark bg-light">
-                <table class="table table-bordered table-hover table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Asignatura</th>
-                            <th>Titulo</th>
-                            <th>Fecha_Inicio</th>
-                            <th>Fecha_Finaliza</th>
-                            <th>Unidad</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let item of planunidadaprobados">
-                        <tr>
-                            <td>{{item.id_plan_unidad}}</td>
-                            <td>{{item.asignatura.descripcion}}</td>
-                            <td>{{item.titulo_unidad}}</td>
-                            <td>{{item.fecha_inicio}}</td>
-                            <td>{{item.fecha_fin}}</td>
-                            <td>{{item.unidad.idUnidad}}</td>
-                            <td>{{item.estado}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <h1 *ngIf="mostrarbtnTodos">PLANES DE UNIDAD APROBADOS</h1>
+            <h1 *ngIf="mostrarbtnMisPlanes">PLANES DE UNIDAD APROBADOS (Todos)</h1>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple *ngIf="mostrarbtnMisPlanes" label="Mis Planes de Unidad"
+                        icon="pi pi-folder-open" class="p-button-success mr-2"
+                        (click)="cargarPlanesUnidadEmpleado(aprobado)"></button>
+                    <button pButton pRipple *ngIf="mostrarbtnTodos" label="Todos" icon="pi pi-book"
+                        class="p-button-primary" (click)="cargarTodosPlanesUnidadAprobados()"></button>
+                </ng-template>
+            </p-toolbar>
+            <p-table #dt [value]="planunidadaprobados" [rows]="10" [paginator]="true"
+                [globalFilterFields]="['asignatura.descripcion','titulo_unidad','unidad.idUnidad']"
+                responsiveLayout="scroll" [rowHover]="true" dataKey="id_plan_unidad"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">Administrar Planes de unidad por (Asignatura, Unidad o Titulo)</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Search..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="id_plan_unidad">Id
+                            <p-sortIcon field="id_plan_unidad"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="asignatura.descripcion">Asignatura
+                            <p-sortIcon field="asignatura.descripcion"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="unidad.idUnidad">Unidad
+                            <p-sortIcon field="unidad.idUnidad"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="titulo_unidad">Titulo
+                            <p-sortIcon field="titulo_unidad"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="fecha_inicio">Fecha_Inicio
+                            <p-sortIcon field="fecha_inicio"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="fecha_fin">Fecha_Fin
+                            <p-sortIcon field="fecha_fin"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="estado">Estado </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td>{{item.id_plan_unidad}}</td>
+                        <td>{{item.asignatura.descripcion}}</td>
+                        <td>{{item.unidad.idUnidad}}</td>
+                        <td>{{item.titulo_unidad}}</td>
+                        <td>{{item.fecha_inicio | date:'MMM dd,yyyy'}}</td>
+                        <td>{{item.fecha_fin | date:'MMM dd,yyyy'}}</td>
+                        <td>{{item.estado}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
         </div>
         <!--Implementacion de la tabla de planes de unidad rechazados-->
         <div *ngIf="mostrarRechazados" class="container-fluid px-4">
             <h1>PLANES DE UNIDAD RECHAZADOS</h1>
-            <div class="container mt-3 border border-dark bg-light">
-                <table class="table table-bordered table-hover table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Asignatura</th>
-                            <th>Titulo</th>
-                            <th>Fecha_Inicio</th>
-                            <th>Fecha_Finaliza</th>
-                            <th>Unidad</th>
-                            <th>Estado</th>
-                            <th>Editar/Borrar</th>
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let item of planunidadrechazados">
-                        <tr>
-                            <td>{{item.id_plan_unidad}}</td>
-                            <td>{{item.asignatura.descripcion}}</td>
-                            <td>{{item.titulo_unidad}}</td>
-                            <td>{{item.fecha_inicio}}</td>
-                            <td>{{item.fecha_fin}}</td>
-                            <td>{{item.unidad.idUnidad}}</td>
-                            <td>{{item.estado}}</td>
-                            <td>
-                                <button pButton type="button" icon="pi pi-pencil" label="Editar" class="p-button-text"
-                                    (click)="abrir(item)"></button>
-                                <button pButton type="button" icon="pi pi-trash" class="p-button-text p-button-danger"
-                                    (click)="eliminar(item)"></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <p-table #dt [value]="planunidadrechazados" [rows]="10" [paginator]="true"
+                [globalFilterFields]="['asignatura.descripcion','titulo_unidad','unidad.idUnidad']"
+                responsiveLayout="scroll" [rowHover]="true" dataKey="id_plan_unidad"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">Administrar Planes de unidad por (Asignatura, Unidad o Titulo)</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Search..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="id_plan_unidad">Id
+                            <p-sortIcon field="id_plan_unidad"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="asignatura.descripcion">Asignatura
+                            <p-sortIcon field="asignatura.descripcion"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="unidad.idUnidad">Unidad
+                            <p-sortIcon field="unidad.idUnidad"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="titulo_unidad">Titulo
+                            <p-sortIcon field="titulo_unidad"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="fecha_inicio">Fecha_Inicio
+                            <p-sortIcon field="fecha_inicio"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="fecha_fin">Fecha_Fin
+                            <p-sortIcon field="fecha_fin"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="estado">Estado </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td>{{item.id_plan_unidad}}</td>
+                        <td>{{item.asignatura.descripcion}}</td>
+                        <td>{{item.unidad.idUnidad}}</td>
+                        <td>{{item.titulo_unidad}}</td>
+                        <td>{{item.fecha_inicio | date:'MMM dd,yyyy'}}</td>
+                        <td>{{item.fecha_fin | date:'MMM dd,yyyy'}}</td>
+                        <td>{{item.estado}}</td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2"
+                                (click)="abrir(item)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                                (click)="eliminar(item)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        In total there are {{planunidadrechazados ? planunidadrechazados.length : 0 }} planes de unidad.
+                    </div>
+                </ng-template>
+            </p-table>
         </div>
         <!--Fin Contenido-->
     </div>

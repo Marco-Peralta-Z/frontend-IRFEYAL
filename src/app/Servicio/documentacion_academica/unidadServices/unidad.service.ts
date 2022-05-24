@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Api } from 'src/app/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UnidadService {
-  private API_SERVER = "http://localhost:8080/unidades/";
+  private API_SERVER = Api.url + "unidades/";
 
   constructor(
     private httpClient: HttpClient

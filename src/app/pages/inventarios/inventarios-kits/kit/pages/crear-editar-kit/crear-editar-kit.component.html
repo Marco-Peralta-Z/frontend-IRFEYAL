@@ -1,0 +1,51 @@
+<div class="container">
+    <form>
+        <div class="row">
+            <div class="col-6 p-4">
+                <!-- nombre -->
+                <div class="field">
+                    <label for="nombre" class="block">Nombre kit</label>
+                    <input id="nombre" type="text" aria-describedby="nombre-help" class="ng-invalid ng-dirty w-100" pInputText />
+                    <small id="nombre-help" class="p-error block">Nombre requerido</small>
+                </div>
+                <!-- precio -->
+                <div class="field">
+                    <label for="precio" class="block">Precio</label>
+                    <input id="precio" type="number" aria-describedby="precio-help" class="ng-invalid ng-dirty w-100" pInputText />
+                    <small id="precio-help" class="p-error block">Precio requerido</small>
+                </div>
+            </div>
+            <div class="col-6 p-4">
+                <!-- periodo -->
+                <div class="field">
+                    <label for="periodo" class="block">Periodo</label>
+                    <p-calendar inputId="basic" styleClass="w-100"></p-calendar>
+                    <small id="periodo-help" class="p-error block">Periodo requerido</small>
+                </div>
+                <label for="numero" class="block">Módulos</label>
+                <p-multiSelect  [options]="modulos" 
+                                styleClass="w-100"
+                                defaultLabel="Seleccionar módulos" 
+                                optionLabel="nombreModulo" 
+                                selectedItemsLabel="{0} items selected">
+                </p-multiSelect>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-evenly">
+                <button pButton 
+                        pRipple 
+                        type="button" 
+                        label="Cancelar" 
+                        icon="pi pi-times" 
+                        class="p-button-outlined p-button-danger" 
+                        iconPos="right"
+                        routerLink="listar"
+                        >
+                </button>
+                <button pButton pRipple type="submit" label="Cancelar" label="Guardar" icon="pi pi-save" iconPos="right"></button>
+            </div>
+        </div>
+    </form>
+</div>

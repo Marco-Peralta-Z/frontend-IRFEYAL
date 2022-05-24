@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Api } from 'src/app/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanunidadService {
-  private API_SERVER = "http://localhost:8080/planunidades/";
+  private API_SERVER = Api.url + "planunidades/";
 
   constructor(
     private httpClient: HttpClient
@@ -38,6 +39,10 @@ export class PlanunidadService {
 
   public updatePlanUnidad(id: any, planunidad: any): Observable<any> {
     return this.httpClient.put(this.API_SERVER + "update/" + id, planunidad);
+  }
+
+  public getAllPlanUnidadesByEmpleado(id: number, estado: String): Observable<any> {
+    return this.httpClient.get(this.API_SERVER + estado + "/empleado/" + id);
   }
 
   //Consumido de parametrizacion
