@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModuloService } from '../../../../../../Servicio/modulo_invetario/modulo.service';
+import { Modulo } from '../../../../../../Model/Inventarios/ModuloLibro';
 
 @Component({
   selector: 'app-listar',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListarComponent implements OnInit {
 
-  constructor() { }
+  public modulos: Modulo [] = [];
+  constructor(
+    private _moduloService: ModuloService,
+  ) { }
 
   ngOnInit(): void {
+    this.getModulos();
+  }
+
+  getModulos = () => {
+    this._moduloService.getModulos().subscribe({
+      next: (resp) => {
+        console.log(resp);
+      },
+      error: ( error ) => {
+        console.log(error);
+      }
+    })
   }
 
 }

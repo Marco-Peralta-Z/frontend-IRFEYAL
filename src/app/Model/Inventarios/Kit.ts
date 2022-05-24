@@ -1,6 +1,10 @@
-export class kit {
-    id_kit: number = 0;
-    periodo: String = '';
-    precio_kit: number = 0;
-    nombre_kit: String = '';
+import { Modulo } from './ModuloLibro';
+export class Kit {
+    id_kit?:       number;
+    nombrekit?:    string;
+    precioKit?:    number;
+    periodo?:      string;
+    listaModulos?: Modulo[];
 }
+
+

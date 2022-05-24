@@ -14,25 +14,22 @@
                     <input id="precio" type="number" aria-describedby="precio-help" class="ng-invalid ng-dirty w-100" pInputText />
                     <small id="precio-help" class="p-error block">Precio requerido</small>
                 </div>
+            </div>
+            <div class="col-6 p-4">
                 <!-- periodo -->
                 <div class="field">
                     <label for="periodo" class="block">Periodo</label>
                     <p-calendar inputId="basic" styleClass="w-100"></p-calendar>
                     <small id="periodo-help" class="p-error block">Periodo requerido</small>
                 </div>
-            </div>
-            <!-- Modulos -->
-            <div class="col-6 p-4">
                 <label for="numero" class="block">Módulos</label>
-                <!-- <p-listbox [options]="countries" [(ngModel)]="selectedCountries" [metaKeySelection]="false" [checkbox]="true" [filter]="true" [multiple]="true" optionLabel="name" [listStyle]="{'max-height':'250px'}" [style]="{'width':'15rem'}">
-                    <ng-template let-country pTemplate="item">
-                        <div class="country-item">
-                            <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + country.code.toLowerCase()" />
-                            <div>{{country.name}}</div>
-                        </div>
-                    </ng-template>
-                </p-listbox> -->
-                <!-- tabla modulos -->
+                <p-multiSelect  [options]="modulos" 
+                                styleClass="w-100"
+                                defaultLabel="Seleccionar módulos" 
+                                optionLabel="nombreModulo" 
+                                selectedItemsLabel="{0} items selected">
+                </p-multiSelect>
+
             </div>
         </div>
         <div class="row">
