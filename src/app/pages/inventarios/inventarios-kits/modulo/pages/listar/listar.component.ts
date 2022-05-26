@@ -51,9 +51,9 @@ export class ListarComponent implements OnInit {
                 this._mensajesSweetService.mensajeError('Upps!', `No se pudo eliminar: ${modulo.nombreModulo}, debido a que tienen una relación con un kit`);
               }
             }
-          })
+          });
         }
     });
-}
+  }
 
 }

@@ -1,1 +1,52 @@
-<p>listar-kits works!</p>
+<div class="card" >
+    <p-table #dt [value]="kits" [rows]="10" [paginator]="true" [globalFilterFields]="['nombreKit','precioKit','periodo']" responsiveLayout="scroll"
+        [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="nombreKit">Nombre <p-sortIcon field="nombreKit"></p-sortIcon></th>
+                <th pSortableColumn="precioKit">Precio <p-sortIcon field="precioKit"></p-sortIcon></th>
+                <th pSortableColumn="periodo">Periodo <p-sortIcon field="periodo"></p-sortIcon></th>
+                <th>Módulos</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-kits>
+            <tr>
+                <td >
+                    No hay Kits
+                </td>
+            </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="body" let-kit>
+            <tr>
+
+                <td>{{kit.nombrekit}}</td>
+                <td>{{kit.precioKit}}</td>
+                <td>{{kit.periodo}}</td>
+                <td>{{kit.listaModulos.length}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/inventariosModule/modulo/editar/', kit.id_kit]"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarKit(kit)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total hay {{kits ? kits.length : 0 }} kits.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
