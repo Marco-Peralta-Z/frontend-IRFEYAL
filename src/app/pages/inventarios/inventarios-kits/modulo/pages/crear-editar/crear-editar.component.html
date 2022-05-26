@@ -1,38 +1,88 @@
 <div class="container">
-    <form [formGroup]="moduloForm" (ngSubmit)="crearModulo()">
+    <form [formGroup]="moduloForm" (ngSubmit)="realizarAccion()">
         <div class="row">
-            <div class="col-6 p-4">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 p-4">
                 <!-- nombre -->
                 <div class="field">
                     <label for="nombre" class="block">Nombre Módulo</label>
-                    <input formControlName="nombreModulo" id="nombre" type="text" aria-describedby="nombre-help" class="ng-invalid ng-dirty w-100" pInputText />
-                    <small id="nombre-help" class="p-error block">Nombre requerido</small>
+                    <input  formControlName="nombreModulo" 
+                            id="nombre" 
+                            type="text" 
+                            class="w-100"
+                            [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('nombreModulo')}"
+                            pInputText />
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('nombreModulo')">
+                            El nombre es requerido.
+                    </small>
+                </div>
+                <!-- codigo -->
+                <div class="field">
+                    <label for="codigo" class="block">Código Módulo</label>
+                    <input  formControlName="codModulo" 
+                            id="codigo" 
+                            type="text" 
+                            class="w-100"
+                            [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('codModulo')}"
+                            pInputText />
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('codModulo')">
+                            El código del módulo es requerido.
+                    </small>
                 </div>
                 <!-- curso -->
                 <div class="field">
                     <label for="curso" class="block">Curso </label>
-                    <input formControlName="curso" id="curso" type="text" aria-describedby="curso-help" class="ng-invalid ng-dirty w-100" pInputText />
-                    <small id="curso-help" class="p-error block">curso requerido</small>
+                    <input  formControlName="curso" 
+                            type="text"
+                            class="w-100" 
+                            [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('curso')}" 
+                            pInputText />
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('curso')">
+                            El curso es requerido.
+                    </small>
                 </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 p-4">
                 <!-- cantidad -->
                 <div class="field">
                     <label for="cantidad" class="block">Cantidad</label>
-                    <input formControlName="cantidad" id="cantidad" type="number" aria-describedby="cantidad-help" class="ng-invalid ng-dirty w-100" pInputText />
-                    <small id="cantidad-help" class="p-error block">Cantidad requerida</small>
-                </div>
-            </div>
-            <div class="col-6 p-4">
-               <!-- numero -->
-                <div class="field">
-                    <label for="numero" class="block">Número</label>
-                    <input formControlName="numero" id="numero" type="number" aria-describedby="numero-help" class="ng-invalid ng-dirty w-100" pInputText />
-                    <small id="numero-help" class="p-error block">Número requerido</small>
+                    <input  formControlName="cantidad"  
+                            type="number"  
+                            class=" w-100" 
+                            [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('cantidad')}"
+                            pInputText />
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('cantidad')">
+                            La cantidad es requerida.
+                    </small>
                 </div>
                 <!-- numero modulo -->
                 <div class="field">
                     <label for="numero-mod" class="block">Número Módulo</label>
-                    <input formControlName="numeroModulo" id="numero-mod" type="text" aria-describedby="numero-mod-help" class="ng-invalid ng-dirty w-100" pInputText />
-                    <small id="numeromod--help" class="p-error block">Número Modulo requerido</small>
+                    <input  formControlName="numeroModulo" 
+                            type="text" 
+                            class="w-100" 
+                            [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('numeroModulo')}"
+                            pInputText />
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('numeroModulo')">
+                            El número  del módulo es requerido.
+                    </small>
+                </div>
+               <!-- numero -->
+                <div class="field">
+                    <label for="numero" class="block">Número</label>
+                    <input  formControlName="numero" 
+                            type="number" 
+                            class="w-100"
+                            [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('numero')}"
+                            pInputText />
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('numero')">
+                            El número es requerido.
+                    </small>
                 </div>
             </div>
         </div>
@@ -45,10 +95,16 @@
                         icon="pi pi-times" 
                         class="p-button-outlined p-button-danger" 
                         iconPos="right"
-                        routerLink="listar"
-                        >
+                        routerLink="listar">
                 </button>
-                <button pButton pRipple type="submit" label="Cancelar" label="Guardar" icon="pi pi-save" iconPos="right"></button>
+                <button pButton 
+                        pRipple type="submit" 
+                        label="Cancelar" 
+                        label="Guardar" 
+                        icon="pi pi-save" 
+                        iconPos="right"
+                        [disabled]="moduloForm.pending">
+                </button>
             </div>
         </div>
     </form>

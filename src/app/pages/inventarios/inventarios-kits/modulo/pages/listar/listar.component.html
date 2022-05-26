@@ -1,1 +1,56 @@
-<p>listar works!</p>
+<div class="card" >
+    <p-table #dt [value]="modulos" [rows]="10" [paginator]="true" [globalFilterFields]="['codModulo','nombreModulo','curso','codModulo']" responsiveLayout="scroll"
+        [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="codModulo">Cod <p-sortIcon field="codModulo"></p-sortIcon></th>
+                <th pSortableColumn="nombreModulo">Nombre <p-sortIcon field="nombreModulo"></p-sortIcon></th>
+                <th pSortableColumn="curso">Curso <p-sortIcon field="curso"></p-sortIcon></th>
+                <th pSortableColumn="cantidad">Catidad <p-sortIcon field="cantidad"></p-sortIcon></th>
+                <th pSortableColumn="numero">Número <p-sortIcon field="numero"></p-sortIcon></th>
+                <th pSortableColumn="numeroModulo">Número Módulo <p-sortIcon field="numeroModulo"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-modulos>
+            <tr>
+                <td >
+                    No hay módulos
+                </td>
+            </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="body" let-modulo>
+            <tr>
+
+                <td>{{modulo.codModulo}}</td>
+                <td>{{modulo.nombreModulo}}</td>
+                <td>{{modulo.curso}}</td>
+                <td>{{modulo.cantidad}}</td>
+                <td>{{modulo.numero}}</td>
+                <td>{{modulo.numeroModulo}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/inventariosModule/modulo/editar/', modulo.id_modulo_libro]"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarModulo(modulo)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total hay {{modulos ? modulos.length : 0 }} módulos.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

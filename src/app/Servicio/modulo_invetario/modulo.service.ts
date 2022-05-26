@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Api } from 'src/app/config';
 import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+
+import { Api } from 'src/app/config';
 import { Modulo } from '../../Model/Inventarios/ModuloLibro';
+import { ResModulo } from '../../Model/Inventarios/intefaces/res_modulo.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +19,50 @@ export class ModuloService {
   ) { }
 
   crearModulo = (modulo: Modulo) => {
-    return this._http.post(`${this._baseUrl}modulolibro/crear/`, modulo);
+    return this._http.post<ResModulo>(`${this._baseUrl}modulolibro/crear/`, modulo)
+      .pipe(
+        map( (response: ResModulo) => {
+          return response.status;
+        }),
+        catchError( err => {
+          console.log(err);
+          return of(false);
+        })
+      );
   }
 
+  actualizarModulo = (id:number, modulo: Modulo) => {
+    return this._http.put<ResModulo>(`${this._baseUrl}modulolibro/${id}`, modulo)
+      .pipe(
+        map( (response: ResModulo) => {
+          return response.status;
+        }),
+        catchError( err => {
+          console.log(err);
+          return of(false);
+        })
+      );
+  }
+
+  eliminarPorId = ( id: number ) => {
+    return this._http.delete<ResModulo>(`${this._baseUrl}modulolibro/${id}`)
+      .pipe(
+        map( (response: ResModulo) => {
+          return response.status;
+        }),
+        catchError( (err) => {
+          console.log(err);
+          return of(false);
+        })
+      )
+  }
+
+  getModuloPorId = (id: number) => {
+    return this._http.get<ResModulo>(`${this._baseUrl}modulolibro/${id}`);
+  }
   getModulos = ()  => {
     return this._http.get(`${this._baseUrl}modulolibro/list/`);
   }
+
+
 }
