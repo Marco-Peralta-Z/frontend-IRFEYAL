@@ -1,5 +1,5 @@
 <div class="card" >
-    <p-table #dt [value]="kits" [rows]="10" [paginator]="true" [globalFilterFields]="['nombreKit','precioKit','periodo']" responsiveLayout="scroll"
+    <p-table #dt [value]="kits" [rows]="10" [paginator]="true" [globalFilterFields]="['nombrekit','precioKit','periodo']" responsiveLayout="scroll"
         [rowHover]="true" dataKey="id"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
@@ -12,7 +12,7 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="nombreKit">Nombre <p-sortIcon field="nombreKit"></p-sortIcon></th>
+                <th pSortableColumn="nombrekit">Nombre <p-sortIcon field="nombrekit"></p-sortIcon></th>
                 <th pSortableColumn="precioKit">Precio <p-sortIcon field="precioKit"></p-sortIcon></th>
                 <th pSortableColumn="periodo">Periodo <p-sortIcon field="periodo"></p-sortIcon></th>
                 <th>Módulos</th>
@@ -32,10 +32,22 @@
 
                 <td>{{kit.nombrekit}}</td>
                 <td>{{kit.precioKit}}</td>
-                <td>{{kit.periodo}}</td>
-                <td>{{kit.listaModulos.length}}</td>
+                <td>{{kit.periodo | date:'dd/MM/yyyy'}}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/inventariosModule/modulo/editar/', kit.id_kit]"></button>
+                    <div class="" *ngIf="kit.listaModulos.length > 0; else cero">
+                        <button pButton 
+                                pRipple 
+                                icon="pi pi-eye" 
+                                label="{{kit.listaModulos.length}}" 
+                                class="p-button-rounded p-button-help"
+                                (click)="showDialog(kit)">
+                        </button>
+                    </div>
+                    <ng-template #cero>0</ng-template>
+                    
+                </td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/inventariosModule/kit/editar/', kit.id_kit]"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarKit(kit)"></button>
                 </td>
             </tr>
@@ -50,3 +62,28 @@
 
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<p-dialog header="Módulos" [(visible)]="displayModulos" [style]="{width: '50vw'}">
+    <div class="" *ngIf="selectKit?.listaModulos">
+        <p-table [value]="selectKit?.listaModulos!" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Cod</th>
+                    <th>Nombre</th>
+                    <th>Curso</th>
+                    <th>Catidad</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-modulo>
+                <tr>
+                    <td>{{modulo.codModulo}}</td>
+                    <td>{{modulo.nombreModulo}}</td>
+                    <td>{{modulo.curso}}</td>
+                    <td>{{modulo.cantidad}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="closeDialog()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

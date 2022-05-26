@@ -1,32 +1,55 @@
 <div class="container">
-    <form>
+    <form [formGroup]="kitForm" (ngSubmit)="verificarAccion()">
         <div class="row">
             <div class="col-6 p-4">
                 <!-- nombre -->
                 <div class="field">
                     <label for="nombre" class="block">Nombre kit</label>
-                    <input id="nombre" type="text" aria-describedby="nombre-help" class="ng-invalid ng-dirty w-100" pInputText />
-                    <small id="nombre-help" class="p-error block">Nombre requerido</small>
+                    <input  type="text" 
+                            class="w-100" 
+                            [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('nombrekit')}"
+                            pInputText 
+                            formControlName="nombrekit"/>
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('nombrekit')">
+                            El nombre es requerido.
+                    </small>
                 </div>
                 <!-- precio -->
                 <div class="field">
                     <label for="precio" class="block">Precio</label>
-                    <input id="precio" type="number" aria-describedby="precio-help" class="ng-invalid ng-dirty w-100" pInputText />
-                    <small id="precio-help" class="p-error block">Precio requerido</small>
+                    <input  type="number"
+                            class="w-100" 
+                            [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('precioKit')}"
+                            formControlName="precioKit"
+                            pInputText />
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('precioKit')">
+                            El precio requerido
+                    </small>
                 </div>
             </div>
             <div class="col-6 p-4">
                 <!-- periodo -->
                 <div class="field">
                     <label for="periodo" class="block">Periodo</label>
-                    <p-calendar inputId="basic" styleClass="w-100"></p-calendar>
-                    <small id="periodo-help" class="p-error block">Periodo requerido</small>
+                    <p-calendar inputId="basic" 
+                                styleClass="w-100"
+                                [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('periodo')}"
+                                dateFormat="dd/mm/yy"
+                                formControlName="periodo">
+                    </p-calendar>
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('periodo')">
+                            El periodo es requerido.
+                    </small>
                 </div>
                 <label for="numero" class="block">Módulos</label>
-                <p-multiSelect  [options]="modulos" 
+                <p-multiSelect  [options]="modulos"
                                 styleClass="w-100"
                                 defaultLabel="Seleccionar módulos" 
-                                optionLabel="nombreModulo" 
+                                optionLabel="nombreModulo"
+                                formControlName="listaModulos"
                                 selectedItemsLabel="{0} items selected">
                 </p-multiSelect>
 

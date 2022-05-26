@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ModuloService } from '../../../../../../Servicio/modulo_invetario/modulo.service';
 import { Modulo } from '../../../../../../Model/Inventarios/ModuloLibro';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Kit } from '../../../../../../Model/Inventarios/Kit';
+import { KitService } from '../../../../../../Servicio/modulo_invetario/kit.service';
+import { MensajesSweetService } from '../../../../../../Servicio/modulo_invetario/mensajes-sweet.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ResKit } from '../../../../../../Model/Inventarios/intefaces/res_kit.interface';
 
 @Component({
   selector: 'app-crear-editar-kit',
@@ -8,27 +14,108 @@ import { Modulo } from '../../../../../../Model/Inventarios/ModuloLibro';
   styleUrls: ['./crear-editar-kit.component.css']
 })
 export class CrearEditarKitComponent implements OnInit {
+
+  public kitForm: FormGroup = this._formBuilder.group({
+    nombrekit: [ , [ Validators.required]],
+    precioKit: [ , [ Validators.required]],
+    periodo: [ , [ Validators.required]],
+    listaModulos: [ ],
+  });
+
+  public id?: number;
   public modulos: Modulo [] = [];
   constructor(
+    private _formBuilder: FormBuilder,
+    private _activatedRoute: ActivatedRoute,
+    private _router: Router,
+    private _kitService: KitService,
     private _moduloService: ModuloService,
+    private _mensajesSweetService: MensajesSweetService,
   ) { }
 
   ngOnInit(): void {
     this.getModulos();
+    this.getKitIdParam();
   }
-
+  getKitIdParam = () => {
+    this._activatedRoute.paramMap.subscribe( params => {      
+      this.id = +params.get('id')!;
+      if ( this.id && !isNaN(this.id)) {
+        this.getKit(this.id);        
+      } else {
+        this._router.navigate(['/inventariosModule/kit/crear']);
+      }
+    });
+  }
   getModulos = () => {
     this._moduloService.getModulos().subscribe({
       next: (resp) => {
         this.modulos = resp as Modulo [];
-        console.log(this.modulos);
-        
       },
       error: (error) => {
-        console.log(error);
+        this.modulos = [];
       }
     });
   }
 
+  verificarAccion = () => {
+    if( this.kitForm.valid ) {
+      let kit: Kit = this.kitForm.value;
+      if ( this.id ) {
+        this.actualizarKit( kit );
+      } else {
+        this.crearKit( kit );
+      }
+    } else {
+      this.kitForm.markAllAsTouched();
+    }
+  }
 
+  crearKit = ( kit: Kit ) => {
+    this._kitService.crearKit( kit ).subscribe({
+      next: (response) => {
+        if ( response === 'ok') {
+          this._mensajesSweetService.mensajeOk('Kit creado');
+          this.kitForm.reset();
+        } else {
+          this._mensajesSweetService.mensajeError('Upss!', 'No se pudo crear el kit',);
+        }
+      }
+    })
+  }
+
+  actualizarKit = ( kit: Kit ) => {
+    this._kitService.actualizarKit( this.id!, kit ).subscribe({
+      next: ( response ) => {
+        if ( response === 'ok') {
+          this.kitForm.reset();
+          this._mensajesSweetService.mensajeOk('Kit Actualizado');
+          this._router.navigate(['/inventariosModule/kit/listar']);
+        } else {            
+          this._mensajesSweetService.mensajeError('Upss!', 'No se pudo actualizar el kit',);
+        }
+      }
+    });
+  }
+
+  getKit = (id: number) => {
+    this._kitService.getKitPorId( id ).subscribe({
+      next: (response: ResKit) => {        
+        if ( response.status === 'ok' ) {
+          response.kit.periodo = new Date(response.kit.periodo);
+          this.kitForm.patchValue(response.kit);
+        }
+      },
+      error: (error) => {
+        if (error.status === 404) {
+          this._mensajesSweetService.mensajeError('Upss!', 'No se pudo encontrar ese Kit',);
+          this._router.navigate(['/inventariosModule/kit/listar']);
+        }
+      }
+    });
+  }
+
+  verificarCampo  = ( campo: string ): boolean => {
+    return ( this.kitForm.controls?.[campo].invalid || false) && ( this.kitForm.controls?.[campo].touched || false );
+  }
 }

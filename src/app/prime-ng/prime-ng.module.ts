@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DividerModule } from 'primeng/divider';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { BlockUIModule } from 'primeng/blockui';
@@ -66,7 +67,7 @@ import {ConfirmPopupModule} from 'primeng/confirmpopup';
     DragDropModule,AccordionModule ,FileUploadModule ,
     SplitterModule, AvatarModule, AvatarGroupModule,
     PanelMenuModule, TreeModule, MessagesModule,
-    DialogModule, ChipModule, MultiSelectModule,
+    DialogModule, DynamicDialogModule, ChipModule, MultiSelectModule,
     MegaMenuModule, TieredMenuModule, MessageModule,
     MenubarModule, CarouselModule, ImageModule,
     InputTextModule, TriStateCheckboxModule,

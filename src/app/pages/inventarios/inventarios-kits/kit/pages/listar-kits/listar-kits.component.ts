@@ -3,6 +3,7 @@ import { ConfirmationService } from 'primeng/api';
 
 import { KitService } from '../../../../../../Servicio/modulo_invetario/kit.service';
 import { Kit } from '../../../../../../Model/Inventarios/Kit';
+import { MensajesSweetService } from '../../../../../../Servicio/modulo_invetario/mensajes-sweet.service';
 
 @Component({
   selector: 'app-listar-kits',
@@ -12,9 +13,12 @@ import { Kit } from '../../../../../../Model/Inventarios/Kit';
 })
 export class ListarKitsComponent implements OnInit {
   public kits: Kit [] = [];
+  public selectKit?: Kit;
+  displayModulos?: boolean;
   constructor(
     private _confirmationService: ConfirmationService,
-    private _kitService: KitService
+    private _kitService: KitService,
+    private _mensajesSweetService: MensajesSweetService,
   ) { }
 
   ngOnInit(): void {
@@ -24,7 +28,6 @@ export class ListarKitsComponent implements OnInit {
   getKits = () => {
     this._kitService.getKits().subscribe({
       next: (resp) => {
-        console.log(resp);
         this.kits = resp as Kit[];
       }
     })
@@ -37,17 +40,26 @@ export class ListarKitsComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         rejectButtonStyleClass: 'p-button-danger p-button-text',
         accept: () => {
-          // this._moduloService.eliminarPorId(modulo.id_modulo_libro!).subscribe({
+          // this._kitService.eliminarPorId(kit.id_kit!).subscribe({
           //   next: (resp) => {;
           //     if ( resp === 'ok' ) {
           //       this._mensajesSweetService.mensajeOk('Módulo eliminado');
-          //       this.modulos = this.modulos.filter(mod => mod.id_modulo_libro !== modulo.id_modulo_libro);
+          //       this.kits = this.kits.filter(kit => kit.id_kit !== kit.id_kit);
           //     } else {
-          //       this._mensajesSweetService.mensajeError('Upps!', `No se pudo eliminar: ${modulo.nombreModulo}, debido a que tienen una relación con un kit`);
+          //       this._mensajesSweetService.mensajeError('Upps!', `No se pudo eliminar el kit: ${kit.nombrekit}`);
           //     }
           //   }
           // });
         }
     });
+  }
+
+  showDialog(kit: Kit) {
+    this.selectKit = kit;
+    this.displayModulos = true;
+  }
+  closeDialog() {
+    this.selectKit = {};
+    this.displayModulos = false;
   }
 }

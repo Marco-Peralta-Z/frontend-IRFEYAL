@@ -8,6 +8,7 @@ import { KitRoutingModule } from './kit-routing.module';
 import { CrearEditarKitComponent } from './pages/crear-editar-kit/crear-editar-kit.component';
 import { KitComponent } from './kit.component';
 import { ListarKitsComponent } from './pages/listar-kits/listar-kits.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ListarKitsComponent } from './pages/listar-kits/listar-kits.component';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     KitRoutingModule,
     PrimeNgModule,
   ]

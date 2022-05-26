@@ -39,13 +39,13 @@ export class CrearEditarComponent implements OnInit {
   }
 
   getModuloIdParam = () => {
-    this._activatedRoute.paramMap.subscribe( params => {
-      console.log(params);
-      
+    this._activatedRoute.paramMap.subscribe( params => {      
       this.id = +params.get('id')!;
       if ( this.id && !isNaN(this.id)) {
         this.getModulo(this.id);
-      } 
+      } else {
+        this._router.navigate(['/inventariosModule/modulo/crear']);
+      }
     });
   }
 
