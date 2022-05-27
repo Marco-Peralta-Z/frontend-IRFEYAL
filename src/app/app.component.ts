@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceUsuarioService } from './Servicio/roles_Usuario/service-usuario.service';
 import { PrimeNGConfig } from 'primeng/api';
 import { AuthService } from './Servicio/auth/auth.service';
 

@@ -66,6 +66,13 @@ const routes: Routes = [
     data: { role: [ 'ROLE_Administrador', 'ROLE_secretaria' ] }
   },
 
+  {
+    path: 'roles',
+    loadChildren:()=>import('./Routing/roles/roles.module').then( module => module.RolesModule),
+    canActivate: [ AuthGuard, RolGuard ],
+    data: { role: [ 'ROLE_Administrador' ] }
+  },
+
   { 
     path: 'asistencia', 
     loadChildren: () => import('./Routing/asistencia/asistencia.module').then(m => m.AsistenciaModule),

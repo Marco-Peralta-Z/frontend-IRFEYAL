@@ -37,7 +37,6 @@ import { MallaComponent } from './pages/parametrizacion/malla/malla.component';
 import { AsignaturasComponent } from './pages/parametrizacion/asignaturas/asignaturas.component';
 import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component';
 import { ArticuloComponent } from './pages/inventarios/invnetarioarticulos/articulo/articulo.component';
-import { UsuarioComponent } from './pages/rol_usuario/usuario/usuario.component';
 import { DataTablesModule } from "angular-datatables";
 import { ActividadesRegistroComponent } from './pages/tutorias/actividadesRegistro/actividadesRegistro.component';
 import { DeudasConsultaComponent } from './pages/tutorias/deudasConsulta/deudasConsulta.component';
@@ -67,7 +66,6 @@ registerLocaleData(localeES);
     MallaComponent,
     AsignaturasComponent,
     CursosComponent,
-    UsuarioComponent,
     ListarasistenciaComponent,
     RegistrarasistenciaComponent,
     GenerarPlanunidadComponent,

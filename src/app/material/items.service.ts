@@ -60,11 +60,18 @@ export class ItemsService {
               visible: this.hasRolUser(
                 [ 'ROLE_Administrador' ]
               ),
-              items: [{
-                  label: 'Usuario',
-                  icon: 'fa fa-user',
-                  routerLink: 'roles/usuarios'
-              }]
+              items: [
+                  {
+                    label: 'Usuario',
+                    icon: 'fa fa-user',
+                    routerLink: 'roles/usuarios'
+                  },
+                  {
+                    label: 'Empleado',
+                    icon: 'fa fa-user',
+                    routerLink: 'roles/empleado'
+                  }  
+                ]
           },
 
           {
