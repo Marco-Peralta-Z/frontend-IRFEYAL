@@ -10,30 +10,26 @@ import { pais } from '../../../Model/rolesTS/pais';
 import { parroquia } from '../../../Model/rolesTS/parroquia';
 import { canton } from '../../../Model/rolesTS/canton';
 import { extension } from '../../../Model/rolesTS/extension';
+import { Api } from '../../../config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EstudianteService {
-private baseUrl: string = environment.baseUrl;
-private urlPrueba: string = 'http://localhost:9070/mapProv';
-private  urlGenero: string ='http://localhost:9070/mapGenero';
-private  urlPais: string ='http://localhost:9070/mapPais';
-private  urlParroquia: string ='http://localhost:9070/mapParroquia';
-private  urlCanton: string ='http://localhost:9070/mapCanton'
-private  urlExten: string ='http://localhost:9070/mapExtension'
+private baseUrl: string = Api.url;
+
   constructor(private http: HttpClient) { }
 
   getEstudiantes(): Observable<Estudiante[]>{
-    return this.http.get<Estudiante[]>(`${this.baseUrl}/estudiantes`);
+    return this.http.get<Estudiante[]>(`${this.baseUrl}api/estudiantes`);
   }
 
   getEstudiantePorCedula(cedula: string): Observable<Estudiante>{
-    return this.http.get<Estudiante>(`${this.baseUrl}/buscarEstudiante/${cedula}`);
+    return this.http.get<Estudiante>(`${this.baseUrl}api/buscarEstudiante/${cedula}`);
   }
 
   postEstudiante(estudiante: Estudiante): Observable<Estudiante>{
-    return this.http.post<Estudiante>(`${this.baseUrl}/estudiante`, estudiante).pipe(
+    return this.http.post<Estudiante>(`${this.baseUrl}api/estudiante`, estudiante).pipe(
       map((response: any) => response.estudiante as Estudiante),
       catchError(e => {
 
@@ -47,26 +43,44 @@ private  urlExten: string ='http://localhost:9070/mapExtension'
       })
     );
   }
+
+  putEstudiante(estudiante: Estudiante): Observable<Estudiante> {
+    return this.http.put(`${this.baseUrl}api/estudiante/${estudiante.id_estudiante}`, estudiante).pipe(
+
+      map((response: any) => response.estudiante as Estudiante), catchError(e => {
+
+        if (e.status == 400) {
+          return throwError(e);
+        }
+        if (e.error.mensaje) {
+          console.log(e.error.mensaje);
+        }
+
+        return throwError(e);
+      })
+    );
+  }
+
   getProvincias(): Observable<provincia[]>{
-    return this.http.get<provincia[]>(`${this.urlPrueba}/Provincia`);
+    return this.http.get<provincia[]>(`${this.baseUrl}mapProv/Provincia`);
   }
 
   getGenero(): Observable<genero[]>{
-    return this.http.get<genero[]>(`${this.urlGenero}/genero`);
+    return this.http.get<genero[]>(`${this.baseUrl}mapGenero/genero`);
   }
 
   getPais(): Observable<pais[]>{
-    return this.http.get<pais[]>(`${this.urlPais}/pais`);
+    return this.http.get<pais[]>(`${this.baseUrl}mapPais/pais`);
   }
 
   getParroquia(): Observable<parroquia[]>{
-    return this.http.get<parroquia[]>(`${this.urlParroquia}/parroquia`);
+    return this.http.get<parroquia[]>(`${this.baseUrl}mapParroquia/parroquia`);
   }
   getCanton(): Observable<canton[]>{
-    return this.http.get<canton[]>(`${this.urlCanton}/canton`);
+    return this.http.get<canton[]>(`${this.baseUrl}mapCanton/canton`);
   }
 
   getExtension(): Observable<extension[]>{
-    return this.http.get<extension[]>(`${this.urlExten}/extension`);
+    return this.http.get<extension[]>(`${this.baseUrl}mapExtension/extension`);
   }
 }

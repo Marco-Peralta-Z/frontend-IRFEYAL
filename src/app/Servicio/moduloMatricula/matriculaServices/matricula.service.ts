@@ -11,11 +11,14 @@ import { Modalidad } from '../../../Model/Parametrizacion/Modalidad';
 import { Periodo } from '../../../Model/Parametrizacion/Periodo';
 import { Paralelo } from '../../../Model/Parametrizacion/Paralelo';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class MatriculaService {
   private baseUrl: string = Api.url;
+
   constructor(private http: HttpClient) { }
 
   getMatricula():Observable<Matricula[]>{
@@ -45,7 +48,8 @@ getParalelos():Observable<Paralelo[]>{
 
 postMatricula(matricula: Matricula): Observable<Matricula>{
   return this.http.post<Matricula>(`${this.baseUrl}api/matricula`, matricula).pipe(
-    map((response: any) => response.estudiante as Matricula),
+    map((response: any) => 
+    response.estudiante as Matricula),
     catchError(e => {
       if (e.status == 400) {
         return throwError(e);
@@ -57,4 +61,6 @@ postMatricula(matricula: Matricula): Observable<Matricula>{
     })
   );
 }
+
+
 }

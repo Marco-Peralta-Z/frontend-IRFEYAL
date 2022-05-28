@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import { Estudiante } from '../../../../Model/Matriculas/estudiante';
 import { EstudianteService } from '../../../../Servicio/moduloMatricula/estudianteServices/estudiante.service';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import { provincia } from '../../../../Model/rolesTS/provincia';
+import { canton } from '../../../../Model/rolesTS/canton';
+import { parroquia } from '../../../../Model/rolesTS/parroquia';
+import { genero } from '../../../../Model/rolesTS/genero';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-listar-estudiante',
   templateUrl: './listar-estudiante.component.html',
@@ -12,11 +17,27 @@ import { MessageService } from 'primeng/api';
 export class ListarEstudianteComponent implements OnInit {
 
   estudiantes: Estudiante[]=[];
+  filteredProvincia: provincia[] = [];
+  filteredCanton: canton[] = [];
+  filteredParroquia: parroquia[] = [];
+  cantones: canton[] = [];
+  parroquias: parroquia[] = [];
+  provincias: provincia[] = [];
+  generos: genero[]=[];
   productDialog?: boolean;
+  fecha: string= '';
+  fechaActual= new Date();
+  year?: number;
+  month?:number;
+  day?:number;
+  mesFinal:any;
+  diaFinal:any
+  pipe = new DatePipe('en-EC');
+  datePipe: DatePipe= new DatePipe('en-EC');
   estudiante: Estudiante= new Estudiante();
 
   selectEstudiante: Estudiante[]=[];
-
+  esditable: boolean = true;
   submitted?: boolean;
 
   statuses?: any[];
@@ -28,11 +49,36 @@ export class ListarEstudianteComponent implements OnInit {
   ngOnInit() {
     this.estudianteService.getEstudiantes()
     .subscribe(estudiantes => this.estudiantes= estudiantes);
+    this.estudianteService.getProvincias()
+      .subscribe(provincia => this.provincias = provincia);
 
+
+      this.estudianteService.getParroquia()
+      .subscribe(parroquia => this.parroquias = parroquia);
+
+    this.estudianteService.getCanton()
+      .subscribe(canton => this.cantones = canton); 
+
+    this.estudianteService.getGenero()
+    .subscribe(genero => this.generos= genero);
   }
 
   openNew() {
       // aqui se puede redireccionar a la pagina agregar para crear un nuevo estudiante
+  }
+
+  filtrarProvincia(event: any) {
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < this.provincias.length; i++) {
+      let provincia = this.provincias[i];
+      if (provincia.provincia.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(provincia);
+      }
+    }
+
+    this.filteredProvincia = filtered;
   }
 
   deleteselectEstudiante() {
@@ -48,9 +94,13 @@ export class ListarEstudianteComponent implements OnInit {
       });
   }
 
-  editProduct(estudent: Estudiante) {
+  editEstudent(estudent: Estudiante) {
       this.estudiante= estudent ;
+
+      // obtener fecha de nacimiento actual del estudiante seleccionado para ver o editar
+      this.fecha=(this.pipe.transform(this.estudiante.id_persona.fechaNacimiento,'yyyy-MM-dd'))!.slice(0,10);
       this.productDialog = true;
+      this.esditable=true;
   }
 
   deleteProduct(estudent: Estudiante) {
@@ -71,13 +121,19 @@ export class ListarEstudianteComponent implements OnInit {
       this.submitted = false;
   }
 
-  saveProduct() {
+  saveEstudent() {
       this.submitted = true;
+      this.productDialog = false;
 // modificar para editar al estudiante obteniendo su id 
       if (this.estudiante.id_persona.cedula.trim()) {
           if (this.estudiante.id_estudiante) {
-              this.estudiantes[this.findIndexById(this.estudiante.id_estudiante)] = this.estudiante;
-              this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+              console.log(this.estudiante.id_persona.fechaNacimiento);
+              this.estudiantes[this.findIndexById(this.estudiante.id_estudiante)] = this.estudiante;              
+              this.estudianteService.putEstudiante(this.estudiante)
+              .subscribe(estudiante => (console.log(estudiante)));
+
+              
+              this.messageService.add({severity:'success', summary: 'Actualizado', detail: 'Información Actualizada', life: 3000});
           }
       }
   }
@@ -93,4 +149,7 @@ export class ListarEstudianteComponent implements OnInit {
 
       return index;
   }
+mostrar(event:any){
+console.log(event);
+}
 }

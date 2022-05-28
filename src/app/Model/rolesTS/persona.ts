@@ -8,7 +8,7 @@ export class persona {
 
   cedula: string = "";
 
-  fechaNacimiento?: Date;
+  fechaNacimiento: Date= new Date();
 
   nombre: string = "";
 

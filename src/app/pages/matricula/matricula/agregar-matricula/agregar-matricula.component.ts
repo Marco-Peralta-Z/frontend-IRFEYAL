@@ -12,6 +12,10 @@ import { usuario } from 'src/app/Model/rolesTS/usuario';
 import { Modalidad } from 'src/app/Model/Parametrizacion/Modalidad';
 import { Periodo } from 'src/app/Model/Parametrizacion/Periodo';
 import { Paralelo } from 'src/app/Model/Parametrizacion/Paralelo';
+import { AuthService } from '../../../../Servicio/auth/auth.service';
+
+
+
 
 @Component({
   selector: 'app-agregar-matricula',
@@ -49,7 +53,8 @@ export class AgregarMatriculaComponent implements OnInit {
   constructor(private estudianteService: EstudianteService,
     private matriculaService: MatriculaService,
     private messageService: MessageService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.estudianteService.getProvincias()
@@ -147,16 +152,17 @@ export class AgregarMatriculaComponent implements OnInit {
 
   guardarMatricula() {
 
-    if (this.matriculaFormulario.invalid) {
-      this.matriculaFormulario.markAllAsTouched();
-      this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'El formulario contiene errores' });
-      return;
-    }
-    this.user.id_usuario = 2;
+    // if (this.matriculaFormulario.invalid) {
+    //   this.matriculaFormulario.markAllAsTouched();
+    //   this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'El formulario contiene errores' });
+    //   return;
+    // }
+    this.user.id_usuario = this.authService.usuario.id_usuario;
     this.matricula.usuario = this.user;
     this.matriculaService.postMatricula(this.matricula)
       .subscribe(newMatricula => {
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Nueva Matricula', detail: `Nuevo id: ${newMatricula.id_matricula} creado con exito!` });
+        
         this.activeIndex1 = 0;
         this.selectedRequerimientos = [];
         this.cedula = "";

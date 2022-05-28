@@ -60,6 +60,8 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputMaskModule } from 'primeng/inputmask';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import {InputSwitchModule} from 'primeng/inputswitch';
+
 @NgModule({
 
   exports: [
@@ -82,7 +84,8 @@ import {ConfirmPopupModule} from 'primeng/confirmpopup';
     SidebarModule, StepsModule, SkeletonModule,
     SplitButtonModule, StyleClassModule, PasswordModule,
     TabMenuModule,CheckboxModule, InputTextareaModule,
-    ConfirmDialogModule,PickListModule,MatIconModule,RadioButtonModule
+    ConfirmDialogModule,PickListModule,MatIconModule,RadioButtonModule,
+    InputSwitchModule
   ]
 
 })
