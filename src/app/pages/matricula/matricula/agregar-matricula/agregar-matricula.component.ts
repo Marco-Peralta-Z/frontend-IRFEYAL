@@ -119,9 +119,6 @@ export class AgregarMatriculaComponent implements OnInit {
     this.filteredProvincia = filtered;
 
   }
-  mostrar() {
-    console.log(this.cursos, this.periodos, this.paralelos);
-  }
 
   buscar() {
     if (this.cedula !== "") {

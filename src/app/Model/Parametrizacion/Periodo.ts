@@ -4,7 +4,7 @@ export class Periodo {
 
     id_periodo: number = 0;
 
-    actividades: string = "";
+    periodo_academico: string = "";
 
     fecha_actividad?: Date;
 
