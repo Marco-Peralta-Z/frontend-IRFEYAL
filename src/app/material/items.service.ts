@@ -89,7 +89,7 @@ export class ItemsService {
                           {
                               label: 'Entregar kit',
                               icon: 'pi pi-tags',
-                              routerLink: 'inventariosModule/modulo/listar'
+                              routerLink: 'inventariosModule/entregar/listar'
                           },
                           {
                               label: 'Mantenimiento Kits',

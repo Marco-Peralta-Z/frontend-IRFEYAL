@@ -9,6 +9,10 @@ const routes: Routes = [
   {
   path:'',
   children:[
+    {
+      path:'entregar', 
+      loadChildren:  () => import('../../pages/inventarios/inventarios-kits/entregar-kit/entregar-kit.module').then( m => m.EntregarKitModule)
+    },
     { 
       path:'kit', 
       loadChildren: () => import('../../pages/inventarios/inventarios-kits/kit/kit.module').then( m => m.KitModule)

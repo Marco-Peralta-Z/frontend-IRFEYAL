@@ -1,0 +1,77 @@
+<div class="card" >
+    <p-table #dt [value]="aprobaciones" [rows]="10" [paginator]="true" [globalFilterFields]="['tipoAprobacion','fechaAprobacion','estudiante']" responsiveLayout="scroll"
+        [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="tipoAprobacion">tipoAprobacion <p-sortIcon field="tipoAprobacion"></p-sortIcon></th>
+                <th pSortableColumn="estadoAproba">estadoAproba <p-sortIcon field="estadoAproba"></p-sortIcon></th>
+                <th pSortableColumn="detalleControl">detalleControl <p-sortIcon field="detalleControl"></p-sortIcon></th>
+                <th pSortableColumn="fechaAprobacion">fechaAprobacion <p-sortIcon field="fechaAprobacion"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-kits>
+            <tr>
+                <td >
+                    No hay Kits
+                </td>
+            </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="body" let-aprobacion>
+            <tr>
+
+                <td>{{aprobacion.tipoAprobacion}}</td>
+                <td>{{aprobacion.estadoAproba}}</td>
+                <td>{{aprobacion.detalleControl}}</td>
+                <td>{{aprobacion.fechaAprobacion}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/inventariosModule/entregar/editar/', aprobacion.id_aprobacion]"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarKitEntregado(aprobacion)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total hay {{aprobaciones ? aprobaciones.length : 0 }} kits entregados.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<!-- <p-dialog header="Módulos" [(visible)]="displayModulos" [style]="{width: '50vw'}">
+    <div class="" *ngIf="selectKit?.listaModulos">
+        <p-table [value]="selectKit?.listaModulos!" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Cod</th>
+                    <th>Nombre</th>
+                    <th>Curso</th>
+                    <th>Catidad</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-modulo>
+                <tr>
+                    <td>{{modulo.codModulo}}</td>
+                    <td>{{modulo.nombreModulo}}</td>
+                    <td>{{modulo.curso}}</td>
+                    <td>{{modulo.cantidad}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="closeDialog()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog> -->

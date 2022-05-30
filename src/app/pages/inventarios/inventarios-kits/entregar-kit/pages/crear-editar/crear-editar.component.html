@@ -1,0 +1,103 @@
+<div class="container">
+    <form >
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 p-4">
+                <!-- tipo -->
+                <div class="field">
+                    <label for="nombre" class="block">Tipo aprobación</label>
+                    <input   
+                            id="nombre" 
+                            type="text" 
+                            class="w-100"
+                            pInputText />
+                            <!-- [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('nombreModulo')}" -->
+                    <!-- <small  class="p-error block"
+                            *ngIf="verificarCampo('nombreModulo')">
+                            El nombre es requerido.
+                    </small> -->
+                </div>
+                <!-- detalle -->
+                <div class="field">
+                    <label for="nombre" class="block">Detalle</label>
+                    <textarea rows="1" class="w-100" pInputTextarea [autoResize]="true"></textarea>
+
+                            <!-- [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('nombreModulo')}" -->
+                    <!-- <small  class="p-error block"
+                            *ngIf="verificarCampo('nombreModulo')">
+                            El nombre es requerido.
+                    </small> -->
+                </div>
+                <!-- kit entrgado -->
+                <div class="field">
+                    <label for="nombre" class="block">Kit entregado al estudiante</label>
+                    <p-checkbox  [binary]="true" inputId="binary"></p-checkbox>
+
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 p-4">
+                <!-- Fecha aprobacion -->
+                <div class="field">
+                    <label for="fecha" class="block">Fecha aprobación</label>
+                    <p-calendar styleClass="w-100" dateFormat="yy-mm-dd" inputId="dateformat"></p-calendar>
+                            <!-- [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('cantidad')}" -->
+                    <!-- <small  class="p-error block"
+                            *ngIf="verificarCampo('cantidad')">
+                            La cantidad es requerida.
+                    </small> -->
+                </div>
+                <!-- estudiante -->
+                <div class="field">
+                    <label for="fecha" class="block">Estudiante</label>
+                    <p-autoComplete [showEmptyMessage]="true" 
+                                    [emptyMessage]="'No hay estudiantes'"
+                                    field="name"
+                                    panelStyleClass="w-100"
+                                    inputStyleClass="w-100"
+                                    styleClass="w-100"
+                                    placeholder="Ingrese cédula del estudiante"
+                                    [minLength]="10">
+                    </p-autoComplete>
+                            <!-- [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('cantidad')}" -->
+                    <!-- <small  class="p-error block"
+                            *ngIf="verificarCampo('cantidad')">
+                            La cantidad es requerida.
+                    </small> -->
+                </div>
+                <!-- kit -->
+                <div class="field">
+                    <label for="fecha" class="block">Kit</label>
+                <p-multiSelect  [options]="kits"
+                                styleClass="w-100"
+                                defaultLabel="Seleccionar kit" 
+                                optionLabel="nombrekit"
+                                emptyMessage="No hay kits"
+                                selectedItemsLabel="{0} items selected">
+                </p-multiSelect>
+                </div>
+               
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-evenly">
+                <button pButton 
+                        pRipple 
+                        type="button" 
+                        label="Cancelar" 
+                        icon="pi pi-times" 
+                        class="p-button-outlined p-button-danger" 
+                        iconPos="right"
+                        routerLink="listar">
+                </button>
+                <button pButton 
+                        pRipple type="submit" 
+                        label="Cancelar" 
+                        label="Guardar" 
+                        icon="pi pisave" 
+                        iconPos="right"
+                        >
+                        <!-- [disabled]="moduloForm.pending" -->
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

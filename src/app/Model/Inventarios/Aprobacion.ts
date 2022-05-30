@@ -1,12 +1,14 @@
 
 import { empleado } from "../rolesTS/empleado";
-
+import { Estudiante } from '../Matriculas/estudiante';
+import { Kit } from './Kit';
 export class Aprobacion {
-    id_aprobacion: number=0;
-    observacionAproba: string='';
-    estadoAproba: boolean=false;
-    detalleControl: string='';
-    fechaAprobacion: string='';
-    fechaControl: string='';
-    id_empleado_admin: empleado= new empleado;
+    id_aprobacion?:   number;
+    tipoAprobacion?:  string;
+    estadoAproba?:    boolean;
+    detalleControl?:  string;
+    fechaAprobacion?: Date;
+    administrador?:   empleado;
+    estudiante?:      Estudiante;
+    kit?:             Kit;
 }
