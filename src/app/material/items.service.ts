@@ -87,15 +87,20 @@ export class ItemsService {
                       icon: 'pi pi-fw pi-book',
                       items: [
                           {
+                              label: 'Entregar kit',
+                              icon: 'pi pi-tags',
+                              routerLink: 'inventariosModule/modulo/listar'
+                          },
+                          {
                               label: 'Mantenimiento Kits',
-                              icon: 'pi pi-box',
+                              icon: 'pi pi-tag',
                               routerLink: 'inventariosModule/kit/listar'
                           },
                           {
                               label: 'Mantenimiento Módulos',
                               icon: 'pi pi-book',
                               routerLink: 'inventariosModule/modulo/listar'
-                          }
+                          },
                       ]
                   },
                   {
