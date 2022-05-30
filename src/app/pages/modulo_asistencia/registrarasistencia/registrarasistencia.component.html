@@ -12,7 +12,7 @@
               <div class="row">
                 <div class="col-4">
                   <p>Periodo</p>
-                  <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="actividades" filterBy="actividades" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  [showClear]="true"></p-dropdown>
+                  <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="periodo_academico" filterBy="periodo_academico" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  [showClear]="true"></p-dropdown>
 
                 </div>
                 <div class="col-4">
@@ -69,7 +69,7 @@
                 <th>
                   
                   <div *ngIf='showDiv'>
-                  <input type="date" [formControl]="controlfecha"    [(ngModel)]="fecha"  (change)="validarfecha()" class="form-control" #fechas1 name="fechas1" id="fechas1" >
+                  <input type="date" [formControl]="fechacontrol"   [(ngModel)]="fecha"  (change)="validarfecha()" class="form-control" #fechas1 name="fechas1" id="fechas1" >
                   </div>
                 </th> 
               </tr>
@@ -99,34 +99,33 @@
 
 
       <p-dialog [(visible)]="actualizarDialog" [style]="{width: '450px'}" header="Actualizar Asistencia" [modal]="true" styleClass="p-fluid">
-        <p-dropdown  [options]="periodosactu" placeholder="Periodo" optionLabel="actividades" filterBy="actividades" optionValue="id_periodo"  (onChange)="onperiodoactualizar($event.value)"  [showClear]="true"></p-dropdown>
+        <p-dropdown  [options]="periodosactu" placeholder="Periodo" optionLabel="periodo_academico" filterBy="periodo_academico" optionValue="id_periodo"  (onChange)="onperiodoactualizar($event.value)"  [showClear]="true"></p-dropdown>
         <p-dropdown [disabled]="showmodalidadactu" [options]="modalidadesactu" placeholder="Modalidad" optionLabel="descripcion" filterBy="descripcion" optionValue="id_modalidad"  (onChange)="onmodalidadactualizar($event.value)"  [showClear]="true"></p-dropdown>
 
         <p-dropdown  [disabled]="showcursoactu"  [options]="cursoactu" placeholder="Curso" optionLabel="descripcion" filterBy="descripcion" optionValue="id_curso"   (onChange)="onCursoactualizar($event.value)" [showClear]="true"></p-dropdown>
 
         <p-dropdown [disabled]="showparaleloactu" [options]="paralelosactu" placeholder="Paralelo" optionLabel="descripcion" filterBy="descripcion" optionValue="id_paralelo" (onChange)="onparaleloactualizar($event.value)" [showClear]="true"></p-dropdown>
         <p-dropdown [disabled]="showasignaturaactu" [options]="asignaturasactu" placeholder="Asignatura" optionLabel="descripcion" filterBy="descripcion" optionValue="id_asignatura"  (onChange)="asignaturaactualizar($event.value)" [showClear]="true"></p-dropdown>
-           <input pInputText type="text" [(ngModel)]="filterValue" (input)="dt1.filterGlobal(filterValue, 'contains')" placeholder="Search..." />
+           <input pInputText type="text" [(ngModel)]="filterValue" (input)="dt13.filterGlobal(filterValue, 'contains')" placeholder="Search..." />
            <p-button label="Filtrar"  icon="pi pi-search"(onClick)="buscaractualizar()"></p-button>
 
            <form >
-           <p-table  #dt1 [value]="asistenciaactualizar"  [globalFilterFields]="['id_persona.cedula']" styleClass="p-datatable-striped" responsiveLayout="scroll">
+           <p-table  #dt13 [value]="asistenciaactualizar"  [globalFilterFields]="['idEstudiante.id_persona.cedula']" styleClass="p-datatable-striped" responsiveLayout="scroll">
           
           <ng-template pTemplate="header">
             <tr>
               <th>id</th>
               <th>nombre</th>
-              <th>estado</th>
               <th>Apellidos</th>
               <th>
-                <input type="date"  class="form-control" name="fechas1"  [formControl]="fechacontrol">
+                <input type="date"   (change)="valiadarfechaactualizar()" class="form-control" name="fechas2"  [formControl]="fechacontrol">
               </th> 
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-product>
             <tr>
               <td>{{ product.idAsistencia }}</td>
-              <td>{{product.estadoAsis}}</td>
+              
               <td>{{ product.idEstudiante.id_persona.nombre}}</td>
               <td>{{ product.idEstudiante.id_persona.apellido}}</td>
               <td>

@@ -5,6 +5,8 @@ import { Asistencia } from 'src/app/Model/Asistencia/asistencia';
 import { Clase } from 'src/app/Model/Asistencia/clase';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { DatePipe } from '@angular/common'
+import { empleado } from 'src/app/Model/rolesTS/empleado';
+import { usuario } from 'src/app/Model/rolesTS/usuario';
 @Injectable({
   providedIn: 'root'
 })
@@ -61,8 +63,8 @@ export class AsistenciaService {
 
   }
 
-  getfiltrosactualizar(idModalidad: number , idPeriodo: number, idParalelo: number,idAsignatura: number, idCurso:number, fecha: string){
-    return this.rutaconsulta.get(this.url+"/buscaractualizar/"+idModalidad+'/'+idPeriodo+'/'+idParalelo+'/'+idAsignatura+'/'+idCurso+'/'+fecha);
+  getfiltrosactualizar(idModalidad: number , idPeriodo: number, idParalelo: number,idAsignatura: number, idCurso:number, fecha: string,docente:any){
+    return this.rutaconsulta.get(this.url+"/buscaractualizar/"+idModalidad+'/'+idPeriodo+'/'+idParalelo+'/'+idAsignatura+'/'+idCurso+'/'+fecha+'/'+docente);
   }
   
   updateasistencia(asistencia: Asistencia){
@@ -74,17 +76,31 @@ export class AsistenciaService {
   listarmodalidad(idempleado:number,idperiodo : number){
     return this.rutaconsulta.get(this.url+"/modalidades/"+idempleado+'/'+ idperiodo);
   }
-  listarcursos(idempleado:number,idmodalidad: number){
-    return this.rutaconsulta.get(this.url+"/cursos/"+idempleado+'/'+ idmodalidad);
+  listarcursos(idempleado:number,idperiodo:number,idmodalidad: number){
+    return this.rutaconsulta.get(this.url+"/cursos/"+idempleado+'/'+idperiodo+'/'+idmodalidad);
   }
-  listarparalelo(idempleado:number,idcursp: number){
-    return this.rutaconsulta.get(this.url+"/paralelos/"+idempleado+'/'+ idcursp);
+  listarparalelo(idempleado:number,idperiodo:number,idmodalidad: number,idcursp: number){
+    return this.rutaconsulta.get(this.url+"/paralelos/"+idempleado+'/'+idperiodo+'/'+idmodalidad+'/'+ idcursp);
   }
-  listarAsignatura(idempleado:number,idperiodo: number,idcurso:number,idparalelo:number){
-    return this.rutaconsulta.get(this.url+"/asignaturas/"+idempleado+'/'+ idperiodo+'/'+idcurso+'/'+ idparalelo);
+  listarAsignatura(idempleado:number,idperiodo: number,idmodalidad: number,idcurso:number,idparalelo:number){
+    return this.rutaconsulta.get(this.url+"/asignaturas/"+idempleado+'/'+ idperiodo+'/'+idmodalidad+'/'+idcurso+'/'+ idparalelo);
   }
 
   actualizarclases(clase:Clase){
     return this.rutaconsulta.put<Clase>(this.url+"/claseactualizar/"+clase.idClase,clase);
+  }
+
+ // findempleados(idusuario:number){
+ //   return this.rutaconsulta.get(this.url+"/findempleado/"+idusuario);
+ // }
+
+  validarclase(iddocenten:number,idperiodo:number,idmodalidad:number,idcurso:number,idparalelo:number,idasignatura:number,fecha:string){
+    return this.rutaconsulta.get(this.url+"/validarclass/"+iddocenten+'/'+idperiodo+'/'+idmodalidad+'/'+idcurso+'/'+idparalelo+'/'+idasignatura+'/'+fecha);
+
+  }
+
+  validarclaseobj(idModalidad: number , idPeriodo: number, idParalelo: number,idAsignatura: number, idCurso:number, fecha: string,docente:any){
+    return this.rutaconsulta.get(this.url+"/validarclase/"+idModalidad+'/'+idPeriodo+'/'+idParalelo+'/'+idAsignatura+'/'+idCurso+'/'+fecha+'/'+docente);
+
   }
 }

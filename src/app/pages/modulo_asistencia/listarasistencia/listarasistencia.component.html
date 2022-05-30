@@ -24,7 +24,9 @@
                           </ng-template>
                       </p-dataView>
                   </div>
-                    <p-table [value]="fechas" styleClass="p-datatable-striped" responsiveLayout="scroll">
+                    <p-table [value]="fechas" [rows]="5" [paginator]="true" responsiveLayout="scroll" dataKey="id"
+                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Asistencia"
+                    [showCurrentPageReport]="true" [globalFilterFields]="['descripcion']" [showCurrentPageReport]="true">
                       <ng-template pTemplate="header">
                         <tr>
                           <th>asignatura</th>
@@ -38,20 +40,26 @@
                         <td>{{ product.fecClase}}</td>             
                         </tr>
                       </ng-template>
+                      <ng-template pTemplate="summary">
+                        <div class="flex align-items-center justify-content-between">
+                            En total se encontro {{fechas ? fechas.length : 0 }} Faltas
+                        </div>
+                    </ng-template>
                     </p-table>
+
 
                     <button pButton pRipple label="Imprimir" icon="pi pi-check"></button>
                   </div>
             </div>
 
             
-              <div class="col-md-6">
+              <div [class.col-md-6]="showDiv===true">
                 <div styleClass="p-fluid">
 
                   <p-toolbar styleClass="mb-4">
                   
                     <div class="col-4">
-                      <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="actividades" filterBy="actividades" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  [showClear]="true"></p-dropdown>
+                      <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="periodo_academico" filterBy="periodo_academico" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  [showClear]="true"></p-dropdown>
 
     
                     </div>

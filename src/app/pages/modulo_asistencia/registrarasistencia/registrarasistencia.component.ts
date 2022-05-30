@@ -9,6 +9,8 @@ import swal from 'sweetalert2';
 import { empty } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Servicio/auth/auth.service';
+import { usuario } from 'src/app/Model/rolesTS/usuario';
 @Component({
   selector: 'app-registrarasistencia',
   templateUrl: './registrarasistencia.component.html',
@@ -35,9 +37,11 @@ export class RegistrarasistenciaComponent implements OnInit {
   cursosfaltas: any[]=[];
   clase: Clase=new Clase();
   clases: Clase= new Clase();
+  clasevalidar : Clase[]=[];
  
   // asistenciaService
   asistenciaactualizar: Asistencia []=[];
+  asistenciaclase: Asistencia []=[];
   asistencia: Asistencia= new Asistencia();
   idclaseaux: any;
   numestudiante : number = 0;
@@ -45,7 +49,9 @@ export class RegistrarasistenciaComponent implements OnInit {
   filterValue:any;
   actualizarDialog:boolean=false;
   fechacontrol=new FormControl('');
+  controladorfecha=new FormControl('');
   fechastring: string = 'yyyy-MM-dd';
+  ntrfecha:any;
   idasistencia : number=0;
   Asistencia: Asistencia=new Asistencia();
   valiadarfecha:number=0;
@@ -73,14 +79,22 @@ export class RegistrarasistenciaComponent implements OnInit {
   public fechaminima:Date= new Date();
   public fechastrminima:any;
  fechausuario:Date=new Date();
-
+  countclase:number=0;
   validarfechaingreso:boolean=false;
-  @ViewChild('fechas1') ngOtpInput:any;
+ 
   
-  constructor(private appService:AsistenciaService,private router:Router,public datepipe: DatePipe) { }
-   idempleados: number =1;
+  idempleados:any;
+  idususarios:any;
+  valiadarfechaact=0;
+  constructor(private appService:AsistenciaService,private router:Router,public datepipe: DatePipe, private auth:AuthService) { }
+
   ngOnInit(): void {
-    
+    this.ntrfecha='';
+    this.idempleados=this.usuarioGuardado().empleado?.id_empleado;
+    this.idususarios=this.usuarioGuardado().id_usuario
+    console.log(this.idempleados);
+    console.log(this.idususarios);
+   // this.idempleados=this.auth.usuario()
     this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodos=data);
     this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodosactu=data);
     this.appService.buscarclase().subscribe(res=>{this.clase.idClase=res.idClase+1});
@@ -91,6 +105,8 @@ export class RegistrarasistenciaComponent implements OnInit {
     //this.fechastrminima=this.datepipe.transform(this.fechaminima,"yyyy-MM-dd");
     this.appService.buscarclase().subscribe((data:any)=>this.clase=data);
   }
+  usuarioGuardado = (): usuario => this.auth.usuario;
+
 
   onSelect(id: any){
     this.cursosfaltas=[];
@@ -138,7 +154,7 @@ export class RegistrarasistenciaComponent implements OnInit {
       
        }
        this.habilitarfecha();
-      this.appService.listarcursos(this.idempleados, this.idModalidad).subscribe((data:any)=>this.curso=data);
+      this.appService.listarcursos(this.idempleados, this.IdPeriodo,this.idModalidad).subscribe((data:any)=>this.curso=data);
       
     }
       onperiodo(id: any){
@@ -189,7 +205,7 @@ export class RegistrarasistenciaComponent implements OnInit {
       this.validarfiltros();
       console.log(this.IdParalelo);
       this.showasignatura=false;
-      this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturas=data);
+      this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturas=data);
 
       if(this.IdParalelo==0){
         this.showasignatura=true;
@@ -216,7 +232,7 @@ export class RegistrarasistenciaComponent implements OnInit {
         this.validarfiltros();
         console.log(this.IdCurso);
         this.showparalelo=false;
-        this.appService.listarparalelo(this.idempleados,this.IdCurso).subscribe((data:any)=>this.paralelos=data);
+        this.appService.listarparalelo(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso).subscribe((data:any)=>this.paralelos=data);
         if(this.IdCurso==0){
           this.showasignatura=true;
           this.showparalelo=true;
@@ -259,12 +275,32 @@ export class RegistrarasistenciaComponent implements OnInit {
           }
         )
        }else{
+         
+        this.ntrfecha=this.fechacontrol.value;
+                
+        console.log(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo,this.idAsignatura,this.ntrfecha);
+        this.appService.validarclase(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo,this.idAsignatura,this.ntrfecha).subscribe((data:any)=>this.countclase=data);
+        this.appService.validarclaseobj(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso,this.ntrfecha,this.idempleados).subscribe((data:any)=>this.asistenciaclase=data);
+
+        console.log("cantidad de faltas"+this.countclase);
+        console.log(this.asistenciaclase);
+        if(this.countclase>0){
+          swal.fire(
+            {
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Por favor ya genero la asistencia para la fecha indicada si desea realizar algun cambio actualize su registros!',
+             
+            }
+          )
+        }else{
          this.ingresoclase();
 
         setTimeout(() =>{this.separarestudiantes()}, 1000);
   ///this.separarestudiantes();  
   this.valiadarfecha=0;
   this.router.navigate(['asistencia/listarAsistencia']);
+}
     }
       }
 
@@ -292,15 +328,17 @@ export class RegistrarasistenciaComponent implements OnInit {
     // estudiantes faltando
     this.estudiantefalta()
       }
-
+      /// fin de funcion separar estudiantes
+  //-----------------------convertir fecha---------------------------------
        fechaconversion(){
         let latest_date =this.datepipe.transform(this.fecha, "yyyy-MM-dd");
         
         this.fechacontrol.setValue(latest_date+"T05:00:00.000+00:00");
        }
-
-       //---------------------- ingreso clase
+  ///------------------fin de convertir fecha-------------------------------
+  //---------------------- ingreso clase------------------------------------
        ingresoclase(){
+
         console.log(this.clases.fecClase);
         this.clases.id_periodo.id_periodo=this.IdPeriodo;
         this.clases.id_modalidad.id_modalidad=this.idModalidad;
@@ -316,16 +354,12 @@ export class RegistrarasistenciaComponent implements OnInit {
            console.log(this.auxidclaseultm);
            this.validarcalendario=1;
            return this.auxidclaseultm;
-         });
-     
-         //this.appService.buscarclase().subscribe((data:any)=>this.clase=data);
-         
+         });    
        }
+//---------------------- fin de ingreso clase------------------------------------
 
-
-
+//----------------------- actualizar clase---------------------------------
        actualizarclases(){
-        
         this.clase.idClase=this.auxidclaseultm;
         this.clase.id_modalidad.id_modalidad=this.idModalidad;
         this.clase.idAsignatura.id_asignatura=this.idAsignatura;
@@ -342,9 +376,10 @@ export class RegistrarasistenciaComponent implements OnInit {
         });
 
        }
+  //--------------------fin del actualizar clase-----------------------------
 
     
-
+// ----------metodo para guardar los estudiantes que asisten-----------------
       estuadiantesasistiendo(asistiendo:any[]){
         if(asistiendo.length>0){
         this.idclaseaux = this.auxidclaseultm;
@@ -362,25 +397,9 @@ export class RegistrarasistenciaComponent implements OnInit {
       }
         this.idclaseaux=0;
       }
-     // estudiantesfaltando(faltando:any[]){
-        
-     ///   if(faltando.length>0){
-     ///   this.idclaseaux= this.auxidclaseultm;
-     //   this.asistencia.idClase=this.idclaseaux;
-      ///  console.log(this.asistencia);
-     ///   for(var i=0 ;i<=faltando.length; i++){
-     //     this.numestudiante=faltando[i];
-      //     this.asistencia.estadoAsis=true;
-      //     //this.asistencia.idClase=this.idclase;
-     //     this.asistencia.idEstudiante=this.numestudiante;
-      //    this.appService.create(this.asistencia)
-      //    .subscribe(asistencia =>{swal.fire('Asistencia', `Asistencia  creada con éxito!`, 'success')})
-      //  }
-     // }
-    //  this.idclaseaux=0;
-     // }
-     
+      //--------------fin del mentodo de estudiantes asistiendo-----------
 
+   //------- metodo que  encontraba los estudiantes que faltan---------------
       estudiantefalta(){
         if(this.cursosfaltas.length>0){
   
@@ -400,12 +419,13 @@ export class RegistrarasistenciaComponent implements OnInit {
         }
         this.idclaseaux=0;
       }
+    //----------- fin de los estudiantes que faltan--------------------------
      
-
+   // metodo para el actualizar faltas
        cambiofalta(value: any , checked:boolean){
          console.log(checked);
         if(checked){
-          alert("poner falta");
+        
             this.cursosfaltas.push(parseInt(value));
             this.idasistencia=parseInt(value);
           //console.log(this.idasistencia);
@@ -427,8 +447,9 @@ export class RegistrarasistenciaComponent implements OnInit {
         }
       
       }
+      // fin cambiar faltas
 
-
+      //********validar filtros ***************** */
       validarfiltros(){
         if(this.idAsignatura==null){
           this.idAsignatura=0;
@@ -453,10 +474,13 @@ export class RegistrarasistenciaComponent implements OnInit {
 
 
       }
+
+      //****************fin de validar filtros************* */
+      //---------------------habilita el panel de actualizar-------
       actualizar(){
         this.actualizarDialog=true;
       }
-
+     //--------------------- fin del habilitar el panel de actualizar-------
 
 
       asignaturaactualizar(id: any){
@@ -483,7 +507,7 @@ export class RegistrarasistenciaComponent implements OnInit {
             this.asistenciaactualizar=[]; 
            }
            this.validarfiltros();
-           this.appService.listarcursos(this.idempleados, this.idModalidad).subscribe((data:any)=>this.cursoactu=data);
+           this.appService.listarcursos(this.idempleados,this.IdPeriodo ,this.idModalidad).subscribe((data:any)=>this.cursoactu=data);
  
           console.log(this.idModalidad);
           }
@@ -517,7 +541,7 @@ export class RegistrarasistenciaComponent implements OnInit {
             this.asignaturasactu=[];
             this.asistenciaactualizar=[]; 
            }
-           this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturasactu=data);
+           this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturasactu=data);
           console.log(this.IdParalelo);
           }
           onCursoactualizar(id: any){
@@ -531,59 +555,102 @@ export class RegistrarasistenciaComponent implements OnInit {
               this.asignaturasactu=[];
               this.asistenciaactualizar=[]; 
              }
-            this.appService.listarparalelo(this.idempleados,this.IdCurso).subscribe((data:any)=>this.paralelosactu=data);
+            this.appService.listarparalelo(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso).subscribe((data:any)=>this.paralelosactu=data);
 
             console.log(this.IdCurso);
     
             }
-
+       //*********************boton filtrar actualizar**********************************/
             buscaractualizar(){
+              if(this.idModalidad==0||this.IdPeriodo==0||this.IdParalelo==0||this.idAsignatura==0 || this.IdCurso==0 || this.valiadarfechaact==0){
+                swal.fire(
+                  {
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Por favor ingrese fecha y especifique los filtros!',
+                   
+                  }
+                )
+            }else{
               this.fechastring=this.fechacontrol.value;
               console.log(this.fechastring);
-              this.appService.getfiltrosactualizar(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso,this.fechastring).subscribe((data:any)=> this.asistenciaactualizar=data);
+              this.appService.getfiltrosactualizar(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso,this.fechastring,this.idempleados).subscribe((data:any)=> this.asistenciaactualizar=data);
+              this.valiadarfecha==0
             }
+            }
+
+            //********************fin de  el boton filtrar actualizar ********************/
+
+            //******************boton actualizar  asistencia ***************************/
             actualizararasistencia(){
               this.appService.updateasistencia(this.Asistencia).subscribe( cliente => {
                 swal.fire('Asistencia Actualizada', `Asistencia actualizada con éxito!`, 'success')
           
               });
             }
-            validarfecha(){  
+            //*******************fin de   actualizar asistencia*****************/
             
-             //  this.convertidor=document.getElementById("fechas1");
-           //    console.log(this.convertidor.value);
+            valiadarfechaactualizar() {
+              this.valiadarfechaact=1;
+            }
+
+            //******************validar fecha**************************** */
+            validarfecha(){  
+               this.convertidor=document.getElementById("fechas1");
+             console.log(this.convertidor.value);
+             if ( this.convertidor.value== null || this.convertidor.value=='' ){
+              swal.fire(
+                {
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'ingrese una fecha nuevamente!',
+                 
+                }
+              );
+              this.valiadarfecha=0;
+            
+          } else {
+            
+    
           //    this.fechaactualnew = new Date(this.convertidor.value+"T05:00:00.000+00:00");
           this.fechaactualnew = new Date(this.fecha);
           this.fechaactualnew.setMinutes(this.fechaactualnew.getMinutes()+this.fechaactualnew.getTimezoneOffset());
               this.convertidor=this.controlfecha.value;
               console.log(this.fechaactualnew);
               console.log(this.fechaactual);
-               if(this.fechaactualnew < this.fechaactual){
+
+               if(this.fechaactualnew < this.fechaactual || this.fechaactualnew > this.fechaactual){
                 swal.fire(
                   {
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'ingrese fecha nuevamente ingrese una fecha mayor!',
+                    text: 'ingrese fecha nuevamente ingrese otra fecha !',
                    
                   }
 
                 );
-               let vaciar= document.getElementById("fechas1");
+              
                 
                 this.valiadarfecha=0;
                }else{
+                 
+                this.ntrfecha=this.fechacontrol.value;
+                
+                console.log(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo,this.idAsignatura,this.ntrfecha);
+                this.appService.validarclase(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo,this.idAsignatura,this.ntrfecha).subscribe((data:any)=>this.countclase=data);
+                this.appService.validarclaseobj(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso,this.ntrfecha,this.idempleados).subscribe((data:any)=>this.asistenciaclase=data);
+
+                console.log("cantidad de faltas"+this.countclase);
+                console.log(this.asistenciaclase);
                 this.valiadarfecha=1;
                }
-              if(this.validarcalendario==1){
-              //   this.actualizarclases();
-            }else{
-             // this.ingresoclase();
-            }
-            
-              
+                 
+              }
             
             }
-
+            // **********************fin de validar fecha******************/
+           
+            //*********************habilitar fecha**************************/
             habilitarfecha(){
               if(this.idAsignatura>0 && this.idModalidad>0 && this.IdPeriodo>0 && this.IdParalelo>0 && this.IdCurso>0){
                this.showDiv=true;
@@ -591,6 +658,7 @@ export class RegistrarasistenciaComponent implements OnInit {
                 this.showDiv=false;
               }
             }
+          //*************************final del habilitar fecha *************/
 
            
 
