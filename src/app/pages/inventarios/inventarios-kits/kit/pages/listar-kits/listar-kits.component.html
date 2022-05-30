@@ -32,7 +32,7 @@
 
                 <td>{{kit.nombrekit}}</td>
                 <td>{{kit.precioKit}}</td>
-                <td>{{kit.periodo | date:'dd/MM/yyyy'}}</td>
+                <td>{{kit.periodo.fecha_inicio+' '+kit.periodo.fecha_fin}}</td>
                 <td>
                     <div class="" *ngIf="kit.listaModulos.length > 0; else cero">
                         <button pButton 
