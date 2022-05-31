@@ -54,7 +54,7 @@
                         <td>{{matricula.estudiante.id_persona.nombre | titlecase}}</td>
                         <td>{{matricula.estudiante.id_persona.apellido | titlecase}}</td>
                         <td>{{matricula.curso.descripcion | titlecase}}</td>
-                        <td>{{matricula.modalidad_estudio | titlecase}}</td>
+                        <td>{{matricula.modalidad.descripcion | titlecase}}</td>
                         <td>
                             <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-warning p-button-outlined mr-2"
                                 (click)="verMatricula(matricula)"></button>
@@ -118,7 +118,7 @@
                         </div>
                         <div class="field col-6">
                             <label>Modalidad de Estudio</label>
-                            <input type="text" pInputText [ngModel]="matricula.modalidad_estudio | titlecase"
+                            <input type="text" pInputText [ngModel]="matricula.modalidad.descripcion | titlecase"
                                 readonly />
                         </div>
                         <div class="field col-6">

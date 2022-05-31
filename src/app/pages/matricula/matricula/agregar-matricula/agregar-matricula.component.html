@@ -159,25 +159,13 @@
                         <div class="row">
                             <div class="col">
                                 <div class="row">
-                                    <label>Modalidad Estudio</label>
-                                    <div class="field-radiobutton">
-                                        <p-radioButton name="city" value="Intensivo"
-                                            [(ngModel)]="matricula.modalidad_estudio" formControlName="city"
-                                            inputId="city1"></p-radioButton>
-                                        <label for="city1" class="mr-2">Intensivo</label>
-
-                                    </div>
-                                    <div class="field-radiobutton">
-                                        <p-radioButton name="city" value="No Intensivo"
-                                            [(ngModel)]="matricula.modalidad_estudio" formControlName="city"
-                                            inputId="city2">
-                                        </p-radioButton>
-                                        <label for="city2">No Intensivo</label>
-                                        <!-- <span class="form-text text-danger" *ngIf="campoValido('extension')">
-                                            Este campo es obligatorio!
-                                        </span> -->
-                                    </div>
+                                    <label class="mt-2">Seleccione el Curso:</label>
+                                    <p-dropdown [options]="cursos" *ngIf="cursos.length>0" [(ngModel)]="matricula.curso"
+                                        placeholder="Seleccione Curso" formControlName="curso"
+                                        (onChange)="buscarJornadaPorCurso()" optionLabel="descripcion">
+                                    </p-dropdown>
                                 </div>
+                                    
                                 <div class="row">
                                     <label class="mt-2">Seleccione Periodo:</label> <br>
                                     <p-dropdown [options]="periodos" *ngIf="periodos.length>0" [(ngModel)]="matricula.id_periodo"
@@ -188,13 +176,15 @@
 
                             </div>
                             <div class="col">
+
                                 <div class="row">
-                                    <label class="mt-2">Seleccione el Curso:</label>
-                                    <p-dropdown [options]="cursos" *ngIf="cursos.length>0" [(ngModel)]="matricula.curso"
-                                        placeholder="Seleccione Curso" formControlName="curso"
-                                        (onChange)="buscarJornadaPorCurso()" optionLabel="descripcion">
+                                    <label class="mt-2">Seleccione Modalidad:</label> <br>
+                                    <p-dropdown [options]="jornadas" *ngIf="jornadas.length>0 " [(ngModel)]="matricula.modalidad"
+                                        placeholder="Seleccione Jornada" formControlName="jornada"
+                                        optionLabel="descripcion">
                                     </p-dropdown>
                                 </div>
+                                
                                 <div class="row">
                                     <label class="mt-2">Seleccione el Paralelo:</label>
                                     <p-dropdown [options]="paralelos" *ngIf="paralelos.length>0" [(ngModel)]="matricula.id_paralelo"
@@ -203,13 +193,7 @@
                                     </p-dropdown>
 
                                 </div>
-                                <div class="row">
-                                    <label class="mt-2">Seleccione la Jornada:</label>
-                                    <p-dropdown [options]="jornadas" *ngIf="jornadas.length>0 " [(ngModel)]="matricula.modalidad"
-                                        placeholder="Seleccione Jornada" formControlName="jornada"
-                                        optionLabel="descripcion">
-                                    </p-dropdown>
-                                </div>
+                               
 
                             </div>
                         </div>
@@ -267,7 +251,7 @@
                                     
                                         <span class="p-float-label mt-4">
                                             <input id="float-input" type="text"
-                                                [value]="matricula.modalidad_estudio| titlecase" pInputText readonly
+                                                [value]="matricula.modalidad.descripcion | titlecase" pInputText readonly
                                                 formControlName="Rmodalidad">
                                             <label for="float-input">Modalidad de Estudio</label>
                                         </span>
@@ -304,7 +288,7 @@
                 <button *ngIf="activeIndex1 != 3" [disabled]="selectedRequerimientos.length<4"
                     (click)="activeIndex1 = 3" pButton pRipple type="button" icon="pi pi-book"
                     class="p-button-rounded p-button-secondary ml-2"></button>
-                <button *ngIf="activeIndex1 == 3 || selectedRequerimientos.length==4"   pButton pRipple type="button" icon="pi pi-save"
+                <button *ngIf="activeIndex1 == 3 && selectedRequerimientos.length==4"   pButton pRipple type="button" icon="pi pi-save"
                     (click)="guardarMatricula()" class="p-button-rounded p-button-success ml-2" label="Guardar"></button>
                 <!-- <button (click)="mostrar()">Mostrar</button> -->
             </div>

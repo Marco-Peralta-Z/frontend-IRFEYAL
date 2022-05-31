@@ -61,6 +61,11 @@ postMatricula(matricula: Matricula): Observable<Matricula>{
     })
   );
 }
-
+sendEmail(matricula: Matricula): Observable<any>{
+  return this.http.post<any>(`${this.baseUrl}api/sendMail`, matricula).pipe(
+    map((response:any)=>
+    response.mensaje as string)
+  );
+}
 
 }

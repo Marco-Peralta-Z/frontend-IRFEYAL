@@ -71,6 +71,11 @@ export class AgregarMatriculaComponent implements OnInit {
     this.matriculaService.getParalelos()
       .subscribe(paralelo => {this.paralelos = paralelo});
 
+      this.matriculaService.getJornadas()
+      .subscribe(modalidades => {this.jornadas = modalidades});
+      
+
+
   }
 
  matriculaFormulario: FormGroup = this.fb.group({
@@ -159,20 +164,21 @@ export class AgregarMatriculaComponent implements OnInit {
     this.matriculaService.postMatricula(this.matricula)
       .subscribe(newMatricula => {
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Nueva Matricula', detail: `Nuevo id: ${newMatricula.id_matricula} creado con exito!` });
-        
+        this.enviarCorreo(newMatricula);
         this.activeIndex1 = 0;
         this.selectedRequerimientos = [];
         this.cedula = "";
 
-        // setTimeout(()=>{
-        //   this.matriculaFormulario.reset();
-        // },2500)
       });
   }
 
   cargarCombox() {
 
 
+  }
+  enviarCorreo(matricula: Matricula){
+    this.matriculaService.sendEmail(matricula)
+    .subscribe(res => console.log(res));
   }
   buscarJornadaPorCurso() {
     this.matriculaService.getJormadasPorCurso(this.matricula.curso.id_curso)
