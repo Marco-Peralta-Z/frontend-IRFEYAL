@@ -11,6 +11,9 @@ import { ConfirmationService } from 'primeng/api';
 })
 export class ListarComponent implements OnInit {
   public aprobaciones: Aprobacion [] = [];
+  public selectAprobacion?: Aprobacion;
+  public displayEstudiante?: boolean;
+  public displayAdmin?: boolean;
   constructor(
     private _confirmationService: ConfirmationService,
     private _entregarKitService: EntregarKitService, 
@@ -25,6 +28,8 @@ export class ListarComponent implements OnInit {
     this._entregarKitService.getKitsEntregados().subscribe({
       next: (resp) => {
         this.aprobaciones = resp as Aprobacion[];
+        console.log(this.aprobaciones);
+        
       }
     });
   }
@@ -50,4 +55,17 @@ export class ListarComponent implements OnInit {
     });
   }
 
+  showDialog(aprobacion:Aprobacion) {
+    this.selectAprobacion = aprobacion;
+    this.displayEstudiante = true;
+  }
+  showDialogAdmin(aprobacion:Aprobacion) {
+    this.selectAprobacion = aprobacion;
+    this.displayAdmin = true;
+  }
+  closeDialog() {
+    this.selectAprobacion = {};
+    this.displayEstudiante = false;
+    this.displayAdmin = false;
+  }
 }

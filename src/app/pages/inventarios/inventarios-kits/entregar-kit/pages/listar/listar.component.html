@@ -1,5 +1,5 @@
 <div class="card" >
-    <p-table #dt [value]="aprobaciones" [rows]="10" [paginator]="true" [globalFilterFields]="['tipoAprobacion','fechaAprobacion','estudiante']" responsiveLayout="scroll"
+    <p-table #dt [value]="aprobaciones" [rows]="10" [paginator]="true" [globalFilterFields]="['tipoAprobacion','fechaAprobacion','estudiante.id_persona.cedula', 'administrador.persona.cedula']" responsiveLayout="scroll"
         [rowHover]="true" dataKey="id"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
@@ -12,17 +12,19 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="tipoAprobacion">tipoAprobacion <p-sortIcon field="tipoAprobacion"></p-sortIcon></th>
-                <th pSortableColumn="estadoAproba">estadoAproba <p-sortIcon field="estadoAproba"></p-sortIcon></th>
-                <th pSortableColumn="detalleControl">detalleControl <p-sortIcon field="detalleControl"></p-sortIcon></th>
-                <th pSortableColumn="fechaAprobacion">fechaAprobacion <p-sortIcon field="fechaAprobacion"></p-sortIcon></th>
+                <th pSortableColumn="tipoAprobacion">Aprobacion <p-sortIcon field="tipoAprobacion"></p-sortIcon></th>
+                <th pSortableColumn="estadoAproba"> Entregado <p-sortIcon field="estadoAproba"></p-sortIcon></th>
+                <th pSortableColumn="detalleControl"> Detalle <p-sortIcon field="detalleControl"></p-sortIcon></th>
+                <th pSortableColumn="estudiante.id_persona.cedula"> Estudiante <p-sortIcon field="estudiante.id_persona.cedula"></p-sortIcon></th>
+                <th pSortableColumn="administrador.persona.cedula"> Creado por <p-sortIcon field="administrador.persona.cedula"></p-sortIcon></th>
+                <th pSortableColumn="fechaAprobacion">Fecha <p-sortIcon field="fechaAprobacion"></p-sortIcon></th>
                 <th></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-kits>
             <tr>
                 <td >
-                    No hay Kits
+                    No hay aprobaciones.
                 </td>
             </tr>
         </ng-template>
@@ -31,8 +33,25 @@
             <tr>
 
                 <td>{{aprobacion.tipoAprobacion}}</td>
-                <td>{{aprobacion.estadoAproba}}</td>
+                <td>
+                    <div *ngIf="aprobacion.estadoAproba; else estado">Si</div>
+                    <ng-template #estado>
+                        <div *ngIf="!aprobacion.estadoAproba">No</div>
+                    </ng-template>
+                </td>
                 <td>{{aprobacion.detalleControl}}</td>
+                <td>
+                    <div class=" d-flex justify-content-center align-items-center">
+                        {{aprobacion.estudiante?.id_persona.cedula}}
+                        <button pButton pRipple icon="pi pi-eye" *ngIf="aprobacion.estudiante" class="ml-1 p-button-rounded p-button-secondary p-button-outlined" (click)="showDialog(aprobacion)"></button>
+                    </div>
+                </td>
+                <td>
+                    <div class=" d-flex justify-content-center align-items-center">
+                        {{aprobacion.administrador?.persona.cedula}}
+                        <button pButton pRipple icon="pi pi-eye" *ngIf="aprobacion.administrador" class="ml-1 p-button-rounded p-button-secondary p-button-outlined" (click)="showDialogAdmin(aprobacion)"></button>
+                    </div>
+                </td>
                 <td>{{aprobacion.fechaAprobacion}}</td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/inventariosModule/entregar/editar/', aprobacion.id_aprobacion]"></button>
@@ -42,7 +61,7 @@
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">
-                En total hay {{aprobaciones ? aprobaciones.length : 0 }} kits entregados.
+                En total hay {{aprobaciones ? aprobaciones.length : 0 }} aprobaciones.
             </div>
         </ng-template>
     </p-table>
@@ -50,23 +69,23 @@
 
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
-<!-- <p-dialog header="Módulos" [(visible)]="displayModulos" [style]="{width: '50vw'}">
-    <div class="" *ngIf="selectKit?.listaModulos">
-        <p-table [value]="selectKit?.listaModulos!" responsiveLayout="scroll">
+<p-dialog header="Estudiante" [(visible)]="displayEstudiante" [style]="{width: '50vw'}">
+    <div class="" *ngIf="selectAprobacion">
+        <p-table [value]="[selectAprobacion.estudiante]"  responsiveLayout="scroll">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Cod</th>
+                    <th>Cédula</th>
                     <th>Nombre</th>
-                    <th>Curso</th>
-                    <th>Catidad</th>
+                    <th>Apellido</th>
+                    <th>Genero</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-modulo>
+            <ng-template pTemplate="body" let-estudiante>
                 <tr>
-                    <td>{{modulo.codModulo}}</td>
-                    <td>{{modulo.nombreModulo}}</td>
-                    <td>{{modulo.curso}}</td>
-                    <td>{{modulo.cantidad}}</td>
+                    <td>{{estudiante?.id_persona?.cedula}}</td>
+                    <td>{{estudiante?.id_persona?.nombre}}</td>
+                    <td>{{estudiante?.id_persona?.apellido}}</td>
+                    <td>{{estudiante?.id_persona?.genero?.genero}}</td>
                 </tr>
             </ng-template>
         </p-table>
@@ -74,4 +93,29 @@
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-check" (click)="closeDialog()" label="Ok" styleClass="p-button-text"></p-button>
     </ng-template>
-</p-dialog> -->
+</p-dialog>
+<p-dialog header="Creador" [(visible)]="displayAdmin" [style]="{width: '50vw'}">
+    <div class="" *ngIf="selectAprobacion">
+        <p-table [value]="[selectAprobacion.administrador]"  responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Cédula</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Genero</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-administrador>
+                <tr>
+                    <td>{{administrador?.persona?.cedula}}</td>
+                    <td>{{administrador?.persona?.nombre}}</td>
+                    <td>{{administrador?.persona?.apellido}}</td>
+                    <td>{{administrador?.persona?.genero?.genero}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="closeDialog()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

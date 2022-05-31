@@ -1,5 +1,5 @@
 <div class="container">
-    <form >
+    <form [formGroup]="entregarKitForm" (ngSubmit)="realizarAccion()">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 p-4">
                 <!-- tipo -->
@@ -9,70 +9,99 @@
                             id="nombre" 
                             type="text" 
                             class="w-100"
+                            [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('tipoAprobacion')}"
+                            formControlName="tipoAprobacion"
                             pInputText />
-                            <!-- [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('nombreModulo')}" -->
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('nombreModulo')">
-                            El nombre es requerido.
-                    </small> -->
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('tipoAprobacion')">
+                            El tipo es requerido.
+                    </small>
                 </div>
                 <!-- detalle -->
                 <div class="field">
                     <label for="nombre" class="block">Detalle</label>
-                    <textarea rows="1" class="w-100" pInputTextarea [autoResize]="true"></textarea>
-
-                            <!-- [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('nombreModulo')}" -->
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('nombreModulo')">
-                            El nombre es requerido.
-                    </small> -->
+                    <textarea   rows="1"    
+                                class="w-100" 
+                                [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('detalleControl')}"
+                                pInputTextarea [autoResize]="true"
+                                formControlName="detalleControl">
+                    </textarea>
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('detalleControl')">
+                            El detalle es requerido.
+                    </small>
                 </div>
                 <!-- kit entrgado -->
                 <div class="field">
                     <label for="nombre" class="block">Kit entregado al estudiante</label>
-                    <p-checkbox  [binary]="true" inputId="binary"></p-checkbox>
-
+                    <div class="d-flex align-content-center">
+                        <p-checkbox [binary]="true" 
+                                inputId="binary"
+                                formControlName="estadoAproba">
+                        </p-checkbox>
+                        <label for="binary" class="mb-0 ml-1" *ngIf="getValorCheck(); else label2">Si</label>
+                        <ng-template #label2>
+                            <label for="binary" class="mb-0 ml-1">No</label>
+                        </ng-template>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 p-4">
                 <!-- Fecha aprobacion -->
                 <div class="field">
                     <label for="fecha" class="block">Fecha aprobación</label>
-                    <p-calendar styleClass="w-100" dateFormat="yy-mm-dd" inputId="dateformat"></p-calendar>
-                            <!-- [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('cantidad')}" -->
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('cantidad')">
-                            La cantidad es requerida.
-                    </small> -->
+                    <p-calendar styleClass="w-100" 
+                                dateFormat="yy-mm-dd" 
+                                inputId="dateformat"
+                                [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('fechaAprobacion')}"
+                                formControlName="fechaAprobacion">
+                    </p-calendar>
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('fechaAprobacion')">
+                            La fecha es requerida.
+                    </small>
                 </div>
                 <!-- estudiante -->
                 <div class="field">
                     <label for="fecha" class="block">Estudiante</label>
-                    <p-autoComplete [showEmptyMessage]="true" 
-                                    [emptyMessage]="'No hay estudiantes'"
-                                    field="name"
+                    <p-autoComplete [emptyMessage]="'No hay estudiantes con esa identificación'"
+                                    [showEmptyMessage]=" estudiantes.length ===  0 "
                                     panelStyleClass="w-100"
                                     inputStyleClass="w-100"
                                     styleClass="w-100"
-                                    placeholder="Ingrese cédula del estudiante"
-                                    [minLength]="10">
+                                    [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('estudiante')}"
+                                    placeholder="Ingrese identificación del estudiante"
+                                    (completeMethod)="getEstudiante($event)"
+                                    [suggestions]="estudiantes"
+                                    field="id_persona.cedula"
+                                    formControlName="estudiante">
+                        <ng-template let-estudiante pTemplate="item">
+                            <div class="country-item">
+                                <div>{{estudiante.id_persona.nombre}} {{estudiante.id_persona.apellido}} ID: {{estudiante.id_persona.cedula}}</div>
+                            </div>
+                        </ng-template>
                     </p-autoComplete>
-                            <!-- [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('cantidad')}" -->
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('cantidad')">
-                            La cantidad es requerida.
-                    </small> -->
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('estudiante')">
+                            {{identificacionErrorMsg}}
+                    </small>
                 </div>
                 <!-- kit -->
                 <div class="field">
-                    <label for="fecha" class="block">Kit</label>
-                <p-multiSelect  [options]="kits"
-                                styleClass="w-100"
-                                defaultLabel="Seleccionar kit" 
+                    <label for="kit" class="block">Kit</label>
+                    <p-dropdown [options]="kits"
+                                [styleClass]=" !verificarCampo('kit') ? 'border w-100' : 'w-100'"   
+                                [ngClass]="{'ng-invalid ng-dirty ' : verificarCampo('kit')}"
                                 optionLabel="nombrekit"
+                                [showClear]="true"
                                 emptyMessage="No hay kits"
-                                selectedItemsLabel="{0} items selected">
-                </p-multiSelect>
+                                placeholder="Seleccione un kit"
+                                formControlName="kit">
+                    </p-dropdown>
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('kit')">
+                            El kit es requerido.
+                    </small>
                 </div>
                
             </div>
@@ -92,10 +121,10 @@
                         pRipple type="submit" 
                         label="Cancelar" 
                         label="Guardar" 
-                        icon="pi pisave" 
+                        icon="pi pi-save" 
                         iconPos="right"
+                        [disabled]="entregarKitForm.pending"
                         >
-                        <!-- [disabled]="moduloForm.pending" -->
                 </button>
             </div>
         </div>

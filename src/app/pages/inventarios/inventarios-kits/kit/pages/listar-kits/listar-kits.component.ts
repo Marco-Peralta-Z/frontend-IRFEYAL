@@ -14,7 +14,7 @@ import { MensajesSweetService } from '../../../../../../Servicio/modulo_invetari
 export class ListarKitsComponent implements OnInit {
   public kits: Kit [] = [];
   public selectKit?: Kit;
-  displayModulos?: boolean;
+  public displayModulos?: boolean;
   constructor(
     private _confirmationService: ConfirmationService,
     private _kitService: KitService,

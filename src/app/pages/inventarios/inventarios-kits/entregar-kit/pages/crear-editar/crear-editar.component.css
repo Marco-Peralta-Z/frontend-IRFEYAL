@@ -4,3 +4,7 @@ label{
 small{
     font-size: 12px;
 }
+
+.border{
+    border-color: transparent;
+}
