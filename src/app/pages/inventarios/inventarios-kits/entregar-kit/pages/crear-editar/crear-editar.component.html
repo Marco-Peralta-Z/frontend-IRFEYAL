@@ -1,43 +1,46 @@
 <div class="container">
-    <form [formGroup]="entregarKitForm" (ngSubmit)="realizarAccion()">
+    <form [formGroup]="entregarKitForm" (ngSubmit)="realizarAccion()" >
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 p-4">
-                <!-- tipo -->
-                <div class="field">
-                    <label for="nombre" class="block">Tipo aprobación</label>
-                    <input   
-                            id="nombre" 
-                            type="text" 
-                            class="w-100"
-                            [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('tipoAprobacion')}"
-                            formControlName="tipoAprobacion"
-                            pInputText />
-                    <small  class="p-error block"
-                            *ngIf="verificarCampo('tipoAprobacion')">
-                            El tipo es requerido.
-                    </small>
-                </div>
-                <!-- detalle -->
-                <div class="field">
-                    <label for="nombre" class="block">Detalle</label>
-                    <textarea   rows="1"    
-                                class="w-100" 
-                                [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('detalleControl')}"
-                                pInputTextarea [autoResize]="true"
-                                formControlName="detalleControl">
-                    </textarea>
-                    <small  class="p-error block"
-                            *ngIf="verificarCampo('detalleControl')">
-                            El detalle es requerido.
-                    </small>
-                </div>
+                <fieldset [disabled]="getValorCheck() && id">
+                    <!-- tipo -->
+                    <div class="field">
+                        <label for="nombre" class="block">Tipo aprobación</label>
+                        <input   
+                                id="nombre" 
+                                type="text" 
+                                class="w-100"
+                                [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('tipoAprobacion')}"
+                                formControlName="tipoAprobacion"
+                                pInputText />
+                        <small  class="p-error block"
+                                *ngIf="verificarCampo('tipoAprobacion')">
+                                El tipo es requerido.
+                        </small>
+                    </div>
+                    <!-- detalle -->
+                    <div class="field">
+                        <label for="nombre" class="block">Detalle</label>
+                        <textarea   rows="1"    
+                                    class="w-100"
+                                    [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('detalleControl')}"
+                                    pInputTextarea [autoResize]="true"
+                                    formControlName="detalleControl">
+                        </textarea>
+                        <small  class="p-error block"
+                                *ngIf="verificarCampo('detalleControl')">
+                                El detalle es requerido.
+                        </small>
+                    </div>
+                </fieldset>
                 <!-- kit entrgado -->
                 <div class="field">
                     <label for="nombre" class="block">Kit entregado al estudiante</label>
                     <div class="d-flex align-content-center">
                         <p-checkbox [binary]="true" 
-                                inputId="binary"
-                                formControlName="estadoAproba">
+                                    inputId="binary"
+                                    [disabled]="getValorCheck() && id"
+                                    formControlName="estadoAproba">
                         </p-checkbox>
                         <label for="binary" class="mb-0 ml-1" *ngIf="getValorCheck(); else label2">Si</label>
                         <ng-template #label2>
@@ -53,6 +56,7 @@
                     <p-calendar styleClass="w-100" 
                                 dateFormat="yy-mm-dd" 
                                 inputId="dateformat"
+                                [disabled]="getValorCheck() && id"
                                 [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('fechaAprobacion')}"
                                 formControlName="fechaAprobacion">
                     </p-calendar>
@@ -74,6 +78,7 @@
                                     (completeMethod)="getEstudiante($event)"
                                     [suggestions]="estudiantes"
                                     field="id_persona.cedula"
+                                    [disabled]="getValorCheck() && id"
                                     formControlName="estudiante">
                         <ng-template let-estudiante pTemplate="item">
                             <div class="country-item">
@@ -95,6 +100,7 @@
                                 optionLabel="nombrekit"
                                 [showClear]="true"
                                 emptyMessage="No hay kits"
+                                [disabled]="getValorCheck() && id"
                                 placeholder="Seleccione un kit"
                                 formControlName="kit">
                     </p-dropdown>
@@ -119,7 +125,6 @@
                 </button>
                 <button pButton 
                         pRipple type="submit" 
-                        label="Cancelar" 
                         label="Guardar" 
                         icon="pi pi-save" 
                         iconPos="right"

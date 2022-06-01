@@ -31,13 +31,26 @@ export class EntregarKitService {
       );
   }
 
-  actualizarAprobacion = (id:number, aprobacion: Aprobacion) => {
-    return this._http.put<ResAprobacion>(`${this._baseUrl}aprobacionkit/${id}`, aprobacion)
+  actualizarAprobacion = ( aprobacion: Aprobacion ) => {
+    return this._http.put<ResAprobacion>(`${this._baseUrl}aprobacionkit`, aprobacion)
       .pipe(
         map( (response: ResAprobacion) => {
           return response.status;
         }),
         catchError( err => {
+          console.log(err);
+          return of(false);
+        })
+      );
+  }
+
+  eliminarAprobacionPorId = ( id:number ) => {
+    return this._http.delete<ResAprobacion>(`${this._baseUrl}aprobacionkit/${id}`)
+      .pipe(
+        map( (response: ResAprobacion) => {
+          return response.status;
+        }),
+        catchError( (err) => {
           console.log(err);
           return of(false);
         })

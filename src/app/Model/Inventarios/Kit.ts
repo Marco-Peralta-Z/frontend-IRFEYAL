@@ -2,10 +2,10 @@ import { Periodo } from '../Parametrizacion/Periodo';
 import { Modulo } from './ModuloLibro';
 export class Kit {
     id_kit?:       number;
-    nombrekit?:    null;
+    nombrekit?:    string;
     precioKit?:    number;
     listaModulos?: Modulo[];
-    periodos?: Periodo[];
+    periodo?: Periodo;
 }
 
 

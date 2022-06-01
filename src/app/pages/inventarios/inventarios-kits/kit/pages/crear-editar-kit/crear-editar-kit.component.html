@@ -33,17 +33,11 @@
                 <!-- periodo -->
                 <div class="field">
                     <label for="periodo" class="block">Periodo</label>
-                    <p-calendar inputId="basic" 
-                                styleClass="w-100"
-                                [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('periodo')}"
-                                dateFormat="dd/mm/yy"
-                                formControlName="periodo">
-                    </p-calendar>
-                    <small  class="p-error block"
-                            *ngIf="verificarCampo('periodo')">
-                            El periodo es requerido.
-                    </small>
+                    <select [compareWith]="compararPeriodo" class="form-select" formControlName="periodo">
+                        <option *ngFor="let periodo of periodos"  [ngValue]="periodo">{{periodo.ano_inicio}} - {{periodo.ano_fin}} -{{periodo.periodo_academico}}</option>
+                    </select>
                 </div>
+                <!-- modulos -->
                 <label for="numero" class="block">Módulos</label>
                 <p-multiSelect  [options]="modulos"
                                 styleClass="w-100"

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EntregarKitService } from '../../../../../../Servicio/modulo_invetario/entregar-kit.service';
 import { Aprobacion } from '../../../../../../Model/Inventarios/Aprobacion';
 import { ConfirmationService } from 'primeng/api';
+import { MensajesSweetService } from '../../../../../../Servicio/modulo_invetario/mensajes-sweet.service';
 
 @Component({
   selector: 'app-listar',
@@ -16,7 +17,9 @@ export class ListarComponent implements OnInit {
   public displayAdmin?: boolean;
   constructor(
     private _confirmationService: ConfirmationService,
-    private _entregarKitService: EntregarKitService, 
+    private _aprobacionService: EntregarKitService,
+    private _entregarKitService: EntregarKitService,
+    private _mensajesSweetService: MensajesSweetService,
   ) { }
 
   ngOnInit(): void {
@@ -36,21 +39,21 @@ export class ListarComponent implements OnInit {
 
   eliminarKitEntregado(aprobacion: Aprobacion) {
     this._confirmationService.confirm({
-        message: 'Desea eliminar: ' + aprobacion.tipoAprobacion + '?',
+        message: 'Desea eliminar: ' + aprobacion.tipoAprobacion +' del estudiante: '+ aprobacion.estudiante?.id_persona.nombre +' '+aprobacion.estudiante?.id_persona.apellido  + '?',
         header: 'Confirmar',
         icon: 'pi pi-exclamation-triangle',
         rejectButtonStyleClass: 'p-button-danger p-button-text',
         accept: () => {
-          // this._kitService.eliminarPorId(kit.id_kit!).subscribe({
-          //   next: (resp) => {;
-          //     if ( resp === 'ok' ) {
-          //       this._mensajesSweetService.mensajeOk('Módulo eliminado');
-          //       this.kits = this.kits.filter(kit => kit.id_kit !== kit.id_kit);
-          //     } else {
-          //       this._mensajesSweetService.mensajeError('Upps!', `No se pudo eliminar el kit: ${kit.nombrekit}`);
-          //     }
-          //   }
-          // });
+          this._aprobacionService.eliminarAprobacionPorId( aprobacion.id_aprobacion! ).subscribe({
+            next: (resp) => {;
+              if ( resp === 'ok' ) {
+                this._mensajesSweetService.mensajeOk('Aprobación eliminada');
+                this.aprobaciones = this.aprobaciones.filter(aprob => aprobacion.id_aprobacion !== aprob.id_aprobacion);
+              } else {
+                this._mensajesSweetService.mensajeError('Upps!', `No se pudo eliminar la aprobacion de: ${aprobacion.estudiante?.id_persona.nombre +' '+aprobacion.estudiante?.id_persona.apellido}`);
+              }
+            }
+          });
         }
     });
   }

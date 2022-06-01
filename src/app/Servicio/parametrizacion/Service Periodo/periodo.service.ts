@@ -13,4 +13,9 @@ export class PeriodoService {
   getAllPerdiodo(){
     return this.http.get<Periodo[]>(this.url+"/views")
   }
+
+  // metodo usado en el modulo kit importante
+  getPeridos = () => {
+    return this.http.get<Periodo[]>(`${Api.url}periodo`);
+  }
 }

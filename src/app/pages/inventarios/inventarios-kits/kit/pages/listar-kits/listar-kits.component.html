@@ -32,7 +32,7 @@
 
                 <td>{{kit.nombrekit}}</td>
                 <td>{{kit.precioKit}}</td>
-                <td>{{kit.periodo.fecha_inicio+' '+kit.periodo.fecha_fin}}</td>
+                <td>{{kit.periodo.ano_inicio}} - {{kit.periodo.ano_fin}}   {{kit.periodo.periodo_academico}}</td>
                 <td>
                     <div class="" *ngIf="kit.listaModulos.length > 0; else cero">
                         <button pButton 
@@ -70,7 +70,7 @@
                     <th>Cod</th>
                     <th>Nombre</th>
                     <th>Curso</th>
-                    <th>Catidad</th>
+                    <th>Cantidad</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-modulo>

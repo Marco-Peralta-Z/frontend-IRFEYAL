@@ -91,6 +91,7 @@ export class CrearEditarComponent implements OnInit {
       aprobacion.administrador = new empleado(this._authService.usuario.empleado?.id_empleado);
 
       if ( this.id ) {
+        aprobacion.id_aprobacion = this.id;
         this.actualizarAprobacion( aprobacion );
       } else {
         this.crearAprobacion(aprobacion);
@@ -115,7 +116,7 @@ export class CrearEditarComponent implements OnInit {
   }
 
   actualizarAprobacion = ( aprobacion: Aprobacion ) => {
-    this._aprobacionService.actualizarAprobacion( this.id!, aprobacion ).subscribe({
+    this._aprobacionService.actualizarAprobacion( aprobacion ).subscribe({
       next: ( response ) => {
         if ( response === 'ok') {
           this.entregarKitForm.reset();

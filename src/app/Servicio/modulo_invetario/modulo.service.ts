@@ -54,7 +54,7 @@ export class ModuloService {
           console.log(err);
           return of(false);
         })
-      )
+      );
   }
 
   getModuloPorId = (id: number) => {

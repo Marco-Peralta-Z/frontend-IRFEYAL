@@ -14,9 +14,16 @@ export class Periodo {
 
     fecha_fin?: Date;
 
+    ano_inicio?:        string;
+
+    ano_fin?:           string;
+
+    vigencia?:          boolean;
+    
     costo_mensualidad: number = 0;
 
     costo_matricula: number = 0;
 
     id_malla: Malla = new Malla();
+
 }

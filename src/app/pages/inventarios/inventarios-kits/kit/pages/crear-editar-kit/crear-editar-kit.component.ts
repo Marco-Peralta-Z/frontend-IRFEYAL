@@ -7,6 +7,8 @@ import { KitService } from '../../../../../../Servicio/modulo_invetario/kit.serv
 import { MensajesSweetService } from '../../../../../../Servicio/modulo_invetario/mensajes-sweet.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ResKit } from '../../../../../../Model/Inventarios/intefaces/res_kit.interface';
+import { PeriodoService } from '../../../../../../Servicio/parametrizacion/Service Periodo/periodo.service';
+import { Periodo } from '../../../../../../Model/Parametrizacion/Periodo';
 
 @Component({
   selector: 'app-crear-editar-kit',
@@ -18,24 +20,28 @@ export class CrearEditarKitComponent implements OnInit {
   public kitForm: FormGroup = this._formBuilder.group({
     nombrekit: [ , [ Validators.required]],
     precioKit: [ , [ Validators.required]],
-    periodo: [ , [ Validators.required]],
+    periodo: [  , [ Validators.required]],
     listaModulos: [ ],
   });
 
   public id?: number;
   public modulos: Modulo [] = [];
+  public periodos: Periodo [] = [];
+  public selectPeriodo?: Periodo;
   constructor(
     private _formBuilder: FormBuilder,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
     private _kitService: KitService,
     private _moduloService: ModuloService,
+    private _periodoService: PeriodoService,
     private _mensajesSweetService: MensajesSweetService,
   ) { }
 
   ngOnInit(): void {
-    this.getModulos();
     this.getKitIdParam();
+    this.getModulos();
+    this.getPeriodos();
   }
   getKitIdParam = () => {
     this._activatedRoute.paramMap.subscribe( params => {      
@@ -57,10 +63,24 @@ export class CrearEditarKitComponent implements OnInit {
       }
     });
   }
+  getPeriodos = () => {
+    this._periodoService.getPeridos().subscribe({
+      next: (resp) => {
+        console.log(resp);
+        
+        this.periodos = resp as Periodo [];
+      },
+      error: (error) => {
+        this.periodos = [];
+      }
+    });
+  }
 
   verificarAccion = () => {
     if( this.kitForm.valid ) {
       let kit: Kit = this.kitForm.value;
+      console.log(kit);
+      
       if ( this.id ) {
         this.actualizarKit( kit );
       } else {
@@ -102,8 +122,8 @@ export class CrearEditarKitComponent implements OnInit {
     this._kitService.getKitPorId( id ).subscribe({
       next: (response: ResKit) => {        
         if ( response.status === 'ok' ) {
-          response.kit.periodo = new Date(response.kit.periodo);
           this.kitForm.patchValue(response.kit);
+          console.log(this.kitForm.value);          
         }
       },
       error: (error) => {
@@ -113,6 +133,13 @@ export class CrearEditarKitComponent implements OnInit {
         }
       }
     });
+  }
+
+  compararPeriodo(o1: Periodo, o2: Periodo): boolean {
+    if (o1 === undefined && o2 === undefined) {
+      return true;
+    }
+    return o1 === null || o2 === null || o1 === undefined || o2 === undefined? false : o1.id_periodo === o2.id_periodo;
   }
 
   verificarCampo  = ( campo: string ): boolean => {
