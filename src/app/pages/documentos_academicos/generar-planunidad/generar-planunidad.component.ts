@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlanunidadService } from './../../../Servicio/documentacion_academica/planunidadServices/planunidad.service';
 import { UnidadService } from './../../../Servicio/documentacion_academica/unidadServices/unidad.service';
+import { AuthService } from './../../../Servicio/auth/auth.service';
 import Swal from 'sweetalert2';
 
 
@@ -12,7 +13,11 @@ import Swal from 'sweetalert2';
 })
 export class GenerarPlanunidadComponent implements OnInit {
   generar_planunidadForm: FormGroup = this.fb.group({});
+  id_usuario: number = 0;
+  id_empleado: number = 0;
+  NombreApellidoEmpleado: String = "";
   //variables para listar
+  usuario: any;
   unidades: any;
   asignaturas: any;
   modalidades: any;
@@ -20,13 +25,11 @@ export class GenerarPlanunidadComponent implements OnInit {
   planunidadaprobados: any;
   planunidadrechazados: any;
   cursos: any;
-  paralelos: any;
 
   aprobado: String = "Aprobado";
   rechazado: String = "Rechazado";
-
   id: any;
-  id_empleado: number = 1;
+
   autoResize: boolean = true;
 
   mostrarFormGenerar: boolean = true;
@@ -36,6 +39,8 @@ export class GenerarPlanunidadComponent implements OnInit {
   mostrarCambiosEditar: boolean = false;
   mostrarbtnTodos: boolean = true;
   mostrarbtnMisPlanes: boolean = false;
+  mostrarObservaciones: boolean = false;
+
   // Variables para capturar el select de Unidad
   opcionSelectUnidad: any;
   verSelectUnidad: any;
@@ -48,18 +53,18 @@ export class GenerarPlanunidadComponent implements OnInit {
   verSelectAsigNom: any;
   // Variables para capturar el select de Periodos
   opcionSelectPeriodo: any;
+  verSelectPeriodoFinicio: any;
+  verSelectPeriodoFfin: any;
   verSelectPeriodoMalla: any;
   // Variables para capturar el select de cursos
   opcionSelectCurso: any;
   verSelectCurso: any;
-  // Variables para capturar el select de paralelo
-  opcionSelectParalelo: any;
-  verSelectParalelo: any;
 
   constructor(
     public fb: FormBuilder,
     public planunidadService: PlanunidadService,
     public unidadService: UnidadService,
+    public authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -76,14 +81,25 @@ export class GenerarPlanunidadComponent implements OnInit {
       fecha_inicio: ['', Validators.required],
       fecha_fin: ['', Validators.required],
       estado: ['', Validators.required],
+      observaciones: ['', Validators.required],
       unidad: ['', Validators.required],
       empleado: ['', Validators.required],
       asignatura: ['', Validators.required],
       curso: ['', Validators.required],
-      paralelo: ['', Validators.required],
       modalidad: ['', Validators.required],
       periodo: ['', Validators.required],
     });
+
+    //Cosumiendo el id del usuario desde auth.service
+    this.id_usuario = this.authService.usuario.id_usuario;
+
+    this.planunidadService.getUsuario(this.id_usuario).subscribe(resp => {
+      this.usuario = resp;
+      this.id_empleado = this.usuario.empleado.id_empleado;
+      this.NombreApellidoEmpleado = this.usuario.empleado.persona.nombre + " " + this.usuario.empleado.persona.apellido;
+    },
+      error => { console.error(error) }
+    );
 
     this.unidadService.getAllUnidades().subscribe(resp => {
       this.unidades = resp;
@@ -102,9 +118,6 @@ export class GenerarPlanunidadComponent implements OnInit {
     },
       error => { console.error(error) }
     );
-    //Cargando datos en las tablas por estado y empleado
-    this.cargarPlanesUnidadEmpleado(this.aprobado);
-    this.cargarPlanesUnidadEmpleado(this.rechazado);
 
     //Captura los cambios en el select de periodo para luego mostrar la asignaturar de acuerdo a la Malla
     this.generar_planunidadForm.get("periodo")?.valueChanges.subscribe(value => {
@@ -126,11 +139,10 @@ export class GenerarPlanunidadComponent implements OnInit {
       error => { console.error(error) }
     );
 
-    this.planunidadService.getAllParalelo().subscribe(resp => {
-      this.paralelos = resp;
-    },
-      error => { console.error(error) }
-    );
+    this.cargarPlanesUnidadEmpleado(this.aprobado);
+    this.cargarPlanesUnidadEmpleado(this.rechazado);
+
+    //this.generar_planunidadForm.get("observaciones")?.disable();
   }
 
   capturarSelectUnidad() {
@@ -151,36 +163,37 @@ export class GenerarPlanunidadComponent implements OnInit {
   capturarSelectPeriodo() {
     // Pasamos el valor seleccionado a la variable verSeleccionPeriodoMalla
     if (this.opcionSelectPeriodo != '0') {
+      this.verSelectPeriodoFinicio = this.opcionSelectPeriodo.fecha_inicio
+      this.verSelectPeriodoFfin = this.opcionSelectPeriodo.fecha_fin;
       this.verSelectPeriodoMalla = this.opcionSelectPeriodo.malla.descripcion;
     }
   }
 
   capturarSelectCurso() {
     // Pasamos el valor seleccionado a la variable verSeleccionUnidad
-    this.verSelectCurso = this.opcionSelectCurso.descripcion;
+    this.verSelectCurso = this.opcionSelectCurso.descripcion + " - " + this.opcionSelectCurso.id_paralelo.descripcion;
   }
 
-  capturarSelectParalelo() {
-    // Pasamos el valor seleccionado a la variable verSeleccionUnidad
-    this.verSelectParalelo = this.opcionSelectParalelo.descripcion;
-  }
 
   verFormGenerar() {
     this.mostrarFormGenerar = true;
     this.mostrarAprobados = false;
     this.mostrarRechazados = false;
+    this.mostrarObservaciones = false;
   }
 
   verTablaAprobados() {
     this.mostrarFormGenerar = false;
     this.mostrarAprobados = true;
     this.mostrarRechazados = false;
+    this.cargarPlanesUnidadEmpleado(this.aprobado);
   }
 
   verTablaRechazados() {
     this.mostrarFormGenerar = false;
     this.mostrarAprobados = false;
     this.mostrarRechazados = true;
+    this.cargarPlanesUnidadEmpleado(this.rechazado);
   }
 
   enviar(): void {
@@ -199,10 +212,9 @@ export class GenerarPlanunidadComponent implements OnInit {
         timer: 2500
       })
     } else {
-      //Id empleado -provicional
-      this.generar_planunidadForm.value.empleado = "1";
-
+      this.generar_planunidadForm.value.empleado = this.id_empleado;
       this.generar_planunidadForm.value.estado = "Pendiente";
+      this.generar_planunidadForm.value.observaciones = "Sin observaciones";
       this.planunidadService.savePlanUnidad(this.generar_planunidadForm.value).subscribe(resp => {
         //Receteamos el formulario
         this.generar_planunidadForm.reset();
@@ -212,7 +224,6 @@ export class GenerarPlanunidadComponent implements OnInit {
         this.opcionSelectAsig = 0;
         this.opcionSelectPeriodo = 0;
         this.opcionSelectCurso = 0;
-        this.opcionSelectParalelo = 0;
         this.opcionSelectAsig = 0;
         //Alerta success
         Swal.fire({
@@ -248,7 +259,6 @@ export class GenerarPlanunidadComponent implements OnInit {
       this.opcionSelectAsig = 0;
       this.opcionSelectPeriodo = 0;
       this.opcionSelectCurso = 0;
-      this.opcionSelectParalelo = 0;
       this.opcionSelectAsig = 0;
       //Mostramos el btn Enviar y ocultamos btn Guardar Cambios y  btn Cancelar
       this.mostrarBotonEnviar = true;
@@ -300,7 +310,6 @@ export class GenerarPlanunidadComponent implements OnInit {
         this.opcionSelectAsig = 0;
         this.opcionSelectPeriodo = 0;
         this.opcionSelectCurso = 0;
-        this.opcionSelectParalelo = 0;
         this.opcionSelectAsig = 0;
         //Mostramos el btn Enviar y ocultamos btn Guardar Cambios y  btn Cancelar
         this.mostrarBotonEnviar = true;
@@ -323,11 +332,11 @@ export class GenerarPlanunidadComponent implements OnInit {
       fecha_inicio: plan_unidad.fecha_inicio,
       fecha_fin: plan_unidad.fecha_fin,
       estado: plan_unidad.estado,
+      observaciones: plan_unidad.observaciones,
       unidad: plan_unidad.unidad,
       empleado: plan_unidad.empleado,
       asignatura: plan_unidad.asignatura,
       curso: plan_unidad.curso,
-      paralelo: plan_unidad.paralelo,
       modalidad: plan_unidad.modalidad,
       periodo: plan_unidad.periodo
     });
@@ -339,20 +348,21 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.opcionSelectAsig = plan_unidad.asignatura;
     this.opcionSelectPeriodo = plan_unidad.periodo;
     this.opcionSelectCurso = plan_unidad.curso;
-    this.opcionSelectParalelo = plan_unidad.paralelo;
     //Cargamos los labels
     this.verSelectUnidad = plan_unidad.unidad.idUnidad;
+    this.verSelectPeriodoFinicio = plan_unidad.periodo.fecha_inicio;
+    this.verSelectPeriodoFfin = plan_unidad.periodo.fecha_fin;
     this.verSelectModalidad = plan_unidad.modalidad.descripcion;
     this.verSelectPeriodoMalla = plan_unidad.periodo.malla.descripcion;
     this.verSelectAsigNom = plan_unidad.asignatura.descripcion;
     this.verSelectAsigId = plan_unidad.asignatura.id_asignatura;
-    this.verSelectCurso = plan_unidad.curso.descripcion;
-    this.verSelectParalelo = plan_unidad.paralelo.descripcion;
+    this.verSelectCurso = plan_unidad.curso.descripcion + " - " + plan_unidad.curso.id_paralelo.descripcion;
     //Mostramos el btn Guardar Cambios y ocultamos btn Enviar
     this.mostrarCambiosEditar = true;
     this.mostrarBotonEnviar = false;
     this.mostrarFormGenerar = true;
     this.mostrarRechazados = false;
+    this.mostrarObservaciones = true;
   }
 
 
@@ -389,16 +399,6 @@ export class GenerarPlanunidadComponent implements OnInit {
       && this.generar_planunidadForm.controls[valor].touched
   }
 
-  cargarTodosPlanesUnidadAprobados() {
-    this.planunidadService.getAllPlanUnidadesAprobados().subscribe(resp => {
-      this.planunidadaprobados = resp;
-      this.mostrarbtnTodos = false;
-      this.mostrarbtnMisPlanes = true;
-    },
-      error => { console.error(error) }
-    );
-  }
-
   cargarPlanesUnidadEmpleado(estado: String) {
     this.planunidadService.getAllPlanUnidadesByEmpleado(this.id_empleado, estado).subscribe(resp => {
       if (estado == "Aprobado") {
@@ -412,6 +412,4 @@ export class GenerarPlanunidadComponent implements OnInit {
       error => { console.error(error) }
     );
   }
-
-
 }

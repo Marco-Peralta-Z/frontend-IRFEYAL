@@ -13,6 +13,10 @@ export class PlanunidadService {
     private httpClient: HttpClient
   ) { }
 
+  public getUsuario(id_usuario: number): Observable<any> {
+    return this.httpClient.get(this.API_SERVER + "usuario/" + id_usuario);
+  }
+
   public getAllPlanUnidades(): Observable<any> {
     return this.httpClient.get(this.API_SERVER);
   }
@@ -61,9 +65,5 @@ export class PlanunidadService {
 
   public getAllCurso(): Observable<any> {
     return this.httpClient.get(this.API_SERVER + "cursos");
-  }
-
-  public getAllParalelo(): Observable<any> {
-    return this.httpClient.get(this.API_SERVER + "paralelos");
   }
 }

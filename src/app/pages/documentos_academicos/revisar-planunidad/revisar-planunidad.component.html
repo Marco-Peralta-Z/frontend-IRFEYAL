@@ -74,6 +74,11 @@
             <br>
             <div *ngIf="mostrarForm">
                 <form [formGroup]="revisar_planunidadForm">
+                    <div *ngIf="mostrarObservacionesAnt" class="border bg-light">
+                        <h3>Observaciones anteriores</h3>
+                        <input type="text" class="form-control" style="border: 0px;" name="observacionesant"
+                            value={{verObservaciones}} disabled><br>
+                    </div><br>
                     <div class="container-fluid border bg-light">
                         <div class="container-fluid">
                             <!-- Implementacion del Grid para el diseño del formulario -->
@@ -92,34 +97,35 @@
                             </div>
                             <!-- Implementacion del Grid para el diseño del formulario -->
                             <!-- Dentro de Parte 2, Etiquetas para mostrar algunos datos-->
+                            <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                Docente:</label>
+                            <label style="font-size:18px; margin-left: 10px;">
+                                {{verEmpleado}}</label><br>
                             <div class="row">
-                                <div class="col-sm-6"><br>
+                                <div class="col-sm-6">
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                        Docente:</label>
+                                        Periodo:</label>
                                     <label style="font-size:18px; margin-left: 10px;">
-                                        {{verEmpleado}}</label><br>
+                                        {{verPeriodoFinicio | date:'dd/MM/yyyy'}} - {{verPeriodoFfin |
+                                        date:'dd/MM/yyyy'}}</label><br>
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
                                         Modalidad:</label>
                                     <label style="font-size:18px; margin-left: 10px;">
                                         {{verModalidad}}</label><br>
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                        Curso:</label>
-                                    <label style="font-size:18px; margin-left: 10px;">
-                                        {{verCurso}}</label><br>
-                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
                                         Asignatura:</label>
                                     <label style="font-size:18px; margin-left: 10px;">
                                         {{verAsigNom}}</label><br>
                                 </div>
-                                <div class="col-sm-6"><br><br>
+                                <div class="col-sm-6">
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
                                         Malla:</label>
                                     <label style="font-size:18px; margin-left: 10px;">
                                         {{verPeriodoMalla}}</label><br>
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                        Paralelo:</label>
+                                        Curso:</label>
                                     <label style="font-size:18px; margin-left: 10px;">
-                                        {{verParalelo}}</label><br>
+                                        {{verCurso}}</label><br>
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
                                         Codigo de Asignatura:</label>
                                     <label style="font-size:18px; margin-left: 10px;">
@@ -130,11 +136,13 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <h2>Fecha de inicio:</h2>
-                                    <input type="date" class="form-control" name="date" formControlName="fecha_inicio">
+                                    <input type="date" class="form-control" name="date" formControlName="fecha_inicio"
+                                        readonly>
                                 </div>
                                 <div class="col-sm-4">
                                     <h2>Fecha de fin:</h2>
-                                    <input type="date" class="form-control" name="date" formControlName="fecha_fin">
+                                    <input type="date" class="form-control" name="date" formControlName="fecha_fin"
+                                        readonly>
                                 </div>
                                 <div class="col-sm-4">
                                 </div>
@@ -144,14 +152,14 @@
                                     <div class="form-group">
                                         <h2>Titulo de Unidad</h2>
                                         <textarea class="form-control" formControlName="titulo_unidad" [rows]="2"
-                                            pInputTextarea [autoResize]="autoResize"></textarea>
+                                            pInputTextarea [autoResize]="autoResize" readonly></textarea>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <h2>Objetivos especificos de la unidad</h2>
                                         <textarea class="form-control" formControlName="objetivos" [rows]="2"
-                                            pInputTextarea [autoResize]="autoResize"></textarea>
+                                            pInputTextarea [autoResize]="autoResize" readonly></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -161,14 +169,14 @@
                                     <div class="form-group">
                                         <h2>Contenidos de la unidad</h2>
                                         <textarea class="form-control" formControlName="contenidos" [rows]="3"
-                                            pInputTextarea [autoResize]="autoResize"></textarea>
+                                            pInputTextarea [autoResize]="autoResize" readonly></textarea>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <h2>Criterios de evaluacion</h2>
                                         <textarea class="form-control" formControlName="criterios_evaluacion" [rows]="3"
-                                            pInputTextarea [autoResize]="autoResize"></textarea>
+                                            pInputTextarea [autoResize]="autoResize" readonly></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -178,23 +186,36 @@
                                     <div class="form-group">
                                         <h2>Destrezas con criterio de desempeño</h2>
                                         <textarea class="form-control" formControlName="destrezas" [rows]="3"
-                                            pInputTextarea [autoResize]="autoResize"></textarea>
+                                            pInputTextarea [autoResize]="autoResize" readonly></textarea>
                                     </div>
                                 </div>
                             </div>
                             <br>
                             <div align="center">
-                                <button type="submit" class="btn btn-secondary btn-lg"
+                                <button type="submit" class="btn btn-secondary btn-lg" [disabled]="btnRegresarEnviar"
                                     (click)="retroceder()">Regresar</button>
-                                <button type="submit" class="btn btn-success btn-lg"
+                                <button type="submit" class="btn btn-success btn-lg" [disabled]="btnRegresarEnviar"
                                     (click)="aprobar()">Aprobar</button>
                                 <button type="submit" class="btn btn-danger btn-lg"
-                                    (click)="rechazar()">Rechazar</button>
+                                    (click)="abrirObservaciones()">Rechazar</button>
                             </div>
                         </div>
                         <br>
                     </div>
                     <br>
+                    <div class="container-fluid border bg-light" *ngIf="mostrarObservaciones">
+                        <h2>Observaciones</h2>
+                        <textarea class="form-control" formControlName="observaciones" [rows]="3"
+                            placeholder="Detalle los puntos a corregir en el Plan de unidad" pInputTextarea
+                            [autoResize]="autoResize"></textarea>
+                        <span class="form-text text-danger" style="font-size:10px;" *ngIf="mostrarmsg">
+                            Campo obligatorio!
+                        </span><br>
+                        <div align="center">
+                            <button type="submit" class="btn btn-secondary" (click)="cancelarObs()">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" (click)="rechazar()">Enviar</button>
+                        </div><br>
+                    </div>
                 </form>
             </div>
         </div>

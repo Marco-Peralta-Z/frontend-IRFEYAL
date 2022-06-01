@@ -22,7 +22,13 @@
             </div>
             <hr>
         </div>
+
         <form *ngIf="mostrarFormGenerar" [formGroup]="generar_planunidadForm" (ngSubmit)="enviar()">
+            <div *ngIf="mostrarObservaciones" class="border bg-light">
+                <h3>Observaciones a corregir</h3>
+                <input type="text" class="form-control" style="border: 0px;" name="observaciones"
+                    formControlName="observaciones" readonly><br>
+            </div><br>
             <div class="container-fluid border bg-light">
                 <div class="container-fluid">
                     <!-- Implementacion del Grid para el diseño del formulario -->
@@ -52,6 +58,15 @@
                                     {{item.nombre_unidad}}</option>
                             </select>
                             <br>
+                            <h3>Elegir Periodo:</h3>
+                            <select name="periodo" id="periodo" class="form-select" formControlName="periodo"
+                                [(ngModel)]="opcionSelectPeriodo" (change)="capturarSelectPeriodo()">
+                                <option value="0"> </option>
+                                <option [ngValue]="item" *ngFor="let item of periodos">{{item.fecha_inicio |
+                                    date:'dd/MM/yyyy'}} a {{item.fecha_fin | date:'dd/MM/yyyy'}}
+                                </option>
+                            </select>
+                            <br>
                             <h3>Elegir Modalidad:</h3>
                             <select name="modalidad" id="modalidad" class="form-select" formControlName="modalidad"
                                 [(ngModel)]="opcionSelectModalidad" (change)="capturarSelectModalidad()">
@@ -60,27 +75,12 @@
                                 <option [ngValue]="item" *ngFor="let item of modalidades">{{item.descripcion}}</option>
                             </select>
                             <br>
-                            <h3>Elegir Periodo:</h3>
-                            <select name="periodo" id="periodo" class="form-select" formControlName="periodo"
-                                [(ngModel)]="opcionSelectPeriodo" (change)="capturarSelectPeriodo()">
-                                <option value="0"> </option>
-                                <option [ngValue]="item" *ngFor="let item of periodos">Inicio {{item.fecha_inicio}}
-                                </option>
-                            </select>
-                            <br>
-                            <h3>Curso:</h3>
+                            <h3>Curso/Paralelo:</h3>
                             <select name="curso" id="curso" class="form-select" formControlName="curso"
                                 [(ngModel)]="opcionSelectCurso" (change)="capturarSelectCurso()">
                                 <option value="0"> </option>
-                                <option [ngValue]="item" *ngFor="let item of cursos">{{item.descripcion}}
-                                </option>
-                            </select>
-                            <br>
-                            <h3>Paralelo:</h3>
-                            <select name="paralelo" id="paralelo" class="form-select" formControlName="paralelo"
-                                [(ngModel)]="opcionSelectParalelo" (change)="capturarSelectParalelo()">
-                                <option value="0"> </option>
-                                <option [ngValue]="item" *ngFor="let item of paralelos">{{item.descripcion}}
+                                <option [ngValue]="item" *ngFor="let item of cursos">{{item.descripcion}} -
+                                    {{item.id_paralelo.descripcion}}
                                 </option>
                             </select>
                             <br>
@@ -94,39 +94,40 @@
                         <!-- Implementacion Parte 2 Todos los demas campos-->
                         <div class="col-sm-9 container">
                             <!-- Dentro de Parte 2, Etiquetas para mostrar algunos datos-->
+                            <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                Docente:</label>
+                            <label style="font-size:18px; margin-left: 10px;">
+                                {{NombreApellidoEmpleado}}</label><br>
                             <div class="row">
-                                <div class="col-sm-6"><br>
+                                <div class="col-sm-6">
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                        Docente:</label>
-                                    <!--<label style="font-size:18px; margin-left: 10px;">
-                                        {{variableDocente}}</label>--><br>
+                                        Periodo:</label>
+                                    <label style="font-size:18px; margin-left: 10px;"
+                                        [hidden]="opcionSelectPeriodo == '0'">
+                                        {{verSelectPeriodoFinicio | date:'dd/MM/yyyy'}} - {{verSelectPeriodoFfin |
+                                        date:'dd/MM/yyyy'}}</label><br>
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
                                         Modalidad:</label>
                                     <label style="font-size:18px; margin-left: 10px;"
                                         [hidden]="opcionSelectModalidad == '0'">
                                         {{verSelectModalidad}}</label><br>
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                        Curso:</label>
-                                    <label style="font-size:18px; margin-left: 10px;"
-                                        [hidden]="opcionSelectCurso == '0'">
-                                        {{verSelectCurso}}</label><br>
-                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
                                         Asignatura:</label>
                                     <label style="font-size:18px; margin-left: 10px;"
                                         [hidden]="opcionSelectAsig == '0'">
                                         {{verSelectAsigNom}}</label><br>
                                 </div>
-                                <div class="col-sm-6"><br><br>
+                                <div class="col-sm-6">
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
                                         Malla:</label>
                                     <label style="font-size:18px; margin-left: 10px;"
                                         [hidden]="opcionSelectPeriodo == '0'">
                                         {{verSelectPeriodoMalla}}</label><br>
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                        Paralelo:</label>
+                                        Curso:</label>
                                     <label style="font-size:18px; margin-left: 10px;"
-                                        [hidden]="opcionSelectParalelo == '0'">
-                                        {{verSelectParalelo}}</label><br>
+                                        [hidden]="opcionSelectCurso == '0'">
+                                        {{verSelectCurso}}</label><br>
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
                                         Codigo de Asignatura:</label>
                                     <label style="font-size:18px; margin-left: 10px;"
@@ -139,6 +140,8 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <h2>Fecha de inicio:</h2>
+                                    <!--<p-calendar inputId="calendar" formControlName="fecha_inicio" [showIcon]="true"
+                                        dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa"></p-calendar>-->
                                     <input type="date" class="form-control" name="date" formControlName="fecha_inicio">
                                     <span class="form-text text-danger" style="font-size:10px;"
                                         *ngIf="validarCampo('fecha_inicio')">
@@ -241,16 +244,6 @@
         <!--Implementacion de la tabla de planes de unidad aprobados-->
         <div *ngIf="mostrarAprobados" class="container-fluid px-4">
             <h1 *ngIf="mostrarbtnTodos">PLANES DE UNIDAD APROBADOS</h1>
-            <h1 *ngIf="mostrarbtnMisPlanes">PLANES DE UNIDAD APROBADOS (Todos)</h1>
-            <p-toolbar styleClass="mb-4">
-                <ng-template pTemplate="left">
-                    <button pButton pRipple *ngIf="mostrarbtnMisPlanes" label="Mis Planes de Unidad"
-                        icon="pi pi-folder-open" class="p-button-success mr-2"
-                        (click)="cargarPlanesUnidadEmpleado(aprobado)"></button>
-                    <button pButton pRipple *ngIf="mostrarbtnTodos" label="Todos" icon="pi pi-book"
-                        class="p-button-primary" (click)="cargarTodosPlanesUnidadAprobados()"></button>
-                </ng-template>
-            </p-toolbar>
             <p-table #dt [value]="planunidadaprobados" [rows]="10" [paginator]="true"
                 [globalFilterFields]="['asignatura.descripcion','titulo_unidad','unidad.idUnidad']"
                 responsiveLayout="scroll" [rowHover]="true" dataKey="id_plan_unidad"
