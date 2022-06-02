@@ -7,36 +7,35 @@
 
             <div class="card">
                 <p-tabView [(activeIndex)]="activeIndex1">
-                    <p-tabPanel>
+                        <p-tabPanel>
                         <ng-template pTemplate="header">
-                            <i class="pi pi-credit-card"></i>
+                            <i class="pi pi-credit-card mr-1"></i>
                             <span>Datos Personales</span>
                         </ng-template>
-                        <div class="form-group row">
+                        <div class="form-group row ml-4">
                             <div class="col">
-                                <span class="p-float-label mt-3">
-                                    <input id="float-input" type="text" [(ngModel)]="estudiante.id_persona.cedula"
-                                        (change)="validaExistenciaEstudiante()" name="cedula" formControlName="cedula" pInputText >
-                                    <label for="float-input">Cedula:</label>
-                                </span>
+                                <label for="float-input">Cedula:</label><br>
+                                    <input maxlength="10" type="text" [(ngModel)]="estudiante.id_persona.cedula"
+                                        (change)="validaExistenciaEstudiante()" placeholder="C.I" name="cedula" formControlName="cedula" pInputText >
+                               
                                 <span class="form-text text-danger" *ngIf="campoValido('cedula')">
                                     Este campo es obligatorio!
-                                </span>
+                                </span><br>
 
-                                <span class="p-float-label mt-4">
+                                <label for="float-input" class="mt-1">Nombres:</label> <br>
                                     <input id="float-input" type="text" [(ngModel)]="estudiante.id_persona.nombre" pInputText
-                                    name="nombre" formControlName="nombre" >
-                                    <label for="float-input">Nombres:</label>
-                                </span>
+                                    name="nombre" formControlName="nombre" placeholder="Nombres Completos">
+                                    
+                                
                                 <span class="form-text text-danger" *ngIf="campoValido('nombre')">
                                     Este campo es obligatorio!
-                                </span>
+                                </span><br>
 
-                                <span class="p-float-label mt-4">
+                                <label for="float-input" class="mt-1">Apellidos:</label><br>
                                     <input id="float-input" type="text" [(ngModel)]="estudiante.id_persona.apellido" pInputText
-                                    name="apellido" formControlName="apellido" >
-                                    <label for="float-input">Apellidos:</label>
-                                </span>
+                                    name="apellido" placeholder="Apellidos Completos" formControlName="apellido" >
+                                    
+                                
                                 <span class="form-text text-danger" *ngIf="campoValido('apellido')">
                                     Este campo es obligatorio!
                                 </span>
@@ -50,17 +49,34 @@
                                 <span class="form-text text-danger" *ngIf="campoValido('fecha')">
                                     Este campo es obligatorio!
                                 </span>
-                                <label class="mt2">Genero:</label> <br>
-                                <p-dropdown [options]="generos" [(ngModel)]="estudiante.id_persona.genero" 
+                                <label class="mt-2">Genero:</label> <br>
+                                <!-- <p-dropdown [options]="generos" [(ngModel)]="estudiante.id_persona.genero" 
                                 placeholder="Seleccione Genero" optionLabel="genero" [showClear]="true" formControlName="genero"></p-dropdown>
                                 
                                 <span class="form-text text-danger" *ngIf="campoValido('genero')">
                                     Este campo es obligatorio!
-                                </span><br>
+                                </span><br> -->
+                                <p-dropdown [options]="generos" [(ngModel)]="estudiante.id_persona.genero" formControlName="genero" optionLabel="genero" [filter]="true" filterBy="genero" [showClear]="true" placeholder="Seleccione">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="country-item country-item-value"  *ngIf="estudiante.id_persona.genero">
+                                            
+                                            <div>{{estudiante.id_persona.genero.genero}}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-generos pTemplate="item">
+                                        <div class="country-item">
+                                            <div>{{generos.genero}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                                <span class="form-text text-danger" *ngIf="campoValido('genero')">
+                                    Este campo es obligatorio!
+                                </span>
+                                <br>
 
-                                <label class="mt2">Extensión:</label> <br>
+                                <label class="mt-2">Extensión:</label> <br>
                                 <p-dropdown [options]="extensiones" [(ngModel)]="estudiante.id_extension" 
-                                placeholder="Seleccione Extensión" optionLabel="nombre_extension" [showClear]="true" name="extension" formControlName="extension"></p-dropdown>
+                                placeholder="Seleccione" optionLabel="nombre_extension" [showClear]="true" name="extension" formControlName="extension"></p-dropdown>
                                 <span class="form-text text-danger" *ngIf="campoValido('extension')">
                                     Este campo es obligatorio!
                                 </span>
@@ -69,57 +85,104 @@
                     </p-tabPanel>
                     <p-tabPanel header="Header II">
                         <ng-template pTemplate="header">
-                            <i class="pi pi-home"></i>
+                            <i class="pi pi-home mr-1"></i>
                             <span>Domicilio</span>
                         </ng-template>
-                        <div class="form-group row">
+                        <div class="form-group row ml-4">
                             <div class="col">
-                                <span class="p-float-label mt-4">
+                                <label for="float-input">Calle Principal:</label><br>
                                     <input id="float-input" type="text" [(ngModel)]="estudiante.direccion.avPrincipal" pInputText
-                                    name="calleFirts" formControlName="calleFirts" >
-                                    <label for="float-input">Calle Principal:</label>
-                                </span>
+                                    name="calleFirts" placeholder="Calle Principal" formControlName="calleFirts" >
+                                  
                                 <span class="form-text text-danger" *ngIf="campoValido('calleFirts')">
                                     Este campo es obligatorio!
-                                </span>
+                                </span><br>
         
-                                <span class="p-float-label mt-4">
+                                <label for="float-input" class="mt-1">Calle Secundaria:</label><br>
                                     <input id="float-input" type="text" [(ngModel)]="estudiante.direccion.avSecundaria" pInputText
-                                    name="calleSecond" formControlName="calleSecond" >
-                                    <label for="float-input">Calle Secundaria:</label>
-                                </span>
+                                    name="calleSecond" placeholder="Calle Secundaria" formControlName="calleSecond" >
+                                    
                                 <span class="form-text text-danger" *ngIf="campoValido('calleSecond')">
                                     Este campo es obligatorio!
                                 </span>
-                                <label class="mt2">Pais:</label> <br>
+                                <!-- Pais esta siendo enviado de forma directa en el ts -->
+                                <!-- <label class="mt2">Pais:</label> <br>
                                 <p-dropdown [options]="paises" [(ngModel)]="estudiante.direccion.pais" 
                                 placeholder="Seleccione Pais" optionLabel="pais" [showClear]="true" name="pais" formControlName="pais"></p-dropdown>
                                 <span class="form-text text-danger" *ngIf="campoValido('pais')">
                                     Este campo es obligatorio!
-                                </span>
+                                </span> -->
                                 
                             </div>
                             <div class="col">
                                 <label >Provincia:</label><br>
-                                <p-autoComplete [(ngModel)]="estudiante.direccion.provincia" [showEmptyMessage]="true"
+                                <!-- <p-autoComplete [(ngModel)]="estudiante.direccion.provincia" 
                                     [suggestions]="filteredProvincia" (completeMethod)="filtrarProvincia($event)" field="provincia"
-                                    [minLength]="1" name="provincia" formControlName="provincia"></p-autoComplete><br>
+                                    [minLength]="1" name="provincia" placeholder="Seleccione Una" formControlName="provincia"></p-autoComplete><br> -->
+                                    
+                                    <p-dropdown [options]="provincias" [(ngModel)]="estudiante.direccion.provincia" formControlName="provincia" optionLabel="provincia" [filter]="true" filterBy="provincia" placeholder="Selecionar Una">
+                                        <ng-template pTemplate="selectedItem">
+                                            <div class="country-item country-item-value"  *ngIf="estudiante.direccion.provincia">
+                                                
+                                                <div>{{estudiante.direccion.provincia.provincia}}</div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template let-provincias pTemplate="item">
+                                            <div class="country-item">
+                                                <div>{{provincias.provincia}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </p-dropdown>
+                                    
                                     <span class="form-text text-danger" *ngIf="campoValido('provincia')">
                                         Este campo es obligatorio!
                                     </span>
-        
-                                <label >Canton:</label><br>
-                                <p-autoComplete [(ngModel)]="estudiante.direccion.canton" [showEmptyMessage]="true"
+                                    <br>
+                                <label class="mt-1">Canton:</label><br>
+                                <!-- <p-autoComplete [(ngModel)]="estudiante.direccion.canton" [showEmptyMessage]="true"
                                     [suggestions]="filteredCanton" (completeMethod)="filtrarCanton($event)" field="canton"
-                                    [minLength]="1" name="canton" formControlName="canton"></p-autoComplete><br>
+                                    [minLength]="1" name="canton" placeholder="Seleccione Una" formControlName="canton"></p-autoComplete><br> -->
+                                    
+                                    <p-dropdown [options]="cantones" [(ngModel)]="estudiante.direccion.canton" formControlName="canton" optionLabel="canton" [filter]="true" filterBy="canton" placeholder="Selecionar Una">
+                                        <ng-template pTemplate="selectedItem">
+                                            <div class="country-item country-item-value"  *ngIf="estudiante.direccion.canton">
+                                                
+                                                <div>{{estudiante.direccion.canton.canton}}</div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template let-cantones pTemplate="item">
+                                            <div class="country-item">
+                                                <div>{{cantones.canton}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </p-dropdown>
+                                    
+                                    
                                     <span class="form-text text-danger" *ngIf="campoValido('canton')">
                                         Este campo es obligatorio!
-                                    </span>
+                                    </span><br>
         
-                                <label >Parroquia:</label><br>
-                                <p-autoComplete [(ngModel)]="estudiante.direccion.parroquia " [showEmptyMessage]="true"
+                                <label class="mt-1">Parroquia:</label><br>
+                                <!-- <p-autoComplete [(ngModel)]="estudiante.direccion.parroquia " [showEmptyMessage]="true"
                                     [suggestions]="filteredParroquia" (completeMethod)="filtrarParroquia($event)" field="parroquia"
-                                    [minLength]="1" name="parroquia" formControlName="parroquia"></p-autoComplete>
+                                    [minLength]="1" name="parroquia" placeholder="Seleccione Una" formControlName="parroquia"></p-autoComplete> -->
+                                    
+                                    <p-dropdown [options]="parroquias" [(ngModel)]="estudiante.direccion.parroquia" formControlName="parroquia" optionLabel="parroquia" [filter]="true" filterBy="parroquia" placeholder="Selecionar Una">
+                                        <ng-template pTemplate="selectedItem">
+                                            <div class="country-item country-item-value"  *ngIf="estudiante.direccion.parroquia">
+                                                
+                                                <div>{{estudiante.direccion.parroquia.parroquia}}</div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template let-parroquias pTemplate="item">
+                                            <div class="country-item">
+                                                <div>{{parroquias.parroquia}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </p-dropdown>
+                                   
+                                   
+                                   
                                     <span class="form-text text-danger" *ngIf="campoValido('parroquia')">
                                         Este campo es obligatorio!
                                     </span>
@@ -131,35 +194,29 @@
                     </p-tabPanel>
                     <p-tabPanel header="Header III">
                         <ng-template pTemplate="header">
-                            <i class="pi pi-search"></i>
+                            <i class="pi pi-compass mr-1"></i>
                             <span>Contactos</span>
-                            <i class="pi pi-cog"></i>
                         </ng-template>
-                        <div class="form-group row">
+                        <div class="form-group row ml-4 ">
                             <div class="col">
-                                <span class="p-float-label mt-3">
-                                    <input id="float-input" type="text" [(ngModel)]="estudiante.telefono.telefono"
-                                        name="telefono" formControlName="telefono" pInputText >
-                                    <label for="float-input">Telefono:</label>
-                                </span>
+                                <label for="float-input" >Telefono:</label><br>
+                                <p-inputMask mask="(99)-999-9999" [(ngModel)]="estudiante.telefono.telefono"
+                                        name="telefono" formControlName="telefono" placeholder="(99) 999-9999" ></p-inputMask>
                                 <span class="form-text text-danger" *ngIf="campoValido('telefono')">
                                     Este campo es obligatorio!
-                                </span>
+                                </span><br>
 
-                                <span class="p-float-label mt-4">
-                                    <input id="float-input" type="text" [(ngModel)]="estudiante.telefono.numCelular" pInputText
-                                    name="celular" formControlName="celular" >
-                                    <label for="float-input">Celular:</label>
-                                </span>
+                                <label for="float-input" class="mt-1">Celular:</label><br>
+                                <p-inputMask [(ngModel)]="estudiante.telefono.numCelular" 
+                                    name="celular" formControlName="celular" mask="999-999-9999"  placeholder="999-999-9999" ></p-inputMask>
+                                   
                                 <span class="form-text text-danger" *ngIf="campoValido('celular')">
                                     Este campo es obligatorio!
-                                </span>
+                                </span><br>
 
-                                <span class="p-float-label mt-4">
+                                <label for="float-input" class="mt-1">Correo Electronico:</label><br>
                                     <input id="float-input" type="text" [(ngModel)]="estudiante.correo.correo" pInputText
-                                    name="email" formControlName="email" >
-                                    <label for="float-input">Correo Electronico:</label>
-                                </span>
+                                    name="email" formControlName="email" placeholder="ejemplo@gmail.com" >
                                 <span class="form-text text-danger" *ngIf="campoValido('email')">
                                     Este campo es obligatorio!
                                 </span>
@@ -168,10 +225,13 @@
                         </div>
                     </p-tabPanel>
                 </p-tabView>
-                <div style="padding: .5em 0 1em 0">
-                    <p-button [disabled]="activeIndex1 ==0" (click)="activeIndex1 = 0" styleClass="p-button-text" label="Datos Personales"></p-button>
-                    <p-button [disabled]="activeIndex1 ==1" (click)="activeIndex1 = 1" styleClass="p-button-text" label="Domicilio"></p-button>
-                    <p-button [disabled]="activeIndex1 == 2"(click)="activeIndex1 = 2" styleClass="p-button-text" label="Contactos"></p-button>
+                <div style="padding: .5em 0 1em 0" class="ml-6">
+                    <p-button [disabled]="activeIndex1 == 0" (click)="activeIndex1 = 0"
+                    styleClass="p-button-rounded p-button-info ml-2 mr-2 " icon="pi pi-credit-card"></p-button>
+                    <p-button [disabled]="activeIndex1 == 1" (click)="activeIndex1 = 1"
+                    styleClass="p-button-rounded p-button-warning mr-2" icon="pi pi-home"></p-button>
+                    <button *ngIf="activeIndex1 != 2 " (click)="activeIndex1 = 2"
+                    pButton pRipple type="button" class="p-button-rounded p-button-help" icon="pi pi-compass"></button>
                     <!-- <button  (click)="mostrar()">mostrar</button> -->
                     <button *ngIf="activeIndex1 == 2" (click)="saveEstudiante()" pButton pRipple type="button" label="Guardar" class="p-button-rounded p-button-success"></button>
                 </div>

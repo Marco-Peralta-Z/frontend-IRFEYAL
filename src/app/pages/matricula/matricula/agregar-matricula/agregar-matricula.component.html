@@ -162,16 +162,22 @@
                                     <label class="mt-2">Seleccione el Curso:</label>
                                     <p-dropdown [options]="cursos" *ngIf="cursos.length>0" [(ngModel)]="matricula.curso"
                                         placeholder="Seleccione Curso" formControlName="curso"
-                                        (onChange)="buscarJornadaPorCurso()" optionLabel="descripcion">
+                                        (onChange)="buscarJornadaPorCurso()" name="curso"optionLabel="descripcion">
                                     </p-dropdown>
+                                    <span class="form-text text-danger" *ngIf="campoValido('curso')">
+                                        Este campo es obligatorio!
+                                    </span>
                                 </div>
                                     
                                 <div class="row">
                                     <label class="mt-2">Seleccione Periodo:</label> <br>
                                     <p-dropdown [options]="periodos" *ngIf="periodos.length>0" [(ngModel)]="matricula.id_periodo"
                                         placeholder="Seleccione Periodo" formControlName="periodo"
-                                        optionLabel="periodo_academico">
+                                        optionLabel="periodo_academico" name="periodo">
                                     </p-dropdown>
+                                    <span class="form-text text-danger" *ngIf="campoValido('periodo')">
+                                        Este campo es obligatorio!
+                                    </span>
                                 </div>
 
                             </div>
@@ -180,18 +186,23 @@
                                 <div class="row">
                                     <label class="mt-2">Seleccione Modalidad:</label> <br>
                                     <p-dropdown [options]="jornadas" *ngIf="jornadas.length>0 " [(ngModel)]="matricula.modalidad"
-                                        placeholder="Seleccione Jornada" formControlName="jornada"
-                                        optionLabel="descripcion">
+                                        placeholder="Seleccione Modalidad" formControlName="jornada"
+                                        optionLabel="descripcion" name="jornada">
                                     </p-dropdown>
+                                    <span class="form-text text-danger" *ngIf="campoValido('jornada')">
+                                        Este campo es obligatorio!
+                                    </span>
                                 </div>
                                 
                                 <div class="row">
                                     <label class="mt-2">Seleccione el Paralelo:</label>
                                     <p-dropdown [options]="paralelos" *ngIf="paralelos.length>0" [(ngModel)]="matricula.id_paralelo"
                                         placeholder="Seleccione Paralelo" formControlName="paralelo"
-                                        optionLabel="descripcion">
+                                        optionLabel="descripcion" name="paralelo">
                                     </p-dropdown>
-
+                                    <span class="form-text text-danger" *ngIf="campoValido('paralelo')">
+                                        Este campo es obligatorio!
+                                    </span>
                                 </div>
                                
 

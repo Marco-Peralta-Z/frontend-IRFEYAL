@@ -33,7 +33,6 @@ export class ListarEstudianteComponent implements OnInit {
   mesFinal:any;
   diaFinal:any
   pipe = new DatePipe('en-EC');
-  datePipe: DatePipe= new DatePipe('en-EC');
   estudiante: Estudiante= new Estudiante();
 
   selectEstudiante: Estudiante[]=[];

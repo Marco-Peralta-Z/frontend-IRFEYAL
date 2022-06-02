@@ -6,13 +6,13 @@ import { Matricula } from '../../../../Model/Matriculas/matricula';
 import { Curso } from '../../../../Model/Parametrizacion/Curso';
 import { MatriculaService } from '../../../../Servicio/moduloMatricula/matriculaServices/matricula.service';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { usuario } from 'src/app/Model/rolesTS/usuario';
 import { Modalidad } from 'src/app/Model/Parametrizacion/Modalidad';
 import { Periodo } from 'src/app/Model/Parametrizacion/Periodo';
 import { Paralelo } from 'src/app/Model/Parametrizacion/Paralelo';
 import { AuthService } from '../../../../Servicio/auth/auth.service';
+import Swal from 'sweetalert2';
 
 
 
@@ -102,11 +102,11 @@ export class AgregarMatriculaComponent implements OnInit {
     copCedula: [, [Validators.required]],
     copVotacion: [, [Validators.required]],
     certMatricula: [, [Validators.required]],
-    city: [,],
-    periodo: [ ],
-    curso: [],
-    paralelo: [],
-    jornada: []
+    city: [[Validators.required]],
+    periodo: [[], [Validators.required]],
+    curso: [[],[Validators.required]],
+    paralelo: [[],[Validators.required]],
+    jornada: [[],[Validators.required]]
   });
 
   filterCountry(event: any) {
@@ -154,11 +154,11 @@ export class AgregarMatriculaComponent implements OnInit {
 
   guardarMatricula() {
 
-    // if (this.matriculaFormulario.invalid) {
-    //   this.matriculaFormulario.markAllAsTouched();
-    //   this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'El formulario contiene errores' });
-    //   return;
-    // }
+    if (this.matriculaFormulario.invalid) {
+      this.matriculaFormulario.markAllAsTouched();
+      this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'El formulario contiene errores o campos vacios.' });
+      return;
+    }
     this.user.id_usuario = this.authService.usuario.id_usuario;
     this.matricula.usuario = this.user;
     this.matriculaService.postMatricula(this.matricula)
@@ -182,6 +182,13 @@ export class AgregarMatriculaComponent implements OnInit {
   }
   buscarJornadaPorCurso() {
     this.matriculaService.getJormadasPorCurso(this.matricula.curso.id_curso)
-      .subscribe(jornadas => this.jornadas = jornadas);
+      .subscribe(jornadas => {
+        this.jornadas = jornadas;
+      });
+  }
+
+  campoValido(valor: string): boolean {
+    return this.matriculaFormulario.controls[valor].errors!
+      && this.matriculaFormulario.controls[valor].touched
   }
 }
