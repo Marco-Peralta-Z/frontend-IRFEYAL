@@ -11,27 +11,27 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-4">
-                  <p>Periodo</p>
+                <h3>Periodo :</h3>
                   <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="periodo_academico" filterBy="periodo_academico" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  [showClear]="true"></p-dropdown>
 
                 </div>
                 <div class="col-4">
-                  <p>Modalidad</p>
+                   <h3>Modalidad :</h3>
                   <p-dropdown  [disabled]="showmodalidad" [options]="modalidades" placeholder="Modalidad" optionLabel="descripcion" filterBy="descripcion" optionValue="id_modalidad"  (onChange)="onmodalidad($event.value)"  [showClear]="true"></p-dropdown>
 
                 </div>
                 <div class="col-4">
-                  <p>Curso</p>
+                <h3>Curso :</h3>
                   <p-dropdown [disabled]="showcurso" [options]="curso" placeholder="Curso" optionLabel="descripcion" filterBy="descripcion" optionValue="id_curso"   (onChange)="onCurso($event.value)" [showClear]="true"></p-dropdown>
 
                 </div>
                 <div class="col-4">
-                  <p>Paralelos</p>
+                <h3>Paralelos :</h3>
                   <p-dropdown [disabled]="showparalelo" [options]="paralelos" placeholder="Paralelo" optionLabel="descripcion" filterBy="descripcion" optionValue="id_paralelo" (onChange)="onparalelo($event.value)" [showClear]="true"></p-dropdown>
 
                 </div>
                 <div class="col-4">
-                  <p>Asignaturas</p>
+                <h3>Asignaturas :</h3>
                   <p-dropdown [disabled]="showasignatura" [options]="asignaturas" placeholder="Asignatura" optionLabel="descripcion" filterBy="descripcion" optionValue="id_asignatura"  (onChange)="onSelect($event.value)" [showClear]="true"></p-dropdown>
 
                 </div>
@@ -69,7 +69,7 @@
                 <th>
                   
                   <div *ngIf='showDiv'>
-                  <input type="date" [formControl]="fechacontrol"   [(ngModel)]="fecha"  (change)="validarfecha()" class="form-control" #fechas1 name="fechas1" id="fechas1" >
+                  <input type="date"  [(ngModel)]="clearfecha" [formControl]="fechacontrol"   [(ngModel)]="fecha"  (change)="validarfecha()" class="form-control" #fechas1 name="fechas1" id="fechas1" >
                   </div>
                 </th> 
               </tr>
@@ -114,11 +114,11 @@
           
           <ng-template pTemplate="header">
             <tr>
-              <th>id</th>
-              <th>nombre</th>
-              <th>Apellidos</th>
+              <th pSortableColumn="idAsistencia">id <p-sortIcon field="idAsistencia"></p-sortIcon></th>
+              <th pSortableColumn="idEstudiante.id_persona.nombre">nombre <p-sortIcon field="idEstudiante.id_persona.nombre"></p-sortIcon></th>
+              <th pSortableColumn="idEstudiante.id_persona.apellido">Apellidos<p-sortIcon field="idEstudiante.id_persona.apellido"></p-sortIcon></th>
               <th>
-                <input type="date"   (change)="valiadarfechaactualizar()" class="form-control" name="fechas2"  [formControl]="fechacontrol">
+                <input type="date"    (change)="valiadarfechaactualizar()" class="form-control" name="fechas2" #fechas2 [formControl]="fechacontrol">
               </th> 
             </tr>
           </ng-template>

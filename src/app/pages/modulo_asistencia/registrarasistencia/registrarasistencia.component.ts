@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { Asistencia } from 'src/app/Model/Asistencia/asistencia';
 import { Clase } from 'src/app/Model/Asistencia/clase';
@@ -18,7 +18,7 @@ import { usuario } from 'src/app/Model/rolesTS/usuario';
 })
 export class RegistrarasistenciaComponent implements OnInit {
   mydate=Date.now();
-  ejem:string='';
+  
   fecha: Date= new Date();
   fechaactual: Date= new Date(this.mydate);
   fechaactualnew: Date= new Date(this.mydate);
@@ -86,6 +86,8 @@ export class RegistrarasistenciaComponent implements OnInit {
   idempleados:any;
   idususarios:any;
   valiadarfechaact=0;
+  clearfecha:any='';
+  
   constructor(private appService:AsistenciaService,private router:Router,public datepipe: DatePipe, private auth:AuthService) { }
 
   ngOnInit(): void {
@@ -266,7 +268,8 @@ export class RegistrarasistenciaComponent implements OnInit {
   //ingreso estudiantes 
       submit(){
        if(this.idModalidad == 0 || this.idAsignatura == 0 || this.IdPeriodo ==0  ||  this.IdParalelo ==0 || this.IdCurso==0 ||this.valiadarfecha==0){
-        swal.fire(
+        this.clearfech();
+        swal.fire( 
           {
             icon: 'error',
             title: 'Oops...',
@@ -285,6 +288,7 @@ export class RegistrarasistenciaComponent implements OnInit {
         console.log("cantidad de faltas"+this.countclase);
         console.log(this.asistenciaclase);
         if(this.countclase>0){
+          this.clearfech();
           swal.fire(
             {
               icon: 'error',
@@ -345,7 +349,7 @@ export class RegistrarasistenciaComponent implements OnInit {
         this.clases.idAsignatura.id_asignatura=this.idAsignatura;
         this.clases.idParalelo.id_paralelo=this.IdParalelo;
        this.clases.idCurso.id_curso=this.IdCurso;
-       this.clases.idDocente.id_empleado=1;
+       this.clases.idDocente.id_empleado=this.idempleados;
        this.fechaconversion();
        this.clases.fecClase=this.fechacontrol.value;
         console.log(this.clases);
@@ -599,6 +603,7 @@ export class RegistrarasistenciaComponent implements OnInit {
                this.convertidor=document.getElementById("fechas1");
              console.log(this.convertidor.value);
              if ( this.convertidor.value== null || this.convertidor.value=='' ){
+               this.clearfech();
               swal.fire(
                 {
                   icon: 'error',
@@ -620,6 +625,7 @@ export class RegistrarasistenciaComponent implements OnInit {
               console.log(this.fechaactual);
 
                if(this.fechaactualnew < this.fechaactual || this.fechaactualnew > this.fechaactual){
+               this.clearfech();
                 swal.fire(
                   {
                     icon: 'error',
@@ -632,6 +638,9 @@ export class RegistrarasistenciaComponent implements OnInit {
               
                 
                 this.valiadarfecha=0;
+                
+                
+                
                }else{
                  
                 this.ntrfecha=this.fechacontrol.value;
@@ -660,6 +669,10 @@ export class RegistrarasistenciaComponent implements OnInit {
             }
           //*************************final del habilitar fecha *************/
 
+
+          clearfech(){
+            this.clearfecha=null;
+          }
            
 
 }
