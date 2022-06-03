@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlanunidadService } from './../../../Servicio/documentacion_academica/planunidadServices/planunidad.service';
+import { PlanUnidad } from '../../../Model/DocumentosAcademicos/plan-unidad';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class RevisarPlanunidadComponent implements OnInit {
   revisar_planunidadForm: FormGroup = this.fb.group({});
-  planunidadpendientes: any;
+  planunidadpendientes: PlanUnidad[] = [];
   //Variables para guardar los campos
   id: any;
   //Variable para mostrar u ocultar el formulario y tabla

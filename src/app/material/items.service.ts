@@ -241,7 +241,7 @@ export class ItemsService {
                 icon: 'pi pi-paperclip',
                 // si tiene el rol de acceso
                 visible: this.hasRolUser(
-                    ['ROLE_rectora']
+                    ['ROLE_coordinador academico']
                 ),
                 items: [
                     {

@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlanunidadService } from './../../../Servicio/documentacion_academica/planunidadServices/planunidad.service';
 import { UnidadService } from './../../../Servicio/documentacion_academica/unidadServices/unidad.service';
+import { Unidad } from '../../../Model/DocumentosAcademicos/unidad';
+import { PlanUnidad } from '../../../Model/DocumentosAcademicos/plan-unidad';
+import { Modalidad } from '../../../Model/Parametrizacion/Modalidad';
+import { Periodo } from '../../../Model/Parametrizacion/Periodo';
 import { AuthService } from './../../../Servicio/auth/auth.service';
 import Swal from 'sweetalert2';
 
@@ -18,12 +22,12 @@ export class GenerarPlanunidadComponent implements OnInit {
   NombreApellidoEmpleado: String = "";
   //variables para listar
   usuario: any;
-  unidades: any;
+  unidades: Unidad[] = [];
   asignaturas: any;
-  modalidades: any;
-  periodos: any;
-  planunidadaprobados: any;
-  planunidadrechazados: any;
+  modalidades: Modalidad[] = [];
+  periodos: Periodo[] = [];
+  planunidadaprobados: PlanUnidad[] = [];
+  planunidadrechazados: PlanUnidad[] = [];
   cursos: any;
 
   aprobado: String = "Aprobado";
@@ -46,19 +50,19 @@ export class GenerarPlanunidadComponent implements OnInit {
   verSelectUnidad: any;
   // Variables para capturar el select de Modalidades
   opcionSelectModalidad: any;
-  verSelectModalidad: any;
+  verSelectModalidad: String = "";
   // Variables para capturar el select de Asignaturas
   opcionSelectAsig: any;
   verSelectAsigId: any;
-  verSelectAsigNom: any;
+  verSelectAsigNom: String = "";
   // Variables para capturar el select de Periodos
   opcionSelectPeriodo: any;
   verSelectPeriodoFinicio: any;
   verSelectPeriodoFfin: any;
-  verSelectPeriodoMalla: any;
+  verSelectPeriodoMalla: String = "";
   // Variables para capturar el select de cursos
   opcionSelectCurso: any;
-  verSelectCurso: any;
+  verSelectCurso: String = "";
 
   constructor(
     public fb: FormBuilder,
@@ -141,16 +145,14 @@ export class GenerarPlanunidadComponent implements OnInit {
 
     this.cargarPlanesUnidadEmpleado(this.aprobado);
     this.cargarPlanesUnidadEmpleado(this.rechazado);
-
-    //this.generar_planunidadForm.get("observaciones")?.disable();
   }
 
   capturarSelectUnidad() {
-    // Pasamos el valor seleccionado a la variable verSeleccionUnidad
+    // Pasamos el valor seleccionado a la variable verSelectUnidad
     this.verSelectUnidad = this.opcionSelectUnidad.idUnidad;
   }
   capturarSelectModalidad() {
-    // Pasamos el valor seleccionado a la variable verSeleccionUnidad
+    // Pasamos el valor seleccionado a la variable verSelectModalidad
     this.verSelectModalidad = this.opcionSelectModalidad.descripcion;
   }
 
@@ -411,5 +413,9 @@ export class GenerarPlanunidadComponent implements OnInit {
     },
       error => { console.error(error) }
     );
+  }
+
+  reportePlanUnidad() {
+
   }
 }

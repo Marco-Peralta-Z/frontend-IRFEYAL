@@ -280,6 +280,7 @@
                             <p-sortIcon field="fecha_fin"></p-sortIcon>
                         </th>
                         <th pSortableColumn="estado">Estado </th>
+                        <th></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-item>
@@ -291,6 +292,10 @@
                         <td>{{item.fecha_inicio | date:'MMM dd,yyyy'}}</td>
                         <td>{{item.fecha_fin | date:'MMM dd,yyyy'}}</td>
                         <td>{{item.estado}}</td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-file" class="p-button-rounded p-button-success mr-2"
+                                (click)="reportePlanUnidad()"></button>
+                        </td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -347,9 +352,9 @@
                         <td>{{item.fecha_fin | date:'MMM dd,yyyy'}}</td>
                         <td>{{item.estado}}</td>
                         <td>
-                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2"
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
                                 (click)="abrir(item)"></button>
-                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
                                 (click)="eliminar(item)"></button>
                         </td>
                     </tr>
