@@ -1,0 +1,41 @@
+<div class="container-fluid page">
+    <div class="centro">
+        <div class="d-flex page__box p-3 mt-2">Agregar Documento</div>
+        <div class="page__content shadow p-3 ">
+            <form [formGroup]="addForm" >
+                <br>
+                <div class="centro">
+                    <label><b>Tipo de documento: </b></label>
+                    <input type="text" pInputText formControlName="tipo_documento"
+                        placeholder="Ingrese tipo de documento" name="tipo_documento" class="form-control"
+                        id="tipo_documento">
+                </div>
+                <br>
+                <div class="centro">
+                    <label><b>Descripcion: </b></label>
+                    <input type="text" pInputText formControlName="descripcion" placeholder="Ingrese la descripcion"
+                        name="descripcion" class="form-control" id="descripcion">
+                </div>
+                <br>
+                <div class="centro">
+                    <label><b>Ubicación </b></label>
+                    <input type="text" pInputText formControlName="ubicacion" placeholder="Ingrese la ubicación"
+                        name="ubicacion" class="form-control" id="ubicacion">
+                </div>
+                <br>
+                <!--<div class="centro">
+                    <button pButton class="btn btn-success" label="GUARDAR"></button>
+                </div>-->
+                <div class="row">
+                    <div class="col-sm-12 col-md-4" style="margin-left: auto;margin-right: auto;">
+                        <button type="submit" class="btn btn-dark"
+                            (click)="ingreso()">Guardar</button>
+                        <button type="submit" class="btn btn-dark" style="margin-left: 35px;"
+                            (click)="regresar()">Cancelar</button> 
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

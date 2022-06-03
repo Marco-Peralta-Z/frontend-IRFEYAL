@@ -87,6 +87,20 @@ const routes: Routes = [
     data: { role: [ 'ROLE_Administrador', 'ROLE_rectora', 'ROLE_docente' ] }
   },
 
+  {
+    path: 'pagos',
+    loadChildren: () => import('./Routing/pagos/pagos.module').then( m => m.PagosModule),
+    canActivate: [ AuthGuard, RolGuard ],
+    data: { role: [ 'ROLE_Administrador', 'ROLE_secretaria' ] }
+  },
+
+  {
+    path: 'secretaria',
+    loadChildren: () => import('./Routing/secretaria/secretaria.module').then( m => m.SecretariaModule),
+    canActivate: [ AuthGuard, RolGuard ],
+    data: { role: [ 'ROLE_Administrador', 'ROLE_secretaria' ] }
+  },
+
   { path: 'login', component: LoginComponent },
   
   {

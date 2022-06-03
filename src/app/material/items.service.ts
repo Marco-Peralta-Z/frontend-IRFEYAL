@@ -251,6 +251,77 @@ export class ItemsService {
                     }
                 ]
             },
+            {
+                label: 'Pagos',
+                icon: 'pi pi-folder',
+                items: [
+                    {
+                        label: 'Consultar Pagos',
+                        icon: 'fa fa-book',
+                        routerLink: 'pagos/listarComprobante'
+                    },
+                    {
+                        label: 'Cobros',
+                        icon: 'fa fa-plus-square',
+                        routerLink: 'pagos/crearComprobante'
+                    }
+                    
+                ]
+            },
+            {
+                label: 'Secretaria',
+                icon: 'pi pi-folder',
+                items: [
+                    {
+                        label: 'Bitacora',
+                        icon: 'fa fa-plus-square',
+                        routerLink: 'secretaria/listarBitacora'
+                    },
+                    {
+                        label: 'Documentos',
+                        icon: 'pi pi-folder',
+                        items: [
+                            {
+                                label: 'Lista de Documentos',
+                                icon: 'fa fa-book',
+                                routerLink: 'secretaria/listarDocumento'
+                            },
+                            {
+                                label: 'Agregar Documentos',
+                                icon: 'fa fa-plus-square',
+                                routerLink: 'secretaria/agregarDocumento'
+                            }
+                        ]
+                    },
+                    {
+                        label: 'Certificados',
+                        icon: 'pi pi-folder',
+                        items: [
+                            {
+                                label: 'Certificado de Matricula',
+                                icon: 'fa fa-plus-square',
+                                routerLink: 'secretaria/generarCertificadoMatricula'
+                            },
+                            {
+                                label: 'Certificado de Promocion',
+                                icon: 'fa fa-plus-square',
+                                routerLink: 'secretaria/generarCertificadoPromocion'
+                            }
+                        ]
+                    },
+                    {
+                        label: 'Nomina',
+                        icon: 'pi pi-folder',
+                        items: [
+                            {
+                                label: 'Nomina Estudiantil',
+                                icon: 'fa fa-plus-square',
+                                routerLink: 'secretaria/nominaEstudiantil'
+                            }
+                        ]
+                    }
+                ]
+            }
         ]
     }
 
