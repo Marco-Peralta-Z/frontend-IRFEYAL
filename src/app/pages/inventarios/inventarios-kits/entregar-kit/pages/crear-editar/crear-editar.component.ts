@@ -39,7 +39,7 @@ export class CrearEditarComponent implements OnInit {
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
     private _aprobacionService:EntregarKitService,
-    private _estudianteService: EstudianteService,
+    //private _estudianteService: EstudianteService,
     private _kitService: KitService,
     private _authService: AuthService,
     private _mensajesSweetService: MensajesSweetService,
@@ -73,7 +73,7 @@ export class CrearEditarComponent implements OnInit {
     this.estudiantes = [];
     let query = event.query.trim();
     if ( query.length > 7) {
-      this._estudianteService.getEstudiantePorCedula( query ).subscribe({
+      this._aprobacionService.getEstudiantePorCedula( query ).subscribe({
         next: (resp) => {
           this.estudiantes = [resp]
         },

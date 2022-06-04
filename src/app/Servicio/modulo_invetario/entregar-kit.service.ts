@@ -4,8 +4,9 @@ import { Api } from '../../config';
 import { HttpClient } from '@angular/common/http';
 import { Aprobacion } from '../../Model/Inventarios/Aprobacion';
 import { ResAprobacion } from '../../Model/Inventarios/intefaces/res_aprobacion.interface';
-import { map, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Estudiante } from 'src/app/Model/Matriculas/estudiante';
 
 @Injectable({
   providedIn: 'root'
@@ -64,4 +65,10 @@ export class EntregarKitService {
   getKitsEntregados = () => {
     return this._http.get(`${this._baseUrl}aprobacionkit/list`);
   }
+
+  getEstudiantePorCedula(cedula: string): Observable<Estudiante>{
+    return this._http.get<Estudiante>(`${this._baseUrl}aprobacionkit/buscarEstudiante/${cedula}`);
+  }
+
+
 }
