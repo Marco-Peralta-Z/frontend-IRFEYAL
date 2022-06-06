@@ -66,9 +66,4 @@ export class EntregarKitService {
     return this._http.get(`${this._baseUrl}aprobacionkit/list`);
   }
 
-  getEstudiantePorCedula(cedula: string): Observable<Estudiante>{
-    return this._http.get<Estudiante>(`${this._baseUrl}aprobacionkit/buscarEstudiante/${cedula}`);
-  }
-
-
 }

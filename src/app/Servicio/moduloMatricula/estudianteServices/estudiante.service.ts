@@ -28,6 +28,11 @@ private baseUrl: string = Api.url;
     return this.http.get<Estudiante>(`${this.baseUrl}api/buscarEstudiante/${cedula}`);
   }
 
+  // para modulo de inventario
+  getEstudiantesPorCedula(cedula: string): Observable<Estudiante[]>{
+    return this.http.get<Estudiante[]>(`${this.baseUrl}api/buscarEstudiantes/${cedula}`);
+  }
+
   postEstudiante(estudiante: Estudiante): Observable<Estudiante>{
     return this.http.post<Estudiante>(`${this.baseUrl}api/estudiante`, estudiante).pipe(
       map((response: any) => response.estudiante as Estudiante),
