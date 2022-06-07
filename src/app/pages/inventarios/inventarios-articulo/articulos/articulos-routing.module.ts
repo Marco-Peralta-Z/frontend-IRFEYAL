@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main.component';
-import { CrearEditarComponent } from './crear-editar/crear-editar.component';
-import { ListarComponent } from './listar/listar.component';
+import { CrearEditarComponent } from './pages/crear-editar/crear-editar.component';
+import { ListarComponent } from './pages/listar/listar.component';
 
 const routes: Routes = [
   {

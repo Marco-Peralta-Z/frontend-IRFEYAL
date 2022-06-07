@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 
-import { MensajesSweetService } from '../../../../../Servicio/modulo_invetario/mensajes-sweet.service';
-import { Inventario } from '../../../../../Model/Inventarios/Inventario';
-import { InventarioService } from '../../../../../Servicio/modulo_invetario/inventario.service';
+import { MensajesSweetService } from '../../../../../../Servicio/modulo_invetario/mensajes-sweet.service';
+import { Inventario } from '../../../../../../Model/Inventarios/Inventario';
+import { InventarioService } from '../../../../../../Servicio/modulo_invetario/inventario.service';
 
 @Component({
   selector: 'app-listar',
