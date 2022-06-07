@@ -109,8 +109,8 @@ export class ItemsService {
                         items: [
                             {
                                 label: 'Mantenimiento articulos',
-                                icon: 'fa fa-book',
-                                routerLink: 'inventariosModule/articulo'
+                                icon: 'pi pi-table',
+                                routerLink: 'inventariosModule/inventario/listar'
                             },
 
                         ]
