@@ -173,7 +173,10 @@ export class GenerarPlanunidadComponent implements OnInit {
 
   capturarSelectCurso() {
     // Pasamos el valor seleccionado a la variable verSeleccionUnidad
-    this.verSelectCurso = this.opcionSelectCurso.descripcion + " - " + this.opcionSelectCurso.id_paralelo.descripcion;
+    if (this.opcionSelectCurso != '0') {
+      this.verSelectCurso = this.opcionSelectCurso.descripcion + " - " + this.opcionSelectCurso.id_paralelo.descripcion;
+    }
+
   }
 
 
@@ -214,40 +217,61 @@ export class GenerarPlanunidadComponent implements OnInit {
         timer: 2500
       })
     } else {
-      this.generar_planunidadForm.value.empleado = this.id_empleado;
-      this.generar_planunidadForm.value.estado = "Pendiente";
-      this.generar_planunidadForm.value.observaciones = "Sin observaciones";
-      this.planunidadService.savePlanUnidad(this.generar_planunidadForm.value).subscribe(resp => {
-        //Receteamos el formulario
-        this.generar_planunidadForm.reset();
-        //Receteamos los Etiquetas
-        this.opcionSelectUnidad = 0;
-        this.opcionSelectModalidad = 0;
-        this.opcionSelectAsig = 0;
-        this.opcionSelectPeriodo = 0;
-        this.opcionSelectCurso = 0;
-        this.opcionSelectAsig = 0;
-        //Alerta success
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Plan de Unidad Enviado con exito!',
-          showConfirmButton: false,
-          timer: 2500
-        })
-      },
-        error => {
-          console.error(error)
-          //Alerta error
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'Plan de Unidad No Enviado, llene todos los campos',
-            showConfirmButton: false,
-            timer: 2500
-          })
-        }
-      )
+      //Controlar que el plan de unidad no se repita, se verifica id_unidad, id_asignatura, id_modalidad, id_curso
+      this.planunidadService.verificarPlanUnidad(this.generar_planunidadForm.value.unidad.idUnidad,
+        this.generar_planunidadForm.value.asignatura.id_asignatura, this.generar_planunidadForm.value.modalidad.id_modalidad,
+        this.generar_planunidadForm.value.curso.id_curso).subscribe(resp => {
+          if (resp == false) {
+            this.generar_planunidadForm.value.empleado = this.id_empleado;
+            this.generar_planunidadForm.value.estado = "Pendiente";
+            this.generar_planunidadForm.value.observaciones = "Sin observaciones";
+            this.planunidadService.savePlanUnidad(this.generar_planunidadForm.value).subscribe(resp => {
+              //Receteamos el formulario
+              this.generar_planunidadForm.reset();
+              //Receteamos los Etiquetas
+              this.opcionSelectUnidad = 0;
+              this.opcionSelectModalidad = 0;
+              this.opcionSelectAsig = 0;
+              this.opcionSelectPeriodo = 0;
+              this.opcionSelectCurso = 0;
+              this.opcionSelectAsig = 0;
+              //Alerta success
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Plan de Unidad Enviado con exito!',
+                showConfirmButton: false,
+                timer: 2500
+              })
+            },
+              error => {
+                console.error(error)
+                //Alerta error
+                Swal.fire({
+                  position: 'center',
+                  icon: 'error',
+                  title: 'Plan de Unidad No Enviado, ocurrio un error',
+                  showConfirmButton: false,
+                  timer: 2500
+                })
+              }
+            )
+          } else if (resp == true) {
+            //Alerta error
+            Swal.fire({
+              position: 'center',
+              icon: 'warning',
+              title: 'Ya existe un Plan de Unidad similar para la:',
+              text: "Unidad " + this.generar_planunidadForm.value.unidad.idUnidad +
+                ' de ' + this.generar_planunidadForm.value.asignatura.descripcion +
+                ' del ' + this.generar_planunidadForm.value.curso.descripcion +
+                ' - ' + this.generar_planunidadForm.value.curso.id_paralelo.descripcion +
+                ' de modalidad ' + this.generar_planunidadForm.value.modalidad.descripcion
+            })
+          }
+        },
+          error => { console.error(error) }
+        );
     }
   }
 

@@ -49,6 +49,10 @@ export class PlanunidadService {
     return this.httpClient.get(this.API_SERVER + estado + "/empleado/" + id);
   }
 
+  public verificarPlanUnidad(id_unidad: number, id_asignatura: number, id_modalidad: number, id_curso: number): Observable<any> {
+    return this.httpClient.get(this.API_SERVER + id_unidad + "/" + id_asignatura + "/" + id_modalidad + "/" + id_curso);
+  }
+
   //Consumido de parametrizacion
 
   public getAllModalidad(): Observable<any> {
