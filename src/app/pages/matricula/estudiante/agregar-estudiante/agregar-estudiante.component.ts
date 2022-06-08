@@ -65,7 +65,7 @@ export class AgregarEstudianteComponent implements OnInit {
   estudentFormulario: FormGroup = this.fb.group({
     nombre: [, [Validators.required, Validators.minLength(3)]],
     apellido: [, [Validators.required, Validators.minLength(3)]],
-    cedula: [, [Validators.required, Validators.pattern(this.cedulaPattern)]],
+    cedula: [, [Validators.required]],
     fecha: [[], [Validators.required, this.noPuedeSerNull]],
     genero: [[], [Validators.required]],
     provincia: [[], Validators.required],
@@ -177,7 +177,7 @@ export class AgregarEstudianteComponent implements OnInit {
   }
 
   validaExistenciaEstudiante(): boolean {
-    this.validarCedu(this.estudiante.id_persona.cedula.trim());
+    // this.validarCedu(this.estudiante.id_persona.cedula.trim());
     this.estudianteService.getEstudiantePorCedula(this.estudiante.id_persona.cedula.trim())
       .subscribe(estudiante => {
         this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Estudiante Encontrado', detail: `El estudiante con cedula: ${this.estudiante.id_persona.cedula}, ya existe` });

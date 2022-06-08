@@ -11,7 +11,7 @@ import { Modalidad } from '../../../Model/Parametrizacion/Modalidad';
 import { Periodo } from '../../../Model/Parametrizacion/Periodo';
 import { Paralelo } from '../../../Model/Parametrizacion/Paralelo';
 import { Malla } from '../../../Model/Parametrizacion/Malla';
-import { Usuario } from '../../../../../../../../../../Spring/angular/clientes-app/src/app/usuarios/usuario';
+
 
 
 
@@ -71,30 +71,6 @@ postMatricula(matricula: Matricula): Observable<Matricula>{
     })
   );
 }
-
-
-postUsuario(usuario: Usuario):Observable<Usuario>{
-  return this.http.post<Usuario>(`${this.baseUrl}mapUsuario/usuario`, usuario).pipe(
-    map((response: any) => 
-    response.usuario as Usuario),
-    catchError(e => {
-      if (e.status == 400) {
-        return throwError(e);
-      }
-      
-      if (e.error.mensaje) {
-        console.log(e.error.mensaje);
-      }
-      return throwError(e);
-    })
-  );
-}
-
-
-
-
-
-
 
 sendEmail(matricula: Matricula): Observable<any>{
   return this.http.post<any>(`${this.baseUrl}api/sendMail`, matricula).pipe(
