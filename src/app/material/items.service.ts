@@ -112,6 +112,11 @@ export class ItemsService {
                                 icon: 'pi pi-table',
                                 routerLink: 'inventariosModule/inventario/listar'
                             },
+                            {
+                                label: 'Mantenimiento categorias',
+                                icon: 'pi pi-table',
+                                routerLink: 'inventariosModule/categoria/listar'
+                            },
 
                         ]
                     },
