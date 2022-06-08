@@ -10,6 +10,8 @@ import { Curso } from '../../../Model/Parametrizacion/Curso';
 import { Modalidad } from '../../../Model/Parametrizacion/Modalidad';
 import { Periodo } from '../../../Model/Parametrizacion/Periodo';
 import { Paralelo } from '../../../Model/Parametrizacion/Paralelo';
+import { Malla } from '../../../Model/Parametrizacion/Malla';
+import { Usuario } from '../../../../../../../../../../Spring/angular/clientes-app/src/app/usuarios/usuario';
 
 
 
@@ -17,6 +19,7 @@ import { Paralelo } from '../../../Model/Parametrizacion/Paralelo';
   providedIn: 'root'
 })
 export class MatriculaService {
+   
   private baseUrl: string = Api.url;
 
   constructor(private http: HttpClient) { }
@@ -34,8 +37,8 @@ getJornadas():Observable<Modalidad[]>{
   return this.http.get<Modalidad[]>(`${this.baseUrl}modalidad`);
 }
 
-getJormadasPorCurso(id_curso: number):Observable<Modalidad[]>{
-  return this.http.get<Modalidad[]>(`${this.baseUrl}modalidad/getJormadasPorCurso/${id_curso}`);
+getModalidadPorCurso(id_curso: number):Observable<Modalidad[]>{
+  return this.http.get<Modalidad[]>(`${this.baseUrl}modalidad/getModalidadPorCurso/${id_curso}`);
 }
 
 getPeriodos():Observable<Periodo[]>{
@@ -46,6 +49,13 @@ getParalelos():Observable<Paralelo[]>{
   return this.http.get<Paralelo[]>(`${this.baseUrl}paralelo`);
 }
 
+getParalelosPorCurso(id_curso: number):Observable<Paralelo[]> {
+  return this.http.get<Paralelo[]>(`${this.baseUrl}paralelo/getParalelosPorCurso/${id_curso}`);
+}
+
+getPeriodoPorMalla(id_malla: number) :Observable<Periodo[]>{
+  return this.http.get<Periodo[]>(`${this.baseUrl}periodo/getPeriodoPorMalla/${id_malla}`);
+}
 postMatricula(matricula: Matricula): Observable<Matricula>{
   return this.http.post<Matricula>(`${this.baseUrl}api/matricula`, matricula).pipe(
     map((response: any) => 
@@ -61,11 +71,41 @@ postMatricula(matricula: Matricula): Observable<Matricula>{
     })
   );
 }
+
+
+postUsuario(usuario: Usuario):Observable<Usuario>{
+  return this.http.post<Usuario>(`${this.baseUrl}mapUsuario/usuario`, usuario).pipe(
+    map((response: any) => 
+    response.usuario as Usuario),
+    catchError(e => {
+      if (e.status == 400) {
+        return throwError(e);
+      }
+      
+      if (e.error.mensaje) {
+        console.log(e.error.mensaje);
+      }
+      return throwError(e);
+    })
+  );
+}
+
+
+
+
+
+
+
 sendEmail(matricula: Matricula): Observable<any>{
   return this.http.post<any>(`${this.baseUrl}api/sendMail`, matricula).pipe(
     map((response:any)=>
     response.mensaje as string)
   );
 }
+
+private url=Api.url+"malla"
+  getAllMalla(){
+    return this.http.get<Malla[]>(this.url)
+  }
 
 }

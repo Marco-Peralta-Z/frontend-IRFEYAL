@@ -25,13 +25,13 @@
                                 <div class="row">
                                     <div class="col">
                                         <span class="p-float-label mt-3">
-                                            <input id="float-input" type="text" [value]="estudiante.id_persona.cedula"
+                                            <input id="float-input" type="text" [ngModel]="estudiante.id_persona.cedula"
                                                 formControlName="cedula" pInputText readonly>
                                             <label for="float-input">Cedula:</label>
                                         </span>
 
                                         <span class="p-float-label mt-4">
-                                            <input id="float-input" type="text" [value]="fullName | titlecase"
+                                            <input id="float-input" type="text" [ngModel]="fullName | titlecase"
                                                 pInputText readonly formControlName="nameComplete">
                                             <label for="float-input">Nombres/Apellidos</label>
                                         </span>
@@ -45,7 +45,7 @@
                                         </span>
                                         <span class="p-float-label mt-4">
                                             <input id="float-input" type="text"
-                                                [value]="estudiante.id_persona.genero.genero | titlecase" pInputText
+                                                [ngModel]="estudiante.id_persona.genero.genero | titlecase" pInputText
                                                 readonly formControlName="genero">
                                             <label for="float-input">Genero</label>
                                         </span>
@@ -57,14 +57,14 @@
                                     <div class="col">
                                         <span class="p-float-label mt-3">
                                             <input id="float-input" type="text"
-                                                [value]="estudiante.direccion.avPrincipal | titlecase"
+                                                [ngModel]="estudiante.direccion.avPrincipal | titlecase"
                                                 formControlName="callePrincipal" pInputText readonly>
                                             <label for="float-input">Calle Principal</label>
                                         </span>
 
                                         <span class="p-float-label mt-4">
                                             <input id="float-input" type="text"
-                                                [value]="estudiante.direccion.avSecundaria | titlecase"
+                                                [ngModel]="estudiante.direccion.avSecundaria | titlecase"
                                                 formControlName="calleSecundaria" pInputText readonly>
                                             <label for="float-input">Calle Secundaria</label>
                                         </span>
@@ -73,19 +73,19 @@
                                     <div class="col">
                                         <span class="p-float-label mt-3">
                                             <input id="float-input" type="text"
-                                                [value]="estudiante.direccion.provincia.provincia | titlecase"
+                                                [ngModel]="estudiante.direccion.provincia.provincia | titlecase"
                                                 pInputText formControlName="provincia" readonly>
                                             <label for="float-input">Provincia</label>
                                         </span>
                                         <span class="p-float-label mt-4">
                                             <input id="float-input" type="text"
-                                                [value]="estudiante.direccion.canton.canton | titlecase" pInputText
+                                                [ngModel]="estudiante.direccion.canton.canton | titlecase" pInputText
                                                 formControlName="canton" readonly>
                                             <label for="float-input">Canton</label>
                                         </span>
                                         <span class="p-float-label mt-4">
                                             <input id="float-input" type="text"
-                                                [value]="estudiante.direccion.parroquia.parroquia | titlecase"
+                                                [ngModel]="estudiante.direccion.parroquia.parroquia | titlecase"
                                                 pInputText formControlName="parroquia" readonly>
                                             <label for="float-input">Parroquia</label>
                                         </span>
@@ -96,18 +96,18 @@
                                 <div class="row">
                                     <div class="col">
                                         <span class="p-float-label mt-3">
-                                            <input id="float-input" type="text" [value]="estudiante.telefono.telefono"
+                                            <input id="float-input" type="text" [ngModel]="estudiante.telefono.telefono"
                                                 formControlName="telefono" pInputText readonly>
                                             <label for="float-input">Telefono:</label>
                                         </span>
 
                                         <span class="p-float-label mt-4">
-                                            <input id="float-input" type="text" [value]="estudiante.telefono.numCelular"
+                                            <input id="float-input" type="text" [ngModel]="estudiante.telefono.numCelular"
                                                 formControlName="celular" pInputText readonly>
                                             <label for="float-input">Celular</label>
                                         </span>
                                         <span class="p-float-label mt-4">
-                                            <input id="float-input" type="text" [value]="estudiante.correo.correo"
+                                            <input id="float-input" type="text" [ngModel]="estudiante.correo.correo"
                                                 formControlName="email" pInputText readonly>
                                             <label for="float-input">Correo Electronico</label>
                                         </span>
@@ -159,23 +159,33 @@
                         <div class="row">
                             <div class="col">
                                 <div class="row">
+                                    <label class="mt-2">Seleccione Malla:</label>
+                                    <p-dropdown [options]="mallas"
+                                        placeholder="Seleccione Malla" [(ngModel)]="mallaSelectd" (onChange)="cargarCursos()" formControlName="malla"
+                                         name="malla" optionLabel="descripcion">
+                                    </p-dropdown>
+                                    <span class="form-text text-danger" *ngIf="campoValido('malla')">
+                                        Este campo es obligatorio!
+                                    </span>
+                                </div>
+                                <div class="row" >
                                     <label class="mt-2">Seleccione el Curso:</label>
-                                    <p-dropdown [options]="cursos" *ngIf="cursos.length>0" [(ngModel)]="matricula.curso"
+                                    <p-dropdown [options]="cursos"  [(ngModel)]="cursoSelectd" 
                                         placeholder="Seleccione Curso" formControlName="curso"
-                                        (onChange)="buscarJornadaPorCurso()" name="curso"optionLabel="descripcion">
+                                        (onChange)="buscarJornadaPorCurso()" [disabled]="cursos.length == 0" name="curso"optionLabel="descripcion">
                                     </p-dropdown>
                                     <span class="form-text text-danger" *ngIf="campoValido('curso')">
                                         Este campo es obligatorio!
                                     </span>
                                 </div>
                                     
-                                <div class="row">
+                                <div class="row" >
                                     <label class="mt-2">Seleccione Periodo:</label> <br>
-                                    <p-dropdown [options]="periodos" *ngIf="periodos.length>0" [(ngModel)]="matricula.id_periodo"
-                                        placeholder="Seleccione Periodo" formControlName="periodo"
+                                    <p-dropdown [options]="periodos" [disabled]="periodos.length==0" [(ngModel)]="peridoSelectd"
+                                        placeholder="Seleccione Periodo" formControlName="periodo"(onChange)="obtenerPeriodo()"
                                         optionLabel="periodo_academico" name="periodo">
                                     </p-dropdown>
-                                    <span class="form-text text-danger" *ngIf="campoValido('periodo')">
+                                    <span class="p-error block" *ngIf="campoValido('periodo')">
                                         Este campo es obligatorio!
                                     </span>
                                 </div>
@@ -183,10 +193,10 @@
                             </div>
                             <div class="col">
 
-                                <div class="row">
+                                <div class="row" >
                                     <label class="mt-2">Seleccione Modalidad:</label> <br>
-                                    <p-dropdown [options]="jornadas" *ngIf="jornadas.length>0 " [(ngModel)]="matricula.modalidad"
-                                        placeholder="Seleccione Modalidad" formControlName="jornada"
+                                    <p-dropdown [options]="modalidades" [disabled]="modalidades.length==0 " [(ngModel)]="modalidadSelectd"
+                                        placeholder="Seleccione Modalidad" formControlName="jornada"(onChange)="obtenerModalidad()"
                                         optionLabel="descripcion" name="jornada">
                                     </p-dropdown>
                                     <span class="form-text text-danger" *ngIf="campoValido('jornada')">
@@ -194,10 +204,10 @@
                                     </span>
                                 </div>
                                 
-                                <div class="row">
+                                <div class="row" >
                                     <label class="mt-2">Seleccione el Paralelo:</label>
-                                    <p-dropdown [options]="paralelos" *ngIf="paralelos.length>0" [(ngModel)]="matricula.id_paralelo"
-                                        placeholder="Seleccione Paralelo" formControlName="paralelo"
+                                    <p-dropdown [options]="paralelos" [disabled]="paralelos.length==0" [(ngModel)]="paraleloSelectd"
+                                        placeholder="Seleccione Paralelo" formControlName="paralelo" (onChange)="obtenerParalelo()"
                                         optionLabel="descripcion" name="paralelo">
                                     </p-dropdown>
                                     <span class="form-text text-danger" *ngIf="campoValido('paralelo')">
@@ -223,29 +233,29 @@
                             <div class="col">
                                 
                                     <span class="p-float-label mt-4">
-                                        <input id="float-input" type="text" [value]="estudiante.id_persona.cedula"
+                                        <input id="float-input" type="text" [ngModel]="estudiante.id_persona.cedula"
                                             formControlName="Rcedula" pInputText readonly>
                                         <label for="float-input">Cedula</label>
                                     </span>
                                 
                                 
-                                    <span class="p-float-label mt-4">
-                                        <input id="float-input" type="text" [value]="matricula.modalidad.descripcion"
+                                    <!-- <span class="p-float-label mt-4">
+                                        <input id="float-input" type="text" [ngModel]="matricula.modalidad.descripcion"
                                             formControlName="Rjornada" pInputText readonly>
                                         <label for="float-input">Jornada</label>
-                                    </span>
+                                    </span> -->
 
                                
                                 
                                     <span class="p-float-label mt-4">
-                                        <input id="float-input" type="text" [value]="matricula.curso.descripcion"
+                                        <input id="float-input" type="text" [ngModel]="matricula.curso.descripcion"
                                             formControlName="Rcurso" pInputText readonly>
                                         <label for="float-input">Curso</label>
                                     </span>
                              
                                 
                                     <span class="p-float-label mt-4">
-                                        <input id="float-input" type="text" [value]="matricula.fechaMatricula | date"
+                                        <input id="float-input" type="text" [ngModel]="matricula.fechaMatricula | date"
                                             formControlName="Rfecha" pInputText readonly>
                                         <label for="float-input">Fecha de Matricula</label>
                                     </span>
@@ -254,7 +264,7 @@
                                 <div class="col">
                                     
                                         <span class="p-float-label mt-4">
-                                            <input id="float-input" type="text" [value]="fullName | titlecase"
+                                            <input id="float-input" type="text" [ngModel]="fullName | titlecase"
                                                 pInputText readonly formControlName="RnameComplete">
                                             <label for="float-input">Nombres/Apellidos</label>
                                         </span>
@@ -262,7 +272,7 @@
                                     
                                         <span class="p-float-label mt-4">
                                             <input id="float-input" type="text"
-                                                [value]="matricula.modalidad.descripcion | titlecase" pInputText readonly
+                                                [ngModel]="matricula.modalidad.descripcion | titlecase" pInputText readonly
                                                 formControlName="Rmodalidad">
                                             <label for="float-input">Modalidad de Estudio</label>
                                         </span>
@@ -270,7 +280,7 @@
                                     
                                         <span class="p-float-label mt-4">
                                             <input id="float-input" type="text"
-                                                [value]="matricula.id_periodo.periodo_academico | titlecase" pInputText
+                                                [ngModel]="matricula.id_periodo.periodo_academico | titlecase" pInputText
                                                 readonly formControlName="Rlectivo">
                                             <label for="float-input">Año Lectivo</label>
                                         </span>
@@ -299,6 +309,8 @@
                 <button *ngIf="activeIndex1 != 3" [disabled]="selectedRequerimientos.length<4"
                     (click)="activeIndex1 = 3" pButton pRipple type="button" icon="pi pi-book"
                     class="p-button-rounded p-button-secondary ml-2"></button>
+
+                   
                 <button *ngIf="activeIndex1 == 3 && selectedRequerimientos.length==4"   pButton pRipple type="button" icon="pi pi-save"
                     (click)="guardarMatricula()" class="p-button-rounded p-button-success ml-2" label="Guardar"></button>
                 <!-- <button (click)="mostrar()">Mostrar</button> -->
@@ -308,3 +320,8 @@
         </div>
     </div>
 </div>
+
+<br>
+
+<h5>Valid</h5>
+<pre>{{matriculaFormulario.valid}}</pre>
