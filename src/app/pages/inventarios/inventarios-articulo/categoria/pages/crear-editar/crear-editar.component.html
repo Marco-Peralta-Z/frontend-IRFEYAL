@@ -2,52 +2,33 @@
 <div class="container">
     <form [formGroup]="categoriaForm" (ngSubmit)="realizarAccion()" >
         <div class="row">
-            <p-divider align="left" type="dashed">
-                <b>Categoria</b>
-            </p-divider>
-            
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                <!-- Id -->
-                <!-- <div class="field">
-                    <label for="codigo" class="block">Id</label>
-                    <input   
-                            type="number" 
-                            class="w-100"
-                            pInputText />
-            
-                </div> -->
-
                 <div class="field">
-                    <label for="nombre" class="block">Nombre </label>
+                    <label for="cateNombre" class="block">Nombre</label>
                     <input  type="text" 
                             class="w-100" 
-                            [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('nombre')}"
                             pInputText 
-                            formControlName="nombre"/>
+                            formControlName="cateNombre"/>
                     <small  class="p-error block"
-                            *ngIf="verificarCampo('nombre')">
+                            *ngIf="verificarCampo('cateNombre')">
                             El nombre es requerido.
                     </small>
                 </div>
-               
-
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <div class="field">
-                    <label for="nombre" class="block">codigo </label>
+                    <label for="cateCodigo" class="block">Código</label>
                     <input  type="text" 
                             class="w-100" 
-                            [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('codigo')}"
                             pInputText 
-                            formControlName="codigo"/>
+                            formControlName="cateCodigo"/>
                     <small  class="p-error block"
-                            *ngIf="verificarCampo('codigo')">
+                            *ngIf="verificarCampo('cateCodigo')">
                             El codigo es requerido.
                     </small>
                 </div>
             </div>
         </div>
-
-
-
     <!-- button -->
     <div class="row">
         <div class="col-12 d-flex justify-content-evenly">

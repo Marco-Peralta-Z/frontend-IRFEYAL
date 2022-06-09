@@ -1,7 +1,5 @@
-<p>listar works!</p>
 <div class="card" >
-    <!-- <p-table #dt [value]="categoria" [rows]="10" [paginator]="true" [globalFilterFields]="['codigo','fechaingreso']" responsiveLayout="scroll" -->
-    <p-table #dt [value]="categoria" [rows]="10" [paginator]="true" [globalFilterFields]="['codigo']" responsiveLayout="scroll"
+    <p-table #dt [value]="categorias" [rows]="10" [paginator]="true" [globalFilterFields]="['cateNombre','cateCodigo']" responsiveLayout="scroll"
         [rowHover]="true" dataKey="id"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
@@ -14,79 +12,35 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="codigo">Id <p-sortIcon field="codigo"></p-sortIcon></th>
-                <th pSortableColumn="articulo.artinombre">Nombre <p-sortIcon field="articulo.artinombre"></p-sortIcon></th>
-                <th pSortableColumn="cantidad">descri. <p-sortIcon field="cantidad"></p-sortIcon></th>
+                <th pSortableColumn="id_categoria">#<p-sortIcon field="id_categoria"></p-sortIcon></th>
+                <th pSortableColumn="cateNombre">Nombre <p-sortIcon field="cateNombre"></p-sortIcon></th>
+                <th pSortableColumn="cateCodigo">Codigo <p-sortIcon field="cateCodigo"></p-sortIcon></th>
                 <th></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-categoria>
             <tr>
                 <td >
-                    No hay registros
+                    No hay categorias
                 </td>
             </tr>
         </ng-template>
-        
-        <ng-template pTemplate="body" let-catego>
+        <ng-template pTemplate="body" let-categoria>
             <tr>
-
-                <!-- <td>{{categoria.id_categoria}}</td>
+                <td>{{categoria.id_categoria}}</td>
+                <td>{{categoria.cateNombre}}</td>
+                <td>{{categoria.cateCodigo}}</td>
                 <td>
-                    <div class=" d-flex align-items-center">
-                        {{categoria.catenombre}} 
-                         {{categoria.articulo.artinombre}}                        
-                        <button pButton pRipple icon="pi pi-eye" *ngIf="categoria.catenombre" class="ml-1 p-button-rounded p-button-secondary p-button-outlined" (click)="showDialog(categoria)"></button>
-                    </div>
-                </td> -->
-                <td>{{catego.id_categoria}}</td>
-                <td>{{catego.cateNombre}}</td>
-                <td>{{catego.cateCodigo}}</td>
-
-                <td>
-                    <!-- revisar path -->
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/inventariosModule/categoria/editar/', catego.id_categoria]"></button>
-                    <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/categoriaModule/categoria/editar/', catego.id_categoria]"></button> -->
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarCategoria(catego)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/inventariosModule/categoria/editar/', categoria.id_categoria]"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarCategoria(categoria)"></button>
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">
-                En total hay {{categoria ? categoria.length : 0 }} categoria.
+                En total hay {{categorias ? categorias.length : 0 }} categorias.
             </div>
         </ng-template>
     </p-table>
 </div>
-
-
 <p-confirmDialog [style]="{width: '650px'}"></p-confirmDialog>
-<p-dialog header="Categoria" [(visible)]="displayCategoria" [style]="{width: '50vw'}">
-    <!-- <div class="" *ngIf="selectCategoria?.">
-        <p-table [value]="[selectCategoria?.articulo]" responsiveLayout="scroll">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Cod</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Estado</th>
-                    <th>Marca</th>
-                    <th>Precio</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-articulo>
-                <tr>
-                    <td>{{articulo.articodigo}}</td>
-                    <td>{{articulo.artinombre}}</td>
-                    <td>{{articulo.artidescrip}}</td>
-                    <td>{{articulo.artiestado}}</td>
-                    <td>{{articulo.artimarca}}</td>
-                    <td>{{articulo.artiprecio}}</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div> -->
-    <!-- <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="closeDialog()" label="Ok" styleClass="p-button-text"></p-button>
-    </ng-template> -->
-</p-dialog>
