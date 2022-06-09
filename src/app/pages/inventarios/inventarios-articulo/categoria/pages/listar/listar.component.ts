@@ -67,6 +67,7 @@ export class ListarComponent implements OnInit {
   closeDialog() {
     this.selectCategoria = {};
     this.displayCategoria = false;
+    
   }
 
 
