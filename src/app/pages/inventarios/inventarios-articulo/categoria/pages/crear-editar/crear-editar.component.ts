@@ -24,6 +24,7 @@ export class CrearEditarComponent implements OnInit {
 
   realizarAccion = () => {
     
+    
   }
 
   verificarCampo  = ( campo: string ): boolean => {
