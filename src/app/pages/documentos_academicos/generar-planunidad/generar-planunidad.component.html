@@ -293,8 +293,8 @@
                         <td>{{item.fecha_fin | date:'MMM dd,yyyy'}}</td>
                         <td>{{item.estado}}</td>
                         <td>
-                            <button pButton pRipple icon="pi pi-file" class="p-button-rounded p-button-success mr-2"
-                                (click)="reportePlanUnidad()"></button>
+                            <button pButton pRipple icon="pi pi-download" class="p-button-rounded p-button-success mr-2"
+                                (click)="reportePDFplanUnidad(item)"></button>
                         </td>
                     </tr>
                 </ng-template>

@@ -439,7 +439,29 @@ export class GenerarPlanunidadComponent implements OnInit {
     );
   }
 
-  reportePlanUnidad() {
-
+  reportePDFplanUnidad(planUnidad: any) {
+    this.planunidadService.createPDFplanunidad(planUnidad).subscribe(resp => {
+      //Alerta success
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Plan de Unidad Descargado!',
+        text: 'El pdf se encuentra en la carpeta de Descargas',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    },
+      error => {
+        console.error(error)
+        //Alerta error
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Ocurrio un error al descargar el plan de unidad',
+          showConfirmButton: false,
+          timer: 2500
+        })
+      }
+    );
   }
 }

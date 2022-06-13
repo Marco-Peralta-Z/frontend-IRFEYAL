@@ -70,4 +70,8 @@ export class PlanunidadService {
   public getAllCurso(): Observable<any> {
     return this.httpClient.get(this.API_SERVER + "cursos");
   }
+
+  public createPDFplanunidad(planunidad: any): Observable<any> {
+    return this.httpClient.post(this.API_SERVER + "pdfPlanUnidad", planunidad);
+  }
 }

@@ -183,6 +183,7 @@ export class RevisarPlanunidadComponent implements OnInit {
             this.mostrarObservaciones = false;
             this.btnRegresarEnviar = false;
             this.mostrarTablePendientes = true;
+            this.mostrarmsg = true;
             //Actualizar tabla
             this.cargarDatos();
             Swal.fire({
