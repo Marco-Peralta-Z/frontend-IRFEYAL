@@ -6,6 +6,7 @@ import { PrimeNgModule } from '../../../../prime-ng/prime-ng.module';
 import { MainComponent } from './main.component';
 import { CrearEditarComponent } from './pages/crear-editar/crear-editar.component';
 import { ListarComponent } from './pages/listar/listar.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { ListarComponent } from './pages/listar/listar.component';
   imports: [
     CommonModule,
     CategoriaRoutingModule,
+    ReactiveFormsModule,
     PrimeNgModule
   ]
 })

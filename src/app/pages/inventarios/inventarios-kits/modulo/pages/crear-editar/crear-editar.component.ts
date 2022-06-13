@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModuloService } from '../../../../../../Servicio/modulo_invetario/modulo.service';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { Modulo } from '../../../../../../Model/Inventarios/ModuloLibro';
 import { ResModulo } from '../../../../../../Model/Inventarios/intefaces/res_modulo.interface';
-import Swal from 'sweetalert2';
+import { ModuloService } from '../../../../../../Servicio/modulo_invetario/modulo.service';
 import { MensajesSweetService } from '../../../../../../Servicio/modulo_invetario/mensajes-sweet.service';
-import { modulo } from '../../../../../../Model/rolesTS/modulo';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-editar',
@@ -100,7 +99,6 @@ export class CrearEditarComponent implements OnInit {
         if (error.status === 404) {
           this._mensajesSweetService.mensajeError('Upss!', 'No se pudo encontrar ese módulo',);
           this._router.navigate(['/inventariosModule/modulo/listar']);
-          console.log(error); 
         }
       }
     });

@@ -15,7 +15,7 @@ export class ListarComponent implements OnInit {
   
   public inventarios: Inventario [] = [];
   public selectInventario?: Inventario;
-  public displayArticulo?: boolean;
+  public displayArticulo?: boolean; 
   
   constructor(
     private _confirmationService: ConfirmationService,
