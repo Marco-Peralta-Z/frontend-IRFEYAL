@@ -342,8 +342,8 @@ export class RegistrarasistenciaComponent implements OnInit {
   ///------------------fin de convertir fecha-------------------------------
   //---------------------- ingreso clase------------------------------------
        ingresoclase(){
-
-        console.log(this.clases.fecClase);
+         
+        console.log("llego a clase"+this.clases.fecClase);
         this.clases.id_periodo.id_periodo=this.IdPeriodo;
         this.clases.id_modalidad.id_modalidad=this.idModalidad;
         this.clases.idAsignatura.id_asignatura=this.idAsignatura;
@@ -359,6 +359,7 @@ export class RegistrarasistenciaComponent implements OnInit {
            this.validarcalendario=1;
            return this.auxidclaseultm;
          });    
+         console.log("llego clase"+this.auxidclaseultm);
        }
 //---------------------- fin de ingreso clase------------------------------------
 

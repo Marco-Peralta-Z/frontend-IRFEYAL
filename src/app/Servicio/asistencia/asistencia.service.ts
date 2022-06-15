@@ -103,4 +103,9 @@ export class AsistenciaService {
     return this.rutaconsulta.get(this.url+"/validarclase/"+idModalidad+'/'+idPeriodo+'/'+idParalelo+'/'+idAsignatura+'/'+idCurso+'/'+fecha+'/'+docente);
 
   }
+
+
+  returnparalelo(idcurso:number){
+    return this.rutaconsulta.get(this.url+"/Paraleloaux/"+idcurso);
+  }
 }

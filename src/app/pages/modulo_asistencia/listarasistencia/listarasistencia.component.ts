@@ -4,6 +4,8 @@ import { usuario } from 'src/app/Model/rolesTS/usuario';
 import { empleado } from 'src/app/Model/rolesTS/empleado';
 import { AsistenciaService } from 'src/app/Servicio/asistencia/asistencia.service';
 import { AuthService } from 'src/app/Servicio/auth/auth.service';
+import { Paralelo } from 'src/app/Model/Parametrizacion/Paralelo';
+
 
 @Component({
   selector: 'app-listarasistencia',
@@ -19,6 +21,7 @@ export class ListarasistenciaComponent implements OnInit {
   periodos: any[] = [];
   asignaturas: any[] = [];
   paralelos: any[] = [];
+  parall: Paralelo = new Paralelo();
   cursos: any[] = [];
   usuarios: empleado= new empleado();
   //estudiantes
@@ -29,6 +32,7 @@ export class ListarasistenciaComponent implements OnInit {
     IdPeriodo: number =0;
     IdParalelo: number =0;
     IdCurso: number =0;
+    IdAux:number=0;
     Estudiante:Estudiante[]=[];
     filterValue:any;
    
@@ -49,12 +53,10 @@ export class ListarasistenciaComponent implements OnInit {
     this.idususarios=this.usuarioGuardado().id_usuario
     console.log(this.idempleados);
     console.log(this.idususarios);
-   // this.appService.findempleados(this.idempleados).subscribe((data:any)=>this.usuarios=data);
-   // console.log(this.usuarios.id_empleado);
-    
    
    this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodos=data);
 
+   
   }
   usuarioGuardado = (): usuario => this.auth.usuario;
  
@@ -68,6 +70,8 @@ export class ListarasistenciaComponent implements OnInit {
   
     }
     onSelect(id: any){
+   
+     
       this.showDiv=false;
       this.idAsignatura= id;
       this.validarfiltros();
@@ -162,7 +166,8 @@ if(this.idAsignatura==0){
           this.estudiantes=[];
          }
         }
-        onCurso(id: any){
+        onCurso(id: any,event: any){
+          console.log(event);
           this.showDiv=false;
           this.asignaturas=[];
         this.idAsignatura=0;
@@ -170,12 +175,12 @@ if(this.idAsignatura==0){
         this.showparalelo=true;
         this.showasignatura=true;
         this.IdParalelo=0;
-          this.IdCurso= id;
+          this.IdCurso=event.value.id_curso;
           this.validarfiltros();
           console.log(this.IdCurso);
           this.showparalelo=false;
-          this.appService.listarparalelo(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso).subscribe((data:any)=>this.paralelos=data);
-
+          this.appService.listarparalelo(this.idempleados,this.IdPeriodo,this.idModalidad,event.value.id_curso).subscribe((data:any)=>this.paralelos=data);       
+         
           if(this.IdCurso==0){
             this.showasignatura=true;
             this.showparalelo=true;
@@ -207,6 +212,9 @@ if(this.idAsignatura==0){
 
         }
 
+
+        
+      
         
 
 }

@@ -12,7 +12,14 @@
               <div class="row">
                 <div class="col-4">
                 <h3>Periodo :</h3>
-                  <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="periodo_academico" filterBy="periodo_academico" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  [showClear]="true"></p-dropdown>
+                  <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="periodo_academico" filterBy="periodo_academico" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  [showClear]="true">
+                    <ng-template let-operatingSystems pTemplate="item">
+                      <div class="flex align-items-center operatingSystems-item">
+                        <div>{{operatingSystems.periodo_academico}} {{operatingSystems.fecha_inicio | date: 'yyyy-MM-dd'}}</div>
+            
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
 
                 </div>
                 <div class="col-4">
@@ -99,7 +106,14 @@
 
 
       <p-dialog [(visible)]="actualizarDialog" [style]="{width: '450px'}" header="Actualizar Asistencia" [modal]="true" styleClass="p-fluid">
-        <p-dropdown  [options]="periodosactu" placeholder="Periodo" optionLabel="periodo_academico" filterBy="periodo_academico" optionValue="id_periodo"  (onChange)="onperiodoactualizar($event.value)"  [showClear]="true"></p-dropdown>
+        <p-dropdown  [options]="periodosactu" placeholder="Periodo" optionLabel="periodo_academico" filterBy="periodo_academico" optionValue="id_periodo"  (onChange)="onperiodoactualizar($event.value)"  [showClear]="true">
+          <ng-template let-operatingSystems pTemplate="item">
+            <div class="flex align-items-center operatingSystems-item">
+              <div>{{operatingSystems.periodo_academico}} {{operatingSystems.fecha_inicio | date: 'yyyy-MM-dd'}}</div>
+  
+            </div>
+          </ng-template>
+        </p-dropdown>
         <p-dropdown [disabled]="showmodalidadactu" [options]="modalidadesactu" placeholder="Modalidad" optionLabel="descripcion" filterBy="descripcion" optionValue="id_modalidad"  (onChange)="onmodalidadactualizar($event.value)"  [showClear]="true"></p-dropdown>
 
         <p-dropdown  [disabled]="showcursoactu"  [options]="cursoactu" placeholder="Curso" optionLabel="descripcion" filterBy="descripcion" optionValue="id_curso"   (onChange)="onCursoactualizar($event.value)" [showClear]="true"></p-dropdown>
@@ -110,7 +124,9 @@
            <p-button label="Filtrar"  icon="pi pi-search"(onClick)="buscaractualizar()"></p-button>
 
            <form >
-           <p-table  #dt13 [value]="asistenciaactualizar"  [globalFilterFields]="['idEstudiante.id_persona.cedula']" styleClass="p-datatable-striped" responsiveLayout="scroll">
+           <p-table  #dt13 [value]="asistenciaactualizar" [rows]="5" [paginator]="true" [globalFilterFields]="['idEstudiante.id_persona.cedula','idEstudiante.id_persona.nombre','idEstudiante.id_persona.apellido']" styleClass="p-datatable-striped" responsiveLayout="scroll"
+           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} estudiante"
+          [showCurrentPageReport]="true">
           
           <ng-template pTemplate="header">
             <tr>

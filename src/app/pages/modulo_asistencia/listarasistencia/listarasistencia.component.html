@@ -60,9 +60,18 @@
                   
                     <div class="col-4">
                       <h3>Periodo :</h3>
-                      <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="periodo_academico" filterBy="periodo_academico" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  autoWidth="false" [style]="{'width':'70%'}" [showClear]="true"></p-dropdown>
+                      <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="periodo_academico" filterBy="periodo_academico" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  autoWidth="false" [style]="{'width':'70%'}" [showClear]="true">
+                        <ng-template let-operatingSystems pTemplate="item">
+                          <div class="flex align-items-center operatingSystems-item">
+                            <div>{{operatingSystems.periodo_academico}} {{operatingSystems.fecha_inicio | date: 'yyyy-MM-dd'}}</div>
+                
+                          </div>
+                        </ng-template>
+                       
+                      </p-dropdown>
 
-    
+                    
+                    
                     </div>
                     <div class="col-4">
                       <h3>Modalidad :</h3>
@@ -71,7 +80,15 @@
                     </div>
                     <div class="col-4">
                       <h3>Curso :</h3>
-                      <p-dropdown [disabled]="showcurso"[options]="cursos" placeholder=" Curso" optionLabel="descripcion" filterBy="descripcion" optionValue="id_curso"   (onChange)="onCurso($event.value)" [showClear]="true"></p-dropdown>
+                      <p-dropdown [disabled]="showcurso"[options]="cursos" placeholder=" Curso" optionLabel="descripcion" filterBy="descripcion"    (onChange)="onCurso($event.value,$event)" [showClear]="true">
+                        <ng-template let-operatingSystems pTemplate="item">
+                          <div class="flex align-items-center operatingSystems-item">
+                            <div>{{operatingSystems.descripcion}}</div>
+                
+                          </div>
+                        </ng-template>
+
+                      </p-dropdown>
 
                     </div>
                     <div class="col-4">
@@ -83,7 +100,9 @@
                     
                     <div class="col-4">
                       <h3>Asignaturas :</h3>
-                      <p-dropdown [disabled]="showasignatura" [options]="asignaturas" placeholder="Asignatura" optionLabel="descripcion" filterBy="descripcion" optionValue="id_asignatura"  (onChange)="onSelect($event.value)" [showClear]="true"></p-dropdown>
+                      <p-dropdown [disabled]="showasignatura" [options]="asignaturas" placeholder="Asignatura" optionLabel="descripcion" filterBy="descripcion" optionValue="id_asignatura"  (onChange)="onSelect($event.value)" [showClear]="true">
+
+                      </p-dropdown>
 
     
                     </div>
