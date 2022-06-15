@@ -96,6 +96,7 @@
                 <th style="font-weight: 700;">EXAMEN GRACIA</th>
                 <th style="font-weight: 700;">PROMEDIO GRACIA</th>
                 <th style="font-weight: 700;">COMPORTAMIENTO</th>
+                <th style="font-weight: 700;">ESTADO</th>
                 <th style="font-weight: 700;">EDITAR</th>
               </tr>
             </ng-template>
@@ -125,6 +126,7 @@
                 <td>{{registro.examen_gracia}}</td>
                 <td>{{registro.promedio_gracia}}</td>
                 <td>{{registro.comportamiento}}</td>
+                <td>{{registro.estado}}</td>
                 <td>
                   <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
                     (click)="edit(registro)"></button>
@@ -169,7 +171,7 @@
             </div>
             <div class="field">
               <label for="ap5">Aporte 5</label>
-              <input type="text" pInputText id="ap5" [(ngModel)]="selectRegistro.aporte5" required autofocus />
+              <input type="text" pInputText id="ap5" [(ngModel)]="selectRegistro.aporte5"  autofocus />
 
             </div>
             <div class="field">
@@ -258,3 +260,9 @@
 
 
 </div>
+
+<script>
+
+
+
+</script>

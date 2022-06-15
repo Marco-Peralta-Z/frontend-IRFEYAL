@@ -67,4 +67,5 @@ export class Registro {
     promedio_remedial: Number = 0;
     promedio_supletorio: Number = 0;
     promediofinal: Number = 0;
+    estado: String="";
 }

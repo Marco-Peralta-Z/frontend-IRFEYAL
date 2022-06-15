@@ -13,7 +13,7 @@ import { usuario } from 'src/app/Model/rolesTS/usuario';
 })
 export class ActividadesRegistroComponent implements OnInit {
 
-  constructor(private servitutorias:ServiceTutoriasService, private messageService: MessageService, private auth:AuthService) { }
+  constructor(private servitutorias: ServiceTutoriasService, private messageService: MessageService, private auth: AuthService) { }
   submitted!: boolean;
 
   statuses!: any[];
@@ -42,10 +42,10 @@ export class ActividadesRegistroComponent implements OnInit {
   limpiarBoolean: boolean = true;
   filtrosBoolean: boolean = false;
 
-  idempleados:any;
+  idempleados: any;
 
   ngOnInit(): void {
-    this.idempleados=this.usuarioGuardado().empleado?.id_empleado;
+    this.idempleados = this.usuarioGuardado().empleado?.id_empleado;
     console.log(this.idempleados)
     this.llenarperiodos();
   }
@@ -71,7 +71,7 @@ export class ActividadesRegistroComponent implements OnInit {
     this.paralelo = [];
     this.asignatura = [];
     this.listarBoolean = true;
-    this.servitutorias.getModalidades(this.idempleados,this.selectPeriodo).subscribe(dataModalidades => {
+    this.servitutorias.getModalidades(this.idempleados, this.selectPeriodo).subscribe(dataModalidades => {
       this.modalidad = dataModalidades;
     });
   }
@@ -107,7 +107,7 @@ export class ActividadesRegistroComponent implements OnInit {
   }
 
   llenarregistros() {
-    this.servitutorias.getRegistros(this.selectParalelo, this.selectCurso, this.selectModalidad, this.selectPeriodo,this.selectAsignatura).subscribe(dataRegistro => {
+    this.servitutorias.getRegistros(this.selectParalelo, this.selectCurso, this.selectModalidad, this.selectPeriodo, this.selectAsignatura).subscribe(dataRegistro => {
       if (dataRegistro.length == 0) {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'NO HAY REGISTROS', life: 3000 });
       } else {
@@ -145,6 +145,93 @@ export class ActividadesRegistroComponent implements OnInit {
     if (this.selectRegistro.id_registro) {
       this.registro[this.findIndexById(this.selectRegistro.id_registro)] = this.selectRegistro;
       this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Registro Actualizado', life: 3000 });
+
+
+
+      this.selectRegistro.promediofinal = ((parseInt(this.selectRegistro.aporte1.toString()) + parseInt(this.selectRegistro.aporte2.toString()) + parseInt(this.selectRegistro.aporte3.toString())
+        + parseInt(this.selectRegistro.aporte4.toString()) + parseInt(this.selectRegistro.aporte5.toString()) + parseInt(this.selectRegistro.aporte6.toString())
+        + parseInt(this.selectRegistro.aporte7.toString()) + parseInt(this.selectRegistro.aporte8.toString()) + parseInt(this.selectRegistro.evaluacion1.toString()) + parseInt(this.selectRegistro.evaluacion2.toString())
+        + parseInt(this.selectRegistro.examenfinal.toString())) * 10) / 11
+
+var q=0,w=0;
+
+
+
+
+      if (this.selectRegistro.promediofinal >= 70) {
+        this.selectRegistro.estado = "Aprobado"
+      }
+
+    if(this.selectRegistro.promediofinal>=60&&this.selectRegistro.promediofinal<70){
+          this.selectRegistro.estado = "Supletorio";
+          
+           q = parseInt(this.selectRegistro.promediofinal.toString()) + parseInt(this.selectRegistro.examen_supletorio.toString())
+   alert(q);
+          }
+    if(q>=60&&q<70){
+      this.selectRegistro.estado = "Remedial";
+       w = parseInt(this.selectRegistro.promediofinal.toString()) + parseInt(this.selectRegistro.examen_remedial.toString())
+   
+      }
+    
+  
+      //  if (p >= 70) {
+          //this.selectRegistro.estado = "Aprobado";
+        //} else {
+          //this.selectRegistro.estado = "Remdial";
+          
+          //var s = parseInt(this.selectRegistro.promediofinal.toString()) + parseInt(this.selectRegistro.examen_remedial.toString())
+          //if(s>=70){
+            //this.selectRegistro.estado = "Aprobado";
+        
+          //}else{
+            //this.selectRegistro.estado = "Gracia";
+            //var q = parseInt(this.selectRegistro.promediofinal.toString()) + parseInt(this.selectRegistro.examen_gracia.toString())
+            //if(q>=70){
+              //this.selectRegistro.estado = "Aprobado";
+              
+            //}else{
+              //this.selectRegistro.estado = "Reprobado";
+            
+            //}
+          
+          
+      //  }
+
+      //  this.messageService.add({ severity: 'warn', summary: 'Alerta', detail: 'El Estudiante Se Queda A Supletorio', life: 3000 });
+        //this.selectRegistro.estado = "Supletorio"
+        //this.selectRegistro.promedio_supletorio = ((parseInt(this.selectRegistro.aporte1.toString()) + parseInt(this.selectRegistro.aporte2.toString()) + parseInt(this.selectRegistro.aporte3.toString())
+          //+ parseInt(this.selectRegistro.aporte4.toString()) + parseInt(this.selectRegistro.aporte5.toString()) + parseInt(this.selectRegistro.aporte6.toString())
+          //+ parseInt(this.selectRegistro.aporte7.toString()) + parseInt(this.selectRegistro.aporte8.toString()) + parseInt(this.selectRegistro.evaluacion1.toString()) + parseInt(this.selectRegistro.evaluacion2.toString())
+          //+ parseInt(this.selectRegistro.examen_supletorio.toString())) * 10) / 11
+
+      //}
+
+      //if (this.selectRegistro.promediofinal < 70 && this.selectRegistro.promedio_supletorio < 70) {
+
+//        this.messageService.add({ severity: 'warn', summary: 'Alerta', detail: 'El Estudiante Se Queda A Remedial', life: 3000 });
+  //      this.selectRegistro.estado = "Remedial"
+    //    this.selectRegistro.promedio_remedial = ((parseInt(this.selectRegistro.aporte1.toString()) + parseInt(this.selectRegistro.aporte2.toString()) + parseInt(this.selectRegistro.aporte3.toString())
+      //    + parseInt(this.selectRegistro.aporte4.toString()) + parseInt(this.selectRegistro.aporte5.toString()) + parseInt(this.selectRegistro.aporte6.toString())
+        //  + parseInt(this.selectRegistro.aporte7.toString()) + parseInt(this.selectRegistro.aporte8.toString()) + parseInt(this.selectRegistro.evaluacion1.toString()) + parseInt(this.selectRegistro.evaluacion2.toString())
+          //+ parseInt(this.selectRegistro.examen_remedial.toString())) * 10) / 11
+
+
+
+
+     // } if (this.selectRegistro.promediofinal < 70 && this.selectRegistro.promedio_supletorio < 70 && this.selectRegistro.promedio_remedial < 70) {
+
+
+       // this.messageService.add({ severity: 'warn', summary: 'Alerta', detail: 'El Estudiante Se Queda A Gracia', life: 3000 });
+        //this.selectRegistro.estado = "Gracia"
+        //this.selectRegistro.promedio_gracia = ((parseInt(this.selectRegistro.aporte1.toString()) + parseInt(this.selectRegistro.aporte2.toString()) + parseInt(this.selectRegistro.aporte3.toString())
+          //+ parseInt(this.selectRegistro.aporte4.toString()) + parseInt(this.selectRegistro.aporte5.toString()) + parseInt(this.selectRegistro.aporte6.toString())
+          //+ parseInt(this.selectRegistro.aporte7.toString()) + parseInt(this.selectRegistro.aporte8.toString()) + parseInt(this.selectRegistro.evaluacion1.toString()) + parseInt(this.selectRegistro.evaluacion2.toString())
+          //+ parseInt(this.selectRegistro.examen_gracia.toString())) * 10) / 11
+      //} if (this.selectRegistro.promediofinal < 70 && this.selectRegistro.promedio_supletorio < 70 && this.selectRegistro.promedio_remedial < 70 && this.selectRegistro.promedio_gracia < 70) {
+       // this.messageService.add({ severity: 'warn', summary: 'Alerta', detail: 'Reprobado', life: 3000 });
+        //this.selectRegistro.estado = "Reprobado"
+      //}
       this.servitutorias.setRegistros(this.selectRegistro).subscribe();
     }
     else {
@@ -181,5 +268,7 @@ export class ActividadesRegistroComponent implements OnInit {
     }
     return id;
   }
+
+
 }
 
