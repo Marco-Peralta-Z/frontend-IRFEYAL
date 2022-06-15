@@ -1,10 +1,12 @@
+import { Curso } from './Curso';
 export class Malla {
 
-    id_malla: number = 0;
+    id_malla?: number;
 
-    estado: Boolean = new Boolean;
+    estado?: boolean;
 
-    descripcion: String = "";
+    descripcion?: string;
 
-    fecha_creacion: Date = new Date;
+    fecha_creacion?:Date;
+    listaCursos?: Curso;
 }

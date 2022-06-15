@@ -1,10 +1,6 @@
-import { Asignatura } from "../Parametrizacion/Asignatura";
 
-export class categorias {
-
-    catenombre: String = "";
-
-    catedescri: String = "";
-
-    cateestado: Asignatura=new Asignatura;
+export class Categoria {
+    id_categoria?: number;
+    cateNombre?:   string;
+    cateCodigo?:   string;
 }

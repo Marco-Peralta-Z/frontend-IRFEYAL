@@ -1,0 +1,55 @@
+
+<div class="container">
+    <form [formGroup]="categoriaForm" (ngSubmit)="realizarAccion()" >
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="field">
+                    <label for="cateNombre" class="block">Nombre</label>
+                    <input  type="text" 
+                            class="w-100" 
+                            pInputText 
+                            formControlName="cateNombre"/>
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('cateNombre')">
+                            El nombre es requerido.
+                    </small>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="field">
+                    <label for="cateCodigo" class="block">Código</label>
+                    <input  type="text" 
+                            class="w-100" 
+                            pInputText 
+                            formControlName="cateCodigo"/>
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('cateCodigo')">
+                            El codigo es requerido.
+                    </small>
+                </div>
+            </div>
+        </div>
+    <!-- button -->
+    <div class="row">
+        <div class="col-12 d-flex justify-content-evenly">
+            <button pButton 
+                    pRipple 
+                    type="button" 
+                    label="Cancelar" 
+                    icon="pi pi-times" 
+                    class="p-button-outlined p-button-danger" 
+                    iconPos="right"
+                    routerLink="listar">
+            </button>
+            <button pButton 
+                    pRipple type="submit" 
+                    label="Guardar" 
+                    icon="pi pi-save" 
+                    iconPos="right"
+                    [disabled]="categoriaForm.pending"
+                    >
+            </button>
+        </div>
+    </div>
+    </form>
+</div>

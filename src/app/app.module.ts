@@ -36,10 +36,8 @@ import { PeriodoComponent } from './pages/parametrizacion/periodo/periodo.compon
 import { MallaComponent } from './pages/parametrizacion/malla/malla.component';
 import { AsignaturasComponent } from './pages/parametrizacion/asignaturas/asignaturas.component';
 import { CursosComponent } from './pages/parametrizacion/cursos/cursos.component';
-import { ArticuloComponent } from './pages/inventarios/invnetarioarticulos/articulo/articulo.component';
 import { DataTablesModule } from "angular-datatables";
 import { ActividadesRegistroComponent } from './pages/tutorias/actividadesRegistro/actividadesRegistro.component';
-import { DeudasConsultaComponent } from './pages/tutorias/deudasConsulta/deudasConsulta.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import localeES from '@angular/common/locales/es-EC';
 import { registerLocaleData } from '@angular/common';
@@ -55,13 +53,11 @@ registerLocaleData(localeES);
   declarations: [
     AppComponent,
     ActividadesRegistroComponent,
-    DeudasConsultaComponent,
     HomeComponent,
     Error404Component,
     LoginComponent,
     HeaderComponent,
     SidenavComponent,
-    ArticuloComponent,
     PeriodoComponent,
     MallaComponent,
     AsignaturasComponent,

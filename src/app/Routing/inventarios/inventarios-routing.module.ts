@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ArticuloComponent } from 'src/app/pages/inventarios/invnetarioarticulos/articulo/articulo.component';
 
 
 const routes: Routes = [
@@ -21,7 +20,14 @@ const routes: Routes = [
       path:'modulo', 
       loadChildren:  () => import('../../pages/inventarios/inventarios-kits/modulo/modulo.module').then( m => m.ModuloModule)
     },
-    {path:'articulo',component:ArticuloComponent},  
+    {
+      path:'inventario', 
+      loadChildren:  () => import('../../pages/inventarios/inventarios-articulo/articulos/articulos.module').then( m => m.ArticulosModule)
+    },
+    {
+      path:'categoria', 
+      loadChildren:  () => import('../../pages/inventarios/inventarios-articulo/categoria/categoria.module').then( m => m.CategoriaModule)
+    },
   ] 
 }];
 

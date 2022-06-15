@@ -13,6 +13,7 @@ import { Periodo } from 'src/app/Model/Parametrizacion/Periodo';
 import { Paralelo } from 'src/app/Model/Parametrizacion/Paralelo';
 import { AuthService } from '../../../../Servicio/auth/auth.service';
 import Swal from 'sweetalert2';
+import { Malla } from '../../../../Model/Parametrizacion/Malla';
 
 
 
@@ -25,16 +26,21 @@ import Swal from 'sweetalert2';
 })
 export class AgregarMatriculaComponent implements OnInit {
   selectedProvincia: provincia[] = [];
+  mallas: Malla[] = [];
+  mallaSelectd: Malla = new Malla();
+  cursoSelectd: Curso = new Curso();
+  peridoSelectd:Periodo= new Periodo();
+  paraleloSelectd:Paralelo= new Paralelo();
+  modalidadSelectd:Modalidad= new Modalidad();
   estudiante: Estudiante = new Estudiante();
   matricula: Matricula = new Matricula();
   user: usuario = new usuario();
   filteredProvincia: provincia[] = [];
-  cursos: Curso[]=[];
-  jornadas: Modalidad[] = [];
+  cursos: Curso[] = [];
+  modalidades: Modalidad[] = [];
   periodos: Periodo[] = [];
   paralelos: Paralelo[] = [];
   errores: string[] = [];
-  provincias: provincia[] = [];
   fecha: Date = new Date();
   activeIndex1: number = 0;
   cedula: string = "";
@@ -48,7 +54,7 @@ export class AgregarMatriculaComponent implements OnInit {
   mens: string = "";
   campo: string = "Cedula incompleta!";
 
- 
+
 
   constructor(private estudianteService: EstudianteService,
     private matriculaService: MatriculaService,
@@ -57,74 +63,61 @@ export class AgregarMatriculaComponent implements OnInit {
     private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.estudianteService.getProvincias()
-      .subscribe(provincia => this.provincias = provincia);
-     
-    this.matriculaService.getCursos()
-      .subscribe(curso => {
-        this.cursos = curso;
-        
-      });
-    this.matriculaService.getPeriodos()
-      .subscribe(periodo => {this.periodos = periodo});
-
-    this.matriculaService.getParalelos()
-      .subscribe(paralelo => {this.paralelos = paralelo});
-
-      this.matriculaService.getJornadas()
-      .subscribe(modalidades => {this.jornadas = modalidades});
-      
-
-
+    this.cargarMallas();
   }
 
- matriculaFormulario: FormGroup = this.fb.group({
+  matriculaFormulario: FormGroup = this.fb.group({
     cedula: [],
-    nameComplete: [, [Validators.required]],
-    nacimiento: [, [Validators.required]],
-    genero: [, [Validators.required]],
-    Rcedula: [, [Validators.required]],
-    RnameComplete: [, [Validators.required]],
-    Rjornada: [, [Validators.required]],
-    Rcurso: [, [Validators.required]],
-    Rfecha: [, [Validators.required]],
-    Rmodalidad: [, [Validators.required]],
-    Rlectivo: [, [Validators.required]],
-    callePrincipal: [, [Validators.required]],
-    calleSecundaria: [, [Validators.required]],
-    provincia: [, [Validators.required]],
-    canton: [, [Validators.required]],
-    parroquia: [, [Validators.required]],
-    telefono: [, [Validators.required]],
-    celular: [, [Validators.required]],
-    email: [, [Validators.required]],
-    inscripcion: [, [Validators.required]],
-    copCedula: [, [Validators.required]],
-    copVotacion: [, [Validators.required]],
-    certMatricula: [, [Validators.required]],
-    city: [[Validators.required]],
+    nameComplete: ['', [Validators.required]],
+    nacimiento: [''],
+    genero: ['', [Validators.required]],
+    Rcedula: ['', [Validators.required]],
+    RnameComplete: ['', [Validators.required]],
+    Rcurso: ['', [Validators.required]],
+    Rfecha: ['', [Validators.required]],
+    Rmodalidad: ['', [Validators.required]],
+    Rlectivo: ['', [Validators.required]],
+    callePrincipal: ['', [Validators.required]],
+    calleSecundaria: ['', [Validators.required]],
+    provincia: ['', [Validators.required]],
+    canton: ['', [Validators.required]],
+    parroquia: ['', [Validators.required]],
+    telefono: ['', [Validators.required]],
+    celular: ['', [Validators.required]],
+    email: ['', [Validators.required]],
+    inscripcion: [[], [Validators.required]],
+    copCedula: [[], [Validators.required]],
+    copVotacion: [[], [Validators.required]],
+    certMatricula: [[], [Validators.required]],
     periodo: [[], [Validators.required]],
-    curso: [[],[Validators.required]],
-    paralelo: [[],[Validators.required]],
-    jornada: [[],[Validators.required]]
+    malla: [[],],
+    curso: [[], [Validators.required]],
+    paralelo: [[], [Validators.required]],
+    jornada: [[], [Validators.required]]
   });
 
-  filterCountry(event: any) {
-    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
-    let filtered: any[] = [];
-    let query = event.query;
 
-    for (let i = 0; i < this.provincias.length; i++) {
-      let provincia = this.provincias[i];
-      if (provincia.provincia.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(provincia);
-      }
+
+  cargarCursos() {
+
+    this.matriculaFormulario.controls['paralelo'].setValue([]);
+    this.matriculaFormulario.controls['jornada'].setValue([]);
+    this.matriculaFormulario.controls['periodo'].setValue([]);
+    this.matriculaFormulario.controls['curso'].setValue([]);
+    this.matriculaFormulario.controls['Rmodalidad'].setValue('');
+    this.matriculaFormulario.controls['Rlectivo'].setValue('');
+    this.matriculaFormulario.controls['Rcurso'].setValue('');
+    this.cargarPeriodo();
+    let filtered: any[] = [];
+    filtered.push(this.mallaSelectd.listaCursos);
+    for (let i = 0; i < filtered.length; i++) {
+      let curso = filtered[i];
+      this.cursos = curso;
+
     }
 
-    this.filteredProvincia = filtered;
 
   }
-
   buscar() {
     if (this.cedula !== "") {
       this.estudianteService.getEstudiantePorCedula(this.cedula.trim())
@@ -159,36 +152,87 @@ export class AgregarMatriculaComponent implements OnInit {
       this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'El formulario contiene errores o campos vacios.' });
       return;
     }
+
     this.user.id_usuario = this.authService.usuario.id_usuario;
     this.matricula.usuario = this.user;
     this.matriculaService.postMatricula(this.matricula)
       .subscribe(newMatricula => {
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Nueva Matricula', detail: `Nuevo id: ${newMatricula.id_matricula} creado con exito!` });
         this.enviarCorreo(newMatricula);
-        this.activeIndex1 = 0;
-        this.selectedRequerimientos = [];
-        this.cedula = "";
+        this.limpiarFormulario();
 
       });
-  }
-
-  cargarCombox() {
-
 
   }
-  enviarCorreo(matricula: Matricula){
+
+  enviarCorreo(matricula: Matricula) {
     this.matriculaService.sendEmail(matricula)
-    .subscribe(res => console.log(res));
+      .subscribe(res => console.log(res));
   }
   buscarJornadaPorCurso() {
-    this.matriculaService.getJormadasPorCurso(this.matricula.curso.id_curso)
-      .subscribe(jornadas => {
-        this.jornadas = jornadas;
+    this.matricula.curso=this.cursoSelectd;
+      this.matriculaService.getModalidadPorCurso(this.cursoSelectd.id_curso)
+      .subscribe(modalidades => {
+        this.modalidades = modalidades;
+        Swal.close()
+        
       });
+
+      this.matriculaService.getParalelosPorCurso(this.cursoSelectd.id_curso)
+      .subscribe(paralelos =>{
+        this.paralelos=paralelos;
+      })
   }
 
   campoValido(valor: string): boolean {
     return this.matriculaFormulario.controls[valor].errors!
       && this.matriculaFormulario.controls[valor].touched
+  }
+
+  obtenerPeriodo(){
+    this.matricula.id_periodo=this.peridoSelectd;
+  }
+  obtenerModalidad(){
+    this.matricula.modalidad=this.modalidadSelectd;
+  }
+  obtenerParalelo(){
+    this.matricula.id_paralelo=this.paraleloSelectd;
+  }
+  cargarPeriodo() {
+    // console.log("objeto malla ", this.mallaSelectd);
+    // console.log("id malla ", this.mallaSelectd.id_malla);
+    this.matriculaService.getPeriodoPorMalla(this.mallaSelectd.id_malla!)
+      .subscribe({
+        next: (periodo) => {
+          this.periodos = periodo;
+          Swal.close()
+        },
+      });
+  }
+  limpiarFormulario() {
+    this.activeIndex1 = 0;
+    this.selectedRequerimientos = [];
+    this.matricula = new Matricula();
+    this.estudiante = new Estudiante();
+    this.matriculaFormulario.controls['curso'].setValue([]);
+    this.matriculaFormulario.controls['periodo'].setValue([]);
+    this.matriculaFormulario.controls['paralelo'].setValue([]);
+    this.matriculaFormulario.controls['jornada'].setValue([]);
+    console.log(this.estudiante.id_persona.fechaNacimiento);
+    this.matriculaFormulario.controls['nacimiento'].setValue([]);
+    this.cedula = "";
+    this.fullName = "";
+    this.cursos = [];
+    this.modalidades = [];
+    this.paralelos = [];
+    this.periodos = [];
+    this.mallas = [];
+    this.mallaSelectd = new Malla();
+    this.cargarMallas();
+  }
+
+  cargarMallas() {
+    this.matriculaService.getAllMalla()
+      .subscribe(malla => { this.mallas = malla });
   }
 }

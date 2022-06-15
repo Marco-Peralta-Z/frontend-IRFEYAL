@@ -1,12 +1,13 @@
-import { categorias } from "./categorias";
-import { DetalIngreArti } from "./DetalIngreArti";
+import {  Categoria } from './categorias';
+import { ControlArticulo } from './control_articulo';
 export class Articulo {
-    id_articulo: number = 0;
-    articodigo: String = '';
-    artiestado: String = '';
-    artimarca: String = '';
-    artinombre: String = '';
-    artiprecio: number = 0;
-    id_categoria: categorias = new categorias;
-    id_det_ingre_art: DetalIngreArti = new DetalIngreArti;
+    id_articulo?:     number;
+    artinombre?:      string;
+    articodigo?:      string;
+    artiprecio?:      number;
+    artidescrip?:     string;
+    artiestado?:      string;
+    artimarca?:       string;
+    cateId?:          Categoria;
+    controlArticulo?: ControlArticulo;
 }

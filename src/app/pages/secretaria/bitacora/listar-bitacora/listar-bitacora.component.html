@@ -1,0 +1,63 @@
+<div class="container-fluid page">
+    <div class="centro">
+        <div class="d-flex page__box p-3 mt-2">Bitacora de Registro de Documentos</div>
+        <div class="page__content shadow p-3 ">
+            <br><br>
+            <p-table [value]="bitacoras" responsiveLayout="scroll" [paginator]="true" [rows]="7"
+                [rowsPerPageOptions]="[7,14]" [rowHover]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="text-align: center">Código</th>
+                        <th style="text-align: center">Documento / Tipo</th>
+                        <th style="text-align: center">Solicitante</th>
+                        <th style="text-align: center">Emisor</th>
+                        <th style="text-align: center">Fecha</th>
+                        <th style="text-align: center">Hora</th>
+                        <th style="text-align: center">Estado</th>
+                        <th style="text-align: center">Descripción</th>
+                        <th style="text-align: center">Procesar</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-bitacora >
+                    <tr>
+                        <td style="text-align: center">{{bitacora.id_registro_bitacora}}</td>
+                        <td *ngIf="bitacora.estado==='Pendiente'||bitacora.estado==='PENDIENTE' ; else elseBlock">
+
+
+                            <select name="miselect" 
+                            style="text-align: center ; margin-left: 16%;"  >
+                            <option value="" disabled selected hidden >SELECCIONE</option>
+                            <option [ngValue]="bitacora" *ngFor="let objeto of documentos">{{objeto.tipo_documento}}</option>-->
+                         
+                            </select>
+
+                        </td>
+                        <ng-template #elseBlock>
+                            <td style="text-align: center">{{bitacora.documento.tipo_documento}}</td>
+                        </ng-template>
+                        <td style="text-align: center">{{bitacora.solicitante | titlecase}}</td>
+                        <td style="text-align: center">{{bitacora.emisor | titlecase}}</td>
+                        <td style="text-align: center">{{bitacora.fecha | date: 'MMMM dd, yyyy'}}</td>
+                        <td style="text-align: center">{{bitacora.fecha | date:'HH:mm:ss'}}</td>
+                        <td style="text-align: center">{{bitacora.estado}}</td>
+                        <td style="text-align: center">{{bitacora.documento.descripcion}}</td>
+                        <td *ngIf="bitacora.estado==='Pendiente'||bitacora.estado==='PENDIENTE'">
+                            <button type="submit" class="btn btn-dark" style="margin-left: 10%;"
+                                (click)="procesar(bitacora)">Procesar</button>
+                        </td>
+                    </tr>
+                </ng-template>
+               
+            </p-table>
+            <br><br>
+            <div class="row">
+                <div class="col-sm-12 col-md-4" style="margin-left: auto;margin-right: auto;">
+                    <button type="submit" class="btn btn-dark" (click)="ingreso()">Nuevo documento</button>
+                    <button type="submit" class="btn btn-dark" style="margin-left: 35px;"
+                        (click)="refrescar()">Actualizar</button>
+                    <button type="submit" class="btn btn-dark" style="margin-left: 35px;"
+                        (click)="regresarHome()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>

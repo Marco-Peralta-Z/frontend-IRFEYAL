@@ -5,9 +5,9 @@ export class usuario {
 
     contrasenia: string = "";
 
-    estUsuario: Boolean = new Boolean;
+    estUsuario?: boolean;
     
-    usuario: String=new String;
+    usuario?: string;
 
     roles: string [] = [];
 

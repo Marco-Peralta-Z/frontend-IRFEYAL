@@ -1,0 +1,68 @@
+<div class="container-fluid page">
+    <div class="centro">
+        ves ves
+        <div class="d-flex page__box p-3 mt-2">Certificado de Matricula</div>
+        <div class="page__content shadow p-3 ">
+            <br>
+
+            <p-table #dt [value]="matriculas" [rows]="10" [paginator]="true" 
+                     responsiveLayout="scroll" dataKey="id"
+                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Certificado de Matricula"
+                    [showCurrentPageReport]="true" [globalFilterFields]="['certificados']" [showCurrentPageReport]="true">
+                
+                
+                <ng-template pTemplate="caption">
+
+                    <div class="col-sm-12 col-md-4" style="margin-left: auto;margin-right: auto;">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" id="search" placeholder="Ingresar cedula" /> 
+                        </span>
+                        <br><br>
+                        <p-button label="Buscar" icon="pi pi-search" type="submit" (click)="buscar()"></p-button>
+
+                    </div>
+
+
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="codigo">Codigo</th>
+                        <th pSortableColumn="estudiante">Estudiante</th>
+                        <th><p-dropdown pSortableColumn="curso" placeholder="Curso"></p-dropdown></th>
+                        <th><p-dropdown pSortableColumn="modalidad"placeholder="Modalidad"></p-dropdown></th>
+                        <th pSortableColumn="cedula">Cedula</th>
+                        <th style="width: 3rem">
+
+                            
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-certificado>
+                    <tr>
+                        <td>{{certificado.id_matricula}}</td>
+                        <td>{{certificado.estudiante?.id_persona.nombre | titlecase}} 
+                            {{certificado.estudiante?.id_persona.apellido| titlecase}}</td>
+                        <td>{{certificado.curso.descripcion | titlecase}}</td>
+                        <td>{{certificado.modalidad.descripcion | titlecase}}</td>
+                        <td>{{certificado.estudiante?.id_persona.cedula }}</td>
+                        <td>
+                            <p-tableCheckbox [value]="matriculas"></p-tableCheckbox>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <br><br>
+            <div class="row">
+                <div class="col-sm-12 col-md-4" style="margin-left: auto;margin-right: auto;">
+                    <button type="submit" class="btn btn-primary" (click)="imprimir()">Imprimir</button>
+                    <button type="submit" class="btn btn-primary" style="margin-left: 35px;" (click)="regresarHome()">Regresar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

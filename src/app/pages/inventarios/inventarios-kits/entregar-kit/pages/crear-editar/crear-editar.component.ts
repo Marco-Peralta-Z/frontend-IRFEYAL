@@ -25,7 +25,7 @@ export class CrearEditarComponent implements OnInit {
     detalleControl: [ , [ Validators.required ]],
     estadoAproba: [ false , [ Validators.required ]],
     fechaAprobacion: [ , [ Validators.required ]],
-    estudiante: [ , [ Validators.required, Validators.minLength(7) ]],
+    estudiante: [ , [ Validators.required, Validators.minLength(3) ]],
     kit: [  , [ Validators.required ]],
   });
   public kits: Kit [] = [];
@@ -72,10 +72,12 @@ export class CrearEditarComponent implements OnInit {
   getEstudiante = (event: any) => {
     this.estudiantes = [];
     let query = event.query.trim();
-    if ( query.length > 7) {
-      this._estudianteService.getEstudiantePorCedula( query ).subscribe({
+    if ( query.length >= 3) {
+      this._estudianteService.getEstudiantesPorCedula( query ).subscribe({
         next: (resp) => {
-          this.estudiantes = [resp]
+          this.estudiantes = resp
+          console.log(resp);
+          
         },
         error: (error) => {
           this.estudiantes = [];

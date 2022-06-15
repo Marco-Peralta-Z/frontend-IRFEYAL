@@ -18,77 +18,91 @@ import { SidenavComponent } from './modulos/sidenav/sidenav.component';
  */
 const routes: Routes = [
   //Inicio Rutas Principales
-  { 
-    path: 'home', 
+  {
+    path: 'home',
     component: HomeComponent,
-    canActivate: [ AuthGuard ],
-    data: { role: [ 'ROLE_Administrador', 'ROLE_gerente', 'ROLE_secretaria', 'ROLE_estudiante', 'ROLE_coordinador de desarrollo', 'ROLE_coordinador administrativo', 'ROLE_rectora', 'ROLE_docente' ] }
+    canActivate: [AuthGuard],
+    data: { role: ['ROLE_Administrador', 'ROLE_gerente', 'ROLE_secretaria', 'ROLE_estudiante', 'ROLE_coordinador de desarrollo', 'ROLE_coordinador administrativo', 'ROLE_rectora', 'ROLE_docente'] }
   },
-  { 
-    path: 'header', 
+  {
+    path: 'header',
     component: HeaderComponent,
-    canActivate: [ AuthGuard ],
-    data: { role: [ 'ROLE_Administrador', 'ROLE_gerente', 'ROLE_secretaria', 'ROLE_estudiante', 'ROLE_coordinador de desarrollo', 'ROLE_coordinador administrativo', 'ROLE_rectora', 'ROLE_docente' ] }
+    canActivate: [AuthGuard],
+    data: { role: ['ROLE_Administrador', 'ROLE_gerente', 'ROLE_secretaria', 'ROLE_estudiante', 'ROLE_coordinador de desarrollo', 'ROLE_coordinador administrativo', 'ROLE_rectora', 'ROLE_docente'] }
   },
-  { 
-    path: 'sidenav', 
+  {
+    path: 'sidenav',
     component: SidenavComponent,
-    canActivate: [ AuthGuard ],
-    data: { role: [ 'ROLE_Administrador', 'ROLE_gerente', 'ROLE_secretaria', 'ROLE_estudiante', 'ROLE_coordinador de desarrollo', 'ROLE_coordinador administrativo', 'ROLE_rectora', 'ROLE_docente' ] }
+    canActivate: [AuthGuard],
+    data: { role: ['ROLE_Administrador', 'ROLE_gerente', 'ROLE_secretaria', 'ROLE_estudiante', 'ROLE_coordinador de desarrollo', 'ROLE_coordinador administrativo', 'ROLE_rectora', 'ROLE_docente'] }
   },
 
-  { 
-    path: 'tutorias', 
+  {
+    path: 'tutorias',
     loadChildren: () => import('./Routing/tutorias/tutorias.module').then(m => m.TutoriasModule),
-    canActivate: [ AuthGuard, RolGuard ],
-    data: { role: [ 'ROLE_Administrador', 'ROLE_docente' ] }
+    canActivate: [AuthGuard, RolGuard],
+    data: { role: ['ROLE_Administrador', 'ROLE_docente'] }
   },
 
   {
     path: 'inventariosModule',
     loadChildren: () => import('./Routing/inventarios/inventarios.module').then(m => m.InventariosModule),
-    canActivate: [ AuthGuard, RolGuard ],
-    data: { role: [ 'ROLE_Administrador', 'ROLE_coordinador de desarrollo', 'ROLE_coordinador administrativo' ] }
+    canActivate: [AuthGuard, RolGuard],
+    data: { role: ['ROLE_Administrador', 'ROLE_coordinador de desarrollo', 'ROLE_coordinador administrativo'] }
   },
 
   {
     path: 'matriculaModule',
     loadChildren: () => import('./Routing/matriculas/matriculas.module').then(m => m.MatriculasModule),
-    canActivate: [ AuthGuard, RolGuard ],
-    data: { role: [ 'ROLE_Administrador', 'ROLE_secretaria' ] }
+    canActivate: [AuthGuard, RolGuard],
+    data: { role: ['ROLE_Administrador', 'ROLE_secretaria'] }
   },
 
   // agrego modulo de parametrizacion para rederisar
   {
     path: 'parametrizacion',
     loadChildren: () => import('./Routing/parametrizacion/parametrizacion.module').then(m => m.ParametrizacionModule),
+    canActivate: [AuthGuard, RolGuard],
+    data: { role: ['ROLE_Administrador', 'ROLE_secretaria'] }
+  },
+
+  {
+    path: 'roles',
+    loadChildren: () => import('./Routing/roles/roles.module').then(module => module.RolesModule),
+    canActivate: [AuthGuard, RolGuard],
+    data: { role: ['ROLE_Administrador'] }
+  },
+
+  {
+    path: 'asistencia',
+    loadChildren: () => import('./Routing/asistencia/asistencia.module').then(m => m.AsistenciaModule),
+    canActivate: [AuthGuard, RolGuard],
+    data: { role: ['ROLE_Administrador', 'ROLE_docente'] }
+  },
+
+  {
+    path: 'documentosacademicos',
+    loadChildren: () => import('./Routing/documentacion-academicos/documentacion-academicos.module').then(m => m.DocumentacionAcademicosModule),
+    canActivate: [AuthGuard, RolGuard],
+    data: { role: ['ROLE_Administrador', 'ROLE_coordinador academico', 'ROLE_docente'] }
+  },
+
+  {
+    path: 'pagos',
+    loadChildren: () => import('./Routing/pagos/pagos.module').then( m => m.PagosModule),
     canActivate: [ AuthGuard, RolGuard ],
     data: { role: [ 'ROLE_Administrador', 'ROLE_secretaria' ] }
   },
 
   {
-    path: 'roles',
-    loadChildren:()=>import('./Routing/roles/roles.module').then( module => module.RolesModule),
+    path: 'secretaria',
+    loadChildren: () => import('./Routing/secretaria/secretaria.module').then( m => m.SecretariaModule),
     canActivate: [ AuthGuard, RolGuard ],
-    data: { role: [ 'ROLE_Administrador' ] }
-  },
-
-  { 
-    path: 'asistencia', 
-    loadChildren: () => import('./Routing/asistencia/asistencia.module').then(m => m.AsistenciaModule),
-    canActivate: [ AuthGuard, RolGuard ],
-    data: { role: [ 'ROLE_Administrador', 'ROLE_docente' ] }
-  },
-
-  { 
-    path: 'documentosacademicos', 
-    loadChildren: () => import('./Routing/documentacion-academicos/documentacion-academicos.module').then(m => m.DocumentacionAcademicosModule),
-    canActivate: [ AuthGuard, RolGuard ],
-    data: { role: [ 'ROLE_Administrador', 'ROLE_rectora', 'ROLE_docente' ] }
+    data: { role: [ 'ROLE_Administrador', 'ROLE_secretaria' ] }
   },
 
   { path: 'login', component: LoginComponent },
-  
+
   {
     path: '**',
     pathMatch: 'full',

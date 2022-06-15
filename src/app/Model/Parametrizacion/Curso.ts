@@ -1,4 +1,5 @@
 import { empleado } from "../rolesTS/empleado";
+import { Paralelo } from './Paralelo';
 
 export class Curso {
     
@@ -10,5 +11,6 @@ export class Curso {
 
     fecha_creacion?: Date ;
 
+    id_paralelo: Paralelo= new Paralelo()
     id_empleado: empleado = new empleado();
 }

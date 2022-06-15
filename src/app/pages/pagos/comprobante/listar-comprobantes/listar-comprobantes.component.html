@@ -1,0 +1,60 @@
+<div class="container-fluid page">
+    <div class="centro">
+        <div class="d-flex page__box p-3 mt-2">Consultar Comprobantes</div>
+        <div class="page__content shadow p-3 position-relative">
+
+            <br>
+            <div class="input-group">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" id="search" placeholder="Codigo" /> 
+                </span>
+                <br><br>
+                <p-button label="Buscar" icon="pi pi-search" type="submit" (click)="buscarComprobante()"></p-button>
+            </div>
+            <br><br>
+            <span class= "card mt-2">
+            <p-table [value]="detalleComprobantes" responsiveLayout="scroll">
+                <ng-template pTemplate="header"> 
+                    <tr>
+                        <th>Codigo Comprobante</th>
+                        <th>Estudiante</th>
+                        <th><p-dropdown pSortableColumn="curso" placeholder="Curso"></p-dropdown></th>
+                        <th><p-dropdown pSortableColumn="modalidad" placeholder="Modalidad"></p-dropdown></th>
+                        <th><p-dropdown pSortableColumn="periodo" placeholder="Periodo"></p-dropdown></th>
+                        <th><p-dropdown pSortableColumn="conceptoPago" placeholder="Concepto Pago"></p-dropdown></th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-comprobante>
+                    <tr>
+                        <td>{{comprobante.idDetalleComprobante}}</td>
+                        <td>{{comprobante.idComprobante.idMatricula.estudiante.id_persona.nombre | titlecase}}
+                            {{comprobante.idComprobante.idMatricula.estudiante.id_persona.apellido | titlecase}}
+                        </td>
+                        <td>{{comprobante.idComprobante.idMatricula.curso.descripcion | titlecase}}</td>
+                        <td>{{comprobante.idComprobante.idMatricula.modalidad.descripcion | titlecase}}</td>
+                        <td>{{comprobante.idComprobante.idMatricula.id_periodo.fecha_creacion | date: 'MMMM, yyyy'}}
+                            {{comprobante.idComprobante.idMatricula.id_periodo.fecha_fin | date: 'MMMM, yyyy'}}
+                        </td>
+                        <td>{{comprobante.idComprobante.tipoComprobante.concepto_pago | titlecase}}</td>
+                        <td>{{comprobante.idComprobante.fecha | date: 'MMMM dd, yyyy'}}</td>
+                        <td>{{comprobante.idComprobante.estado}}</td>
+                        <td><button class="btn btn-danger" style="margin-left: 35px;" (click)="eliminarComprobante(comprobante.idDetalleComprobante)">Eliminar</button></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+            <br><br>
+                <div class="row">
+                    <div class="col-sm-12 col-md-4" style="margin-left: auto;margin-right: auto;">                   
+                        <button type="submit" class="btn btn-dark" style="margin-left: 35px;" (click)="imprimirLista()">Imprimir</button>
+                    </div>
+    
+                </div>
+            </span>
+        </div>
+    </div>
+</div>

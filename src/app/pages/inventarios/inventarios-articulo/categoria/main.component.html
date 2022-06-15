@@ -1,0 +1,22 @@
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2">Mantenimiento categoria</div>
+    <div class="page__content shadow p-3 position-relative">
+        <p-toolbar styleClass="mb-4">
+            <ng-template pTemplate="left">
+                <button pButton 
+                        pRipple label="Agregar categoria" 
+                        icon="pi pi-plus" 
+                        class="p-button-success mr-2" 
+                        routerLink="crear">
+                </button>
+                <button pButton 
+                        pRipple label="Categorias" 
+                        icon="pi pi-list" 
+                        class="p-button-primary mr-2" 
+                        routerLink="listar">
+                </button>
+            </ng-template>
+        </p-toolbar>
+        <router-outlet></router-outlet>
+    </div>
+</div>
