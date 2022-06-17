@@ -135,11 +135,6 @@ export class ItemsService {
                         label: 'Registro De Actividades',
                         icon: 'fa fa-plus-square',
                         routerLink: 'tutorias/tutorias/actividadesRegistro'
-                    },
-                    {
-                        label: 'Articulo',
-                        icon: 'fa fa-book',
-                        routerLink: 'inventario/articulo'
                     }
                 ]
             },
