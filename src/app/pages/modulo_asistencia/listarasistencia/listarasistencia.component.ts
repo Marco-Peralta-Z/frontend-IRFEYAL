@@ -6,7 +6,7 @@ import { AsistenciaService } from 'src/app/Servicio/asistencia/asistencia.servic
 import { AuthService } from 'src/app/Servicio/auth/auth.service';
 import { Paralelo } from 'src/app/Model/Parametrizacion/Paralelo';
 
-
+import swal from 'sweetalert2'; 
 @Component({
   selector: 'app-listarasistencia',
   templateUrl: './listarasistencia.component.html',
@@ -51,8 +51,7 @@ export class ListarasistenciaComponent implements OnInit {
   ngOnInit(): void {
     this.idempleados=this.usuarioGuardado().empleado?.id_empleado;
     this.idususarios=this.usuarioGuardado().id_usuario
-    console.log(this.idempleados);
-    console.log(this.idususarios);
+  
    
    this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodos=data);
 
@@ -61,30 +60,53 @@ export class ListarasistenciaComponent implements OnInit {
   usuarioGuardado = (): usuario => this.auth.usuario;
  
   mostrarinfo(id:any){
-    console.log(id);
+  
     this.appService.getInformaciondelestudiante(id).subscribe((data:any)=>this.Estudiante=data);
           this.showDiv=true;
-          console.log(this.Estudiante);
           this.appService.getInfechasfaltasdelestudiante(id,this.idempleados,this.idAsignatura,this.IdCurso,this.IdParalelo,this.idModalidad,this.IdPeriodo).subscribe((data:any)=>this.fechas=data);
-        console.log(this.fechas);
   
     }
+    // ---------------- evento asignatura-----------------
     onSelect(id: any){
    
      
       this.showDiv=false;
       this.idAsignatura= id;
       this.validarfiltros();
-      console.log(this.idAsignatura);
 if(this.idAsignatura==0){
  this.estudiantes=[];
 }else{
-  console.log(this.idususarios);
-  this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> this.estudiantes=data);
+  
+  this.appService.getfiltros(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso).subscribe((data:any)=> {
+    this.estudiantes=data
+
+    if (data.length == 0) {
+      swal.fire(
+        {
+          title: 'Oops...',
+          text: 'no se encontraron registros !',
+         
+        }
+      )
+      this.showDiv=false;
+      this.showasignatura=true;
+      this.showmodalidad=true;
+      this.showcurso=true;
+      this.showparalelo=true;
+      this.asignaturas=[];
+      this.modalidades=[];
+      this.cursos=[];
+      this.paralelos=[];
+      this.estudiantes=[];
+    } 
+  });
 
 }
   
       }
+      //----------------- fin  evento asignatura
+
+      //--------------- evento modalidad-------------------//
       onmodalidad(id: any){
         this.showDiv=false;
         this.showasignatura=true;
@@ -97,10 +119,8 @@ if(this.idAsignatura==0){
         this.IdCurso=0;
         this.idAsignatura=0;
         this.IdParalelo=0;
-        
         this.idModalidad= id;
         this.validarfiltros();
-        console.log(this.idModalidad);
         this.showcurso=false;
         if(this.idModalidad==0){
           this.showasignatura=true;
@@ -113,6 +133,8 @@ if(this.idAsignatura==0){
          }
         this.appService.listarcursos(this.idempleados,this.IdPeriodo ,this.idModalidad).subscribe((data:any)=>this.cursos=data);
         }
+        //------------ fin evento modalidad----------------//
+        //------------ evento  periodo---------------------//
         onperiodo(id: any){
           this.showDiv=false;
           this.IdCurso=0;
@@ -130,7 +152,6 @@ if(this.idAsignatura==0){
           this.estudiantes=[];
         this.IdPeriodo= id;
         this.validarfiltros();
-        console.log(this.IdPeriodo);
         this.showmodalidad=false;
         this.appService.listarmodalidad(this.idempleados,this.IdPeriodo).subscribe((data:any)=>this.modalidades=data);
 
@@ -147,6 +168,8 @@ if(this.idAsignatura==0){
          this.estudiantes=[];
         }
         }
+        //---------------- fin evento periodo------------//
+        //-----------------------evento paralelo -----------------//
         onparalelo(id: any){
           this.showDiv=false;
           this.asignaturas=[];
@@ -156,7 +179,6 @@ if(this.idAsignatura==0){
 
         this.IdParalelo= id;
         this.validarfiltros();
-        console.log(this.IdParalelo);
         this.showasignatura=false;
         this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturas=data);
 
@@ -166,8 +188,11 @@ if(this.idAsignatura==0){
           this.estudiantes=[];
          }
         }
+        //----------- fin evento paralelo--------------//
+
+        // -------------------  evento  curso ----------------------//
         onCurso(id: any,event: any){
-          console.log(event);
+          
           this.showDiv=false;
           this.asignaturas=[];
         this.idAsignatura=0;
@@ -177,7 +202,6 @@ if(this.idAsignatura==0){
         this.IdParalelo=0;
           this.IdCurso=event.value.id_curso;
           this.validarfiltros();
-          console.log(this.IdCurso);
           this.showparalelo=false;
           this.appService.listarparalelo(this.idempleados,this.IdPeriodo,this.idModalidad,event.value.id_curso).subscribe((data:any)=>this.paralelos=data);       
          
