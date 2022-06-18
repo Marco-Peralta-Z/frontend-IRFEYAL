@@ -14,34 +14,24 @@ import { usuario } from 'src/app/Model/rolesTS/usuario';
 export class ActividadesRegistroComponent implements OnInit {
 
   constructor(private servitutorias: ServiceTutoriasService, private messageService: MessageService, private auth: AuthService) { }
+
   submitted!: boolean;
-
-  statuses!: any[];
-
   Dialog!: boolean;
-
   periodo!: Periodo[];
   selectPeriodo!: Periodo;
-
   modalidad!: Modalidad[];
   selectModalidad!: Modalidad;
-
   curso!: Curso[];
   selectCurso!: Curso;
-
   paralelo!: Paralelo[];
   selectParalelo!: Paralelo;
-
   asignatura!: Asignatura[];
   selectAsignatura!: Asignatura;
-
   registro!: Registro[];
   selectRegistro!: Registro;
-
   listarBoolean: boolean = true;
   limpiarBoolean: boolean = true;
   filtrosBoolean: boolean = false;
-
   idempleados: any;
 
   ngOnInit(): void {
@@ -112,23 +102,20 @@ export class ActividadesRegistroComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'NO HAY REGISTROS', life: 3000 });
       } else {
         this.registro = dataRegistro;
-        
         for (let i = 0; i < this.registro.length; i++) {
           this.validarAprobaciones(this.registro[i]);
           this.registro[i].id_matricula.estudiante.id_persona.apellido = this.registro[i].id_matricula.estudiante.id_persona.apellido.toUpperCase();
           this.registro[i].id_matricula.estudiante.id_persona.nombre = this.registro[i].id_matricula.estudiante.id_persona.nombre.toUpperCase();
         }
-
-        this.registro.sort((o1, o2) =>{
-          if(o1.id_matricula.estudiante.id_persona.apellido < o2.id_matricula.estudiante.id_persona.apellido){
+        this.registro.sort((o1, o2) => {
+          if (o1.id_matricula.estudiante.id_persona.apellido < o2.id_matricula.estudiante.id_persona.apellido) {
             return -1;
-          }else if(o1.id_matricula.estudiante.id_persona.apellido > o2.id_matricula.estudiante.id_persona.apellido){
+          } else if (o1.id_matricula.estudiante.id_persona.apellido > o2.id_matricula.estudiante.id_persona.apellido) {
             return 1;
-          }else{
+          } else {
             return 0;
           }
         })
-
         this.listarBoolean = true;
         this.filtrosBoolean = true;
         this.limpiarBoolean = false;
@@ -137,38 +124,61 @@ export class ActividadesRegistroComponent implements OnInit {
   }
 
   validarAprobaciones(registro: Registro) {
+    if (registro.aporte1 == null) registro.aporte1 = 0;
+    if (registro.aporte2 == null) registro.aporte2 = 0;
+    if (registro.aporte3 == null) registro.aporte3 = 0;
+    if (registro.aporte4 == null) registro.aporte4 = 0;
+    if (registro.aporte5 == null) registro.aporte5 = 0;
+    if (registro.aporte6 == null) registro.aporte6 = 0;
+    if (registro.aporte7 == null) registro.aporte7 = 0;
+    if (registro.aporte8 == null) registro.aporte8 = 0;
+    if (registro.evaluacion1 == null) registro.evaluacion1 = 0;
+    if (registro.evaluacion2 == null) registro.evaluacion2 = 0;
+    if (registro.examenfinal == null) registro.examenfinal = 0;
+    if (registro.promediofinal == null) registro.promediofinal = 0;
+    if (registro.examen_supletorio == null) registro.examen_supletorio = 0;
+    if (registro.promedio_supletorio == null) registro.promedio_supletorio = 0;
+    if (registro.examen_remedial == null) registro.examen_remedial = 0;
+    if (registro.promedio_remedial == null) registro.promedio_remedial = 0;
+    if (registro.examen_gracia == null) registro.examen_gracia = 0;
+    if (registro.promedio_gracia == null) registro.promedio_gracia = 0;
+    if (registro.comportamiento == null) registro.comportamiento = 0;
     registro.promediofinal = Math.round(((parseInt(registro.aporte1.toString()) + parseInt(registro.aporte2.toString()) +
       parseInt(registro.aporte3.toString()) + parseInt(registro.aporte4.toString()) + parseInt(registro.aporte5.toString()) + parseInt(registro.aporte6.toString()) +
       parseInt(registro.aporte7.toString()) + parseInt(registro.aporte8.toString()) + parseInt(registro.evaluacion1.toString()) + parseInt(registro.evaluacion2.toString()) +
       parseInt(registro.examenfinal.toString())) * 10) / 11);
-
     registro.promedio_supletorio = 0;
     registro.promedio_remedial = 0;
     registro.promedio_gracia = 0;
-
-    if (parseInt(registro.promediofinal.toString()) >= 70 &&registro.examenfinal>=5 ) {
+    if (parseInt(registro.promediofinal.toString()) >= 70 && registro.examenfinal >= 5) {
       registro.estado = "APROBADO";
+      registro.examen_supletorio = 0;
+      registro.examen_remedial = 0;
+      registro.examen_gracia = 0;
     } else {
       if (parseInt(registro.promediofinal.toString()) >= 40) {
         if (registro.examen_supletorio == 0) {
           registro.estado = "SUPLETORIO";
         } else {
           registro.promedio_supletorio = Math.round((parseInt(registro.promediofinal.toString()) + parseInt(registro.examen_supletorio.toString())));
-          if (registro.promedio_supletorio >= 70 && registro.examen_supletorio>=5) {
+          if (registro.promedio_supletorio >= 70 && registro.examen_supletorio >= 5) {
             registro.estado = "APROBADO";
+            registro.examen_remedial = 0;
+            registro.examen_gracia = 0;
           } else {
             if (registro.examen_remedial == 0) {
               registro.estado = "REMEDIAL";
             } else {
               registro.promedio_remedial = Math.round((parseInt(registro.promediofinal.toString()) + parseInt(registro.examen_supletorio.toString()) + parseInt(registro.examen_remedial.toString())));
-              if (registro.promedio_remedial >= 70 && registro.examen_remedial>=5) {
+              if (registro.promedio_remedial >= 70 && registro.examen_remedial >= 5) {
                 registro.estado = "APROBADO";
+                registro.examen_gracia = 0;
               } else {
                 if (registro.examen_gracia == 0) {
                   registro.estado = "GRACIA";
                 } else {
                   registro.promedio_gracia = Math.round((parseInt(registro.promediofinal.toString()) + parseInt(registro.examen_supletorio.toString()) + parseInt(registro.examen_remedial.toString()) + parseInt(registro.examen_gracia.toString())));
-                  if (registro.promedio_gracia >= 70 && registro.examen_gracia>=5) {
+                  if (registro.promedio_gracia >= 70 && registro.examen_gracia >= 5) {
                     registro.estado = "APROBADO";
                   } else {
                     registro.estado = "REPROBADO";
@@ -210,9 +220,7 @@ export class ActividadesRegistroComponent implements OnInit {
     if (this.selectRegistro.id_registro) {
       this.registro[this.findIndexById(this.selectRegistro.id_registro)] = this.selectRegistro;
       this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Registro Actualizado', life: 3000 });
-
       this.validarAprobaciones(this.selectRegistro);
-      
       this.servitutorias.setRegistros(this.selectRegistro).subscribe();
     }
     else {
@@ -249,7 +257,6 @@ export class ActividadesRegistroComponent implements OnInit {
     }
     return id;
   }
-
 
 }
 
