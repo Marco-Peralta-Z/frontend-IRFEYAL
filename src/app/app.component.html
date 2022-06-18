@@ -1,0 +1,10 @@
+
+<mat-drawer-container>
+    <mat-drawer *ngIf="authService.isAuthenticated()" mode="side"  [opened]="sideBarOpen">
+        <app-sidenav *ngIf="authService.isAuthenticated()"></app-sidenav>
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-header (toggleSidebarForMe)="sideBarToggler()" *ngIf="authService.isAuthenticated()"></app-header>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

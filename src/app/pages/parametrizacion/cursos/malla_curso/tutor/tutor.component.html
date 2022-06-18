@@ -1,0 +1,69 @@
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2">Cursos Y Paralelos</div>
+    <div class="page__content shadow p-3 ">
+        <!--Inicio Pages-->
+        <div class="car">
+
+            <div class="p-field">
+                <div class="col-xs-11 col-sm-8 col-md-5 mx-auto">
+                    <div class="p-grid p-fluid">
+                        <div class="p-col-12 p-md-6 p-lg-10">
+                            <div class="card-header" style="text-align: center;">
+                                <h3>{{tipo}}</h3>
+                            </div>
+                            <p-toast></p-toast>
+
+                            <div class="card-body text-center">
+                                <form action="">
+                                    <div class="form-group">
+                                        {{curso.descripcion}}
+                                    </div>
+
+                                    <div class="form-group" style="text-align: left;">
+                                        <p-dropdown [options]="listParalelos" [(ngModel)]="selectparalelo"
+                                            name="paralelo" placeholder="Seleccione el Paralelo"
+                                            optionLabel="descripcion" [showClear]="true">
+                                        </p-dropdown>
+
+                                    </div>
+
+                                    <div class="form-group" style="text-align: left;">
+                                        <p-dropdown [options]="listempleado" [(ngModel)]="selectdocente" name="docente"
+                                            optionLabel="cargo" [filter]="true" filterBy="cargo" [showClear]="true"
+                                            placeholder="Seleccione el docente">
+                                            <ng-template pTemplate="selectedItem">
+                                                <div class="empleado-item empleado-item-value" *ngIf="selectdocente">
+                                                    <div>{{selectdocente.cargo}}:
+                                                        {{selectdocente.persona.apellido}}{{selectdocente.persona.nombre}}
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template let-empleado pTemplate="item">
+                                                <div class="empleado-item">
+                                                    <div>{{empleado.cargo}}:
+                                                        {{empleado.persona.apellido}}{{empleado.persona.nombre}}</div>
+                                                </div>
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button pButton type="button" class="ui-button-rounded ui-button-success"
+                                            label="Guardar" (click)="saveTutor()"></button>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <button pButton type="button" label="Cancelar" class="p-button-text"
+                                            (click)="cancelar()"> </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Fin Pages-->
+        </div>
+    </div>

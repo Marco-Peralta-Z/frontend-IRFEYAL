@@ -1,0 +1,98 @@
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2">Mallas Curriculares</div>
+    <div class="page__content shadow p-3 ">
+
+        <!--Inicio Contenido-->
+        <p-toast [style]="{marginTop: '80px'}"></p-toast>
+        <p-confirmPopup></p-confirmPopup>
+
+        <p-toolbar styleClass="mb-4">
+            <ng-template pTemplate="left">
+                <button pButton pRipple label="Nueva Malla" icon="pi pi-plus" class="p-button-success mr-2"
+                    (click)="nuevaMalla()"></button>
+
+            </ng-template>
+
+            <ng-template pTemplate="right">
+
+            </ng-template>
+        </p-toolbar>
+        
+        <div class="card">
+            <p-table #dt [value]="malla" [rows]="7" [paginator]="true" responsiveLayout="scroll" dataKey="id"
+                scrollHeight="400px" [globalFilterFields]="['descripcion']"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Mallas Curriculares"
+                [scrollable]="true" [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">Lista de las Mallas Curriculares</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Buscar..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Descripcion Malla </th>
+                        <th>Modalidad </th>
+                        <th>Cursos Asignados</th>
+                        <th>Materias Asignadas</th>
+                        <th>Accion</th>
+                        <th style="width: 8rem">
+                            <div class="flex justify-content-center align-items-center">
+                                Estado
+                                <p-columnFilter type="boolean" field="estado" display="menu"></p-columnFilter>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-m>
+                    <tr>
+                        <td style="text-align: justify;">
+                            {{m.descripcion}}
+                        </td>
+                        <td style="text-align: justify;">
+                            {{m.id_modalidad.descripcion}}
+                        </td>
+                        <td>
+                            <div class="flex justify-content-center align-items-center">
+                                <button pButton pRipple type="button" icon="fa fa-eye" (click)="verCursos(m)"
+                                    class="p-button-rounded p-button-secondary p-button-text"></button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex justify-content-center align-items-center">
+                                <button pButton pRipple type="button" icon="fa fa-eye" (click)=" verAsignaturas(m)"
+                                    class="p-button-rounded p-button-secondary p-button-text"></button>
+                            </div>
+                        </td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" tooltipPosition="Actualizar"
+                                class="p-button-rounded p-button-success mr-2" (click)="updateAsignatura(m)"></button>
+                            <button pButton pRipple icon="pi pi-trash" tooltipPosition="Eliminar"
+                                (click)="deleteMalla(m,$event)" class="p-button-rounded p-button-warning"></button>
+                        </td>
+                        <td>
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': m.estado, 'false-icon pi-times-circle': !m.estado}"></i>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="6">No sea encontrado ninguna Malla</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        En total se encontro {{malla ? malla.length : 0 }} Mallas Curriculares.
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <!--Fin Contenido-->
+    </div>
+</div>

@@ -1,0 +1,80 @@
+<!--Panel para Asignaturas y Docentes-->
+<div class="card">
+
+
+    <p-table #dt [value]="liscursos" dataKey="descripcion" responsiveLayout="scroll" [scrollable]="true"
+        scrollHeight="400px" [rows]="5" [paginator]="true" [globalFilterFields]="['descripcion']"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Asignaturas">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Lista de Cursos y Dirigente</h5>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Buscar..." />
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem"></th>
+                <th pSortableColumn="descripcion">Curso<p-sortIcon field="descripcion">
+                    </p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-c let-expanded="expanded">
+            <tr style="text-align: justify;">
+                <td>
+                    <button type="button" pButton pRipple [pRowToggler]="c" (click)="buscarParalelo(c)"
+                        class="p-button-text p-button-rounded p-button-plain" pTooltip="Ver Palelos"
+                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                </td>
+                <td>
+                    {{c.descripcion}}
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">No sea encontrado ningun Curso</td>
+            </tr>
+        </ng-template>
+
+
+        <ng-template pTemplate="rowexpansion" let-c>
+            <tr>
+                <td colspan="10">
+                    <div class="p-3 card">
+                        <p-table [value]="listtutor" dataKey="id_tutor">
+                            <ng-template pTemplate="header">
+            <tr>
+                <th>Palelo</th>
+                <th colspan="6">Tutor</th>
+            </tr>
+
+        </ng-template>
+        <ng-template pTemplate="body" let-tu>
+            <tr style="text-align: left;" >
+                <td>{{tu.id_paralelo.descripcion}}</td>
+                <td colspan="6">{{tu.id_empleado.persona.cedula}} {{tu.id_empleado.persona.apellido}}
+                    {{tu.id_empleado.persona.nombre}}</td>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6">No sea encontrado ningun Paralelo</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+</tr>
+</ng-template>
+
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total se encontro {{liscursos ? liscursos.length : 0 }} Cursos
+            </div>
+        </ng-template>
+    </p-table>

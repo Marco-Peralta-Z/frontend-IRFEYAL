@@ -1,0 +1,138 @@
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2">Crear Horario</div>
+    <div class="page__content shadow p-3 ">
+        <!--Inicio Contenido-->
+        <p-toast></p-toast>
+        <div class="p-field">
+            <div class="col-xs-11 col-sm-8 col-md-5 mx-auto">
+                <div class="p-grid p-fluid">
+                    <div class="p-col-12 p-md-6 p-lg-10">
+                        <div class="card-header" style="text-align: center;">
+                            <h3>Ingrese El nuevo Horario</h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="">
+                                <p-dropdown [options]="listperiodo" [(ngModel)]="selectperiodo" optionLabel="vigencia"
+                                    [filter]="true" filterBy="periodo" [showClear]="true" (onChange)="listhoras()"
+                                    placeholder="Seleccione el Periodo" name="periodo">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="periodo-item periodo-item-value" *ngIf="selectperiodo">
+                                            <div>{{selectperiodo.ano_inicio}}-{{selectperiodo.ano_fin}}:
+                                                Modalidad:{{selectperiodo.malla.id_modalidad.descripcion}} </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-p pTemplate="item">
+                                        <div class="p-item">
+                                            <div>{{p.ano_inicio}}-{{p.ano_fin}}: {{p.fecha_inicio| date:
+                                                'MM/yyyy'}}-{{p.fecha_fin|
+                                                date: 'MM/yyyy'}}: {{p.malla.descripcion}},
+                                                Modalidad:{{p.malla.id_modalidad.descripcion}} </div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+
+                                <div *ngIf="selectperiodo">
+                                    <br>
+                                    <!--Curso-->
+                                    <div class="form-group">
+                                        <p-dropdown [options]="listCurso" (onClear)="cerrarC()"
+                                            [(ngModel)]="selectCurso" name="curso" placeholder="Seleccione el Curso"
+                                            optionLabel="descripcion" [showClear]="true">
+                                        </p-dropdown>
+                                    </div>
+                                    <!--Paralelo-->
+                                    <div class="form-group" *ngIf="selectCurso">
+                                        <p-dropdown [options]="listParalelo" [(ngModel)]="selectParalelo"
+                                            optionLabel="id_paralelo" [filter]="true" filterBy="name" [showClear]="true"
+                                            name="paralelo" placeholder="Seleccione El Paralelo">
+                                            <ng-template pTemplate="selectedItem">
+                                                <div class="tutor-item tutor-item-value" *ngIf="selectParalelo">
+                                                    <div>{{selectParalelo.id_paralelo.descripcion}}:
+                                                        Tutor{{selectParalelo.id_empleado.persona.apellido}}{{selectParalelo.id_empleado.persona.nombre}}
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template let-t pTemplate="item">
+                                                <div class="tutor-item">
+                                                    {{t.id_paralelo.descripcion}}: Tutor
+                                                    {{t.id_empleado.persona.apellido}}{{t.id_empleado.persona.nombre}}
+                                                </div>
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </div>
+                                    <!--Dia-->
+                                    <div class="form-group" *ngIf="selectParalelo">
+                                        <p-dropdown [options]="listdia" [(ngModel)]="selectdia" name="dia"
+                                            (onChange)="verHoras()" placeholder="Seleccione el Dia" optionLabel="dia"
+                                            [showClear]="true">
+                                        </p-dropdown>
+                                    </div>
+                                    <!--Asignaturas-->
+                                    <div class="form-group">
+                                        <p-dropdown [options]="listAsig" [(ngModel)]="selectasignatura" [filter]="true"
+                                            placeholder="Seleccione la Asignatura" optionLabel="descripcion"
+                                            [showClear]="true" name="Asig">
+                                        </p-dropdown>
+                                    </div>
+                                    <!--Empleado o Docente-->
+                                    <div class="form-group" *ngIf="selectasignatura">
+                                        <p-dropdown [options]="selectasignatura.empleados" [(ngModel)]="selecDocente"
+                                            optionLabel="cargo" [filter]="true" filterBy="cargo" [showClear]="true"
+                                            name="emple" placeholder="Seleccione El Docente">
+                                            <ng-template pTemplate="selectedItem">
+                                                <div class="empleado-item empleado-item-value" *ngIf="selecDocente">
+                                                    <div>{{selecDocente.cargo}}:
+                                                        {{selecDocente.persona.apellido}}{{selecDocente.persona.nombre}}
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template let-em pTemplate="item">
+                                                <div class="empleado-item">
+                                                    {{em.cargo}}: {{em.persona.apellido}}{{em.persona.nombre}}
+                                                </div>
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </div>
+                                    <!--Horas-->
+                                    <div class="form-group">
+                                        <p-dropdown [options]="horas" [(ngModel)]="selehoras" optionLabel="inicio"
+                                            name="horas" [filter]="true" filterBy="inicio" [showClear]="true"
+                                            placeholder="Seleccione el horario" (onClick)="verihora()">
+                                            <ng-template pTemplate="selectedItem">
+                                                <div class="horas-item horas-item-value" *ngIf="selehoras">
+                                                    <div>{{selehoras.inicio}}-{{selehoras.fin}}</div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template let-h pTemplate="item">
+                                                <div class="horas-item">
+                                                    {{h.inicio}}-{{h.fin}}
+                                                    <div *ngIf="h.code === 'rc'" style="color: red;">
+                                                        RECESO
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </p-dropdown>
+
+                                    </div>
+
+
+                                    <div class="card">
+                                        <button pButton type="submit" class="ui-button-rounded ui-button-success"
+                                            label="Guardar" (click)="guardar()"></button>
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group card">
+                                    <button class="btn btn-link" (click)="cancelar()">Cancelar </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--fin Contenido-->
+    </div>
+</div>

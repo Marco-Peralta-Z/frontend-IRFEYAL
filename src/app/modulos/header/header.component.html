@@ -1,0 +1,40 @@
+<div >
+    <mat-toolbar>
+        <mat-toolbar-row class="justify-content-between">
+            <div *ngIf="menuacti">
+                <button pButton pRipple type="button" icon="fa fa-chevron-left"
+                    class="p-button-rounded p-button-secondary " (click)="toggleSidebar()"></button>
+            </div>
+
+            <div *ngIf="!menuacti">
+                <button pButton pRipple type="button" icon="fa fa-chevron-right"
+                    class="p-button-rounded p-button-secondary " (click)="toggleSidebar()"></button>
+            </div>
+            <div class="row mr-2 ml-auto">
+                <ul>
+
+                    <button mat-button [matMenuTriggerFor]="menu"
+                        class="user mt-2 d-flex align-items-center ">
+
+                        <p-chip label="{{usuarioGuardado().usuario}}"  styleClass="mr-2 custom-chip"
+                            class="user-image  p-2" icon="fa fa-sort-desc">
+                        </p-chip>
+
+                    </button>
+
+                    <mat-menu #menu="matMenu">
+                        <button pButton pRipple type="button" label="Perfil" class="p-button-text p-button-plain"
+                            icon="pi pi-fw pi-user">
+                        </button>
+
+                        <button pButton pRipple type="button" label="Cerrar Sesion"
+                                class="p-button-text p-button-plain" icon="pi pi-fw pi-power-off"
+                                (click)="cerrarSesion()">
+                        </button>
+                    </mat-menu>
+
+                </ul>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+</div>
