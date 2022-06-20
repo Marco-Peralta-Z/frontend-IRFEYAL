@@ -32,6 +32,7 @@ export class ListarEstudianteComponent implements OnInit {
   day?:number;
   mesFinal:any;
   diaFinal:any
+  rows: number=5;
   pipe = new DatePipe('en-EC');
   estudiante: Estudiante= new Estudiante();
 

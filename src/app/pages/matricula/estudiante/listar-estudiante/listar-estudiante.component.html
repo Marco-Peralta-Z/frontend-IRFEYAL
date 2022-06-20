@@ -4,13 +4,14 @@
         <p-toast></p-toast>
 
         <div class="card">
+            <!-- <p-table [value]="customers" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" responsiveLayout="scroll"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"> -->
 
-
-            <p-table #dt [value]="estudiantes" [rows]="10" [paginator]="true"
+            <p-table #dt [value]="estudiantes" [rows]="rows" [paginator]="true"
                 [globalFilterFields]="['id_persona.cedula','id_persona.nombre','id_persona.apellido']"
                 responsiveLayout="scroll" [(selection)]="selectEstudiante" [rowHover]="true" dataKey="id"
                 currentPageReportTemplate="De {first} a {last} de {totalRecords} existentes"
-                [showCurrentPageReport]="true">
+                [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]">
                 <ng-template pTemplate="caption">
                     <div class="flex align-items-center justify-content-between">
                         <h3 class="m-0">Lista de Estudiantes</h3>
@@ -63,6 +64,7 @@
 
         <p-dialog [(visible)]="productDialog" [style]="{width: '650px'}" header="Información Estudiante" [modal]="true"
             styleClass="p-fluid">
+            <hr>
             <ng-template pTemplate="content">
                 <h3>Desea Editar?</h3>
                 <p-toggleButton [(ngModel)]="esditable" onLabel="Habilitar" offLabel="Deshabilitar" onIcon="pi pi-check"
@@ -71,9 +73,16 @@
                 <hr>
                 <div class="formgrid grid">
                     <div class="field col-6">
+                        <label for="identidadUpdate">Cedula/Pasaporte</label>
+                        <input type="text" pInputText id="identidadUpdate" [(ngModel)]="estudiante.id_persona.cedula"
+                            [disabled]="esditable" required autofocus />
+                        <small class="p-error" *ngIf="submitted && !estudiante.id_persona.cedula">Nombre es
+                            requerido.</small>
+                    </div>
+                    <div class="field col-6">
                         <label for="nombreUpdate">Nombre</label>
                         <input type="text" pInputText id="nombreUpdate" [(ngModel)]="estudiante.id_persona.nombre"
-                            [disabled]="esditable" required autofocus />
+                            [disabled]="esditable" required />
                         <small class="p-error" *ngIf="submitted && !estudiante.id_persona.nombre">Nombre es
                             requerido.</small>
                     </div>

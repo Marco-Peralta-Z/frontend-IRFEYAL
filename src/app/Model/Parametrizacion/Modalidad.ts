@@ -4,7 +4,7 @@ export class Modalidad {
 
     descripcion: string = "";
 
-    hora_inicio: string = "";
+    // hora_inicio: string = "";
 
-    hora_fin: string = "";
+    // hora_fin: string = "";
 }

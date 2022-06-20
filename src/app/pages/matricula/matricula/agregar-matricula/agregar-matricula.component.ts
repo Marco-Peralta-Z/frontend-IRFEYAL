@@ -14,6 +14,7 @@ import { Paralelo } from 'src/app/Model/Parametrizacion/Paralelo';
 import { AuthService } from '../../../../Servicio/auth/auth.service';
 import Swal from 'sweetalert2';
 import { Malla } from '../../../../Model/Parametrizacion/Malla';
+import { persona } from '../../../../Model/rolesTS/persona';
 
 
 
@@ -29,10 +30,12 @@ export class AgregarMatriculaComponent implements OnInit {
   mallas: Malla[] = [];
   mallaSelectd: Malla = new Malla();
   cursoSelectd: Curso = new Curso();
-  peridoSelectd:Periodo= new Periodo();
-  paraleloSelectd:Paralelo= new Paralelo();
-  modalidadSelectd:Modalidad= new Modalidad();
+  peridoSelectd: Periodo = new Periodo();
+  paraleloSelectd: Paralelo = new Paralelo();
+  modalidadSelectd: Modalidad = new Modalidad();
   estudiante: Estudiante = new Estudiante();
+  personaSelectd: persona = new persona();
+  personas: persona[] = [];
   matricula: Matricula = new Matricula();
   user: usuario = new usuario();
   filteredProvincia: provincia[] = [];
@@ -52,6 +55,7 @@ export class AgregarMatriculaComponent implements OnInit {
   display: boolean = false;
   nombre: string = "";
   mens: string = "";
+  listRequerimientos: string = "";
   campo: string = "Cedula incompleta!";
 
 
@@ -64,6 +68,12 @@ export class AgregarMatriculaComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarMallas();
+    // this.matriculaService.getPeronas()
+    // .subscribe(persona => this.personas=persona);
+
+
+    this.estudianteService.getEstudiantePersonas()
+      .subscribe(persona => this.personas = persona);
   }
 
   matriculaFormulario: FormGroup = this.fb.group({
@@ -100,6 +110,7 @@ export class AgregarMatriculaComponent implements OnInit {
 
   cargarCursos() {
 
+  
     this.matriculaFormulario.controls['paralelo'].setValue([]);
     this.matriculaFormulario.controls['jornada'].setValue([]);
     this.matriculaFormulario.controls['periodo'].setValue([]);
@@ -116,11 +127,12 @@ export class AgregarMatriculaComponent implements OnInit {
 
     }
 
+    this.cargarModalidadesPorMalla();
 
   }
   buscar() {
-    if (this.cedula !== "") {
-      this.estudianteService.getEstudiantePorCedula(this.cedula.trim())
+    if (this.personaSelectd.cedula !== "") {
+      this.estudianteService.getEstudiantePorCedula(this.personaSelectd.cedula.trim())
         .subscribe(estudiante => {
           this.estudiante = estudiante
           this.matricula.estudiante = estudiante;
@@ -157,30 +169,35 @@ export class AgregarMatriculaComponent implements OnInit {
     this.matricula.usuario = this.user;
     this.matriculaService.postMatricula(this.matricula)
       .subscribe(newMatricula => {
-        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Nueva Matricula', detail: `Nuevo id: ${newMatricula.id_matricula} creado con exito!` });
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Nueva Matricula', detail: `Matricula creada con exito!` });
         this.enviarCorreo(newMatricula);
         this.limpiarFormulario();
-
       });
 
   }
 
   enviarCorreo(matricula: Matricula) {
-    this.matriculaService.sendEmail(matricula)
-      .subscribe(res => console.log(res));
+    
+    if (this.selectedRequerimientos.length!=0) {
+      for (let i = 0; i < this.selectedRequerimientos.length; i++) {
+        this.listRequerimientos+=this.selectedRequerimientos[i]+"-";
+      }
+    }else{
+      this.listRequerimientos="vacio";
+    }
+    
+    this.matriculaService.sendEmail(matricula, this.listRequerimientos)
+    .subscribe(res => console.log(res));
+    
   }
-  buscarJornadaPorCurso() {
-    this.matricula.curso=this.cursoSelectd;
-      this.matriculaService.getModalidadPorCurso(this.cursoSelectd.id_curso)
-      .subscribe(modalidades => {
-        this.modalidades = modalidades;
-        Swal.close()
-        
-      });
-
-      this.matriculaService.getParalelosPorCurso(this.cursoSelectd.id_curso)
-      .subscribe(paralelos =>{
-        this.paralelos=paralelos;
+  cargarModalidadesPorMalla() {
+    let filtered: any[] = [];
+    filtered.push(this.mallaSelectd.id_modalidad);
+    this.modalidades = filtered;
+    console.log(this.modalidades);
+    this.matriculaService.getParalelos()
+      .subscribe(paralelos => {
+        this.paralelos = paralelos;
       })
   }
 
@@ -189,25 +206,30 @@ export class AgregarMatriculaComponent implements OnInit {
       && this.matriculaFormulario.controls[valor].touched
   }
 
-  obtenerPeriodo(){
-    this.matricula.id_periodo=this.peridoSelectd;
+  obtenerPeriodo() {
+    this.matricula.id_periodo = this.peridoSelectd;
   }
-  obtenerModalidad(){
-    this.matricula.modalidad=this.modalidadSelectd;
+  obtenerModalidad() {
+    this.matricula.modalidad = this.modalidadSelectd;
   }
-  obtenerParalelo(){
-    this.matricula.id_paralelo=this.paraleloSelectd;
+  obtenerParalelo() {
+    this.matricula.id_paralelo = this.paraleloSelectd;
   }
+
+  obtenerCurso() {
+    this.matricula.curso = this.cursoSelectd;
+  }
+
   cargarPeriodo() {
-    // console.log("objeto malla ", this.mallaSelectd);
-    // console.log("id malla ", this.mallaSelectd.id_malla);
+
     this.matriculaService.getPeriodoPorMalla(this.mallaSelectd.id_malla!)
       .subscribe({
         next: (periodo) => {
           this.periodos = periodo;
-          Swal.close()
+          
         },
       });
+      console.log(this.periodos);
   }
   limpiarFormulario() {
     this.activeIndex1 = 0;
@@ -218,9 +240,8 @@ export class AgregarMatriculaComponent implements OnInit {
     this.matriculaFormulario.controls['periodo'].setValue([]);
     this.matriculaFormulario.controls['paralelo'].setValue([]);
     this.matriculaFormulario.controls['jornada'].setValue([]);
-    console.log(this.estudiante.id_persona.fechaNacimiento);
     this.matriculaFormulario.controls['nacimiento'].setValue([]);
-    this.cedula = "";
+    this.listRequerimientos="";
     this.fullName = "";
     this.cursos = [];
     this.modalidades = [];

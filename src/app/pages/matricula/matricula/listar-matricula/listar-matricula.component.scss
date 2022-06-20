@@ -1,1 +1,12 @@
 @import "../../../../../assets/scss/pages.scss";
+
+.encabezado{
+    height: 30px; width: 100%;
+    background-color: #EEE;
+    display: inline-table;
+  }
+  .titulo{ 
+    display: table-cell; 
+    vertical-align: middle;
+    text-align: center;
+  }

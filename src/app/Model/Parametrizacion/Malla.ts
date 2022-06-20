@@ -1,4 +1,5 @@
 import { Curso } from './Curso';
+import { Modalidad } from '../tutorias/registro';
 export class Malla {
 
     id_malla?: number;
@@ -9,4 +10,5 @@ export class Malla {
 
     fecha_creacion?:Date;
     listaCursos?: Curso;
+    id_modalidad?: Modalidad;
 }
