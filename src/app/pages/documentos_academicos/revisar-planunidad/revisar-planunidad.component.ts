@@ -36,6 +36,7 @@ export class RevisarPlanunidadComponent implements OnInit {
   verAsigNom: any;
   verAsigId: any;
   verCurso: any;
+  verParalelo: any;
 
 
 
@@ -64,6 +65,7 @@ export class RevisarPlanunidadComponent implements OnInit {
       empleado: ['', Validators.required],
       asignatura: ['', Validators.required],
       curso: ['', Validators.required],
+      paralelo: ['', Validators.required],
       modalidad: ['', Validators.required],
       periodo: ['', Validators.required],
     });
@@ -93,6 +95,7 @@ export class RevisarPlanunidadComponent implements OnInit {
       empleado: plan_unidad.empleado,
       asignatura: plan_unidad.asignatura,
       curso: plan_unidad.curso,
+      paralelo: plan_unidad.paralelo,
       modalidad: plan_unidad.modalidad,
       periodo: plan_unidad.periodo
     });
@@ -111,7 +114,9 @@ export class RevisarPlanunidadComponent implements OnInit {
     this.verPeriodoMalla = plan_unidad.periodo.malla.descripcion;
     this.verAsigNom = plan_unidad.asignatura.descripcion;
     this.verAsigId = plan_unidad.asignatura.id_asignatura;
-    this.verCurso = plan_unidad.curso.descripcion + " - " + plan_unidad.curso.id_paralelo.descripcion;
+    this.verCurso = plan_unidad.curso.descripcion;
+    this.verParalelo = plan_unidad.paralelo.descripcion;
+
     if (this.verObservaciones != "Sin observaciones") {
       this.mostrarObservacionesAnt = true;
     } else {
@@ -183,7 +188,6 @@ export class RevisarPlanunidadComponent implements OnInit {
             this.mostrarObservaciones = false;
             this.btnRegresarEnviar = false;
             this.mostrarTablePendientes = true;
-            this.mostrarmsg = true;
             //Actualizar tabla
             this.cargarDatos();
             Swal.fire({

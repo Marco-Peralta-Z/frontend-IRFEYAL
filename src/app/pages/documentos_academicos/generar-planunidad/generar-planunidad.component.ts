@@ -29,6 +29,7 @@ export class GenerarPlanunidadComponent implements OnInit {
   planunidadaprobados: PlanUnidad[] = [];
   planunidadrechazados: PlanUnidad[] = [];
   cursos: any;
+  paralelos: any;
 
   aprobado: String = "Aprobado";
   rechazado: String = "Rechazado";
@@ -63,6 +64,9 @@ export class GenerarPlanunidadComponent implements OnInit {
   // Variables para capturar el select de cursos
   opcionSelectCurso: any;
   verSelectCurso: String = "";
+  // Variables para capturar el select de paralelos
+  opcionSelectParalelo: any;
+  verSelectParalelo: String = "";
 
   constructor(
     public fb: FormBuilder,
@@ -90,6 +94,7 @@ export class GenerarPlanunidadComponent implements OnInit {
       empleado: ['', Validators.required],
       asignatura: ['', Validators.required],
       curso: ['', Validators.required],
+      paralelo: ['', Validators.required],
       modalidad: ['', Validators.required],
       periodo: ['', Validators.required],
     });
@@ -123,10 +128,22 @@ export class GenerarPlanunidadComponent implements OnInit {
       error => { console.error(error) }
     );
 
+    this.planunidadService.getAllCurso().subscribe(resp => {
+      this.cursos = resp;
+    },
+      error => { console.error(error) }
+    );
+
+    this.planunidadService.getAllParalelo().subscribe(resp => {
+      this.paralelos = resp;
+    },
+      error => { console.error(error) }
+    );
+
     //Captura los cambios en el select de periodo para luego mostrar la asignaturar de acuerdo a la Malla
     this.generar_planunidadForm.get("periodo")?.valueChanges.subscribe(value => {
       if (value != null && value != 0) {
-        this.planunidadService.getAllAsignaturasMalla(value.malla.id_malla).subscribe(resp => {
+        this.planunidadService.getAllAsignaturasByMalla(value.malla.id_malla).subscribe(resp => {
           this.asignaturas = resp;
         },
           error => { console.error(error) }
@@ -137,11 +154,6 @@ export class GenerarPlanunidadComponent implements OnInit {
       }
     });
 
-    this.planunidadService.getAllCurso().subscribe(resp => {
-      this.cursos = resp;
-    },
-      error => { console.error(error) }
-    );
 
     this.cargarPlanesUnidadEmpleado(this.aprobado);
     this.cargarPlanesUnidadEmpleado(this.rechazado);
@@ -150,16 +162,6 @@ export class GenerarPlanunidadComponent implements OnInit {
   capturarSelectUnidad() {
     // Pasamos el valor seleccionado a la variable verSelectUnidad
     this.verSelectUnidad = this.opcionSelectUnidad.idUnidad;
-  }
-  capturarSelectModalidad() {
-    // Pasamos el valor seleccionado a la variable verSelectModalidad
-    this.verSelectModalidad = this.opcionSelectModalidad.descripcion;
-  }
-
-  capturarSelectAsig() {
-    // Pasamos el id y descripcion del valor seleccionado a la variable verSeleccion verSelectAsigId y verSelectAsigNom
-    this.verSelectAsigId = this.opcionSelectAsig.id_asignatura;
-    this.verSelectAsigNom = this.opcionSelectAsig.descripcion;
   }
 
   capturarSelectPeriodo() {
@@ -171,13 +173,33 @@ export class GenerarPlanunidadComponent implements OnInit {
     }
   }
 
+  capturarSelectModalidad() {
+    // Pasamos el valor seleccionado a la variable verSelectModalidad
+    this.verSelectModalidad = this.opcionSelectModalidad.descripcion;
+  }
+
   capturarSelectCurso() {
-    // Pasamos el valor seleccionado a la variable verSeleccionUnidad
+    // Pasamos el valor seleccionado a la variable verSeleccionCurso
     if (this.opcionSelectCurso != '0') {
-      this.verSelectCurso = this.opcionSelectCurso.descripcion + " - " + this.opcionSelectCurso.id_paralelo.descripcion;
+      this.verSelectCurso = this.opcionSelectCurso.descripcion;
+    }
+  }
+
+  capturarSelectParalelo() {
+    // Pasamos el valor seleccionado a la variable verSeleccionUnidad
+    if (this.opcionSelectParalelo != '0') {
+      this.verSelectParalelo = this.opcionSelectParalelo.descripcion;
     }
 
   }
+
+  capturarSelectAsig() {
+    // Pasamos el id y descripcion del valor seleccionado a la variable verSeleccion verSelectAsigId y verSelectAsigNom
+    this.verSelectAsigId = this.opcionSelectAsig.id_asignatura;
+    this.verSelectAsigNom = this.opcionSelectAsig.descripcion;
+  }
+
+
 
 
   verFormGenerar() {
@@ -234,6 +256,7 @@ export class GenerarPlanunidadComponent implements OnInit {
               this.opcionSelectAsig = 0;
               this.opcionSelectPeriodo = 0;
               this.opcionSelectCurso = 0;
+              this.opcionSelectParalelo = 0;
               this.opcionSelectAsig = 0;
               //Alerta success
               Swal.fire({
@@ -265,7 +288,7 @@ export class GenerarPlanunidadComponent implements OnInit {
               text: "Unidad " + this.generar_planunidadForm.value.unidad.idUnidad +
                 ' de ' + this.generar_planunidadForm.value.asignatura.descripcion +
                 ' del ' + this.generar_planunidadForm.value.curso.descripcion +
-                ' - ' + this.generar_planunidadForm.value.curso.id_paralelo.descripcion +
+                ' - ' + this.generar_planunidadForm.value.paralelo.descripcion +
                 ' de modalidad ' + this.generar_planunidadForm.value.modalidad.descripcion
             })
           }
@@ -285,6 +308,7 @@ export class GenerarPlanunidadComponent implements OnInit {
       this.opcionSelectAsig = 0;
       this.opcionSelectPeriodo = 0;
       this.opcionSelectCurso = 0;
+      this.opcionSelectParalelo = 0;
       this.opcionSelectAsig = 0;
       //Mostramos el btn Enviar y ocultamos btn Guardar Cambios y  btn Cancelar
       this.mostrarBotonEnviar = true;
@@ -363,6 +387,7 @@ export class GenerarPlanunidadComponent implements OnInit {
       empleado: plan_unidad.empleado,
       asignatura: plan_unidad.asignatura,
       curso: plan_unidad.curso,
+      paralelo: plan_unidad.paralelo,
       modalidad: plan_unidad.modalidad,
       periodo: plan_unidad.periodo
     });
@@ -374,6 +399,7 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.opcionSelectAsig = plan_unidad.asignatura;
     this.opcionSelectPeriodo = plan_unidad.periodo;
     this.opcionSelectCurso = plan_unidad.curso;
+    this.opcionSelectParalelo = plan_unidad.paralelo;
     //Cargamos los labels
     this.verSelectUnidad = plan_unidad.unidad.idUnidad;
     this.verSelectPeriodoFinicio = plan_unidad.periodo.fecha_inicio;
@@ -382,7 +408,8 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.verSelectPeriodoMalla = plan_unidad.periodo.malla.descripcion;
     this.verSelectAsigNom = plan_unidad.asignatura.descripcion;
     this.verSelectAsigId = plan_unidad.asignatura.id_asignatura;
-    this.verSelectCurso = plan_unidad.curso.descripcion + " - " + plan_unidad.curso.id_paralelo.descripcion;
+    this.verSelectCurso = plan_unidad.curso.descripcion;
+    this.verSelectParalelo = plan_unidad.paralelo.descripcion;
     //Mostramos el btn Guardar Cambios y ocultamos btn Enviar
     this.mostrarCambiosEditar = true;
     this.mostrarBotonEnviar = false;
