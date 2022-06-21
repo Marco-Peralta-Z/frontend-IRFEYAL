@@ -11,6 +11,7 @@ import { parroquia } from '../../../Model/rolesTS/parroquia';
 import { canton } from '../../../Model/rolesTS/canton';
 import { extension } from '../../../Model/rolesTS/extension';
 import { Api } from '../../../config';
+import { persona } from '../../../Model/rolesTS/persona';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ private baseUrl: string = Api.url;
     return this.http.get<Estudiante[]>(`${this.baseUrl}api/estudiantes`);
   }
 
+  getEstudiantePersonas(): Observable<persona[]>{
+    return this.http.get<persona[]>(`${this.baseUrl}api/estudiantePersonas`);
+  }
+  
   getEstudiantePorCedula(cedula: string): Observable<Estudiante>{
     return this.http.get<Estudiante>(`${this.baseUrl}api/buscarEstudiante/${cedula}`);
   }
