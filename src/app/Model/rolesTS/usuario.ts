@@ -5,11 +5,16 @@ export class usuario {
 
     contrasenia: string = "";
 
-    estUsuario?: boolean;
+    estUsuario: Boolean = new Boolean;
     
-    usuario?: string;
+    usuario: String=new String;
 
     roles: string [] = [];
 
     empleado?: empleado ;
+}
+
+export interface RespUsuario{
+    usuario: usuario ;
+    mensaje: string ;
 }

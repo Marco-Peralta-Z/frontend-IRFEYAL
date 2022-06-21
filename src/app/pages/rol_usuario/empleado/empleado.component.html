@@ -1,15 +1,199 @@
+<p-toast></p-toast>
 <div class="container-fluid page">
-    <div class="d-flex page__box p-3 mt-2">Lista de Empleados</div>
+    <div class="d-flex page__box p-3 mt-2">Registro Empleado</div>
     <div class="page__content shadow p-3 ">
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Crear Empleado" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+        </ng-template>
+        <ng-template pTemplate="right">
+        <span class="p-input-icon-left" >
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  placeholder="Search..." />
+                </span>
+        </ng-template>
+    </p-toolbar>
 
-        <!--Inicio Contenido-->
+ <p-table #dt [value]="empleados" [rows]="10" [paginator]="true" 
+        [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h3 class="p-m-0">Tabla Empleados</h3>
+                
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id_empleado">ID <p-sortIcon field="id_empleado"></p-sortIcon></th>
+                <th pSortableColumn="persona.nombre">Nombre <p-sortIcon field="persona.nombre"></p-sortIcon></th>
+                <th pSortableColumn="persona.apellido">Apellido <p-sortIcon field="persona.apellido"></p-sortIcon></th>
+                <th pSortableColumn="persona.cedula">Cedula <p-sortIcon field="persona.cedula"></p-sortIcon></th>
+                <th pSortableColumn="cargo">Cargo <p-sortIcon field="cargo"></p-sortIcon></th>
+                <th pSortableColumn=" ">Genero <p-sortIcon field=" "></p-sortIcon></th>
+                <!-- <th pSortableColumn="estUsuario"> fecha de nacimiento<p-sortIcon field="estUsuario"></p-sortIcon></th> -->
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-empleado>
+            <tr>
+                <td>{{empleado.id_empleado}}</td>
+                <td>{{empleado.persona.nombre}}</td>
+                <td>{{empleado.persona.apellido}}</td>
+                <td>{{empleado.persona.cedula}}</td>
+                <td>{{empleado.cargo}}</td>
+                <td>{{empleado.persona.genero.genero | titlecase}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editarEmpleado(empleado)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarEmpleado(empleado)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                En total hay {{empleados ? empleados.length : 0 }} empleados.
+            </div>
+        </ng-template>
+    </p-table>
+</div> 
 
+<p-dialog [(visible)]="empleadoDialog" (onHide)="hideDialog()" [style]="{width: '650px'}" header="Agregar empleado" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content" >
+       <form [formGroup]="empleadoForm">
+        <!-- PERSONA -->
+        <div class="formgrid grid">
+            <div class="p-field col-6">
+                <label for="name">Nombre</label>
+                <input type="text" pInputText formControlName="nombre" />
+                <small class="p-error block" *ngIf="verificarCampo('nombre')">{{errorMsg('nombre',3)}}</small>
+            </div>
+            <div class="p-field col-6">
+                <label for="name">Apellido:</label>
+                <input type="text" pInputText formControlName="apellido"/>
+                <small class="p-error block" *ngIf="verificarCampo('apellido')">{{errorMsg('apellido',3)}}</small>
+            </div>
+            <div class="p-field col-6">
+                <label for="name">Cedula:</label>
+                <input type="text" pInputText formControlName="cedula" />
+                <small class="p-error block" *ngIf="verificarCampo('cedula')">{{errorMsg('cedula',10)}}.</small>
+            </div>
+            <div class="p-field col-6">
+                <label for="name">Fecha Nacimiento:</label>
+                <p-calendar dateFormat="yy-mm-dd" inputId="dateformat" formControlName="fechaNacimiento"></p-calendar>
+                <small class="p-error block" *ngIf="verificarCampo('fechaNacimiento')">requiere fecha de nacimiento.</small>
+        
+            </div>
+            <div class="p-field col-6">
+                <label for="name">Genero:</label>
+                <p-dropdown [options]="generos" placeholder="Seleccione Genero" optionLabel="genero" [showClear]="true"
+                formControlName="genero">
+                </p-dropdown>
+                <small class="p-error block" *ngIf="verificarCampo('genero')">requiere genero.</small>
+            </div>
+        </div>
+        <!--FIN PERSONA-->
+        <hr>
+        <!--INICIO DIRECCION-->
+        <div class="field">
+            <label class="mb-2">
+                <h2>Dirección</h2>
+            </label>
+            <div class="formgrid grid">
+                <div class="p-field col-6">
+                    <label for="name">Pais:</label>
+                    <p-dropdown [options]="paises" placeholder="Seleccione pais" optionLabel="pais" [showClear]="true"
+                    formControlName="pais" [filter]="true" filterBy="pais">
+                    </p-dropdown>
+                    <small class="p-error block" *ngIf="verificarCampo('pais')">requiere .</small>
+                </div>
+                <div class="p-field col-6">
+                    <label for="name">Provincia:</label>
+                    <p-dropdown [options]="provincias" placeholder="Seleccione Provincia" optionLabel="provincia"
+                        [showClear]="true" formControlName="provincia" [filter]="true" filterBy="provincia"></p-dropdown>
+                        <small class="p-error block" *ngIf="verificarCampo('provincia')">requiere .</small>
+                </div>
+                <div class="p-field col-6">
+                    <label for="name">Canton:</label>
+                    <p-dropdown [options]="cantones" placeholder="Seleccione Canton" optionLabel="canton" [showClear]="true"
+                    formControlName="canton" [filter]="true" filterBy="canton">
+                    </p-dropdown>
+                    <small class="p-error block" *ngIf="verificarCampo('canton')">requiere .</small>
+                </div>
+                <div class="p-field col-6">
+                    <label for="name">Parroquia:</label>
+                    <p-dropdown [options]="parroquias" placeholder="Seleccione Parroquia" optionLabel="parroquia"
+                        [showClear]="true" formControlName="parroquia" [filter]="true" filterBy="parroquia"></p-dropdown>
+                        <small class="p-error block" *ngIf="verificarCampo('parroquia')">requiere .</small>
+                </div>
+        
+                <div class="p-field col-6">
+                    <label for="name">Av. Principal</label>
+                    <input type="text" pInputText formControlName="avPrincipal" />
+                    <small class="p-error block" *ngIf="verificarCampo('avPrincipal')">requiere Av principal.</small>
+                </div>
+                <div class="p-field col-6">
+                    <label for="name">Av. Secundaria</label>
+                    <input type="text" pInputText formControlName="avSecundaria"/>
+                    <small class="p-error block" *ngIf="verificarCampo('avSecundaria')">requiere Av.secundaria.</small>
+                </div>
+            </div>
+        </div>
+        <!----FIN DIRECCION-->
+        <hr>
+        <!--INICIO EMPLEADO-->
+        <div class="field">
+            <label class="mb-2">
+                <h2>Empleado</h2>
+            </label>
+        
+            <div class="field">
+                <div class="formgrid grid">
+                    <div class="p-field col-6">
+                        <label for="name">Correo</label>
+                        <input type="text" pInputText formControlName="correo"/>
+                        <small class="p-error block" *ngIf="verificarCampo('correo')">{{emailErrorMsg}}</small>
+                    </div>
+                    <div class="p-field col-6">
+                        <label for="name">Cargo Empleado</label>
+                        <input type="text" pInputText formControlName="cargo"/>
+                        <small class="p-error block" *ngIf="verificarCampo('cargo')">requiere cargo</small>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="formgrid grid">
+                <div class="p-field col-6">
+                    <label for="name">Extension empresa:</label>
+                    <p-dropdown [options]="extensiones" placeholder="Seleccione Extension" optionLabel="nombre_extension"
+                        [showClear]="true" formControlName="extension"></p-dropdown>
+                        <small class="p-error block" *ngIf="verificarCampo('extension')">requiere </small>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="field">
+            <div class="formgrid grid">
+                <div class="p-field col-6">
+                    <label for="name">Celular</label>
+                    <input type="text" pInputText formControlName="numCelular" />
+                    <small class="p-error block" *ngIf="verificarCampo('numCelular')">requiere celular.</small>
+                </div>
+                <div class="p-field col-6">
+                    <label for="name">Telefono</label>
+                    <input type="text" pInputText formControlName="telefono" />
+                    <small class="p-error block" *ngIf="verificarCampo('telefono')">requiere telefono.</small>
+                </div>
+            </div>
+        </div>
+        <!--FIN EMPLEADO-->
+       </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"  (click)="realizarAccion()"></button>
+    </ng-template> 
+</p-dialog> 
 
-
-
-
-
-
-        <!--Fin Contenido-->
-    </div>
-</div>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+</div> 

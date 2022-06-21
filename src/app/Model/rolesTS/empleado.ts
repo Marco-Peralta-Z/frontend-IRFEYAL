@@ -19,12 +19,19 @@ export class empleado {
 
     usuario: usuario = new usuario;
 
-    CorreoElectronico: correoElectronico = new correoElectronico;
+    correo: correoElectronico = new correoElectronico;
 
-    id_persona: persona = new persona();
+    persona: persona = new persona();
 
     constructor(id_empleado?: number) {
         this.id_empleado = id_empleado ?? 0;
     }
 
+
+}
+
+
+export interface RespEmpleado{
+    empleado: empleado ;
+    mensaje: string ;
 }
