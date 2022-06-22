@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Api } from '../../config';
 import { HttpClient } from '@angular/common/http';
 import { Aprobacion } from '../../Model/Inventarios/Aprobacion';
-import { ResAprobacion } from '../../Model/Inventarios/intefaces/res_aprobacion.interface';
+import { ResAprobacion } from '../../Model/Inventarios/interfaces/res_aprobacion.interface';
 import { map, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Estudiante } from 'src/app/Model/Matriculas/estudiante';

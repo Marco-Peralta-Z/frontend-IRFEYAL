@@ -10,7 +10,7 @@ import { MensajesSweetService } from '../../../../../../Servicio/modulo_invetari
 import { AuthService } from '../../../../../../Servicio/auth/auth.service';
 import { empleado } from '../../../../../../Model/rolesTS/empleado';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ResAprobacion } from '../../../../../../Model/Inventarios/intefaces/res_aprobacion.interface';
+import { ResAprobacion } from '../../../../../../Model/Inventarios/interfaces/res_aprobacion.interface';
 
 @Component({
   selector: 'app-crear-editar',

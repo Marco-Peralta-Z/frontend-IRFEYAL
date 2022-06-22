@@ -7,13 +7,15 @@ import { CrearEditarComponent } from './pages/crear-editar/crear-editar.componen
 import { PrimeNgModule } from '../../../../prime-ng/prime-ng.module';
 import { MainComponent } from './main.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PrestarComponent } from './pages/prestar/prestar.component';
 
 
 @NgModule({
   declarations: [
     MainComponent,
     ListarComponent,
-    CrearEditarComponent
+    CrearEditarComponent,
+    PrestarComponent
   ],
   imports: [
     CommonModule,

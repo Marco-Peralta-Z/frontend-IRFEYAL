@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 
 import { Api } from '../../config';
 import { Kit } from '../../Model/Inventarios/Kit';
-import { ResKit } from '../../Model/Inventarios/intefaces/res_kit.interface';
+import { ResKit } from '../../Model/Inventarios/interfaces/res_kit.interface';
 
 @Injectable({
   providedIn: 'root'

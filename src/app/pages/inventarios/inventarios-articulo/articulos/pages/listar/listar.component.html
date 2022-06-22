@@ -1,5 +1,5 @@
 <div class="card" >
-    <p-table #dt [value]="inventarios" [rows]="10" [paginator]="true" [globalFilterFields]="['codigo','fechaingreso']" responsiveLayout="scroll"
+    <p-table #dt [value]="stockArticulos" [rows]="10" [paginator]="true" [globalFilterFields]="['categoria']" responsiveLayout="scroll"
         [rowHover]="true" dataKey="id"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
@@ -12,12 +12,9 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="codigo">Cod <p-sortIcon field="codigo"></p-sortIcon></th>
-                <th pSortableColumn="articulo.artinombre">Articulo <p-sortIcon field="articulo.artinombre"></p-sortIcon></th>
-                <th pSortableColumn="cantidad">Cant. <p-sortIcon field="cantidad"></p-sortIcon></th>
-                <th pSortableColumn="disponibilidad">Disp. <p-sortIcon field="disponibilidad"></p-sortIcon></th>
-                <th pSortableColumn="fechaingreso">F. Ingreso <p-sortIcon field="fechaingreso"></p-sortIcon></th>
-                <th></th>
+                <th pSortableColumn="categoria">Categoria <p-sortIcon field="categoria"></p-sortIcon></th>
+                <th pSortableColumn="cantidad">Cantidad<p-sortIcon field="cantidad"></p-sortIcon></th>
+                <th>Ver articulos</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-inventario>
@@ -28,29 +25,26 @@
             </tr>
         </ng-template>
         
-        <ng-template pTemplate="body" let-inventario>
+        <ng-template pTemplate="body" let-stockArticulo>
             <tr>
 
-                <td>{{inventario.codigo}}</td>
+                <td>{{stockArticulo.categoria}}</td>
+                <td>{{stockArticulo.cantidad}}</td>
                 <td>
                     <div class=" d-flex align-items-center">
-                        {{inventario.articulo.artinombre}}
-                        <button pButton pRipple icon="pi pi-eye" *ngIf="inventario.articulo" class="ml-1 p-button-rounded p-button-secondary p-button-outlined" (click)="showDialog(inventario)"></button>
+                        {{stockArticulo.listaArticulos.length}}
+                        <button pButton pRipple icon="pi pi-eye" class="ml-1 p-button-rounded p-button-secondary p-button-outlined" (click)="showDialog(stockArticulo)"></button>
                     </div>
                 </td>
-                <td>{{inventario.cantidad}}</td>
-                <td>{{inventario.disponibilidad}}</td>
-                <td>{{inventario.fechaingreso}}</td>
-
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/inventariosModule/inventario/editar/', inventario.id_inventario]"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarInventario(inventario)"></button>
+                    <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/inventariosModule/inventario/editar/', inventario.id_inventario]"></button> -->
+                    <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarInventario(inventario)"></button> -->
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">
-                En total hay {{inventarios ? inventarios.length : 0 }} inventarios.
+                En total hay {{stockArticulos ? stockArticulos.length : 0 }} articulos en stock.
             </div>
         </ng-template>
     </p-table>
@@ -58,17 +52,15 @@
 
 
 <p-confirmDialog [style]="{width: '650px'}"></p-confirmDialog>
-<p-dialog header="Articulo" [(visible)]="displayArticulo" [style]="{width: '50vw'}">
-    <div class="" *ngIf="selectInventario?.articulo">
-        <p-table [value]="[selectInventario?.articulo]" responsiveLayout="scroll">
+<p-dialog header="Articulo" [(visible)]="displayArticulos" [style]="{width: '60vw'}" styleClass="p-fluid" >
+    <div class="" *ngIf="selectStockArticulo?.listaArticulos">
+        <p-table [value]="selectStockArticulo?.listaArticulos!"  [rows]="5"  [paginator]="true" responsiveLayout="scroll">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Cod</th>
                     <th>Nombre</th>
                     <th>Descripción</th>
-                    <th>Estado</th>
-                    <th>Marca</th>
-                    <th>Precio</th>
+                    <th>Disponibilidad</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-articulo>
@@ -77,9 +69,12 @@
                     <td>{{articulo.artinombre}}</td>
                     <td>{{articulo.artidescrip}}</td>
                     <td>{{articulo.artiestado}}</td>
-                    <td>{{articulo.artimarca}}</td>
-                    <td>{{articulo.artiprecio}}</td>
                 </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="flex align-items-center justify-content-between">
+                    En total hay {{selectStockArticulo?.listaArticulos   ? selectStockArticulo?.listaArticulos?.length : 0 }} articulos en stock.
+                </div>
             </ng-template>
         </p-table>
     </div>

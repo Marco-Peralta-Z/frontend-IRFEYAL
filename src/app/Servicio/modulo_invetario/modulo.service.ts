@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 
 import { Api } from 'src/app/config';
 import { Modulo } from '../../Model/Inventarios/ModuloLibro';
-import { ResModulo } from '../../Model/Inventarios/intefaces/res_modulo.interface';
+import { ResModulo } from '../../Model/Inventarios/interfaces/res_modulo.interface';
 
 @Injectable({
   providedIn: 'root'

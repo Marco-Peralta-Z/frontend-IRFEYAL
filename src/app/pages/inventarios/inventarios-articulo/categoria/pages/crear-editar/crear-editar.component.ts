@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Categoria } from '../../../../../../Model/Inventarios/categorias';
-import { ResCategoria } from '../../../../../../Model/Inventarios/intefaces/resp';
+import { ResCategoria } from '../../../../../../Model/Inventarios/interfaces/resp';
 import { CategoriaArticuloService } from '../../../../../../Servicio/modulo_invetario/categoria-articulo.service';
 import { MensajesSweetService } from '../../../../../../Servicio/modulo_invetario/mensajes-sweet.service';
 

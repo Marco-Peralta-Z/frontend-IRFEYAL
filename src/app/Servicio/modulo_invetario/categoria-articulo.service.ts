@@ -5,7 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 
 import { Api } from '../../config';
 import { Categoria } from 'src/app/Model/Inventarios/categorias';
-import { ResCategoria } from '../../Model/Inventarios/intefaces/resp';
+import { ResCategoria } from '../../Model/Inventarios/interfaces/resp';
 
 @Injectable({
   providedIn: 'root'

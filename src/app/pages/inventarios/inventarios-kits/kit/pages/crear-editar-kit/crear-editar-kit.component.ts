@@ -6,7 +6,7 @@ import { Kit } from '../../../../../../Model/Inventarios/Kit';
 import { KitService } from '../../../../../../Servicio/modulo_invetario/kit.service';
 import { MensajesSweetService } from '../../../../../../Servicio/modulo_invetario/mensajes-sweet.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ResKit } from '../../../../../../Model/Inventarios/intefaces/res_kit.interface';
+import { ResKit } from '../../../../../../Model/Inventarios/interfaces/res_kit.interface';
 import { PeriodoService } from '../../../../../../Servicio/parametrizacion/Service Periodo/periodo.service';
 import { Periodo } from '../../../../../../Model/Parametrizacion/Periodo';
 
