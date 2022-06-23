@@ -1,42 +1,5 @@
 <div class="container">
-    <form [formGroup]="inventarioForm" (ngSubmit)="realizarAccion()" >
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                <!-- Fecha  -->
-                <div class="field">
-                    <label for="fecha" class="block">Fecha ingreso</label>
-                    <p-calendar styleClass="w-100" 
-                                dateFormat="yy-mm-dd" 
-                                inputId="dateformat"
-                                formControlName="fechaingreso">
-                    </p-calendar>
-                    <small  class="p-error block"
-                            *ngIf="verificarCampo('fechaingreso')">
-                            La fecha es requerida.
-                    </small>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                <!-- categoria -->
-                <div class="field">
-                    <label for="categoria" class="block">Categoría</label>
-                    <p-dropdown [options]="categoriasArticulos"
-                                [styleClass]=" !verificarCampo('cateId') ? 'border w-100' : 'w-100'"   
-                                [ngClass]="{'ng-invalid ng-dirty ' : verificarCampo('cateId')}"
-                                optionLabel="cateNombre"
-                                [filter]="true"
-                                filterBy="cateNombre"
-                                [showClear]="true"
-                                placeholder="Seleccione una categoria"
-                                formControlName="cateId">
-                    </p-dropdown>
-                    <small  class="p-error block"
-                            *ngIf="verificarCampo('cateId')">
-                            La categoría es requerida.
-                    </small>
-                </div>
-            </div>
-        </div>
+    <form [formGroup]="articuloForm" (ngSubmit)="realizarAccion()" >
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <!-- nombre -->
@@ -51,6 +14,8 @@
                             El nombre es requerido.
                     </small>
                 </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <!-- marca -->
                 <div class="field">
                     <label for="marca" class="block">Marca</label>
@@ -64,6 +29,8 @@
                     </small>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <!-- precio -->
                 <div class="field">
@@ -78,6 +45,28 @@
                     </small>
                 </div>
             </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                
+                <!-- categoria -->
+                <div class="field">
+                    <label for="categoria" class="block">Categoría</label>
+                    <p-dropdown [options]="categoriasArticulos"
+                                [styleClass]=" !verificarCampo('cateId') ? 'border w-100' : 'w-100'"   
+                                [ngClass]="{'ng-invalid ng-dirty ' : verificarCampo('cateId')}"
+                                optionLabel="cateNombre"
+                                [filter]="true"
+                                filterBy="cateNombre"
+                                [showClear]="true"
+                                placeholder="Seleccione una categoria"
+                                formControlName="cateId">
+                    </p-dropdown>
+                    <!-- <input type="text" formControlName="cateId"> -->
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('cateId')">
+                            La categoría es requerida.
+                    </small>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -89,23 +78,6 @@
                                 pInputTextarea [autoResize]="true"
                                 formControlName="artidescrip">
                     </textarea>
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('tipoAprobacion')">
-                            El tipo es requerido.
-                    </small> -->
-                </div>
-                <!-- observacion -->
-                <div class="field">
-                    <label for="observacion" class="block">Observación</label>
-                    <textarea   rows="2"    
-                                class="w-100"
-                                pInputTextarea [autoResize]="true"
-                                formControlName="observacion">
-                    </textarea>
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('tipoAprobacion')">
-                            El tipo es requerido.
-                    </small> -->
                 </div>
             </div>
         </div>
@@ -125,7 +97,7 @@
                         label="Guardar" 
                         icon="pi pi-save" 
                         iconPos="right"
-                        [disabled]="inventarioForm.pending"
+                        [disabled]="articuloForm.pending"
                         >
                 </button>
             </div>

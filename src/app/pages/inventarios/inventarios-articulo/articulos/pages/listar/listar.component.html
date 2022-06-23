@@ -60,13 +60,24 @@
 <p-confirmDialog [style]="{width: '650px'}"></p-confirmDialog>
 <p-dialog header="Articulo" [(visible)]="displayArticulos" [style]="{width: '60vw'}" styleClass="p-fluid" >
     <div class="" *ngIf="selectStockArticulo?.listaArticulos">
-        <p-table [value]="selectStockArticulo?.listaArticulos!"  [rows]="5"  [paginator]="true" responsiveLayout="scroll">
+        <p-table #art [value]="selectStockArticulo?.listaArticulos!" [globalFilterFields]="['articodigo', 'artinombre']"  [rows]="5"  [paginator]="true" responsiveLayout="scroll"
+        [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+            <ng-template pTemplate="caption">
+                <div class="flex align-items-center justify-content-between">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="art.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
+                    </span>
+                </div>
+            </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Cod</th>
-                    <th>Nombre</th>
+                    <th pSortableColumn="articodigo">Cod <p-sortIcon field="articodigo"></p-sortIcon> </th>
+                    <th pSortableColumn="artinombre">Nombre <p-sortIcon field="artinombre"></p-sortIcon> </th>
                     <th>Descripción</th>
                     <th>Disponibilidad</th>
+                    <th></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-articulo>
@@ -74,7 +85,25 @@
                     <td>{{articulo.articodigo}}</td>
                     <td>{{articulo.artinombre}}</td>
                     <td>{{articulo.artidescrip}}</td>
-                    <td>{{articulo.artiestado}}</td>
+                    <td>
+                        <div *ngIf="articulo.artiDisponibilidad; else disponible">Si</div>
+                        <ng-template #disponible>
+                            <div>No</div>
+                        </ng-template>
+                    </td>
+                    <td>
+                        <button pButton 
+                                pRipple 
+                                icon="pi pi-pencil" 
+                                class="p-button-rounded p-button-success mr-2" 
+                                [routerLink]="['/inventariosModule/inventario/editarArt/', articulo.id_articulo]">
+                        </button>
+                        <button pButton 
+                                pRipple 
+                                icon="pi pi-times-circle" 
+                                class="p-button-rounded p-button-warning mr-2" >
+                        </button>
+                    </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary">

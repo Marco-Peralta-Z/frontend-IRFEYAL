@@ -123,7 +123,6 @@ export class CrearEditarKitComponent implements OnInit {
       next: (response: ResKit) => {        
         if ( response.status === 'ok' ) {
           this.kitForm.patchValue(response.kit);
-          console.log(this.kitForm.value);          
         }
       },
       error: (error) => {

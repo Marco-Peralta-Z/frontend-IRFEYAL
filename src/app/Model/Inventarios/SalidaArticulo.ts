@@ -1,9 +1,11 @@
-import { Aprobacion } from "./Aprobacion";
+import { Inventario } from './Inventario';
+import { empleado } from '../rolesTS/empleado';
 
 export class SalidaArticulo {
-    id_salida_art: number = 0;
-    codigo: String = '';
-    detallesalida: String = '';
-    fecha_salida?: Date;
-    id_aprobacion: Aprobacion = new Aprobacion;
+    id_salida_art?: number = 0;
+    fechaSalida?:   Date;
+    codigo?:        string;
+    detallesalida?: string;
+    inventario?:    Inventario;
+    empleado?:      empleado;
 }

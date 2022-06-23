@@ -13,7 +13,7 @@ import { AuthService } from '../../../../../../Servicio/auth/auth.service';
   styleUrls: ['./crear-editar.component.css']
 })
 export class CrearEditarComponent implements OnInit {
-  public fechaActual: Date = new Date();
+
   public inventarioForm: FormGroup = this._formBuilder.group({
     fechaingreso: [ ,[ Validators.required]],
     cateId: [ ,[ Validators.required]],
@@ -25,6 +25,7 @@ export class CrearEditarComponent implements OnInit {
   });
 
   public categoriasArticulos: Categoria [] = [];
+
   constructor(
     private _formBuilder: FormBuilder,
     private _categoriaArticuloService: CategoriaArticuloService,

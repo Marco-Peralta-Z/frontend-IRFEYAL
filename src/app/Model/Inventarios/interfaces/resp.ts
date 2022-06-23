@@ -14,3 +14,8 @@ export interface ResSalida {
     mensaje: any;
     status: string;
 }
+export interface ResArticulo {
+    articulo: any;
+    mensaje: any;
+    status: string;
+}

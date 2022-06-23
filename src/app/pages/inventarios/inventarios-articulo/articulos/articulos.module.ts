@@ -8,6 +8,8 @@ import { PrimeNgModule } from '../../../../prime-ng/prime-ng.module';
 import { MainComponent } from './main.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PrestarComponent } from './pages/prestar/prestar.component';
+import { EditarArticuloComponent } from './pages/editar-articulo/editar-articulo.component';
+import { ListaArtPrestadoComponent } from './pages/lista-art-prestado/lista-art-prestado.component';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { PrestarComponent } from './pages/prestar/prestar.component';
     MainComponent,
     ListarComponent,
     CrearEditarComponent,
-    PrestarComponent
+    PrestarComponent,
+    EditarArticuloComponent,
+    ListaArtPrestadoComponent
   ],
   imports: [
     CommonModule,
