@@ -7,12 +7,14 @@
                     <label for="fecha" class="block">Fecha ingreso</label>
                     <p-calendar styleClass="w-100" 
                                 dateFormat="yy-mm-dd" 
-                                inputId="dateformat">
+                                inputId="dateformat"
+                                [(ngModel)]="fechaActual"
+                                formControlName="fechaingreso">
                     </p-calendar>
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('fecha')">
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('fechaingreso')">
                             La fecha es requerida.
-                    </small> -->
+                    </small>
                 </div>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
@@ -20,17 +22,19 @@
                 <div class="field">
                     <label for="categoria" class="block">Categoría</label>
                     <p-dropdown [options]="categoriasArticulos"
-                                styleClass="w-100"
+                                [styleClass]=" !verificarCampo('cateId') ? 'border w-100' : 'w-100'"   
+                                [ngClass]="{'ng-invalid ng-dirty ' : verificarCampo('cateId')}"
                                 optionLabel="cateNombre"
                                 [filter]="true"
                                 filterBy="cateNombre"
                                 [showClear]="true"
-                                placeholder="Seleccione una categoria">
+                                placeholder="Seleccione una categoria"
+                                formControlName="cateId">
                     </p-dropdown>
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('kit')">
-                            El kit es requerido.
-                    </small> -->
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('cateId')">
+                            La categoría es requerida.
+                    </small>
                 </div>
             </div>
         </div>
@@ -39,26 +43,26 @@
                 <!-- nombre -->
                 <div class="field">
                     <label for="nombre" class="block">Nombre</label>
-                    <input   
-                            type="text" 
+                    <input  type="text" 
                             class="w-100"
-                            pInputText />
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('tipoAprobacion')">
-                            El tipo es requerido.
-                    </small> -->
+                            pInputText 
+                            formControlName="artinombre"/>
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('artinombre')">
+                            El nombre es requerido.
+                    </small>
                 </div>
                 <!-- marca -->
                 <div class="field">
                     <label for="marca" class="block">Marca</label>
-                    <input   
-                            type="text" 
+                    <input  type="text" 
                             class="w-100"
-                            pInputText />
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('tipoAprobacion')">
-                            El tipo es requerido.
-                    </small> -->
+                            pInputText 
+                            formControlName="artimarca"/>
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('artimarca')">
+                            La marca es requerida.
+                    </small>
                 </div>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
@@ -67,11 +71,12 @@
                     <label for="precio" class="block">Precio</label>
                     <input  type="number"  
                             class=" w-100" 
-                            pInputText />
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('cantidad')">
-                            La cantidad es requerida.
-                    </small> -->
+                            pInputText 
+                            formControlName="artiprecio"/>
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('artiprecio')">
+                            El precio es requerido.
+                    </small>
                 </div>
             </div>
         </div>
@@ -82,7 +87,8 @@
                     <label for="descripcion" class="block">Descripción</label>
                     <textarea   rows="2"    
                                 class="w-100"
-                                pInputTextarea [autoResize]="true">
+                                pInputTextarea [autoResize]="true"
+                                formControlName="artidescrip">
                     </textarea>
                     <!-- <small  class="p-error block"
                             *ngIf="verificarCampo('tipoAprobacion')">
@@ -94,7 +100,8 @@
                     <label for="observacion" class="block">Observación</label>
                     <textarea   rows="2"    
                                 class="w-100"
-                                pInputTextarea [autoResize]="true">
+                                pInputTextarea [autoResize]="true"
+                                formControlName="observacion">
                     </textarea>
                     <!-- <small  class="p-error block"
                             *ngIf="verificarCampo('tipoAprobacion')">

@@ -33,7 +33,13 @@
                 <td>
                     <div class=" d-flex align-items-center">
                         {{stockArticulo.listaArticulos.length}}
-                        <button pButton pRipple icon="pi pi-eye" class="ml-1 p-button-rounded p-button-secondary p-button-outlined" (click)="showDialog(stockArticulo)"></button>
+                        <button pButton 
+                                pRipple 
+                                icon="pi pi-eye" 
+                                class="ml-1 p-button-rounded p-button-secondary p-button-outlined" 
+                                *ngIf="stockArticulo.listaArticulos.length > 0"
+                                (click)="showDialog(stockArticulo)">
+                        </button>
                     </div>
                 </td>
                 <td>
