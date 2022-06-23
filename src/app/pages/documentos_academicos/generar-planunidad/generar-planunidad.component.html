@@ -29,226 +29,229 @@
                 <input type="text" class="form-control" style="border: 0px;" name="observaciones"
                     formControlName="observaciones" readonly><br>
             </div><br>
-            <div class="container-fluid border bg-light">
-                <div class="container-fluid">
-                    <!-- Implementacion del Grid para el diseño del formulario -->
-                    <!-- Implementacion del Enacabezado-->
-                    <div class="row">
-                        <div class="col">
-                        </div>
-                        <div class="col-sm-4">
-                            <label style="text-align:center; font-size:23px; font-weight:bold;">
-                                PLAN DE UNIDAD N°</label>
-                            <label style="text-align:center; font-size:23px; font-weight:bold; margin-left: 10px;"
-                                [hidden]="opcionSelectUnidad == '0'">
-                                {{verSelectUnidad}}</label>
-                        </div>
-                        <div class="col">
+            <!-- Seleccion del Enacabezado-->
+            <p-accordion>
+                <p-accordionTab header="Encabezado del Plan de Unidad" [selected]="panelEncabezado">
+                    <div class="border bg-light">
+                        <div class="row">
+                            <div class="col-sm-4" style="text-align:left;">
+                                <label>Unidad:</label> <br>
+                                <p-dropdown [options]="unidades" [(ngModel)]="opcionSelectUnidad" placeholder="Select"
+                                    [style]="{'width':'200px'}" [showClear]="true" optionLabel="nombre_unidad"
+                                    formControlName="unidad" id="unidad" (onChange)="capturarSelectUnidad()">
+                                </p-dropdown>
+                                <br><br>
+                                <label>Curso:</label> <br>
+                                <p-dropdown [options]="cursos" [(ngModel)]="opcionSelectCurso" placeholder="Select"
+                                    [style]="{'width':'200px'}" [showClear]="true" optionLabel="descripcion"
+                                    formControlName="curso" (onChange)="capturarSelectCurso()">
+                                </p-dropdown>
+                                <br><br>
+                            </div>
+                            <div class="col-sm-4" style="text-align:left;">
+                                <label>Periodo:</label> <br>
+                                <p-dropdown [options]="periodos" [(ngModel)]="opcionSelectPeriodo" placeholder="Select"
+                                    [style]="{'width':'200px'}" [showClear]="true" optionLabel="periodo_academico"
+                                    formControlName="periodo" (onChange)="capturarSelectPeriodo()">
+                                    <ng-template let-periodo pTemplate="item">
+                                        <div class="flex align-items-center operatingSystems-item">
+                                            <div>{{periodo.fecha_inicio | date:'dd/MM/yyyy'}} a {{periodo.fecha_fin |
+                                                date:'dd/MM/yyyy'}}
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                                <br><br>
+                                <label>Paralelo:</label> <br>
+                                <p-dropdown [options]="paralelos" [(ngModel)]="opcionSelectParalelo"
+                                    placeholder="Select" [style]="{'width':'200px'}" [showClear]="true"
+                                    optionLabel="descripcion" formControlName="paralelo"
+                                    (onChange)="capturarSelectParalelo()">
+                                </p-dropdown>
+                                <br><br>
+                            </div>
+                            <div class="col-sm-4" style="text-align:left;">
+                                <label>Modalidad:</label> <br>
+                                <p-dropdown [options]="modalidades" [(ngModel)]="opcionSelectModalidad"
+                                    placeholder="Select" [style]="{'width':'200px'}" [showClear]="true"
+                                    optionLabel="descripcion" formControlName="modalidad"
+                                    (onChange)="capturarSelectModalidad()">
+                                </p-dropdown>
+                                <br><br>
+                                <label>Asignatura:</label> <br>
+                                <p-dropdown [options]="asignaturas" [(ngModel)]="opcionSelectAsig" placeholder="Select"
+                                    [style]="{'width':'200px'}" [showClear]="true" optionLabel="descripcion"
+                                    formControlName="asignatura" [disabled]="showSelect"
+                                    (onChange)="capturarSelectAsig()">
+                                </p-dropdown>
+                            </div>
                         </div>
                     </div>
-                    <!-- Implementacion del Cuerpo-->
-                    <div class="row">
-                        <!-- Implementacion Parte 1 Seleccion -->
-                        <div class="col-sm-2">
-                            <h3>Unidad:</h3>
-                            <select name="unidad" id="unidad" class="form-select" formControlName="unidad"
-                                [(ngModel)]="opcionSelectUnidad" (change)="capturarSelectUnidad()">
-                                <option value="0"> </option>
-                                <option [ngValue]="item" *ngFor="let item of unidades">
-                                    {{item.nombre_unidad}}</option>
-                            </select>
-                            <br>
-                            <h3>Periodo:</h3>
-                            <select name="periodo" id="periodo" class="form-select" formControlName="periodo"
-                                [(ngModel)]="opcionSelectPeriodo" (change)="capturarSelectPeriodo()">
-                                <option value="0"> </option>
-                                <option [ngValue]="item" *ngFor="let item of periodos">{{item.fecha_inicio |
-                                    date:'dd/MM/yyyy'}} a {{item.fecha_fin | date:'dd/MM/yyyy'}}
-                                </option>
-                            </select>
-                            <br>
-                            <h3>Modalidad:</h3>
-                            <select name="modalidad" id="modalidad" class="form-select" formControlName="modalidad"
-                                [(ngModel)]="opcionSelectModalidad" (change)="capturarSelectModalidad()">
-                                <option value="0">
-                                </option>
-                                <option [ngValue]="item" *ngFor="let item of modalidades">{{item.descripcion}}</option>
-                            </select>
-                            <br>
-                            <h3>Curso:</h3>
-                            <select name="curso" id="curso" class="form-select" formControlName="curso"
-                                [(ngModel)]="opcionSelectCurso" (change)="capturarSelectCurso()">
-                                <option value="0"> </option>
-                                <option [ngValue]="item" *ngFor="let item of cursos">{{item.descripcion}}
-                                </option>
-                            </select>
-                            <br>
-                            <h3>Paralelo:</h3>
-                            <select name="paralelo" id="paralelo" class="form-select" formControlName="paralelo"
-                                [(ngModel)]="opcionSelectParalelo" (change)="capturarSelectParalelo()">
-                                <option value="0"> </option>
-                                <option [ngValue]="item" *ngFor="let item of paralelos">{{item.descripcion}}
-                                </option>
-                            </select>
-                            <br>
-                            <h3>Asignatura:</h3>
-                            <select name="asignatura" id="asignatura" class="form-select" formControlName="asignatura"
-                                [(ngModel)]="opcionSelectAsig" (change)="capturarSelectAsig()">
-                                <option value="0"> </option>
-                                <option [ngValue]="item" *ngFor="let item of asignaturas">{{item.descripcion}}</option>
-                            </select>
-                        </div>
-                        <!-- Implementacion Parte 2 Todos los demas campos-->
-                        <div class="col-sm-9 container">
-                            <!-- Dentro de Parte 2, Etiquetas para mostrar algunos datos-->
-                            <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                Docente:</label>
-                            <label style="font-size:18px; margin-left: 10px;">
-                                {{NombreApellidoEmpleado}}</label><br>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                        Periodo:</label>
-                                    <label style="font-size:18px; margin-left: 10px;"
-                                        [hidden]="opcionSelectPeriodo == '0'">
-                                        {{verSelectPeriodoFinicio | date:'dd/MM/yyyy'}} - {{verSelectPeriodoFfin |
-                                        date:'dd/MM/yyyy'}}</label><br>
-                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                        Modalidad:</label>
-                                    <label style="font-size:18px; margin-left: 10px;"
-                                        [hidden]="opcionSelectModalidad == '0'">
-                                        {{verSelectModalidad}}</label><br>
-                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                        Asignatura:</label>
-                                    <label style="font-size:18px; margin-left: 10px;"
-                                        [hidden]="opcionSelectAsig == '0'">
-                                        {{verSelectAsigNom}}</label><br>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                        Malla:</label>
-                                    <label style="font-size:18px; margin-left: 10px;"
-                                        [hidden]="opcionSelectPeriodo == '0'">
-                                        {{verSelectPeriodoMalla}}</label><br>
-                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                        Curso:</label>
-                                    <label style="font-size:18px; margin-left: 10px;"
-                                        [hidden]="opcionSelectCurso == '0'">
-                                        {{verSelectCurso}}</label>
-                                    <label style="font-size:18px; margin-left: 10px;"
-                                        [hidden]="opcionSelectParalelo == '0'">
-                                        {{verSelectParalelo}}</label><br>
-                                    <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                        Codigo de Asignatura:</label>
-                                    <label style="font-size:18px; margin-left: 10px;"
-                                        [hidden]="opcionSelectAsig == '0'">
-                                        {{verSelectAsigId}}</label><br>
-                                </div>
+                </p-accordionTab>
+                <br>
+                <div class="container-fluid border bg-light">
+                    <div class="container-fluid">
+                        <!-- Implementacion del Grid para el diseño del formulario -->
+                        <div class="row">
+                            <div class="col">
                             </div>
-                            <br>
-                            <!-- Dentro de Parte 2, 3 columnas para datos principales-->
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <h2>Fecha de inicio:</h2>
-                                    <!--<p-calendar inputId="calendar" formControlName="fecha_inicio" [showIcon]="true"
+                            <div class="col-sm-4"><br>
+                                <label style="text-align:center; font-size:23px; font-weight:bold;">
+                                    PLAN DE UNIDAD N°</label>
+                                <label style="text-align:center; font-size:23px; font-weight:bold; margin-left: 10px;"
+                                    [hidden]="opcionSelectUnidad == null">
+                                    {{verSelectUnidad}}</label>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+                        <!-- Implementacion Parte 2 Contenido-->
+                        <!-- Dentro de Parte 2, Etiquetas para mostrar algunos datos-->
+                        <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                            Docente:</label>
+                        <label style="font-size:18px; margin-left: 10px;">
+                            {{NombreApellidoEmpleado}}</label><br>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                    Periodo:</label>
+                                <label style="font-size:18px; margin-left: 10px;"
+                                    [hidden]="opcionSelectPeriodo == null">
+                                    {{verSelectPeriodoFinicio | date:'dd/MM/yyyy'}} - {{verSelectPeriodoFfin |
+                                    date:'dd/MM/yyyy'}}</label><br>
+                                <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                    Modalidad:</label>
+                                <label style="font-size:18px; margin-left: 10px;"
+                                    [hidden]="opcionSelectModalidad == null">
+                                    {{verSelectModalidad}}</label><br>
+                                <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                    Asignatura:</label>
+                                <label style="font-size:18px; margin-left: 10px;" [hidden]="opcionSelectAsig == null">
+                                    {{verSelectAsigNom}}</label><br>
+                            </div>
+                            <div class="col-sm-6">
+                                <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                    Malla:</label>
+                                <label style="font-size:18px; margin-left: 10px;"
+                                    [hidden]="opcionSelectPeriodo == null">
+                                    {{verSelectPeriodoMalla}}</label><br>
+                                <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                    Curso:</label>
+                                <label style="font-size:18px; margin-left: 10px;" [hidden]="opcionSelectCurso == null">
+                                    {{verSelectCurso}}</label>
+                                <label style="font-size:18px; margin-left: 10px;"
+                                    [hidden]="opcionSelectParalelo == null">
+                                    {{verSelectParalelo}}</label><br>
+                                <label style="font-size:18px; font-size:18px; font-weight:bold;">
+                                    Codigo de Asignatura:</label>
+                                <label style="font-size:18px; margin-left: 10px;" [hidden]="opcionSelectAsig == null">
+                                    {{verSelectAsigId}}</label><br>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- Dentro de Parte 2, 3 columnas para datos principales-->
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h2>Fecha de inicio:</h2>
+                                <!--<p-calendar inputId="calendar" formControlName="fecha_inicio" [showIcon]="true"
                                         dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa"></p-calendar>-->
-                                    <input type="date" class="form-control" name="date" formControlName="fecha_inicio">
+                                <input type="date" class="form-control" name="date" formControlName="fecha_inicio">
+                                <span class="form-text text-danger" style="font-size:10px;"
+                                    *ngIf="validarCampo('fecha_inicio')">
+                                    Campo obligatorio!
+                                </span>
+                            </div>
+                            <div class="col-sm-4">
+                                <h2>Fecha de fin:</h2>
+                                <input type="date" class="form-control" name="date" formControlName="fecha_fin">
+                                <span class="form-text text-danger" style="font-size:10px;"
+                                    *ngIf="validarCampo('fecha_fin')">
+                                    Campo obligatorio!
+                                </span>
+                            </div>
+                            <div class="col-sm-4">
+                            </div>
+                        </div>
+                        <br>
+                        <!-- Dentro de Parte 2, 2 columanas (titulo y objetivos)-->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <h2>Titulo de Unidad</h2>
+                                    <textarea class="form-control" formControlName="titulo_unidad" [rows]="2"
+                                        pInputTextarea [autoResize]="autoResize"></textarea>
                                     <span class="form-text text-danger" style="font-size:10px;"
-                                        *ngIf="validarCampo('fecha_inicio')">
+                                        *ngIf="validarCampo('titulo_unidad')">
                                         Campo obligatorio!
                                     </span>
                                 </div>
-                                <div class="col-sm-4">
-                                    <h2>Fecha de fin:</h2>
-                                    <input type="date" class="form-control" name="date" formControlName="fecha_fin">
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <h2>Objetivos especificos de la unidad</h2>
+                                    <textarea class="form-control" formControlName="objetivos" [rows]="2" pInputTextarea
+                                        [autoResize]="autoResize"></textarea>
                                     <span class="form-text text-danger" style="font-size:10px;"
-                                        *ngIf="validarCampo('fecha_fin')">
+                                        *ngIf="validarCampo('objetivos')">
                                         Campo obligatorio!
                                     </span>
-                                </div>
-                                <div class="col-sm-4">
-                                </div>
-                            </div>
-                            <br>
-                            <!-- Dentro de Parte 2, 2 columanas (titulo y objetivos)-->
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <h2>Titulo de Unidad</h2>
-                                        <textarea class="form-control" formControlName="titulo_unidad" [rows]="2"
-                                            pInputTextarea [autoResize]="autoResize"></textarea>
-                                        <span class="form-text text-danger" style="font-size:10px;"
-                                            *ngIf="validarCampo('titulo_unidad')">
-                                            Campo obligatorio!
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <h2>Objetivos especificos de la unidad</h2>
-                                        <textarea class="form-control" formControlName="objetivos" [rows]="2"
-                                            pInputTextarea [autoResize]="autoResize"></textarea>
-                                        <span class="form-text text-danger" style="font-size:10px;"
-                                            *ngIf="validarCampo('objetivos')">
-                                            Campo obligatorio!
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            <!-- Dentro de Parte 2, 2 columanas (contenidos y criterio)-->
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <h2>Contenidos de la unidad</h2>
-                                        <textarea class="form-control" formControlName="contenidos" [rows]="3"
-                                            pInputTextarea [autoResize]="autoResize"></textarea>
-                                        <span class="form-text text-danger" style="font-size:10px;"
-                                            *ngIf="validarCampo('contenidos')">
-                                            Campo obligatorio!
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <h2>Criterios de evaluacion</h2>
-                                        <textarea class="form-control" formControlName="criterios_evaluacion" [rows]="3"
-                                            pInputTextarea [autoResize]="autoResize"></textarea>
-                                        <span class="form-text text-danger" style="font-size:10px;"
-                                            *ngIf="validarCampo('criterios_evaluacion')">
-                                            Campo obligatorio!
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            <!-- Dentro de Parte 2, 1 columana (Destrezas)-->
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <h2>Destrezas con criterio de desempeño</h2>
-                                        <textarea class="form-control" formControlName="destrezas" [rows]="3"
-                                            pInputTextarea [autoResize]="autoResize"></textarea>
-                                        <span class="form-text text-danger" style="font-size:10px;"
-                                            *ngIf="validarCampo('destrezas')">
-                                            Campo obligatorio!
-                                        </span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <br>
+                        <!-- Dentro de Parte 2, 2 columanas (contenidos y criterio)-->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <h2>Contenidos de la unidad</h2>
+                                    <textarea class="form-control" formControlName="contenidos" [rows]="3"
+                                        pInputTextarea [autoResize]="autoResize"></textarea>
+                                    <span class="form-text text-danger" style="font-size:10px;"
+                                        *ngIf="validarCampo('contenidos')">
+                                        Campo obligatorio!
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <h2>Criterios de evaluacion</h2>
+                                    <textarea class="form-control" formControlName="criterios_evaluacion" [rows]="3"
+                                        pInputTextarea [autoResize]="autoResize"></textarea>
+                                    <span class="form-text text-danger" style="font-size:10px;"
+                                        *ngIf="validarCampo('criterios_evaluacion')">
+                                        Campo obligatorio!
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- Dentro de Parte 2, 1 columana (Destrezas)-->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <h2>Destrezas con criterio de desempeño</h2>
+                                    <textarea class="form-control" formControlName="destrezas" [rows]="3" pInputTextarea
+                                        [autoResize]="autoResize"></textarea>
+                                    <span class="form-text text-danger" style="font-size:10px;"
+                                        *ngIf="validarCampo('destrezas')">
+                                        Campo obligatorio!
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div align="center">
+                            <button *ngIf="mostrarBotonEnviar" type="submit"
+                                class="btn btn-success btn-lg">Enviar</button>
+                            <button *ngIf="mostrarCambiosEditar" type="button" class="btn btn-secondary"
+                                (click)="cancelaredit()">Cancelar</button>
+                            <button *ngIf="mostrarCambiosEditar" type="button" class="btn btn-primary"
+                                (click)="guardaredit()">Guardar Cambios</button>
+                        </div><br>
                     </div>
                     <br>
-                    <div align="center">
-                        <button *ngIf="mostrarBotonEnviar" type="submit" class="btn btn-success btn-lg">Enviar</button>
-                        <button *ngIf="mostrarCambiosEditar" type="button" class="btn btn-secondary"
-                            (click)="cancelaredit()">Cancelar</button>
-                        <button *ngIf="mostrarCambiosEditar" type="button" class="btn btn-primary"
-                            (click)="guardaredit()">Guardar Cambios</button>
-                    </div><br>
                 </div>
-                <br>
-            </div>
+            </p-accordion>
             <br>
         </form>
         <!--Implementacion de la tabla de planes de unidad aprobados-->

@@ -45,6 +45,8 @@ export class GenerarPlanunidadComponent implements OnInit {
   mostrarbtnTodos: boolean = true;
   mostrarbtnMisPlanes: boolean = false;
   mostrarObservaciones: boolean = false;
+  panelEncabezado: boolean = true;
+  showSelect: boolean = true;
 
   // Variables para capturar el select de Unidad
   opcionSelectUnidad: any;
@@ -142,31 +144,35 @@ export class GenerarPlanunidadComponent implements OnInit {
 
     //Captura los cambios en el select de periodo para luego mostrar la asignaturar de acuerdo a la Malla
     this.generar_planunidadForm.get("periodo")?.valueChanges.subscribe(value => {
-      if (value != null && value != 0) {
+      if (value != null) {
         this.planunidadService.getAllAsignaturasByMalla(value.malla.id_malla).subscribe(resp => {
           this.asignaturas = resp;
+          this.showSelect = false;
         },
           error => { console.error(error) }
         );
-      } else if (value == 0) {
+      } else if (value == null) {
         this.asignaturas = null;
-        this.opcionSelectAsig = 0;
+        this.opcionSelectAsig = null;
+        this.showSelect = true;
       }
     });
 
-
     this.cargarPlanesUnidadEmpleado(this.aprobado);
     this.cargarPlanesUnidadEmpleado(this.rechazado);
+
   }
 
   capturarSelectUnidad() {
     // Pasamos el valor seleccionado a la variable verSelectUnidad
-    this.verSelectUnidad = this.opcionSelectUnidad.idUnidad;
+    if (this.opcionSelectUnidad != null) {
+      this.verSelectUnidad = this.opcionSelectUnidad.idUnidad;
+    }
   }
 
   capturarSelectPeriodo() {
     // Pasamos el valor seleccionado a la variable verSeleccionPeriodoMalla
-    if (this.opcionSelectPeriodo != '0') {
+    if (this.opcionSelectPeriodo != null) {
       this.verSelectPeriodoFinicio = this.opcionSelectPeriodo.fecha_inicio
       this.verSelectPeriodoFfin = this.opcionSelectPeriodo.fecha_fin;
       this.verSelectPeriodoMalla = this.opcionSelectPeriodo.malla.descripcion;
@@ -175,19 +181,21 @@ export class GenerarPlanunidadComponent implements OnInit {
 
   capturarSelectModalidad() {
     // Pasamos el valor seleccionado a la variable verSelectModalidad
-    this.verSelectModalidad = this.opcionSelectModalidad.descripcion;
+    if (this.opcionSelectModalidad != null) {
+      this.verSelectModalidad = this.opcionSelectModalidad.descripcion;
+    }
   }
 
   capturarSelectCurso() {
     // Pasamos el valor seleccionado a la variable verSeleccionCurso
-    if (this.opcionSelectCurso != '0') {
+    if (this.opcionSelectCurso != null) {
       this.verSelectCurso = this.opcionSelectCurso.descripcion;
     }
   }
 
   capturarSelectParalelo() {
     // Pasamos el valor seleccionado a la variable verSeleccionUnidad
-    if (this.opcionSelectParalelo != '0') {
+    if (this.opcionSelectParalelo != null) {
       this.verSelectParalelo = this.opcionSelectParalelo.descripcion;
     }
 
@@ -195,11 +203,11 @@ export class GenerarPlanunidadComponent implements OnInit {
 
   capturarSelectAsig() {
     // Pasamos el id y descripcion del valor seleccionado a la variable verSeleccion verSelectAsigId y verSelectAsigNom
-    this.verSelectAsigId = this.opcionSelectAsig.id_asignatura;
-    this.verSelectAsigNom = this.opcionSelectAsig.descripcion;
+    if (this.opcionSelectAsig != null) {
+      this.verSelectAsigId = this.opcionSelectAsig.id_asignatura;
+      this.verSelectAsigNom = this.opcionSelectAsig.descripcion;
+    }
   }
-
-
 
 
   verFormGenerar() {
@@ -207,6 +215,7 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.mostrarAprobados = false;
     this.mostrarRechazados = false;
     this.mostrarObservaciones = false;
+    this.panelEncabezado = true;
   }
 
   verTablaAprobados() {
@@ -248,16 +257,7 @@ export class GenerarPlanunidadComponent implements OnInit {
             this.generar_planunidadForm.value.estado = "Pendiente";
             this.generar_planunidadForm.value.observaciones = "Sin observaciones";
             this.planunidadService.savePlanUnidad(this.generar_planunidadForm.value).subscribe(resp => {
-              //Receteamos el formulario
-              this.generar_planunidadForm.reset();
-              //Receteamos los Etiquetas
-              this.opcionSelectUnidad = 0;
-              this.opcionSelectModalidad = 0;
-              this.opcionSelectAsig = 0;
-              this.opcionSelectPeriodo = 0;
-              this.opcionSelectCurso = 0;
-              this.opcionSelectParalelo = 0;
-              this.opcionSelectAsig = 0;
+              this.cleanForm();
               //Alerta success
               Swal.fire({
                 position: 'center',
@@ -301,15 +301,7 @@ export class GenerarPlanunidadComponent implements OnInit {
   guardaredit() {
     this.generar_planunidadForm.value.estado = "Pendiente";
     this.planunidadService.updatePlanUnidad(this.id, this.generar_planunidadForm.value).subscribe(resp => {
-      this.generar_planunidadForm.reset();
-      //Receteamos los Etiquetas
-      this.opcionSelectUnidad = 0;
-      this.opcionSelectModalidad = 0;
-      this.opcionSelectAsig = 0;
-      this.opcionSelectPeriodo = 0;
-      this.opcionSelectCurso = 0;
-      this.opcionSelectParalelo = 0;
-      this.opcionSelectAsig = 0;
+      this.cleanForm();
       //Mostramos el btn Enviar y ocultamos btn Guardar Cambios y  btn Cancelar
       this.mostrarBotonEnviar = true;
       this.mostrarCambiosEditar = false;
@@ -352,15 +344,7 @@ export class GenerarPlanunidadComponent implements OnInit {
       cancelButtonText: 'No, Seguir editando'
     }).then((result) => {
       if (result.isConfirmed) {
-        //Receteamos el formulario
-        this.generar_planunidadForm.reset();
-        //Receteamos los Etiquetas
-        this.opcionSelectUnidad = 0;
-        this.opcionSelectModalidad = 0;
-        this.opcionSelectAsig = 0;
-        this.opcionSelectPeriodo = 0;
-        this.opcionSelectCurso = 0;
-        this.opcionSelectAsig = 0;
+        this.cleanForm();
         //Mostramos el btn Enviar y ocultamos btn Guardar Cambios y  btn Cancelar
         this.mostrarBotonEnviar = true;
         this.mostrarCambiosEditar = false;
@@ -385,11 +369,11 @@ export class GenerarPlanunidadComponent implements OnInit {
       observaciones: plan_unidad.observaciones,
       unidad: plan_unidad.unidad,
       empleado: plan_unidad.empleado,
-      asignatura: plan_unidad.asignatura,
       curso: plan_unidad.curso,
       paralelo: plan_unidad.paralelo,
       modalidad: plan_unidad.modalidad,
-      periodo: plan_unidad.periodo
+      periodo: plan_unidad.periodo,
+      asignatura: plan_unidad.asignatura
     });
     //Pasamos el id del plan a la variable (id) 
     this.id = plan_unidad.id_plan_unidad;
@@ -416,6 +400,7 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.mostrarFormGenerar = true;
     this.mostrarRechazados = false;
     this.mostrarObservaciones = true;
+    this.panelEncabezado = false;
   }
 
 
@@ -490,5 +475,17 @@ export class GenerarPlanunidadComponent implements OnInit {
         })
       }
     );
+  }
+
+  cleanForm() {
+    //Receteamos el formulario
+    this.generar_planunidadForm.reset();
+    //Receteamos los Etiquetas del encabezado
+    this.opcionSelectUnidad = null;
+    this.opcionSelectModalidad = null;
+    this.opcionSelectPeriodo = null;
+    this.opcionSelectCurso = null;
+    this.opcionSelectParalelo = null;
+    this.opcionSelectAsig = null;
   }
 }
