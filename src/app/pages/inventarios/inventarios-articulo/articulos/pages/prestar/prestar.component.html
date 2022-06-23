@@ -1,0 +1,106 @@
+<div class="container">
+    <!-- <form [formGroup]="inventarioForm" (ngSubmit)="realizarAccion()" > -->
+    <form>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <!-- Fecha  -->
+                <div class="field">
+                    <label for="fecha" class="block">Fecha ingreso</label>
+                    <p-calendar styleClass="w-100" 
+                                dateFormat="yy-mm-dd" 
+                                inputId="dateformat">
+                    </p-calendar>
+                    <!-- <small  class="p-error block"
+                            *ngIf="verificarCampo('fecha')">
+                            La fecha es requerida.
+                    </small> -->
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <!-- articulo -->
+                <div class="field">
+                    <label for="articulo" class="block">Artículo</label>
+                    <p-dropdown [options]="inventarioArticulos"
+                                styleClass="w-100"
+                                optionLabel="articulo.artinombre"
+                                [filter]="true"
+                                filterBy="articulo.artinombre"
+                                filterPlaceholder="Nombre artículo"
+                                [showClear]="true"
+                                placeholder="Seleccione artículo">
+                        <ng-template let-inventario pTemplate="item">
+                            <div class="country-item">
+                                <div>{{inventario.codigo}} - {{inventario.articulo.artinombre}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <!-- <small  class="p-error block"
+                            *ngIf="verificarCampo('kit')">
+                            El kit es requerido.
+                    </small> -->
+                </div>
+            </div>
+        </div>  
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <!-- empleado -->
+                <div class="field">
+                    <label for="empleado" class="block">Empleado</label>
+                    <p-dropdown [options]="empleados"
+                                styleClass="w-100"
+                                optionLabel="persona.cedula"
+                                [filter]="true"
+                                filterBy="persona.cedula"
+                                filterPlaceholder="Ingrese cedula"
+                                [showClear]="true"
+                                placeholder="Seleccione empledo">
+                        <ng-template let-empleado pTemplate="item">
+                            <div class="country-item">
+                                <div>{{empleado.persona.cedula}} - {{empleado.persona.nombre}} {{empleado.persona.apellido}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <!-- <small  class="p-error block"
+                            *ngIf="verificarCampo('kit')">
+                            El kit es requerido.
+                    </small> -->
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <!-- detalle -->
+                <div class="field">
+                    <label for="detalle" class="block">Detalle</label>
+                    <textarea   rows="1"    
+                                class="w-100"
+                                pInputTextarea [autoResize]="true">
+                    </textarea>
+                    <!-- <small  class="p-error block"
+                            *ngIf="verificarCampo('tipoAprobacion')">
+                            El tipo es requerido.
+                    </small> -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-evenly">
+                <button pButton 
+                        pRipple 
+                        type="button" 
+                        label="Cancelar" 
+                        icon="pi pi-times" 
+                        class="p-button-outlined p-button-danger" 
+                        iconPos="right"
+                        routerLink="listar">
+                </button>
+                <button pButton 
+                        pRipple type="submit" 
+                        label="Guardar" 
+                        icon="pi pi-save" 
+                        iconPos="right"
+                        >
+                    </button>
+                    <!-- [disabled]="inventarioForm.pending" -->
+            </div>
+        </div>
+    </form>
+</div>

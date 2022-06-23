@@ -24,6 +24,6 @@ export class Periodo {
 
     costo_matricula: number = 0;
 
-    id_malla: Malla = new Malla();
+    malla: Malla = new Malla();
 
 }

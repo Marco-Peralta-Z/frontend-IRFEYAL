@@ -1,20 +1,32 @@
 <div class="container-fluid page">
-    <div class="d-flex page__box p-3 mt-2">Entregas kits</div>
+    <div class="d-flex page__box p-3 mt-2">Inventario</div>
     <div class="page__content shadow p-3 position-relative">
         <p-toolbar styleClass="mb-4">
             <ng-template pTemplate="left">
                 <button pButton 
-                        pRipple label="Agregar Articulo" 
+                        pRipple label="Listar Articulos" 
+                        icon="pi pi-list" 
+                        class="p-button-primary mr-2" 
+                        routerLink="listar">
+                </button>
+                <button pButton 
+                        pRipple label="Crear Artículo" 
                         icon="pi pi-plus" 
                         class="p-button-success mr-2" 
                         routerLink="crear">
                 </button> 
                 <button pButton 
-                        pRipple label="Articulo" 
+                        pRipple label="Prestar" 
+                        icon="pi pi-plus" 
+                        class="p-button-secondary mr-2" 
+                        routerLink="prestar">
+                </button> 
+                <button pButton 
+                        pRipple label="Artículos prestados" 
                         icon="pi pi-list" 
                         class="p-button-primary mr-2" 
-                        routerLink="listar">
-                </button>
+                        routerLink="crear">
+                </button> 
             </ng-template>
         </p-toolbar>
         <router-outlet></router-outlet>

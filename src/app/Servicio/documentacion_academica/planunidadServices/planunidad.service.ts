@@ -53,6 +53,10 @@ export class PlanunidadService {
     return this.httpClient.get(this.API_SERVER + id_unidad + "/" + id_asignatura + "/" + id_modalidad + "/" + id_curso);
   }
 
+  public createPDFplanunidad(planunidad: any): Observable<any> {
+    return this.httpClient.post(this.API_SERVER + "pdfPlanUnidad", planunidad);
+  }
+
   //Consumido de parametrizacion
 
   public getAllModalidad(): Observable<any> {
@@ -63,15 +67,16 @@ export class PlanunidadService {
     return this.httpClient.get(this.API_SERVER + "periodos");
   }
 
-  public getAllAsignaturasMalla(idMalla: any): Observable<any> {
-    return this.httpClient.get(this.API_SERVER + "asignaturas/" + idMalla);
+  public getAllAsignaturasByMalla(idMalla: any): Observable<any> {
+    return this.httpClient.get(this.API_SERVER + "asignaturas/malla/" + idMalla);
   }
 
   public getAllCurso(): Observable<any> {
     return this.httpClient.get(this.API_SERVER + "cursos");
   }
 
-  public createPDFplanunidad(planunidad: any): Observable<any> {
-    return this.httpClient.post(this.API_SERVER + "pdfPlanUnidad", planunidad);
+  public getAllParalelo(): Observable<any> {
+    return this.httpClient.get(this.API_SERVER + "paralelos");
   }
+
 }

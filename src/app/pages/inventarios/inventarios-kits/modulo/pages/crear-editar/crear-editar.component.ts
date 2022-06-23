@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Modulo } from '../../../../../../Model/Inventarios/ModuloLibro';
-import { ResModulo } from '../../../../../../Model/Inventarios/intefaces/res_modulo.interface';
+import { ResModulo } from '../../../../../../Model/Inventarios/interfaces/res_modulo.interface';
 import { ModuloService } from '../../../../../../Servicio/modulo_invetario/modulo.service';
 import { MensajesSweetService } from '../../../../../../Servicio/modulo_invetario/mensajes-sweet.service';
 

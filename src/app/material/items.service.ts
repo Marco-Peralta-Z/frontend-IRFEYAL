@@ -27,6 +27,26 @@ export class ItemsService {
                 visible: true
             },
             {
+                label: 'Roles y Usuario',
+                icon: 'fa fa-users',
+                // si tiene el rol de acceso
+                visible: this.hasRolUser(
+                    ['ROLE_Administrador']
+                ),
+                items: [
+                    {
+                        label: 'Crear Empleado',
+                        icon: 'fa fa-user',
+                        routerLink: 'roles/empleado'
+                    },
+                    {
+                        label: 'Crear Usuario',
+                        icon: 'fa fa-user',
+                        routerLink: 'roles/usuarios'
+                    }
+                ]
+            },
+            {
                 label: 'Parametrizacion',
                 icon: 'pi pi-fw pi-book',
                 // si tiene el rol de acceso
@@ -53,27 +73,6 @@ export class ItemsService {
                     }
                 ]
             },
-            {
-                label: 'Roles y Usuario',
-                icon: 'fa fa-users',
-                // si tiene el rol de acceso
-                visible: this.hasRolUser(
-                    ['ROLE_Administrador']
-                ),
-                items: [
-                    {
-                        label: 'Usuario',
-                        icon: 'fa fa-user',
-                        routerLink: 'roles/usuarios'
-                    },
-                    {
-                        label: 'Empleado',
-                        icon: 'fa fa-user',
-                        routerLink: 'roles/empleado'
-                    }
-                ]
-            },
-
             {
                 label: 'Inventario',
                 icon: 'fa fa-book',

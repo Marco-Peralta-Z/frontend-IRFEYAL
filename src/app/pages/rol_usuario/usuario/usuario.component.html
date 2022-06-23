@@ -5,7 +5,7 @@
 <div class="card">
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+            <button pButton pRipple label=" Crear Usuario" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
         </ng-template>
         <ng-template pTemplate="right">
         <span class="p-input-icon-left" >
@@ -39,9 +39,16 @@
                 <td>{{usuario.usuario}}</td>
                 <td>{{usuario.estUsuario}}</td>
                 <td>
-                    <div class="" *ngFor="let rol of usuario.roles">
-                        <small>{{rol.rol.descripcion | titlecase }}</small>
+                    <div class="">
+                        <button pButton 
+                                pRipple 
+                                icon="pi pi-eye" 
+                                label = "asignar"
+                                class="p-button-rounded p-button-help"
+                                (click)="showDialogRol(usuario)">
+                        </button>
                     </div>
+
                 </td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editarUsuario(usuario)"></button>
@@ -57,50 +64,50 @@
     </p-table>
 </div>
 
-<p-dialog [(visible)]="usuarioDialog" [style]="{width: '450px'}" header="Detalles del Usuairo" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="usuarioDialog" [style]="{width: '650px'}" (onHide)="hideDialog()" header="Detalles del Usuairo" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
-        <div class="p-field">
-            <label for="name">Name</label>
-            <input type="text" pInputText id="name" [(ngModel)]="usuario.usuario" required autofocus />
-            <small class="p-invalid" *ngIf="submitted && !usuario.usuario">Name is required.</small>
-        </div>
-        <div class="p-field">
-            <label for="description">Description</label>
-            <input type="password" pInputText id="name" [(ngModel)]="usuario.contrasenia" required  />
+        
+        <div class="p-field col-6">
+            <label for="name">Cedula Persona</label>
+            <p-autoComplete  [showEmptyMessage]="true" [suggestions]="empleados"
+             [(ngModel)]="empleado" (completeMethod)="getEmpleados($event)" field="persona.cedula" [minLength]="3" placeholder="Ejem:010....."></p-autoComplete>
+            <small class="p-invalid" *ngIf="submitted && !usuario.empleado">requiere apellido.</small>
         </div>
 
-        <!-- <div class="p-field">
-            <label class="p-mb-3">Category</label>
-            <div class="p-formgrid p-grid">
-                <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="category1" name="category" value="Accessories" [(ngModel)]="product.category"></p-radioButton>
-                    <label for="category1">Accessories</label>
+        <div *ngIf="empleado && empleado.id_empleado >0; else noHayEmpleado">
+           <div class="row"> 
+                <h2>Empleado seleccionado: <small>{{empleado.persona.nombre}} {{empleado.persona.apellido}} CI: {{empleado.persona.cedula}}</small> </h2>
+                <div class="p-field col-6">
+                <label for="name">Nombre Usuario:</label>
+                <input type="text" pInputText id="name" [(ngModel)]="usuario.usuario" required autofocus />
+                <small class="p-invalid" *ngIf="submitted && !usuario.usuario">Name is required.</small>
                 </div>
-                <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="category2" name="category" value="Clothing" [(ngModel)]="product.category"></p-radioButton>
-                    <label for="category2">Clothing</label>
-                </div>
-                <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="category3" name="category" value="Electronics" [(ngModel)]="product.category"></p-radioButton>
-                    <label for="category3">Electronics</label>
-                </div>
-                <div class="p-field-radiobutton p-col-6">
-                    <p-radioButton id="category4" name="category" value="Fitness" [(ngModel)]="product.category"></p-radioButton>
-                    <label for="category4">Fitness</label>
+                <div class="p-field col-6">
+                    <label for="contrasenia">Contraseña:</label>
+                    <p-password [(ngModel)]="usuario.contrasenia" [toggleMask]="true" [feedback]="false"></p-password>
                 </div>
             </div>
-        </div> -->
-
-        <!-- <div class="p-formgrid p-grid">
-            <div class="p-field p-col">
-                <label for="price">Price</label>
-                <p-inputNumber id="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+            <div class="row">
+                <div class="p-field col-8">
+                    <label for="description">Estado</label>
+                    <div class="field-checkbox">
+                    <p-checkbox [(ngModel)]="usuario.estUsuario" [binary]="true" inputId="binary"></p-checkbox>
+                    <label for="binary" *ngIf="usuario.estUsuario; else mesaje">Activo</label>
+                    <ng-template #mesaje>
+                        <label for="binary">Inactivo</label>
+                    </ng-template>
+                </div>
             </div>
-            <div class="p-field p-col">
-                <label for="quantity">Quantity</label>
-                <p-inputNumber id="quantity" [(ngModel)]="product.quantity"></p-inputNumber>
+        </div>
+            
+            
+            
+        </div>
+        <ng-template #noHayEmpleado > 
+            <div style="min-height:650px;">
+            <h5>Primero Seleccione un Empleado</h5>
             </div>
-        </div> -->
+        </ng-template>
     </ng-template>
     
     <ng-template pTemplate="footer">
@@ -111,3 +118,33 @@
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 </div>
+
+<p-dialog header="Roles" (onHide)="closeDialogRol()" [(visible)]="displayRol" [style]="{width: '50vw', height: '50vh'}">
+    <p-dropdown [options]="roles" [(ngModel)]="selectRol" optionLabel="descripcion" [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Seleccion un rol">
+        
+    </p-dropdown>
+  
+    <button pButton pRipple type="button" label="Agregar rol" (click)="agregarRol()"></button>
+    <div class="" *ngIf="selectUsuario?.roles">
+        <p-table [value]="selectUsuario?.roles!" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Rol</th>
+                    
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rolUsuario>
+                <tr>
+                    <td>{{rolUsuario.rol.descripcion}}</td>
+                    <td>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarRol(rolUsuario)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="closeDialogRol()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

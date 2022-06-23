@@ -11,6 +11,7 @@ import { Modalidad } from '../../../Model/Parametrizacion/Modalidad';
 import { Periodo } from '../../../Model/Parametrizacion/Periodo';
 import { Paralelo } from '../../../Model/Parametrizacion/Paralelo';
 import { Malla } from '../../../Model/Parametrizacion/Malla';
+import { persona } from '../../../Model/rolesTS/persona';
 
 
 
@@ -33,7 +34,11 @@ export class MatriculaService {
   );
 }
 
-getJornadas():Observable<Modalidad[]>{
+getHistorialMatriculas(id_matricula: number):Observable<Matricula[]>{
+  return this.http.get<Matricula[]>(`${this.baseUrl}api/historialMatricula/${id_matricula}`);
+}
+
+getModalidades():Observable<Modalidad[]>{
   return this.http.get<Modalidad[]>(`${this.baseUrl}modalidad`);
 }
 
@@ -72,11 +77,15 @@ postMatricula(matricula: Matricula): Observable<Matricula>{
   );
 }
 
-sendEmail(matricula: Matricula): Observable<any>{
-  return this.http.post<any>(`${this.baseUrl}api/sendMail`, matricula).pipe(
+sendEmail(matricula: Matricula, list: string): Observable<any>{
+  return this.http.put<any>(`${this.baseUrl}api/sendMail/${list}`, matricula).pipe(
     map((response:any)=>
     response.mensaje as string)
   );
+}
+
+getPeronas():Observable<persona[]>{
+  return this.http.get<persona[]>(`${this.baseUrl}mapPersona/persona`);
 }
 
 private url=Api.url+"malla"

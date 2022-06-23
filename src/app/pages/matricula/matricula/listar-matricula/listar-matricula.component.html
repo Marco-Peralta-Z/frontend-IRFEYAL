@@ -6,11 +6,11 @@
         <div class="card">
 
 
-            <p-table #dt [value]="matriculas" [rows]="10" [paginator]="true"
-                [globalFilterFields]="['estudiante.id_persona.cedula','estudiante.id_persona.nombre','estudiante.id_persona.apellido','curso.descripcion','modalidad_estudio']"
+            <p-table #dt [value]="matriculas" [rows]="rows" [paginator]="true"
+                [globalFilterFields]="['estudiante.id_persona.cedula','estudiante.id_persona.nombre','estudiante.id_persona.apellido','curso.descripcion','modalidad.descripcion']"
                 responsiveLayout="scroll" [(selection)]="selectedMatricula" [rowHover]="true" dataKey="id"
                 currentPageReportTemplate="De {first} a {last} de {totalRecords} existentes"
-                [showCurrentPageReport]="true">
+                [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]">
                 <ng-template pTemplate="caption">
                     <div class="flex align-items-center justify-content-between">
                         <h3 class="m-0">Lista de Matriculas</h3>
@@ -23,43 +23,76 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-
-                        <th pSortableColumn="estudiante.id_persona.cedula">Cedula <p-sortIcon
+                        <th pSortableColumn="estudiante.id_persona.cedula">Cedula/Pasaporte<p-sortIcon
                                 field="estudiante.id_persona.cedula">
                             </p-sortIcon>
                         </th>
-                        <th pSortableColumn="estudiante.id_persona.nombre">Nombre <p-sortIcon
+                        <th pSortableColumn="estudiante.id_persona.nombre">Nombres <p-sortIcon
                                 field="estudiante.id_persona.nombre">
                             </p-sortIcon>
                         </th>
-                        <th pSortableColumn="estudiante.id_persona.apellido">Apellido <p-sortIcon
+                        <th pSortableColumn="estudiante.id_persona.apellido">Apellidos <p-sortIcon
                                 field="estudiante.id_persona.apellido">
                             </p-sortIcon>
                         </th>
-                        <th pSortableColumn="curso.descripcion">Curso <p-sortIcon
-                                field="curso.descripcion">
+                        <th pSortableColumn="curso.descripcion">Curso <p-sortIcon field="curso.descripcion">
                             </p-sortIcon>
                         </th>
-                        <th pSortableColumn="modalidad_estudio">Modalidad de Estudio <p-sortIcon
-                                field="modalidad_estudio">
+                        <th pSortableColumn="modalidad.descripcion">Modalidad <p-sortIcon field="modalidad.descripcion">
                             </p-sortIcon>
                         </th>
                         <th></th>
                     </tr>
+                    <tr>
+
+                        <th>
+                            <input pInputText type="text"
+                                (input)="dt.filter($event.target.value, 'estudiante.id_persona.cedula', 'contains')"
+                                placeholder="Buscar por Cedula" class="p-column-filter">
+                        </th>
+                        <th>
+                            <input pInputText type="text"
+                                (input)="dt.filter($event.target.value, 'estudiante.id_persona.nombre', 'contains')"
+                                placeholder="Buscar por Nombre" class="p-column-filter">
+                        </th>
+                        <th>
+                            <input pInputText type="text"
+                                (input)="dt.filter($event.target.value, 'estudiante.id_persona.apellido', 'contains')"
+                                placeholder="Buscar por Apellido" class="p-column-filter">
+                        </th>
+                        <th>
+                            <input pInputText type="text"
+                                (input)="dt.filter($event.target.value, 'curso.descripcion', 'contains')"
+                                placeholder="Buscar por Curso" class="p-column-filter">
+                        </th>
+                        <th>
+                            <p-dropdown [options]="modalidades" optionLabel="descripcion"
+                                (input)="dt.filter($event.target.value, 'modalidad.descripcion', 'contains')"
+                                placeholder="Modalidad" class="p-column-filter"></p-dropdown>
+                            <!-- <input pInputText type="text" (input)="dt.filter($event.target.value, 'modalidad.descripcion', 'contains')"  placeholder="Buscar por Modalidad" class="p-column-filter"> -->
+                        </th>
+                    </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-matricula>
+                <ng-template pTemplate="body" let-matricula let-expanded="expanded">
                     <tr>
                         <td>{{matricula.estudiante.id_persona.cedula }}</td>
-                        <!-- <td><img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.name" width="100" class="shadow-4" /></td> -->
                         <td>{{matricula.estudiante.id_persona.nombre | titlecase}}</td>
                         <td>{{matricula.estudiante.id_persona.apellido | titlecase}}</td>
                         <td>{{matricula.curso.descripcion | titlecase}}</td>
                         <td>{{matricula.modalidad.descripcion | titlecase}}</td>
                         <td>
-                            <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-warning p-button-outlined mr-2"
+                            <button pButton pRipple icon="pi pi-eye"
+                                class="p-button-rounded p-button-warning p-button-outlined mr-2"
                                 (click)="verMatricula(matricula)"></button>
                             <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(estudiante)"></button> -->
                         </td>
+                    </tr>
+                </ng-template>
+
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="4">No se obtuvo coincidencias</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="summary">
@@ -70,75 +103,119 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="productDialog" [style]="{width: '650px'}" header="Información de Matricula" [modal]="true"
-            styleClass="p-fluid">
-            <ng-template pTemplate="content">
-                <!-- <h3>Desea Editar?</h3>
-                <p-toggleButton [(ngModel)]="esditable" onLabel="Habilitar" offLabel="Deshabilitar" onIcon="pi pi-check"
-                    offIcon="pi pi-times" [style]="{'width': '10em'}"></p-toggleButton> -->
-                <!-- <img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.image" class="product-image" *ngIf="product.image"> -->
-                <hr>
-                <div class="formgrid grid">
-                    <div class="field col-6">
-                        <label for="nombreUpdate">Cedula</label>
-                        <input type="text" pInputText [ngModel]="matricula.estudiante.id_persona.cedula"
-                           readonly />
+        <p-dialog [(visible)]="productDialog" [style]="{width: '900px'}" header="INFORMACIÓN DE MATRICULA"
+            [modal]="true" styleClass="p-fluid">
 
-                    </div>
-                    <div class="field col-6">
-                        <label for="apellidoUpdate">Apellidos/Nombres</label>
-                        <input type="text" pInputText id="apellidoUpdate" [ngModel]="fullName | titlecase"
-                            readonly />
-                    </div>
-                    <!-- <div class="field col-6">
-                        <label for="nacimientoUpdate">Fecha Nacimiento:</label>
-                        <label>Ingresada:</label>
-                        <input type="date" max="2004-12-31" pInputText id="nacimientoUpdate"
-                            [(ngModel)]="estudiante.id_persona.fechaNacimiento" [disabled]="esditable" required />
+            <div class="card">
+                <p-tabView>
+                    <p-tabPanel header="Matricula Actual" leftIcon="pi pi-user" tooltip="Actual">
+                        <ng-template pTemplate="content">
 
-                      
-                    </div>
-                    <div class="field col-6">
-                        <label for="generoUpdate">Genero</label>
-                        <p-dropdown [options]="generos" [(ngModel)]="estudiante.id_persona.genero"
-                            placeholder="Seleccione Genero" optionLabel="genero" [showClear]="true"
-                            [disabled]="esditable"></p-dropdown>
-                       
-                    </div> -->
-                </div>
-                <hr>
-                <div class="field">
-                    <label class="mb-3">Datos de Matrícula</label>
-                <hr>
-                    <div class="formgrid grid">
-                        <div class="field col-6">
-                            <label>Curso</label>
-                            <input type="text" pInputText [ngModel]="matricula.curso.descripcion | titlecase"
-                                readonly />
-                        </div>
-                        <div class="field col-6">
-                            <label>Modalidad de Estudio</label>
-                            <input type="text" pInputText [ngModel]="matricula.modalidad.descripcion | titlecase"
-                                readonly />
-                        </div>
-                        <!-- <div class="field col-6">
-                            <label>Jornada</label>
-                            <input type="text" pInputText [ngModel]="matricula.modalidad.descripcion | titlecase"
-                                readonly />
-                        </div> -->
-                        <div class="field col-6">
-                            <label>Año Lectivo</label>
-                            <input type="text" pInputText [ngModel]="matricula.id_periodo.periodo_academico | titlecase"
-                                readonly />
-                        </div>
-                        <div class="field col-6">
-                            <label>Fecha de Matricula</label>
-                            <input type="text" pInputText [ngModel]="matricula.fechaMatricula | date"
-                                readonly />
-                        </div>
-                    </div>
-                </div>
-            </ng-template>
+                            <div class="formgrid grid">
+                                <div class="field col-6">
+                                    <label for="nombreUpdate"><b>Cedula/Pasaporte</b></label>
+                                    <input type="text" pInputText [ngModel]="matricula.estudiante.id_persona.cedula"
+                                        readonly />
+
+                                </div>
+                                <div class="field col-6">
+                                    <label for="apellidoUpdate"><b>Apellidos/Nombres</b></label>
+                                    <input type="text" pInputText id="apellidoUpdate" [ngModel]="fullName | titlecase"
+                                        readonly />
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="field">
+                                <div class="encabezado">
+                                    <label class="mb-3 titulo"><b>Datos de Matrícula</b></label>
+                                </div>
+
+                                <hr>
+                                <div class="formgrid grid">
+                                    <div class="field col-6">
+                                        <label><b>Curso</b></label>
+                                        <input type="text" pInputText
+                                            [ngModel]="matricula.curso.descripcion | titlecase" readonly />
+                                    </div>
+                                    <div class="field col-6">
+                                        <label><b>Modalidad de Estudio</b></label>
+                                        <input type="text" pInputText
+                                            [ngModel]="matricula.modalidad.descripcion | titlecase" readonly />
+                                    </div>
+
+                                    <div class="field col-6">
+                                        <label><b>Año Lectivo</b></label>
+                                        <input type="text" pInputText
+                                            [ngModel]="matricula.id_periodo.ano_inicio + ' - ' + matricula.id_periodo.ano_fin"
+                                            readonly />
+                                    </div>
+                                    <div class="field col-6">
+                                        <label><b>Fecha de Matricula</b></label>
+                                        <input type="text" pInputText [ngModel]="matricula.fechaMatricula | date"
+                                            readonly />
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-tabPanel>
+                    <p-tabPanel header="Historial" rightIcon="pi pi-inbox" tooltip="Historial">
+                        <p-accordion [multiple]="true" *ngFor="let historial of historial">
+                            <p-accordionTab header="{{historial.mallaNombre | titlecase}}">
+                                <p-accordionTab header="{{detalle.curso.descripcion | titlecase}}"
+                                    *ngFor="let detalle of historial.matriculas">
+                                    <ng-template pTemplate="content">
+
+                                        <div class="formgrid grid">
+                                            <div class="field col-6">
+                                                <label><b>Fecha de Matricula</b></label>
+                                                <input type="text" pInputText
+                                                    value="{{detalle.fechaMatricula | date: 'yyyy-MM-dd'}}" readonly />
+
+                                            </div>
+                                            <div class="field col-6">
+                                                <label><b>Modalidad</b></label>
+                                                <input type="text" pInputText value="{{detalle.modalidad.descripcion}}"
+                                                    readonly />
+                                            </div>
+                                            <div class="field col-6">
+                                                <label><b>Periodo Academico</b></label>
+                                                <input type="text" pInputText
+                                                    value="{{detalle.id_periodo.ano_inicio + ' - ' + detalle.id_periodo.ano_fin}}"
+                                                    readonly />
+                                            </div>
+
+                                            <div class="field col-6">
+                                                <label><b>Estado</b></label>
+                                                <input type="text" pInputText value="Activo" readonly *ngIf="detalle.id_periodo.vigencia! else name"
+                                                    value="Activo"/>
+                                                <ng-template #name>
+                                                    <input type="text" pInputText value="Culminado"  readonly />
+                                                </ng-template>
+                                                
+                                                
+
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </ng-template>
+                                </p-accordionTab>
+                            </p-accordionTab>
+
+                        </p-accordion>
+                    </p-tabPanel>
+                    <!-- <p-tabPanel header="Header III" leftIcon="pi pi-user" rightIcon="pi pi-star-fill" tooltip="1990">
+                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
+                        deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
+                        cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est
+                        laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+                        Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
+                </p-tabPanel> -->
+                </p-tabView>
+            </div>
+
 
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Cerrar" icon="pi pi-times" class="p-button-text"

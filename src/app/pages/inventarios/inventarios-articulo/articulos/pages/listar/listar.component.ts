@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 
 import { MensajesSweetService } from '../../../../../../Servicio/modulo_invetario/mensajes-sweet.service';
-import { Inventario } from '../../../../../../Model/Inventarios/Inventario';
 import { InventarioService } from '../../../../../../Servicio/modulo_invetario/inventario.service';
+import { StockArticulo } from '../../../../../../Model/Inventarios/stockArticulo';
 
 @Component({
   selector: 'app-listar',
@@ -13,9 +13,9 @@ import { InventarioService } from '../../../../../../Servicio/modulo_invetario/i
 })
 export class ListarComponent implements OnInit {
   
-  public inventarios: Inventario [] = [];
-  public selectInventario?: Inventario;
-  public displayArticulo?: boolean; 
+  public stockArticulos: StockArticulo [] = [];
+  public selectStockArticulo?: StockArticulo;
+  public displayArticulos?: boolean; 
   
   constructor(
     private _confirmationService: ConfirmationService,
@@ -28,18 +28,18 @@ export class ListarComponent implements OnInit {
   }
 
   getInventarios = () => {
-    this._inventarioService.getInventarios().subscribe({
+    this._inventarioService.getStockArticulos().subscribe({
       next: (resp) => {
         console.log(resp);
-        this.inventarios = resp;
+        this.stockArticulos = resp;
       },
       error: (err) => console.log
     });
   }
 
-  eliminarInventario(inventario: Inventario) {
+  eliminarInventario(stockArticulo: StockArticulo) {
     this._confirmationService.confirm({
-        message: 'Desea eliminar: ' + inventario.codigo + '?',
+        message: 'Desea eliminar: ' + stockArticulo.categoria + '?',
         header: 'Confirmar',
         icon: 'pi pi-exclamation-triangle',
         rejectButtonStyleClass: 'p-button-danger p-button-text',
@@ -58,13 +58,14 @@ export class ListarComponent implements OnInit {
     });
   }
 
-  showDialog(inventario: Inventario) {
-    this.selectInventario = inventario;
-    this.displayArticulo = true;
+  showDialog(stockArticulo: StockArticulo) {
+    console.log(stockArticulo.listaArticulos);
+    this.selectStockArticulo = stockArticulo;
+    this.displayArticulos = true;
   }
   closeDialog() {
-    this.selectInventario = {};
-    this.displayArticulo = false;
+    this.selectStockArticulo = {};
+    this.displayArticulos = false;
   }
 
 }

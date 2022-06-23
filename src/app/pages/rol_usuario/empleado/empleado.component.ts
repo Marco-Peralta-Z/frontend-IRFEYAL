@@ -1,15 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { empresa } from 'src/app/Model/rolesTS/empresa';
 
-@Component({
-  selector: 'app-empleado',
-  templateUrl: './empleado.component.html',
-  styleUrls: ['.././usuario.component.scss']
-})
-export class EmpleadoComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit(): void {
-  }
 
-}

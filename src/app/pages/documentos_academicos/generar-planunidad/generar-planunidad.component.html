@@ -50,7 +50,7 @@
                     <div class="row">
                         <!-- Implementacion Parte 1 Seleccion -->
                         <div class="col-sm-2">
-                            <h3>Elegir Unidad:</h3>
+                            <h3>Unidad:</h3>
                             <select name="unidad" id="unidad" class="form-select" formControlName="unidad"
                                 [(ngModel)]="opcionSelectUnidad" (change)="capturarSelectUnidad()">
                                 <option value="0"> </option>
@@ -58,7 +58,7 @@
                                     {{item.nombre_unidad}}</option>
                             </select>
                             <br>
-                            <h3>Elegir Periodo:</h3>
+                            <h3>Periodo:</h3>
                             <select name="periodo" id="periodo" class="form-select" formControlName="periodo"
                                 [(ngModel)]="opcionSelectPeriodo" (change)="capturarSelectPeriodo()">
                                 <option value="0"> </option>
@@ -67,7 +67,7 @@
                                 </option>
                             </select>
                             <br>
-                            <h3>Elegir Modalidad:</h3>
+                            <h3>Modalidad:</h3>
                             <select name="modalidad" id="modalidad" class="form-select" formControlName="modalidad"
                                 [(ngModel)]="opcionSelectModalidad" (change)="capturarSelectModalidad()">
                                 <option value="0">
@@ -75,16 +75,23 @@
                                 <option [ngValue]="item" *ngFor="let item of modalidades">{{item.descripcion}}</option>
                             </select>
                             <br>
-                            <h3>Curso/Paralelo:</h3>
+                            <h3>Curso:</h3>
                             <select name="curso" id="curso" class="form-select" formControlName="curso"
                                 [(ngModel)]="opcionSelectCurso" (change)="capturarSelectCurso()">
                                 <option value="0"> </option>
-                                <option [ngValue]="item" *ngFor="let item of cursos">{{item.descripcion}} -
-                                    {{item.id_paralelo.descripcion}}
+                                <option [ngValue]="item" *ngFor="let item of cursos">{{item.descripcion}}
                                 </option>
                             </select>
                             <br>
-                            <h3>Elegir Asignatura:</h3>
+                            <h3>Paralelo:</h3>
+                            <select name="paralelo" id="paralelo" class="form-select" formControlName="paralelo"
+                                [(ngModel)]="opcionSelectParalelo" (change)="capturarSelectParalelo()">
+                                <option value="0"> </option>
+                                <option [ngValue]="item" *ngFor="let item of paralelos">{{item.descripcion}}
+                                </option>
+                            </select>
+                            <br>
+                            <h3>Asignatura:</h3>
                             <select name="asignatura" id="asignatura" class="form-select" formControlName="asignatura"
                                 [(ngModel)]="opcionSelectAsig" (change)="capturarSelectAsig()">
                                 <option value="0"> </option>
@@ -127,7 +134,10 @@
                                         Curso:</label>
                                     <label style="font-size:18px; margin-left: 10px;"
                                         [hidden]="opcionSelectCurso == '0'">
-                                        {{verSelectCurso}}</label><br>
+                                        {{verSelectCurso}}</label>
+                                    <label style="font-size:18px; margin-left: 10px;"
+                                        [hidden]="opcionSelectParalelo == '0'">
+                                        {{verSelectParalelo}}</label><br>
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
                                         Codigo de Asignatura:</label>
                                     <label style="font-size:18px; margin-left: 10px;"

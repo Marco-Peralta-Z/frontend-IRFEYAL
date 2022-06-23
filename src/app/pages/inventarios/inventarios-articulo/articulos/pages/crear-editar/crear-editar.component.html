@@ -1,22 +1,7 @@
 <div class="container">
     <form [formGroup]="inventarioForm" (ngSubmit)="realizarAccion()" >
         <div class="row">
-            <p-divider align="left" type="dashed">
-                <b>Inventario</b>
-            </p-divider>
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                <!-- Codigo -->
-                <div class="field">
-                    <label for="codigo" class="block">Código</label>
-                    <input   
-                            type="text" 
-                            class="w-100"
-                            pInputText />
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('tipoAprobacion')">
-                            El tipo es requerido.
-                    </small> -->
-                </div>
                 <!-- Fecha  -->
                 <div class="field">
                     <label for="fecha" class="block">Fecha ingreso</label>
@@ -31,47 +16,26 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                <!-- cantidad -->
+                <!-- categoria -->
                 <div class="field">
-                    <label for="cantidad" class="block">Cantidad</label>
-                    <input  type="number"  
-                            class=" w-100" 
-                            pInputText />
+                    <label for="categoria" class="block">Categoría</label>
+                    <p-dropdown [options]="categoriasArticulos"
+                                styleClass="w-100"
+                                optionLabel="cateNombre"
+                                [filter]="true"
+                                filterBy="cateNombre"
+                                [showClear]="true"
+                                placeholder="Seleccione una categoria">
+                    </p-dropdown>
                     <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('cantidad')">
-                            La cantidad es requerida.
-                    </small> -->
-                </div>
-                <!-- disponibilidad -->
-                <div class="field">
-                    <label for="disponibilidad" class="block">Disponibilidad</label>
-                    <input  type="number"  
-                            class=" w-100" 
-                            pInputText />
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('disponibilidad')">
-                            La disponibilidad es requerida.
+                            *ngIf="verificarCampo('kit')">
+                            El kit es requerido.
                     </small> -->
                 </div>
             </div>
         </div>
         <div class="row">
-            <p-divider align="left" type="dashed">
-                <b>Artículo</b>
-            </p-divider>
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                <!-- Codigo -->
-                <div class="field">
-                    <label for="codigo" class="block">Código</label>
-                    <input   
-                            type="text" 
-                            class="w-100"
-                            pInputText />
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('tipoAprobacion')">
-                            El tipo es requerido.
-                    </small> -->
-                </div>
                 <!-- nombre -->
                 <div class="field">
                     <label for="nombre" class="block">Nombre</label>
@@ -109,10 +73,14 @@
                             La cantidad es requerida.
                     </small> -->
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <!-- descripcion -->
                 <div class="field">
                     <label for="descripcion" class="block">Descripción</label>
-                    <textarea   rows="1"    
+                    <textarea   rows="2"    
                                 class="w-100"
                                 pInputTextarea [autoResize]="true">
                     </textarea>
@@ -121,79 +89,16 @@
                             El tipo es requerido.
                     </small> -->
                 </div>
-                <!-- estado -->
-                <div class="field">
-                    <label for="estado" class="block">Estado</label>
-                    <input   
-                            type="text" 
-                            class="w-100"
-                            pInputText />
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('tipoAprobacion')">
-                            El tipo es requerido.
-                    </small> -->
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <p-divider align="left" type="dashed">
-                <b>Categoria articulo</b>
-            </p-divider>
-            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                <!-- categoria -->
-                <div class="field">
-                    <label for="categoria" class="block">Categoría</label>
-                    <input   
-                            type="text" 
-                            class="w-100"
-                            pInputText />
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('tipoAprobacion')">
-                            El tipo es requerido.
-                    </small> -->
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <p-divider align="left" type="dashed">
-                <b>Control artículo</b>
-            </p-divider>
-            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <!-- observacion -->
                 <div class="field">
                     <label for="observacion" class="block">Observación</label>
-                    <input   
-                            type="text" 
-                            class="w-100"
-                            pInputText />
+                    <textarea   rows="2"    
+                                class="w-100"
+                                pInputTextarea [autoResize]="true">
+                    </textarea>
                     <!-- <small  class="p-error block"
                             *ngIf="verificarCampo('tipoAprobacion')">
                             El tipo es requerido.
-                    </small> -->
-                </div>
-                <!-- Fecha  -->
-                <div class="field">
-                    <label for="fecha" class="block">Fecha ingreso</label>
-                    <p-calendar styleClass="w-100" 
-                                dateFormat="yy-mm-dd" 
-                                inputId="dateformat">
-                    </p-calendar>
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('fecha')">
-                            La fecha es requerida.
-                    </small> -->
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                <!-- cantidad -->
-                <div class="field">
-                    <label for="cantidad" class="block">Cantidad</label>
-                    <input  type="number"  
-                            class=" w-100" 
-                            pInputText />
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('cantidad')">
-                            La cantidad es requerida.
                     </small> -->
                 </div>
             </div>

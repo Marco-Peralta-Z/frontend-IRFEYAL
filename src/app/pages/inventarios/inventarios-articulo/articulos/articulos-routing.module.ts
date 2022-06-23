@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main.component';
 import { CrearEditarComponent } from './pages/crear-editar/crear-editar.component';
 import { ListarComponent } from './pages/listar/listar.component';
+import { PrestarComponent } from './pages/prestar/prestar.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
       {
         path:'crear',
         component: CrearEditarComponent
+      },
+      {
+        path:'prestar',
+        component: PrestarComponent
       },
       {
         path:'listar',
