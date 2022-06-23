@@ -295,7 +295,7 @@ export class RegistrarasistenciaComponent implements OnInit {
   //------------------------ingreso estudiantes ------------------------///
   ///----------- evento  submit ingresar-------------//
       submit(){
-       if(this.idModalidad == 0 || this.idAsignatura == 0 || this.IdPeriodo ==0  ||  this.IdParalelo ==0 || this.IdCurso==0 ||this.valiadarfecha==0){
+       if(this.idModalidad == 0 || this.idAsignatura == 0 || this.IdPeriodo ==0  ||  this.IdParalelo ==0 || this.IdCurso==0 ||this.valiadarfecha==0||this.estudiantes.length<1){
         this.clearfech();
         swal.fire( 
           {

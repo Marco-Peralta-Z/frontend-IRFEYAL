@@ -28,6 +28,7 @@ export class ListarasistenciaComponent implements OnInit {
   estudiantes:Estudiante []=[];
   // id filtros
   idModalidad: number = 0;
+  idestudiante:number=0;
     idAsignatura: number = 0;
     IdPeriodo: number =0;
     IdParalelo: number =0;
@@ -60,6 +61,7 @@ export class ListarasistenciaComponent implements OnInit {
   usuarioGuardado = (): usuario => this.auth.usuario;
  
   mostrarinfo(id:any){
+    this.idestudiante=id;
   
     this.appService.getInformaciondelestudiante(id).subscribe((data:any)=>this.Estudiante=data);
           this.showDiv=true;
@@ -234,6 +236,12 @@ if(this.idAsignatura==0){
           this.IdCurso=0;
          }
 
+        }
+
+
+        reportes(){
+          console.log(this.idestudiante);
+        
         }
 
 
