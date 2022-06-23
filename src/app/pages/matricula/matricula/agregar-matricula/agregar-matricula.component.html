@@ -1,337 +1,357 @@
-    <div class="container-fluid page">
-        <div class="d-flex page__box p-3 mt-2">Crear Matricula</div>
-        <div class="page__content shadow p-3 position-relative">
-            <br>
-            <p-toast position="top-right" key="tc"></p-toast>
-            <!-- <span class="p-float-label p-input-icon-right">
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2">Crear Matricula</div>
+    <div class="page__content shadow p-3 position-relative">
+        <br>
+        <p-toast position="top-right" key="tc"></p-toast>
+        <!-- <span class="p-float-label p-input-icon-right">
                 <input id="float-input" [(ngModel)]="cedula" type="text" pInputText maxlength="10" >
                 <label for="float-input">Cedula</label>
             </span> -->
-            <p-badge value="Buscar Estudiante" size="large" styleClass="mr-2 mb-2"></p-badge><br>
-            
-            <p-dropdown [options]="personas" [(ngModel)]="personaSelectd"  (onChange)="buscar()" optionLabel="cedula" [filter]="true" filterBy="cedula" [showClear]="true" placeholder="Por Cedula/Pasaporte">
-                <ng-template pTemplate="selectedItem">
-                    <div class="country-item country-item-value"  *ngIf="personaSelectd">
-                        <div>{{personaSelectd.cedula}}</div>
-                    </div>
-                </ng-template>
-                <ng-template let-persona pTemplate="item">
-                    <div class="country-item">
+        <p-badge value="Buscar Estudiante" size="large" styleClass="mr-2 mb-2"></p-badge><br>
+
+        <p-dropdown [options]="personas" [(ngModel)]="personaSelectd" (onChange)="buscar()" optionLabel="cedula"
+            [filter]="true" filterBy="cedula" [showClear]="true" placeholder="Por Cedula/Pasaporte">
+            <ng-template pTemplate="selectedItem">
+                <div class="country-item country-item-value" *ngIf="personaSelectd">
+                    <div>{{personaSelectd.cedula}}</div>
+                </div>
+            </ng-template>
+            <ng-template let-persona pTemplate="item">
+                <div class="country-item">
                     <div>{{persona.cedula}}</div>
-                    </div>
-                </ng-template>
-            </p-dropdown>
-            <!-- <p-button (click)="buscar()" [disabled]="cedula.length<10" icon="pi pi-search" label="Buscar"></p-button>
+                </div>
+            </ng-template>
+        </p-dropdown>
+        <!-- <p-button (click)="buscar()" [disabled]="cedula.length<10" icon="pi pi-search" label="Buscar"></p-button>
             <span class="form-text text-danger" *ngIf="cedula.length<10 && cedula !==''">
                 {{campo}}
             </span> -->
-            <div class="card mt-2">
-                <form autocomplete="off" [formGroup]="matriculaFormulario">
-                    <p-tabView [(activeIndex)]="activeIndex1">
-                        <p-tabPanel>
-                            <ng-template pTemplate="header">
-                                <i class="pi pi-credit-card mr-1"></i>
-                                <span> Datos Estudiante</span>
-                            </ng-template>
-                            <!-- mostrar la informacion del estudiante buscado -->
-                            <p-accordion [multiple]="true">
-                                <p-accordionTab header="Información Personal" [selected]="true">
-                                    <div class="row">
-                                        <div class="col">
-                                            <span class="p-float-label mt-3">
-                                                <input id="float-input" type="text" [ngModel]="estudiante.id_persona.cedula"
-                                                    formControlName="cedula" pInputText readonly>
-                                                <label for="float-input">Cedula:</label>
-                                            </span>
-
-                                            <span class="p-float-label mt-4">
-                                                <input id="float-input" type="text" [ngModel]="fullName | titlecase"
-                                                    pInputText readonly formControlName="nameComplete">
-                                                <label for="float-input">Nombres/Apellidos</label>
-                                            </span>
-                                        </div>
-                                        <div class="col">
-                                            <span class="p-float-label mt-3">
-                                                <input id="float-input" type="text"
-                                                    [value]="estudiante.id_persona.fechaNacimiento | date"
-                                                    formControlName="nacimiento" pInputText readonly>
-                                                <label for="float-input">Fecha de Nacimiento:</label>
-                                            </span>
-                                            <span class="p-float-label mt-4">
-                                                <input id="float-input" type="text"
-                                                    [ngModel]="estudiante.id_persona.genero.genero | titlecase" pInputText
-                                                    readonly formControlName="genero">
-                                                <label for="float-input">Genero</label>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </p-accordionTab>
-                                <p-accordionTab header="Dirección De Domicilio">
-                                    <div class="row">
-                                        <div class="col">
-                                            <span class="p-float-label mt-3">
-                                                <input id="float-input" type="text"
-                                                    [ngModel]="estudiante.direccion.avPrincipal | titlecase"
-                                                    formControlName="callePrincipal" pInputText readonly>
-                                                <label for="float-input">Calle Principal</label>
-                                            </span>
-
-                                            <span class="p-float-label mt-4">
-                                                <input id="float-input" type="text"
-                                                    [ngModel]="estudiante.direccion.avSecundaria | titlecase"
-                                                    formControlName="calleSecundaria" pInputText readonly>
-                                                <label for="float-input">Calle Secundaria</label>
-                                            </span>
-
-                                        </div>
-                                        <div class="col">
-                                            <span class="p-float-label mt-3">
-                                                <input id="float-input" type="text"
-                                                    [ngModel]="estudiante.direccion.provincia.provincia | titlecase"
-                                                    pInputText formControlName="provincia" readonly>
-                                                <label for="float-input">Provincia</label>
-                                            </span>
-                                            <span class="p-float-label mt-4">
-                                                <input id="float-input" type="text"
-                                                    [ngModel]="estudiante.direccion.canton.canton | titlecase" pInputText
-                                                    formControlName="canton" readonly>
-                                                <label for="float-input">Canton</label>
-                                            </span>
-                                            <span class="p-float-label mt-4">
-                                                <input id="float-input" type="text"
-                                                    [ngModel]="estudiante.direccion.parroquia.parroquia | titlecase"
-                                                    pInputText formControlName="parroquia" readonly>
-                                                <label for="float-input">Parroquia</label>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </p-accordionTab>
-                                <p-accordionTab header="Contactos">
-                                    <div class="row">
-                                        <div class="col">
-                                            <span class="p-float-label mt-3">
-                                                <input id="float-input" type="text" [ngModel]="estudiante.telefono.telefono"
-                                                    formControlName="telefono" pInputText readonly>
-                                                <label for="float-input">Telefono:</label>
-                                            </span>
-
-                                            <span class="p-float-label mt-4">
-                                                <input id="float-input" type="text" [ngModel]="estudiante.telefono.numCelular"
-                                                    formControlName="celular" pInputText readonly>
-                                                <label for="float-input">Celular</label>
-                                            </span>
-                                            <span class="p-float-label mt-4">
-                                                <input id="float-input" type="text" [ngModel]="estudiante.correo.correo"
-                                                    formControlName="email" pInputText readonly>
-                                                <label for="float-input">Correo Electronico</label>
-                                            </span>
-
-                                        </div>
-                                    </div>
-                                </p-accordionTab>
-                            </p-accordion>
-                        </p-tabPanel>
-                        <p-tabPanel header="Header II">
-                            <ng-template pTemplate="header">
-                                <i class="pi pi-list mr-1"></i>
-                                <!-- marcado de requisitos necesarios para matricular -->
-                                <span> Requisitos</span>
-                            </ng-template>
-                            <h5>Documentos Receptados:</h5>
-                            <div class="field-checkbox mr-1">
-                                <p-checkbox name="group1" value="Ficha de Inscripcion" [(ngModel)]="selectedRequerimientos"
-                                    formControlName="inscripcion" inputId="ny">
-                                </p-checkbox>
-                                <label for="ny">Ficha de Inscripcion</label>
-                            </div>
-                            <div class="field-checkbox">
-                                <p-checkbox name="group1" value="Copia de Cédula" [(ngModel)]="selectedRequerimientos"
-                                    formControlName="copCedula" inputId="sf">
-                                </p-checkbox>
-                                <label for="sf">Copia de Cédula</label>
-                            </div>
-                            <div class="field-checkbox">
-                                <p-checkbox name="group1" value="Copia certificado de votación"
-                                    formControlName="copVotacion" [(ngModel)]="selectedRequerimientos" inputId="la">
-                                </p-checkbox>
-                                <label for="la">Copia certificado de votación</label>
-                            </div>
-                            <div class="field-checkbox">
-                                <p-checkbox name="group1" value="Certificado de matricula"
-                                    [(ngModel)]="selectedRequerimientos" formControlName="certMatricula" inputId="ch">
-                                </p-checkbox>
-                                <label for="ch">Certificado de matricula</label>
-                            </div>
-
-                        </p-tabPanel>
-                        <p-tabPanel header="Header III" >
-                            <ng-template pTemplate="header">
-                                <i class="pi pi-cog mr-1"></i>
-                                <span> Matricula</span>
-                            </ng-template>
-
-                            <div class="row">
-                                <div class="col">
-                                    <div class="row">
-                                        <label class="mt-2">Seleccione Malla:</label>
-                                        <p-dropdown [options]="mallas"
-                                            placeholder="Seleccione Malla" [(ngModel)]="mallaSelectd" (onChange)="cargarCursos()" formControlName="malla"
-                                            name="malla" optionLabel="descripcion">
-                                        </p-dropdown>
-                                        <span class="form-text text-danger" *ngIf="campoValido('malla')">
-                                            Este campo es obligatorio!
-                                        </span>
-                                    </div>
-                                    <div class="row" >
-                                        <label class="mt-2">Seleccione el Curso:</label>
-                                        <p-dropdown [options]="cursos"  [(ngModel)]="cursoSelectd" 
-                                            placeholder="Seleccione Curso" formControlName="curso"
-                                            (onChange)="obtenerCurso()" [disabled]="cursos.length == 0" name="curso"optionLabel="descripcion">
-                                        </p-dropdown>
-                                        <span class="form-text text-danger" *ngIf="campoValido('curso')">
-                                            Este campo es obligatorio!
-                                        </span>
-                                    </div>
-                                        
-                                    <div class="row" >
-                                        <label class="mt-2">Seleccione Periodo:</label> <br>
-                                        <p-dropdown [options]="periodos" [disabled]="periodos.length==0" [(ngModel)]="peridoSelectd"
-                                            placeholder="Seleccione Periodo" formControlName="periodo"(onChange)="obtenerPeriodo()"
-                                            optionLabel="ano_inicio" name="periodo">
-                                        </p-dropdown>
-                                        <span class="p-error block" *ngIf="campoValido('periodo')">
-                                            Este campo es obligatorio!
-                                        </span>
-                                    </div>
-
-                                </div>
-                                <div class="col">
-
-                                    <div class="row" >
-                                        <label class="mt-2">Seleccione Modalidad:</label> <br>
-                                        <p-dropdown [options]="modalidades" [disabled]="modalidades.length==0 " [(ngModel)]="modalidadSelectd"
-                                            placeholder="Seleccione Modalidad" formControlName="jornada"(onChange)="obtenerModalidad()"
-                                            optionLabel="descripcion" name="jornada">
-                                        </p-dropdown>
-                                        <span class="form-text text-danger" *ngIf="campoValido('jornada')">
-                                            Este campo es obligatorio!
-                                        </span>
-                                    </div>
-                                    
-                                    <div class="row" >
-                                        <label class="mt-2">Seleccione el Paralelo:</label>
-                                        <p-dropdown [options]="paralelos" [disabled]="paralelos.length==0" [(ngModel)]="paraleloSelectd"
-                                            placeholder="Seleccione Paralelo" formControlName="paralelo" (onChange)="obtenerParalelo()"
-                                            optionLabel="descripcion" name="paralelo">
-                                        </p-dropdown>
-                                        <span class="form-text text-danger" *ngIf="campoValido('paralelo')">
-                                            Este campo es obligatorio!
-                                        </span>
-                                    </div>
-                                
-
-                                </div>
-                            </div>
-
-
-
-                        </p-tabPanel>
-
-
-                        <p-tabPanel header="Header IV" >
-                            <ng-template pTemplate="header">
-                                <i class="pi pi-book mr-1"></i>
-                                <span> Resumen</span>
-                            </ng-template>
-                            <div class="row">
-                                <div class="col">
-                                    
-                                        <span class="p-float-label mt-4">
+        <div class="card mt-2">
+            <form autocomplete="off" [formGroup]="matriculaFormulario">
+                <p-tabView [(activeIndex)]="activeIndex1">
+                    <p-tabPanel>
+                        <ng-template pTemplate="header">
+                            <i class="pi pi-credit-card mr-1"></i>
+                            <span> Datos Estudiante</span>
+                        </ng-template>
+                        <!-- mostrar la informacion del estudiante buscado -->
+                        <p-accordion [multiple]="true">
+                            <p-accordionTab header="Información Personal" [selected]="true">
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="p-float-label mt-3">
                                             <input id="float-input" type="text" [ngModel]="estudiante.id_persona.cedula"
-                                                formControlName="Rcedula" pInputText readonly>
-                                            <label for="float-input">Cedula</label>
+                                                formControlName="cedula" pInputText readonly>
+                                            <label for="float-input">Cedula:</label>
                                         </span>
-                                    
-                                    
-                                        <!-- <span class="p-float-label mt-4">
+
+                                        <span class="p-float-label mt-4">
+                                            <input id="float-input" type="text" [ngModel]="fullName | titlecase"
+                                                pInputText readonly formControlName="nameComplete">
+                                            <label for="float-input">Nombres/Apellidos</label>
+                                        </span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="p-float-label mt-3">
+                                            <input id="float-input" type="text"
+                                                [value]="estudiante.id_persona.fechaNacimiento | date"
+                                                formControlName="nacimiento" pInputText readonly>
+                                            <label for="float-input">Fecha de Nacimiento:</label>
+                                        </span>
+                                        <span class="p-float-label mt-4">
+                                            <input id="float-input" type="text"
+                                                [ngModel]="estudiante.id_persona.genero.genero | titlecase" pInputText
+                                                readonly formControlName="genero">
+                                            <label for="float-input">Genero</label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </p-accordionTab>
+                            <p-accordionTab header="Dirección De Domicilio">
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="p-float-label mt-3">
+                                            <input id="float-input" type="text"
+                                                [ngModel]="estudiante.direccion.avPrincipal | titlecase"
+                                                formControlName="callePrincipal" pInputText readonly>
+                                            <label for="float-input">Calle Principal</label>
+                                        </span>
+
+                                        <span class="p-float-label mt-4">
+                                            <input id="float-input" type="text"
+                                                [ngModel]="estudiante.direccion.avSecundaria | titlecase"
+                                                formControlName="calleSecundaria" pInputText readonly>
+                                            <label for="float-input">Calle Secundaria</label>
+                                        </span>
+
+                                    </div>
+                                    <div class="col">
+                                        <span class="p-float-label mt-3">
+                                            <input id="float-input" type="text"
+                                                [ngModel]="estudiante.direccion.provincia.provincia | titlecase"
+                                                pInputText formControlName="provincia" readonly>
+                                            <label for="float-input">Provincia</label>
+                                        </span>
+                                        <span class="p-float-label mt-4">
+                                            <input id="float-input" type="text"
+                                                [ngModel]="estudiante.direccion.canton.canton | titlecase" pInputText
+                                                formControlName="canton" readonly>
+                                            <label for="float-input">Canton</label>
+                                        </span>
+                                        <span class="p-float-label mt-4">
+                                            <input id="float-input" type="text"
+                                                [ngModel]="estudiante.direccion.parroquia.parroquia | titlecase"
+                                                pInputText formControlName="parroquia" readonly>
+                                            <label for="float-input">Parroquia</label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </p-accordionTab>
+                            <p-accordionTab header="Contactos">
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="p-float-label mt-3">
+                                            <input id="float-input" type="text" [ngModel]="estudiante.telefono.telefono"
+                                                formControlName="telefono" pInputText readonly>
+                                            <label for="float-input">Telefono:</label>
+                                        </span>
+
+                                        <span class="p-float-label mt-4">
+                                            <input id="float-input" type="text"
+                                                [ngModel]="estudiante.telefono.numCelular" formControlName="celular"
+                                                pInputText readonly>
+                                            <label for="float-input">Celular</label>
+                                        </span>
+                                        <span class="p-float-label mt-4">
+                                            <input id="float-input" type="text" [ngModel]="estudiante.correo.correo"
+                                                formControlName="email" pInputText readonly>
+                                            <label for="float-input">Correo Electronico</label>
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </p-accordionTab>
+                        </p-accordion>
+                    </p-tabPanel>
+                    <p-tabPanel header="Header II">
+                        <ng-template pTemplate="header">
+                            <i class="pi pi-list mr-1"></i>
+                            <!-- marcado de requisitos necesarios para matricular -->
+                            <span> Requisitos</span>
+                        </ng-template>
+                        <h5>Documentos Receptados:</h5>
+                        <div class="field-checkbox mr-1">
+                            <p-checkbox name="group1" value="Ficha de Inscripcion" [(ngModel)]="selectedRequerimientos"
+                                formControlName="inscripcion" inputId="ny">
+                            </p-checkbox>
+                            <label for="ny">Ficha de Inscripcion</label>
+                        </div>
+                        <div class="field-checkbox">
+                            <p-checkbox name="group1" value="Copia de Cédula" [(ngModel)]="selectedRequerimientos"
+                                formControlName="copCedula" inputId="sf">
+                            </p-checkbox>
+                            <label for="sf">Copia de Cédula</label>
+                        </div>
+                        <div class="field-checkbox">
+                            <p-checkbox name="group1" value="Copia certificado de votación"
+                                formControlName="copVotacion" [(ngModel)]="selectedRequerimientos" inputId="la">
+                            </p-checkbox>
+                            <label for="la">Copia certificado de votación</label>
+                        </div>
+                        <div class="field-checkbox">
+                            <p-checkbox name="group1" value="Certificado de matricula"
+                                [(ngModel)]="selectedRequerimientos" formControlName="certMatricula" inputId="ch">
+                            </p-checkbox>
+                            <label for="ch">Certificado de matricula</label>
+                        </div>
+
+                    </p-tabPanel>
+                    <p-tabPanel header="Header III">
+                        <ng-template pTemplate="header">
+                            <i class="pi pi-cog mr-1"></i>
+                            <span> Matricula</span>
+                        </ng-template>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <label class="mt-2">Seleccione Malla:</label>
+                                    <p-dropdown [options]="mallas" placeholder="Seleccione Malla"
+                                        [(ngModel)]="mallaSelectd" (onChange)="cargarCursos()" formControlName="malla"
+                                        name="malla" optionLabel="descripcion">
+                                    </p-dropdown>
+                                    <span class="form-text text-danger" *ngIf="campoValido('malla')">
+                                        Este campo es obligatorio!
+                                    </span>
+                                </div>
+                                <div class="row">
+                                    <label class="mt-2">Seleccione el Curso:</label>
+                                    <p-dropdown [options]="cursos" [(ngModel)]="cursoSelectd"
+                                        placeholder="Seleccione Curso" formControlName="curso"
+                                        (onChange)="obtenerCurso()" [disabled]="cursos.length == 0" name="curso"
+                                        optionLabel="descripcion">
+                                    </p-dropdown>
+                                    <span class="form-text text-danger" *ngIf="campoValido('curso')">
+                                        Este campo es obligatorio!
+                                    </span>
+                                </div>
+
+                                <div class="row">
+                                    <label class="mt-2">Seleccione Periodo:</label> <br>
+                                    <p-dropdown [options]="periodos" [disabled]="periodos.length==0"
+                                        [(ngModel)]="peridoSelectd" placeholder="Seleccione Periodo"
+                                        formControlName="periodo" (onChange)="obtenerPeriodo()"  optionLabel="periodo_academico"
+                                        name="periodo">
+                                    </p-dropdown>
+                                    <span class="p-error block" *ngIf="campoValido('periodo')">
+                                        Este campo es obligatorio!
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="col">
+
+                                <div class="row">
+                                    <label class="mt-2">Seleccione Modalidad:</label> <br>
+                                    <p-dropdown [options]="modalidades" [disabled]="modalidades.length==0 "
+                                        [(ngModel)]="modalidadSelectd" placeholder="Seleccione Modalidad"
+                                        formControlName="jornada" (onChange)="obtenerModalidad()"
+                                        optionLabel="descripcion" name="jornada">
+                                    </p-dropdown>
+                                    <span class="form-text text-danger" *ngIf="campoValido('jornada')">
+                                        Este campo es obligatorio!
+                                    </span>
+                                </div>
+
+                                <div class="row">
+                                    <label class="mt-2">Seleccione el Paralelo:</label>
+                                    <p-dropdown [options]="paralelos" [disabled]="paralelos.length==0"
+                                        [(ngModel)]="paraleloSelectd" placeholder="Seleccione Paralelo"
+                                        formControlName="paralelo" (onChange)="obtenerParalelo()"
+                                        optionLabel="descripcion" name="paralelo">
+                                    </p-dropdown>
+                                    <span class="form-text text-danger" *ngIf="campoValido('paralelo')">
+                                        Este campo es obligatorio!
+                                    </span>
+                                </div>
+
+
+                            </div>
+                            <div class="col" *ngIf="controlMatricula.length>0">
+
+                                <div class="row">
+                                    <label class="mt-2">Estudiantes por Paralelos:</label>
+                                    <div class="card">
+                                        <div *ngFor="let paralelo of controlMatricula">
+                                            <label>Paralelo: {{paralelo.descripcion}}</label>
+                                            <p-progressBar [value]="paralelo.contador" unit="/45"></p-progressBar>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </p-tabPanel>
+
+
+                    <p-tabPanel header="Header IV">
+                        <ng-template pTemplate="header">
+                            <i class="pi pi-book mr-1"></i>
+                            <span> Resumen</span>
+                        </ng-template>
+                        <div class="row">
+                            <div class="col">
+
+                                <span class="p-float-label mt-4">
+                                    <input id="float-input" type="text" [ngModel]="estudiante.id_persona.cedula"
+                                        formControlName="Rcedula" pInputText readonly>
+                                    <label for="float-input">Cedula</label>
+                                </span>
+
+
+                                <!-- <span class="p-float-label mt-4">
                                             <input id="float-input" type="text" [ngModel]="matricula.modalidad.descripcion"
                                                 formControlName="Rjornada" pInputText readonly>
                                             <label for="float-input">Jornada</label>
                                         </span> -->
 
-                                
-                                    
-                                        <span class="p-float-label mt-4">
-                                            <input id="float-input" type="text" [ngModel]="matricula.curso.descripcion"
-                                                formControlName="Rcurso" pInputText readonly>
-                                            <label for="float-input">Curso</label>
-                                        </span>
-                                
-                                    
-                                        <span class="p-float-label mt-4">
-                                            <input id="float-input" type="text" [ngModel]="matricula.fechaMatricula | date"
-                                                formControlName="Rfecha" pInputText readonly>
-                                            <label for="float-input">Fecha de Matricula</label>
-                                        </span>
-                                    
-                                </div>
-                                    <div class="col">
-                                        
-                                            <span class="p-float-label mt-4">
-                                                <input id="float-input" type="text" [ngModel]="fullName | titlecase"
-                                                    pInputText readonly formControlName="RnameComplete">
-                                                <label for="float-input">Nombres/Apellidos</label>
-                                            </span>
-                                        
-                                        
-                                            <span class="p-float-label mt-4">
-                                                <input id="float-input" type="text"
-                                                    [ngModel]="matricula.modalidad.descripcion | titlecase" pInputText readonly
-                                                    formControlName="Rmodalidad">
-                                                <label for="float-input">Modalidad de Estudio</label>
-                                            </span>
-                                        
-                                        
-                                            <span class="p-float-label mt-4">
-                                                <input id="float-input" type="text"
-                                                    [ngModel]="matricula.id_periodo.periodo_academico | titlecase" pInputText
-                                                    readonly formControlName="Rlectivo">
-                                                <label for="float-input">Año Lectivo</label>
-                                            </span>
-                                        
-                                    </div>
-                                
-                                <!-- <div class="col">
+
+
+                                <span class="p-float-label mt-4">
+                                    <input id="float-input" type="text" [ngModel]="matricula.curso.descripcion"
+                                        formControlName="Rcurso" pInputText readonly>
+                                    <label for="float-input">Curso</label>
+                                </span>
+
+
+                                <span class="p-float-label mt-4">
+                                    <input id="float-input" type="text" [ngModel]="matricula.fechaMatricula | date"
+                                        formControlName="Rfecha" pInputText readonly>
+                                    <label for="float-input">Fecha de Matricula</label>
+                                </span>
+
+                            </div>
+                            <div class="col">
+
+                                <span class="p-float-label mt-4">
+                                    <input id="float-input" type="text" [ngModel]="fullName | titlecase" pInputText
+                                        readonly formControlName="RnameComplete">
+                                    <label for="float-input">Nombres/Apellidos</label>
+                                </span>
+
+
+                                <span class="p-float-label mt-4">
+                                    <input id="float-input" type="text"
+                                        [ngModel]="matricula.modalidad.descripcion | titlecase" pInputText readonly
+                                        formControlName="Rmodalidad">
+                                    <label for="float-input">Modalidad de Estudio</label>
+                                </span>
+
+
+                                <span class="p-float-label mt-4">
+                                    <input id="float-input" type="text"
+                                        [ngModel]="matricula.id_periodo.periodo_academico | titlecase" pInputText
+                                        readonly formControlName="Rlectivo">
+                                    <label for="float-input">Año Lectivo</label>
+                                </span>
+
+                            </div>
+
+                            <!-- <div class="col">
                                     <!-- <label class="mt2">Seleccione el Curso:</label> <br>
                                     <p-dropdown [options]="cursos" [(ngModel)]="matricula.curso" placeholder="Seleccione Curso"
                                         optionLabel="descripcion" [showClear]="true"></p-dropdown> -->
-                                <!-- </div> --> 
-                            </div>
+                            <!-- </div> -->
+                        </div>
 
 
 
-                        </p-tabPanel>
-                    </p-tabView>
-                </form>
-                <div style="padding: .5em 0 1em 0">
-                    <p-button [disabled]="activeIndex1 == 0" (click)="activeIndex1 = 0"
-                        styleClass="p-button-rounded p-button-info ml-2 mr-2 " icon="pi pi-credit-card"></p-button>
-                    <p-button [disabled]="activeIndex1 == 1" (click)="activeIndex1 = 1"
-                        styleClass="p-button-rounded p-button-warning mr-2" icon="pi pi-list"></p-button>
-                    <button [disabled]="activeIndex1 == 2 || selectedRequerimientos.length < 4" (click)="activeIndex1 = 2"
-                        pButton pRipple type="button" class="p-button-rounded p-button-help" icon="pi pi-cog"></button>
-                    <button *ngIf="activeIndex1 != 3" [disabled]="selectedRequerimientos.length<4"
-                        (click)="activeIndex1 = 3" pButton pRipple type="button" icon="pi pi-book"
-                        class="p-button-rounded p-button-secondary ml-2"></button>
-
-                    
-                    <button *ngIf="activeIndex1 == 3"   pButton pRipple type="button" icon="pi pi-save"
-                        (click)="guardarMatricula()" class="p-button-rounded p-button-success ml-2" label="Guardar"></button>
-                    <!-- <button (click)="mostrar()">Mostrar</button> -->
-                </div>
+                    </p-tabPanel>
+                </p-tabView>
+            </form>
+            <div style="padding: .5em 0 1em 0">
+                <p-button [disabled]="activeIndex1 == 0" (click)="activeIndex1 = 0"
+                    styleClass="p-button-rounded p-button-info ml-2 mr-2 " icon="pi pi-credit-card"></p-button>
+                <p-button [disabled]="activeIndex1 == 1" (click)="activeIndex1 = 1"
+                    styleClass="p-button-rounded p-button-warning mr-2" icon="pi pi-list"></p-button>
+                <button [disabled]="activeIndex1 == 2 " (click)="activeIndex1 = 2"
+                    pButton pRipple type="button" class="p-button-rounded p-button-help" icon="pi pi-cog"></button>
+                <button *ngIf="activeIndex1 != 3" 
+                    (click)="activeIndex1 = 3" pButton pRipple type="button" icon="pi pi-book"
+                    class="p-button-rounded p-button-secondary ml-2"></button>
 
 
+                <button *ngIf="activeIndex1 == 3" pButton pRipple type="button" icon="pi pi-save"
+                    (click)="guardarMatricula()" class="p-button-rounded p-button-success ml-2"
+                    label="Guardar"></button>
+                <!-- <button (click)="mostrar()">Mostrar</button> -->
             </div>
+
+
         </div>
     </div>
-
+</div>

@@ -162,7 +162,7 @@ export class ItemsService {
                         ]
                     },
                     {
-                        label: 'Estudiantes',
+                        label: 'Estudiante',
                         icon: 'pi pi-users',
                         items: [
                             {

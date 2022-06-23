@@ -12,9 +12,9 @@ import { Modalidad } from 'src/app/Model/Parametrizacion/Modalidad';
 import { Periodo } from 'src/app/Model/Parametrizacion/Periodo';
 import { Paralelo } from 'src/app/Model/Parametrizacion/Paralelo';
 import { AuthService } from '../../../../Servicio/auth/auth.service';
-import Swal from 'sweetalert2';
 import { Malla } from '../../../../Model/Parametrizacion/Malla';
 import { persona } from '../../../../Model/rolesTS/persona';
+import { ControlMatricula } from '../../../../Model/Matriculas/controlMatricula';
 
 
 
@@ -28,6 +28,7 @@ import { persona } from '../../../../Model/rolesTS/persona';
 export class AgregarMatriculaComponent implements OnInit {
   selectedProvincia: provincia[] = [];
   mallas: Malla[] = [];
+  controlMatricula: ControlMatricula[] = [];
   mallaSelectd: Malla = new Malla();
   cursoSelectd: Curso = new Curso();
   peridoSelectd: Periodo = new Periodo();
@@ -37,6 +38,7 @@ export class AgregarMatriculaComponent implements OnInit {
   personaSelectd: persona = new persona();
   personas: persona[] = [];
   matricula: Matricula = new Matricula();
+  matriculas: Matricula[] = [];
   user: usuario = new usuario();
   filteredProvincia: provincia[] = [];
   cursos: Curso[] = [];
@@ -68,9 +70,10 @@ export class AgregarMatriculaComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarMallas();
-    // this.matriculaService.getPeronas()
-    // .subscribe(persona => this.personas=persona);
-
+      this.matriculaService.getMatriculasActivas()
+      .subscribe(matriculasActivas =>{
+        this.matriculas=matriculasActivas;
+      });
 
     this.estudianteService.getEstudiantePersonas()
       .subscribe(persona => this.personas = persona);
@@ -95,10 +98,10 @@ export class AgregarMatriculaComponent implements OnInit {
     telefono: ['', [Validators.required]],
     celular: ['', [Validators.required]],
     email: ['', [Validators.required]],
-    inscripcion: [[], [Validators.required]],
-    copCedula: [[], [Validators.required]],
-    copVotacion: [[], [Validators.required]],
-    certMatricula: [[], [Validators.required]],
+    inscripcion: [],
+    copCedula: [],
+    copVotacion: [],
+    certMatricula: [],
     periodo: [[], [Validators.required]],
     malla: [[],],
     curso: [[], [Validators.required]],
@@ -106,11 +109,7 @@ export class AgregarMatriculaComponent implements OnInit {
     jornada: [[], [Validators.required]]
   });
 
-
-
   cargarCursos() {
-
-  
     this.matriculaFormulario.controls['paralelo'].setValue([]);
     this.matriculaFormulario.controls['jornada'].setValue([]);
     this.matriculaFormulario.controls['periodo'].setValue([]);
@@ -140,15 +139,12 @@ export class AgregarMatriculaComponent implements OnInit {
           this.fullName = this.estudiante.id_persona.nombre + " " + this.estudiante.id_persona.apellido
           this.mens = "Estudiante Encontrado"
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Busqueda', detail: 'Estudiante Encontrado' });
-
-          // swal.fire('Busqueda Estudiante...', this.mens, 'success')
         },
           err => {
             err.error.mensaje;
             this.display = true
             this.mens = "Estudiante no Encontrado"
             this.messageService.add({ key: 'tc', severity: 'error', summary: 'Busqueda', detail: 'Estudiante no Encontrado' });
-            // swal.fire('Busqueda Estudiante...', this.mens, 'error')
           });
     } else {
       this.campo = "No se permite campos vacios"
@@ -177,24 +173,24 @@ export class AgregarMatriculaComponent implements OnInit {
   }
 
   enviarCorreo(matricula: Matricula) {
-    
-    if (this.selectedRequerimientos.length!=0) {
+
+    if (this.selectedRequerimientos.length != 0) {
       for (let i = 0; i < this.selectedRequerimientos.length; i++) {
-        this.listRequerimientos+=this.selectedRequerimientos[i]+"-";
+        this.listRequerimientos += this.selectedRequerimientos[i] + "-";
       }
-    }else{
-      this.listRequerimientos="vacio";
+    } else {
+      this.listRequerimientos = "vacio";
     }
-    
+
     this.matriculaService.sendEmail(matricula, this.listRequerimientos)
-    .subscribe(res => console.log(res));
-    
+      .subscribe(res => console.log(res));
+
   }
   cargarModalidadesPorMalla() {
     let filtered: any[] = [];
     filtered.push(this.mallaSelectd.id_modalidad);
     this.modalidades = filtered;
-    console.log(this.modalidades);
+
     this.matriculaService.getParalelos()
       .subscribe(paralelos => {
         this.paralelos = paralelos;
@@ -208,9 +204,11 @@ export class AgregarMatriculaComponent implements OnInit {
 
   obtenerPeriodo() {
     this.matricula.id_periodo = this.peridoSelectd;
+
   }
   obtenerModalidad() {
     this.matricula.modalidad = this.modalidadSelectd;
+    this.contadorDeMatriculasByParalelos(this.matricula.curso.id_curso, this.matricula.modalidad.id_modalidad, this.matricula.id_periodo.id_periodo);
   }
   obtenerParalelo() {
     this.matricula.id_paralelo = this.paraleloSelectd;
@@ -218,6 +216,9 @@ export class AgregarMatriculaComponent implements OnInit {
 
   obtenerCurso() {
     this.matricula.curso = this.cursoSelectd;
+    if (this.modalidadSelectd != null && this.peridoSelectd !=null) {
+      this.contadorDeMatriculasByParalelos(this.matricula.curso.id_curso, this.matricula.modalidad.id_modalidad, this.matricula.id_periodo.id_periodo);
+    }
   }
 
   cargarPeriodo() {
@@ -226,10 +227,14 @@ export class AgregarMatriculaComponent implements OnInit {
       .subscribe({
         next: (periodo) => {
           this.periodos = periodo;
-          
+          for (let i = 0; i < this.periodos.length; i++) {
+            this.periodos[i].periodo_academico=this.periodos[i].ano_inicio! +"-" + this.periodos[i].ano_fin!;
+            
+          }    
         },
       });
-      console.log(this.periodos);
+
+      
   }
   limpiarFormulario() {
     this.activeIndex1 = 0;
@@ -241,13 +246,14 @@ export class AgregarMatriculaComponent implements OnInit {
     this.matriculaFormulario.controls['paralelo'].setValue([]);
     this.matriculaFormulario.controls['jornada'].setValue([]);
     this.matriculaFormulario.controls['nacimiento'].setValue([]);
-    this.listRequerimientos="";
+    this.listRequerimientos = "";
     this.fullName = "";
     this.cursos = [];
     this.modalidades = [];
     this.paralelos = [];
     this.periodos = [];
     this.mallas = [];
+    this.controlMatricula=[];
     this.mallaSelectd = new Malla();
     this.cargarMallas();
   }
@@ -255,5 +261,52 @@ export class AgregarMatriculaComponent implements OnInit {
   cargarMallas() {
     this.matriculaService.getAllMalla()
       .subscribe(malla => { this.mallas = malla });
+  }
+
+  contadorDeMatriculasByParalelos(curso: number, modalidad: number, periodo: number) {
+    this.controlMatricula = [];
+    let cont = 0;
+    for (let i = 0; i < this.matriculas.length; i++) {
+      if (this.matriculas[i].curso.id_curso == curso && this.matriculas[i].modalidad.id_modalidad == modalidad && this.matriculas[i].id_periodo.id_periodo == periodo) {
+        cont++;
+        if (this.controlMatricula.length == 0) {
+          this.controlMatricula.push({
+            descripcion: this.matriculas[i].id_paralelo.descripcion,
+            contador: cont
+          });
+        } else {
+          let aux = 0;
+          for (let u = 0; u < this.controlMatricula.length; u++) {
+            if (this.controlMatricula[u].descripcion?.includes(this.matriculas[i].id_paralelo.descripcion)) {
+              this.controlMatricula[u].contador = cont;
+              aux++;
+            }
+          }
+          if (aux == 0) {
+            cont = 1;
+            this.controlMatricula.push({
+              descripcion: this.matriculas[i].id_paralelo.descripcion,
+              contador: cont
+            });
+          }
+
+        }
+      }
+    }
+    console.log("Esto antes de llenar lo demas: ", this.controlMatricula, "el contador: ", cont);
+    for (let a = 0; a < this.paralelos.length; a++) {
+      let aux = 0;
+      for (let j = 0; j < this.controlMatricula.length; j++) {
+        if (this.controlMatricula[j].descripcion?.includes(this.paralelos[a].descripcion)) {
+          aux++;
+        }
+      }
+      if (aux == 0) {
+        this.controlMatricula.push({
+          descripcion: this.paralelos[a].descripcion,
+          contador: aux
+        });
+      }
+    }
   }
 }

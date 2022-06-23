@@ -38,9 +38,9 @@
                         <th pSortableColumn="curso.descripcion">Curso <p-sortIcon field="curso.descripcion">
                             </p-sortIcon>
                         </th>
-                        <th pSortableColumn="modalidad.descripcion">Modalidad <p-sortIcon field="modalidad.descripcion">
+                        <!-- <th pSortableColumn="modalidad.descripcion">Modalidad <p-sortIcon field="modalidad.descripcion">
                             </p-sortIcon>
-                        </th>
+                        </th> -->
                         <th></th>
                     </tr>
                     <tr>
@@ -65,12 +65,13 @@
                                 (input)="dt.filter($event.target.value, 'curso.descripcion', 'contains')"
                                 placeholder="Buscar por Curso" class="p-column-filter">
                         </th>
-                        <th>
+                        <!-- <th>
                             <p-dropdown [options]="modalidades" optionLabel="descripcion"
                                 (input)="dt.filter($event.target.value, 'modalidad.descripcion', 'contains')"
-                                placeholder="Modalidad" class="p-column-filter"></p-dropdown>
+                                placeholder="Modalidad" class="p-column-filter"></p-dropdown> -->
                             <!-- <input pInputText type="text" (input)="dt.filter($event.target.value, 'modalidad.descripcion', 'contains')"  placeholder="Buscar por Modalidad" class="p-column-filter"> -->
-                        </th>
+                        <!-- </th> -->
+                        <th></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-matricula let-expanded="expanded">
@@ -79,7 +80,7 @@
                         <td>{{matricula.estudiante.id_persona.nombre | titlecase}}</td>
                         <td>{{matricula.estudiante.id_persona.apellido | titlecase}}</td>
                         <td>{{matricula.curso.descripcion | titlecase}}</td>
-                        <td>{{matricula.modalidad.descripcion | titlecase}}</td>
+                        <!-- <td>{{matricula.modalidad.descripcion | titlecase}}</td> -->
                         <td>
                             <button pButton pRipple icon="pi pi-eye"
                                 class="p-button-rounded p-button-warning p-button-outlined mr-2"
@@ -103,7 +104,7 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="productDialog" [style]="{width: '900px'}" header="INFORMACIÓN DE MATRICULA"
+        <p-dialog [(visible)]="productDialog" [style]="{width: '800px'}" header="INFORMACIÓN DE MATRICULA"
             [modal]="true" styleClass="p-fluid">
 
             <div class="card">

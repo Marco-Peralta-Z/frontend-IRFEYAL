@@ -9,7 +9,6 @@ import { parroquia } from '../../../../Model/rolesTS/parroquia';
 import { pais } from '../../../../Model/rolesTS/pais';
 import { extension } from '../../../../Model/rolesTS/extension';
 import { MessageService } from 'primeng/api';
-import { DatePipe } from '@angular/common';
 import { ValidatorsService } from '../../../../Servicio/moduloMatricula/Validators/validators.service';
 import { persona } from '../../../../Model/rolesTS/persona';
 
@@ -69,9 +68,6 @@ export class AgregarEstudianteComponent implements OnInit {
     email: [, [Validators.required, Validators.pattern(this.emailPattern)]]
   })
 
-
-
-
   constructor(private estudianteService: EstudianteService,
     private fb: FormBuilder, 
     private messageService: MessageService,
@@ -97,7 +93,6 @@ export class AgregarEstudianteComponent implements OnInit {
       .subscribe(extension => this.extensiones = extension);
 
   }
-
 
   filtrarProvincia(event: any) {
     let filtered: any[] = [];
@@ -138,7 +133,6 @@ export class AgregarEstudianteComponent implements OnInit {
     }
     this.filteredCanton = filtered;
   }
-
 
   saveEstudiante() {
     if (this.estudentFormulario.invalid) {

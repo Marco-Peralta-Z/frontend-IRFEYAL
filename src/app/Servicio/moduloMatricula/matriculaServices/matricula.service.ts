@@ -12,6 +12,7 @@ import { Periodo } from '../../../Model/Parametrizacion/Periodo';
 import { Paralelo } from '../../../Model/Parametrizacion/Paralelo';
 import { Malla } from '../../../Model/Parametrizacion/Malla';
 import { persona } from '../../../Model/rolesTS/persona';
+import { ControlMatricula } from '../../../Model/Matriculas/controlMatricula';
 
 
 
@@ -46,8 +47,13 @@ getModalidadPorCurso(id_curso: number):Observable<Modalidad[]>{
   return this.http.get<Modalidad[]>(`${this.baseUrl}modalidad/getModalidadPorCurso/${id_curso}`);
 }
 
+
 getPeriodos():Observable<Periodo[]>{
   return this.http.get<Periodo[]>(`${this.baseUrl}periodo`);
+}
+
+getMatriculasActivas():Observable<Matricula[]>{
+  return this.http.get<Matricula[]>(`${this.baseUrl}api/matriculasActivas`);
 }
 
 getParalelos():Observable<Paralelo[]>{

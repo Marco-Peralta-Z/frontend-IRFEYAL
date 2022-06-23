@@ -25,8 +25,6 @@
                                 <label for="float-input" class="mt-1">Nombres:</label> <br>
                                     <input id="float-input" type="text" [(ngModel)]="estudiante.id_persona.nombre" pInputText
                                     name="nombre" formControlName="nombre" placeholder="Nombres Completos">
-                                    
-                                
                                 <span class="form-text text-danger" *ngIf="campoValido('nombre')">
                                     Este campo es obligatorio!
                                 </span><br>
@@ -34,8 +32,6 @@
                                 <label for="float-input" class="mt-1">Apellidos:</label><br>
                                     <input id="float-input" type="text" [(ngModel)]="estudiante.id_persona.apellido" pInputText
                                     name="apellido" placeholder="Apellidos Completos" formControlName="apellido" >
-                                    
-                                
                                 <span class="form-text text-danger" *ngIf="campoValido('apellido')">
                                     Este campo es obligatorio!
                                 </span>
@@ -50,12 +46,6 @@
                                     Este campo es obligatorio!
                                 </span>
                                 <label class="mt-2">Genero:</label> <br>
-                                <!-- <p-dropdown [options]="generos" [(ngModel)]="estudiante.id_persona.genero" 
-                                placeholder="Seleccione Genero" optionLabel="genero" [showClear]="true" formControlName="genero"></p-dropdown>
-                                
-                                <span class="form-text text-danger" *ngIf="campoValido('genero')">
-                                    Este campo es obligatorio!
-                                </span><br> -->
                                 <p-dropdown [options]="generos" [(ngModel)]="estudiante.id_persona.genero" formControlName="genero" optionLabel="genero" [filter]="true" filterBy="genero" [showClear]="true" placeholder="Seleccione">
                                     <ng-template pTemplate="selectedItem">
                                         <div class="country-item country-item-value"  *ngIf="estudiante.id_persona.genero">
@@ -115,15 +105,10 @@
                                 
                             </div>
                             <div class="col">
-                                <label >Provincia:</label><br>
-                                <!-- <p-autoComplete [(ngModel)]="estudiante.direccion.provincia" 
-                                    [suggestions]="filteredProvincia" (completeMethod)="filtrarProvincia($event)" field="provincia"
-                                    [minLength]="1" name="provincia" placeholder="Seleccione Una" formControlName="provincia"></p-autoComplete><br> -->
-                                    
+                                <label >Provincia:</label><br>                                    
                                     <p-dropdown [options]="provincias" [(ngModel)]="estudiante.direccion.provincia" formControlName="provincia" optionLabel="provincia" [filter]="true" filterBy="provincia" placeholder="Selecionar Una">
                                         <ng-template pTemplate="selectedItem">
                                             <div class="country-item country-item-value"  *ngIf="estudiante.direccion.provincia">
-                                                
                                                 <div>{{estudiante.direccion.provincia.provincia}}</div>
                                             </div>
                                         </ng-template>
@@ -138,11 +123,7 @@
                                         Este campo es obligatorio!
                                     </span>
                                     <br>
-                                <label class="mt-1">Canton:</label><br>
-                                <!-- <p-autoComplete [(ngModel)]="estudiante.direccion.canton" [showEmptyMessage]="true"
-                                    [suggestions]="filteredCanton" (completeMethod)="filtrarCanton($event)" field="canton"
-                                    [minLength]="1" name="canton" placeholder="Seleccione Una" formControlName="canton"></p-autoComplete><br> -->
-                                    
+                                <label class="mt-1">Canton:</label><br>                                    
                                     <p-dropdown [options]="cantones" [(ngModel)]="estudiante.direccion.canton" formControlName="canton" optionLabel="canton" [filter]="true" filterBy="canton" placeholder="Selecionar Una">
                                         <ng-template pTemplate="selectedItem">
                                             <div class="country-item country-item-value"  *ngIf="estudiante.direccion.canton">
@@ -156,17 +137,11 @@
                                             </div>
                                         </ng-template>
                                     </p-dropdown>
-                                    
-                                    
                                     <span class="form-text text-danger" *ngIf="campoValido('canton')">
                                         Este campo es obligatorio!
                                     </span><br>
         
                                 <label class="mt-1">Parroquia:</label><br>
-                                <!-- <p-autoComplete [(ngModel)]="estudiante.direccion.parroquia " [showEmptyMessage]="true"
-                                    [suggestions]="filteredParroquia" (completeMethod)="filtrarParroquia($event)" field="parroquia"
-                                    [minLength]="1" name="parroquia" placeholder="Seleccione Una" formControlName="parroquia"></p-autoComplete> -->
-                                    
                                     <p-dropdown [options]="parroquias" [(ngModel)]="estudiante.direccion.parroquia" formControlName="parroquia" optionLabel="parroquia" [filter]="true" filterBy="parroquia" placeholder="Selecionar Una">
                                         <ng-template pTemplate="selectedItem">
                                             <div class="country-item country-item-value"  *ngIf="estudiante.direccion.parroquia">
@@ -180,14 +155,9 @@
                                             </div>
                                         </ng-template>
                                     </p-dropdown>
-                                   
-                                   
-                                   
                                     <span class="form-text text-danger" *ngIf="campoValido('parroquia')">
                                         Este campo es obligatorio!
-                                    </span>
-        
-                                
+                                    </span> 
                             </div>
                         </div>
 
