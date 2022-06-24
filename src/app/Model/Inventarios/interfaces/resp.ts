@@ -19,3 +19,9 @@ export interface ResArticulo {
     mensaje: any;
     status: string;
 }
+export interface ResDetallaBajaArt {
+    detalleBaja: any;
+    mensaje: any;
+    error: string;
+    status: string;
+}

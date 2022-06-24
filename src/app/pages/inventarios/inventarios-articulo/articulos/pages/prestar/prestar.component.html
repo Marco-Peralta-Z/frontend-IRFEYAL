@@ -92,16 +92,16 @@
                         icon="pi pi-times" 
                         class="p-button-outlined p-button-danger" 
                         iconPos="right"
-                        routerLink="listar">
+                        routerLink="/inventariosModule/inventario/listarArt">
                 </button>
                 <button pButton 
                         pRipple type="submit" 
                         label="Guardar" 
                         icon="pi pi-save" 
                         iconPos="right"
+                        [disabled]="prestarArticuloForm.pending"
                         >
                     </button>
-                    <!-- [disabled]="inventarioForm.pending" -->
             </div>
         </div>
     </form>

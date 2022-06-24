@@ -55,8 +55,7 @@
                     </div>
                 </td>
                 <td>
-                    <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/inventariosModule/inventario/editar/', inventario.id_inventario]"></button> -->
-                    <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarInventario(inventario)"></button> -->
+                    <button pButton pRipple icon="pi pi-trash" (click)="abrirDialogEliminarBajaArticulo(articuloSalida)" class="p-button-rounded p-button-warning" ></button>
                 </td>
             </tr>
         </ng-template>
@@ -120,3 +119,4 @@
         <p-button icon="pi pi-check" (click)="closeDialog()" label="Ok" styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>
+<p-confirmDialog [style]="{width: '650px'}"></p-confirmDialog>

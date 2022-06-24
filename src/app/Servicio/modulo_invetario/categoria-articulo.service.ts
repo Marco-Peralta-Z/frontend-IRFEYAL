@@ -52,13 +52,13 @@ export class CategoriaArticuloService {
 
   eliminarPorId = (id: number) => {
     return this._http.delete<ResCategoria>(`${this._baseUrl}categoriarticulo/${id}`)
-    .pipe(
-      map( (response: ResCategoria) => {
-        return response.status;
-      }),
-      catchError( (err) => {
-        return of(false);
-      })
-    );
+      .pipe(
+        map( (response: ResCategoria) => {
+          return response.status;
+        }),
+        catchError( (err) => {
+          return of(false);
+        })
+      );
   }
 }

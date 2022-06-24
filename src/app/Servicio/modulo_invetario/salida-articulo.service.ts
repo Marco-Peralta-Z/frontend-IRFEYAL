@@ -31,4 +31,16 @@ export class SalidaArticuloService {
         })
       );
   }
+
+  eliminarSalidaArticulo = ( id: number ) => {
+    return this._http.delete<ResSalida>(`${this._baseUrl}salidaarticulo/${id}`)
+      .pipe(
+        map( (response: ResSalida) => {
+          return response.status;
+        }),
+        catchError( (err) => {
+          return of(false);
+        })
+      );
+  }
 }

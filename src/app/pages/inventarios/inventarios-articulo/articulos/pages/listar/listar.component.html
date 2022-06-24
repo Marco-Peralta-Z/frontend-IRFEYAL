@@ -101,7 +101,8 @@
                         <button pButton 
                                 pRipple 
                                 icon="pi pi-times-circle" 
-                                class="p-button-rounded p-button-warning mr-2" >
+                                class="p-button-rounded p-button-warning mr-2"
+                                (click)="showDialogBajaArticulo(articulo)">
                         </button>
                     </td>
                 </tr>
@@ -115,5 +116,49 @@
     </div>
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-check" (click)="closeDialog()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Baja Artículo" [(visible)]="displayBajaArticulo" [style]="{width: '40vw'}"  >
+    <div class="" *ngIf="selectArticulo">
+        <form [formGroup]="bajaDetalleForm">
+            <div class="row">
+                <div class="col-12 w-100">
+                    <!-- Fecha  -->
+                    <div class="field w-100">
+                        <label for="fecha" class="block">Fecha ingreso</label>
+                        <p-calendar styleClass="w-100 test"
+                                    dateFormat="yy-mm-dd" 
+                                    inputId="dateformat"
+                                    appendTo="body"
+                                    formControlName="fechaBaja">
+                        </p-calendar>
+                        <small  class="p-error block"
+                                *ngIf="verificarCampo('fechaBaja')">
+                                La fecha es requerida.
+                        </small>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <!-- motivo -->
+                    <div class="field">
+                        <label for="descripcion" class="block">Motivo</label>
+                        <textarea   rows="1"    
+                                    class="w-100"
+                                    pInputTextarea 
+                                    formControlName="motivo">
+                        </textarea>
+                        <small  class="p-error block"
+                                *ngIf="verificarCampo('motivo')">
+                                El motivo es requerido.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="closeDialogBajaArticulo()" label="Cerrar" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-save" (click)="realizarAccion()" label="Guardar" styleClass="p-button-primary"></p-button>
     </ng-template>
 </p-dialog>
