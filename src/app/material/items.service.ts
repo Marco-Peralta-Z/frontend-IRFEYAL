@@ -51,7 +51,7 @@ export class ItemsService {
                 icon: 'pi pi-fw pi-book',
                 // si tiene el rol de acceso
                 visible: this.hasRolUser(
-                    ['ROLE_Administrador', 'ROLE_secretaria']
+                    ['ROLE_Administrador', 'ROLE_Coordinador administrativo', 'ROLE_Coordinador academico']
                 ),
                 items: [
                     {
@@ -78,7 +78,7 @@ export class ItemsService {
                 icon: 'fa fa-book',
                 // si tiene el rol de acceso
                 visible: this.hasRolUser(
-                    ['ROLE_Administrador', 'ROLE_coordinador de desarrollo', 'ROLE_coordinador administrativo']
+                    ['ROLE_Administrador', 'ROLE_Coordinador de desarrollo institucional', 'ROLE_Coordinador administrativo']
                 ),
                 items: [
                     {
@@ -127,7 +127,7 @@ export class ItemsService {
                 icon: 'pi pi-fw pi-book',
                 // si tiene el rol de acceso
                 visible: this.hasRolUser(
-                    ['ROLE_Administrador', 'ROLE_docente']
+                    ['ROLE_Administrador', 'ROLE_Docente']
                 ),
                 items: [
                     {
@@ -141,7 +141,7 @@ export class ItemsService {
                 label: 'Matriculas',
                 // si tiene el rol de acceso
                 visible: this.hasRolUser(
-                    ['ROLE_Administrador', 'ROLE_secretaria']
+                    ['ROLE_Administrador', 'ROLE_Secretaria']
                 ),
                 icon: 'pi pi-folder',
                 items: [
@@ -185,7 +185,7 @@ export class ItemsService {
                 icon: 'pi pi-folder',
                 // si tiene el rol de acceso
                 visible: this.hasRolUser(
-                    ['ROLE_Administrador', 'ROLE_docente']
+                    ['ROLE_Administrador', 'ROLE_Docente']
                 ),
                 items: [
                     {
@@ -225,7 +225,7 @@ export class ItemsService {
                 icon: 'pi pi-paperclip',
                 // si tiene el rol de acceso
                 visible: this.hasRolUser(
-                    ['ROLE_docente']
+                    ['ROLE_Docente']
                 ),
                 items: [
                     {
@@ -240,7 +240,7 @@ export class ItemsService {
                 icon: 'pi pi-paperclip',
                 // si tiene el rol de acceso
                 visible: this.hasRolUser(
-                    ['ROLE_coordinador academico']
+                    ['ROLE_Coordinador academico']
                 ),
                 items: [
                     {
@@ -253,6 +253,9 @@ export class ItemsService {
             {
                 label: 'Pagos',
                 icon: 'pi pi-folder',
+                visible: this.hasRolUser(
+                    ['ROLE_Administrador', 'ROLE_Secretaria']
+                ),
                 items: [
                     {
                         label: 'Consultar Pagos',
@@ -270,6 +273,9 @@ export class ItemsService {
             {
                 label: 'Secretaria',
                 icon: 'pi pi-folder',
+                visible: this.hasRolUser(
+                    ['ROLE_Administrador', 'ROLE_Secretaria']
+                ),
                 items: [
                     {
                         label: 'Bitacora',

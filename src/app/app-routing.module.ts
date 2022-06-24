@@ -22,48 +22,47 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     canActivate: [AuthGuard],
-    data: { role: ['ROLE_Administrador', 'ROLE_gerente', 'ROLE_secretaria', 'ROLE_estudiante', 'ROLE_coordinador de desarrollo', 'ROLE_coordinador administrativo', 'ROLE_rectora', 'ROLE_docente'] }
+    data: { role: ['ROLE_Administrador', 'ROLE_Secretaria', 'ROLE_Docente', 'ROLE_Coordinador de desarrollo institucional', 'ROLE_Coordinador administrativo', 'ROLE_Coordinador academico'] }
   },
   {
     path: 'header',
     component: HeaderComponent,
     canActivate: [AuthGuard],
-    data: { role: ['ROLE_Administrador', 'ROLE_gerente', 'ROLE_secretaria', 'ROLE_estudiante', 'ROLE_coordinador de desarrollo', 'ROLE_coordinador administrativo', 'ROLE_rectora', 'ROLE_docente'] }
+    data: { role: ['ROLE_Administrador', 'ROLE_Secretaria', 'ROLE_Docente', 'ROLE_Coordinador de desarrollo institucional', 'ROLE_Coordinador administrativo', 'ROLE_Coordinador academico'] }
   },
   {
     path: 'sidenav',
     component: SidenavComponent,
     canActivate: [AuthGuard],
-    data: { role: ['ROLE_Administrador', 'ROLE_gerente', 'ROLE_secretaria', 'ROLE_estudiante', 'ROLE_coordinador de desarrollo', 'ROLE_coordinador administrativo', 'ROLE_rectora', 'ROLE_docente'] }
+    data: { role: ['ROLE_Administrador', 'ROLE_Secretaria', 'ROLE_Docente', 'ROLE_Coordinador de desarrollo institucional', 'ROLE_Coordinador administrativo', 'ROLE_Coordinador academico'] }
   },
 
   {
     path: 'tutorias',
     loadChildren: () => import('./Routing/tutorias/tutorias.module').then(m => m.TutoriasModule),
     canActivate: [AuthGuard, RolGuard],
-    data: { role: ['ROLE_Administrador', 'ROLE_docente'] }
+    data: { role: ['ROLE_Administrador', 'ROLE_Docente'] }
   },
 
   {
     path: 'inventariosModule',
     loadChildren: () => import('./Routing/inventarios/inventarios.module').then(m => m.InventariosModule),
     canActivate: [AuthGuard, RolGuard],
-    data: { role: ['ROLE_Administrador', 'ROLE_coordinador de desarrollo', 'ROLE_coordinador administrativo'] }
+    data: { role: ['ROLE_Administrador', 'ROLE_Coordinador de desarrollo institucional', 'ROLE_Coordinador administrativo'] }
   },
 
   {
     path: 'matriculaModule',
     loadChildren: () => import('./Routing/matriculas/matriculas.module').then(m => m.MatriculasModule),
     canActivate: [AuthGuard, RolGuard],
-    data: { role: ['ROLE_Administrador', 'ROLE_secretaria'] }
+    data: { role: ['ROLE_Administrador', 'ROLE_Secretaria'] }
   },
 
-  // agrego modulo de parametrizacion para rederisar
   {
     path: 'parametrizacion',
     loadChildren: () => import('./Routing/parametrizacion/parametrizacion.module').then(m => m.ParametrizacionModule),
     canActivate: [AuthGuard, RolGuard],
-    data: { role: ['ROLE_Administrador', 'ROLE_secretaria'] }
+    data: { role: ['ROLE_Administrador', 'ROLE_Coordinador administrativo', 'ROLE_Coordinador academico'] }
   },
 
   {
@@ -77,28 +76,28 @@ const routes: Routes = [
     path: 'asistencia',
     loadChildren: () => import('./Routing/asistencia/asistencia.module').then(m => m.AsistenciaModule),
     canActivate: [AuthGuard, RolGuard],
-    data: { role: ['ROLE_Administrador', 'ROLE_docente'] }
+    data: { role: ['ROLE_Administrador', 'ROLE_Docente'] }
   },
 
   {
     path: 'documentosacademicos',
     loadChildren: () => import('./Routing/documentacion-academicos/documentacion-academicos.module').then(m => m.DocumentacionAcademicosModule),
     canActivate: [AuthGuard, RolGuard],
-    data: { role: ['ROLE_Administrador', 'ROLE_coordinador academico', 'ROLE_docente'] }
+    data: { role: ['ROLE_Administrador', 'ROLE_Docente', 'ROLE_Coordinador academico'] }
   },
 
   {
     path: 'pagos',
     loadChildren: () => import('./Routing/pagos/pagos.module').then( m => m.PagosModule),
     canActivate: [ AuthGuard, RolGuard ],
-    data: { role: [ 'ROLE_Administrador', 'ROLE_secretaria' ] }
+    data: { role: [ 'ROLE_Administrador', 'ROLE_Secretaria' ] }
   },
 
   {
     path: 'secretaria',
     loadChildren: () => import('./Routing/secretaria/secretaria.module').then( m => m.SecretariaModule),
     canActivate: [ AuthGuard, RolGuard ],
-    data: { role: [ 'ROLE_Administrador', 'ROLE_secretaria' ] }
+    data: { role: [ 'ROLE_Administrador', 'ROLE_Secretaria' ] }
   },
 
   { path: 'login', component: LoginComponent },
