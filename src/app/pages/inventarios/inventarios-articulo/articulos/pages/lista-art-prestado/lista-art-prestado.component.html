@@ -1,0 +1,122 @@
+<div class="card" >
+    <p-table #dt [value]="articulosPrestados" [rows]="10" [paginator]="true" [globalFilterFields]="['codigo']" responsiveLayout="scroll"
+        [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="codigo">Código <p-sortIcon field="codigo"></p-sortIcon></th>
+                <th pSortableColumn="fechaSalida">Fecha<p-sortIcon field="fechaSalida"></p-sortIcon></th>
+                <th>Detalle</th>
+                <th>Empleado</th>
+                <th>Articulo</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-inventario>
+            <tr>
+                <td >
+                    No hay registros
+                </td>
+            </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="body" let-articuloSalida>
+            <tr>
+
+                <td>{{articuloSalida.codigo}}</td>
+                <td>{{articuloSalida.fechaSalida}}</td>
+                <td>{{articuloSalida.detallesalida}}</td>
+                <td>
+                    <div class=" d-flex align-items-center">
+                        <button pButton 
+                                pRipple 
+                                icon="pi pi-eye" 
+                                class="ml-1 p-button-rounded p-button-secondary p-button-outlined" 
+                                (click)="showDialog(articuloSalida)">
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    <div class=" d-flex align-items-center">
+                        <button pButton 
+                                pRipple 
+                                icon="pi pi-eye" 
+                                class="ml-1 p-button-rounded p-button-secondary p-button-outlined" 
+                                (click)="showDialogInventario(articuloSalida)">
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    <button pButton pRipple icon="pi pi-trash" (click)="abrirDialogEliminarBajaArticulo(articuloSalida)" class="p-button-rounded p-button-warning" ></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total hay {{articulosPrestados ? articulosPrestados.length : 0 }} artículos prestados.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog header="Empleado" [(visible)]="displayEmpleado" [style]="{width: '60vw'}" styleClass="p-fluid" >
+    <div class="" *ngIf="selectArticuloSalida">
+        <p-table [value]="[selectArticuloSalida.empleado]"   responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Cedula</th>
+                    <th>Cargo</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-empleado>
+                <tr>
+                    <td>{{empleado?.persona.nombre}}</td>
+                    <td>{{empleado?.persona.cedula}}</td>
+                    <td>{{empleado?.cargo}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="closeDialog()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+<p-dialog header="Articulo" [(visible)]="displayInventario" [style]="{width: '60vw'}" styleClass="p-fluid" >
+    <div class="" *ngIf="selectArticuloSalida">
+        <p-table [value]="[selectArticuloSalida.inventario]"   responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Codigo</th>
+                    <th>nombre</th>
+                    <th>Marca</th>
+                    <th>Precio</th>
+                    <th>Desripcion</th>
+                    <th>Categoria</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-articulo>
+                <tr>
+                    <td>{{articulo?.articulo.articodigo}}</td>
+                    <td>{{articulo?.articulo.artinombre}}</td>
+                    <td>{{articulo?.articulo.artimarca}}</td>
+                    <td>{{articulo?.articulo.artiprecio}}</td>
+                    <td>{{articulo?.articulo.artidescrip}}</td>
+                    <td>{{articulo?.articulo.cateId.cateNombre}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="closeDialog()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+<p-confirmDialog [style]="{width: '650px'}"></p-confirmDialog>

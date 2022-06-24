@@ -4,6 +4,8 @@ import { MainComponent } from './main.component';
 import { CrearEditarComponent } from './pages/crear-editar/crear-editar.component';
 import { ListarComponent } from './pages/listar/listar.component';
 import { PrestarComponent } from './pages/prestar/prestar.component';
+import { EditarArticuloComponent } from './pages/editar-articulo/editar-articulo.component';
+import { ListaArtPrestadoComponent } from './pages/lista-art-prestado/lista-art-prestado.component';
 
 const routes: Routes = [
   {
@@ -23,8 +25,16 @@ const routes: Routes = [
         component: ListarComponent
       },
       {
+        path:'listarArt',
+        component: ListaArtPrestadoComponent
+      },
+      {
         path:'editar/:id',
         component: CrearEditarComponent
+      },
+      {
+        path:'editarArt/:id',
+        component: EditarArticuloComponent
       }
     ]
   },

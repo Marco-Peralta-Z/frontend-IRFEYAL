@@ -33,7 +33,13 @@
                 <td>
                     <div class=" d-flex align-items-center">
                         {{stockArticulo.listaArticulos.length}}
-                        <button pButton pRipple icon="pi pi-eye" class="ml-1 p-button-rounded p-button-secondary p-button-outlined" (click)="showDialog(stockArticulo)"></button>
+                        <button pButton 
+                                pRipple 
+                                icon="pi pi-eye" 
+                                class="ml-1 p-button-rounded p-button-secondary p-button-outlined" 
+                                *ngIf="stockArticulo.listaArticulos.length > 0"
+                                (click)="showDialog(stockArticulo)">
+                        </button>
                     </div>
                 </td>
                 <td>
@@ -54,13 +60,24 @@
 <p-confirmDialog [style]="{width: '650px'}"></p-confirmDialog>
 <p-dialog header="Articulo" [(visible)]="displayArticulos" [style]="{width: '60vw'}" styleClass="p-fluid" >
     <div class="" *ngIf="selectStockArticulo?.listaArticulos">
-        <p-table [value]="selectStockArticulo?.listaArticulos!"  [rows]="5"  [paginator]="true" responsiveLayout="scroll">
+        <p-table #art [value]="selectStockArticulo?.listaArticulos!" [globalFilterFields]="['articodigo', 'artinombre']"  [rows]="5"  [paginator]="true" responsiveLayout="scroll"
+        [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+            <ng-template pTemplate="caption">
+                <div class="flex align-items-center justify-content-between">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="art.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
+                    </span>
+                </div>
+            </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Cod</th>
-                    <th>Nombre</th>
+                    <th pSortableColumn="articodigo">Cod <p-sortIcon field="articodigo"></p-sortIcon> </th>
+                    <th pSortableColumn="artinombre">Nombre <p-sortIcon field="artinombre"></p-sortIcon> </th>
                     <th>Descripción</th>
                     <th>Disponibilidad</th>
+                    <th></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-articulo>
@@ -68,7 +85,26 @@
                     <td>{{articulo.articodigo}}</td>
                     <td>{{articulo.artinombre}}</td>
                     <td>{{articulo.artidescrip}}</td>
-                    <td>{{articulo.artiestado}}</td>
+                    <td>
+                        <div *ngIf="articulo.artiDisponibilidad; else disponible">Si</div>
+                        <ng-template #disponible>
+                            <div>No</div>
+                        </ng-template>
+                    </td>
+                    <td>
+                        <button pButton 
+                                pRipple 
+                                icon="pi pi-pencil" 
+                                class="p-button-rounded p-button-success mr-2" 
+                                [routerLink]="['/inventariosModule/inventario/editarArt/', articulo.id_articulo]">
+                        </button>
+                        <button pButton 
+                                pRipple 
+                                icon="pi pi-times-circle" 
+                                class="p-button-rounded p-button-warning mr-2"
+                                (click)="showDialogBajaArticulo(articulo)">
+                        </button>
+                    </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary">
@@ -80,5 +116,49 @@
     </div>
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-check" (click)="closeDialog()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Baja Artículo" [(visible)]="displayBajaArticulo" [style]="{width: '40vw'}"  >
+    <div class="" *ngIf="selectArticulo">
+        <form [formGroup]="bajaDetalleForm">
+            <div class="row">
+                <div class="col-12 w-100">
+                    <!-- Fecha  -->
+                    <div class="field w-100">
+                        <label for="fecha" class="block">Fecha ingreso</label>
+                        <p-calendar styleClass="w-100 test"
+                                    dateFormat="yy-mm-dd" 
+                                    inputId="dateformat"
+                                    appendTo="body"
+                                    formControlName="fechaBaja">
+                        </p-calendar>
+                        <small  class="p-error block"
+                                *ngIf="verificarCampo('fechaBaja')">
+                                La fecha es requerida.
+                        </small>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <!-- motivo -->
+                    <div class="field">
+                        <label for="descripcion" class="block">Motivo</label>
+                        <textarea   rows="1"    
+                                    class="w-100"
+                                    pInputTextarea 
+                                    formControlName="motivo">
+                        </textarea>
+                        <small  class="p-error block"
+                                *ngIf="verificarCampo('motivo')">
+                                El motivo es requerido.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="closeDialogBajaArticulo()" label="Cerrar" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-save" (click)="realizarAccion()" label="Guardar" styleClass="p-button-primary"></p-button>
     </ng-template>
 </p-dialog>

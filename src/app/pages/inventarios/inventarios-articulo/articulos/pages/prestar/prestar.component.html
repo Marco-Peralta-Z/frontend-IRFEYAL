@@ -1,6 +1,5 @@
 <div class="container">
-    <!-- <form [formGroup]="inventarioForm" (ngSubmit)="realizarAccion()" > -->
-    <form>
+    <form [formGroup]="prestarArticuloForm" (ngSubmit)="realizarAccion()" >
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <!-- Fecha  -->
@@ -8,12 +7,13 @@
                     <label for="fecha" class="block">Fecha ingreso</label>
                     <p-calendar styleClass="w-100" 
                                 dateFormat="yy-mm-dd" 
-                                inputId="dateformat">
+                                inputId="dateformat"
+                                formControlName="fechaSalida">
                     </p-calendar>
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('fecha')">
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('fechaSalida')">
                             La fecha es requerida.
-                    </small> -->
+                    </small>
                 </div>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
@@ -21,23 +21,25 @@
                 <div class="field">
                     <label for="articulo" class="block">Artículo</label>
                     <p-dropdown [options]="inventarioArticulos"
-                                styleClass="w-100"
+                                [styleClass]=" !verificarCampo('inventario') ? 'border w-100' : 'w-100'"   
+                                [ngClass]="{'ng-invalid ng-dirty ' : verificarCampo('inventario')}"
                                 optionLabel="articulo.artinombre"
                                 [filter]="true"
                                 filterBy="articulo.artinombre"
                                 filterPlaceholder="Nombre artículo"
                                 [showClear]="true"
-                                placeholder="Seleccione artículo">
+                                placeholder="Seleccione artículo"
+                                formControlName="inventario">
                         <ng-template let-inventario pTemplate="item">
                             <div class="country-item">
                                 <div>{{inventario.codigo}} - {{inventario.articulo.artinombre}}</div>
                             </div>
                         </ng-template>
                     </p-dropdown>
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('kit')">
-                            El kit es requerido.
-                    </small> -->
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('inventario')">
+                            El artículo es requerido.
+                    </small>
                 </div>
             </div>
         </div>  
@@ -47,23 +49,25 @@
                 <div class="field">
                     <label for="empleado" class="block">Empleado</label>
                     <p-dropdown [options]="empleados"
-                                styleClass="w-100"
+                                [styleClass]=" !verificarCampo('empleado') ? 'border w-100' : 'w-100'"   
+                                [ngClass]="{'ng-invalid ng-dirty ' : verificarCampo('empleado')}"
                                 optionLabel="persona.cedula"
                                 [filter]="true"
                                 filterBy="persona.cedula"
                                 filterPlaceholder="Ingrese cedula"
                                 [showClear]="true"
-                                placeholder="Seleccione empledo">
+                                placeholder="Seleccione empledo"
+                                formControlName="empleado">
                         <ng-template let-empleado pTemplate="item">
                             <div class="country-item">
                                 <div>{{empleado.persona.cedula}} - {{empleado.persona.nombre}} {{empleado.persona.apellido}}</div>
                             </div>
                         </ng-template>
                     </p-dropdown>
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('kit')">
-                            El kit es requerido.
-                    </small> -->
+                    <small  class="p-error block"
+                            *ngIf="verificarCampo('empleado')">
+                            El empleado es requerido.
+                    </small>
                 </div>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
@@ -72,12 +76,10 @@
                     <label for="detalle" class="block">Detalle</label>
                     <textarea   rows="1"    
                                 class="w-100"
-                                pInputTextarea [autoResize]="true">
+                                pInputTextarea [autoResize]="true"
+                                formControlName="detallesalida">
                     </textarea>
-                    <!-- <small  class="p-error block"
-                            *ngIf="verificarCampo('tipoAprobacion')">
-                            El tipo es requerido.
-                    </small> -->
+
                 </div>
             </div>
         </div>
@@ -90,16 +92,16 @@
                         icon="pi pi-times" 
                         class="p-button-outlined p-button-danger" 
                         iconPos="right"
-                        routerLink="listar">
+                        routerLink="/inventariosModule/inventario/listarArt">
                 </button>
                 <button pButton 
                         pRipple type="submit" 
                         label="Guardar" 
                         icon="pi pi-save" 
                         iconPos="right"
+                        [disabled]="prestarArticuloForm.pending"
                         >
                     </button>
-                    <!-- [disabled]="inventarioForm.pending" -->
             </div>
         </div>
     </form>
