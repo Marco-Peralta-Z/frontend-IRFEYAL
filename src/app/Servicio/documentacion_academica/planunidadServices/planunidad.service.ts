@@ -49,8 +49,8 @@ export class PlanunidadService {
     return this.httpClient.get(this.API_SERVER + estado + "/empleado/" + id);
   }
 
-  public verificarPlanUnidad(id_unidad: number, id_asignatura: number, id_modalidad: number, id_curso: number): Observable<any> {
-    return this.httpClient.get(this.API_SERVER + id_unidad + "/" + id_asignatura + "/" + id_modalidad + "/" + id_curso);
+  public verificarPlanUnidad(id_unidad: number, id_asignatura: number, id_curso: number, id_paralelo: number, id_periodo: number, id_modalidad: number): Observable<any> {
+    return this.httpClient.get(this.API_SERVER + id_unidad + "/" + id_asignatura + "/" + id_curso + "/" + id_paralelo + "/" + id_periodo + "/" + id_modalidad);
   }
 
   public createPDFplanunidad(planunidad: any): Observable<any> {

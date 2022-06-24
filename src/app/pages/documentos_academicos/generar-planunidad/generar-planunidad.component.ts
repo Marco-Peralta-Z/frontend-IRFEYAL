@@ -35,8 +35,6 @@ export class GenerarPlanunidadComponent implements OnInit {
   rechazado: String = "Rechazado";
   id: any;
 
-  autoResize: boolean = true;
-
   mostrarFormGenerar: boolean = true;
   mostrarAprobados: boolean = false;
   mostrarRechazados: boolean = false;
@@ -46,7 +44,7 @@ export class GenerarPlanunidadComponent implements OnInit {
   mostrarbtnMisPlanes: boolean = false;
   mostrarObservaciones: boolean = false;
   panelEncabezado: boolean = true;
-  showSelect: boolean = true;
+  showSelectAsig: boolean = true;
 
   // Variables para capturar el select de Unidad
   opcionSelectUnidad: any;
@@ -147,14 +145,14 @@ export class GenerarPlanunidadComponent implements OnInit {
       if (value != null) {
         this.planunidadService.getAllAsignaturasByMalla(value.malla.id_malla).subscribe(resp => {
           this.asignaturas = resp;
-          this.showSelect = false;
+          this.showSelectAsig = false;
         },
           error => { console.error(error) }
         );
       } else if (value == null) {
         this.asignaturas = null;
         this.opcionSelectAsig = null;
-        this.showSelect = true;
+        this.showSelectAsig = true;
       }
     });
 
@@ -248,10 +246,11 @@ export class GenerarPlanunidadComponent implements OnInit {
         timer: 2500
       })
     } else {
-      //Controlar que el plan de unidad no se repita, se verifica id_unidad, id_asignatura, id_modalidad, id_curso
+      //Controlar que el plan de unidad no se repita, parametros(id_unidad, id_asig, id_curso,id_paralelo, id_periodo, id_modalidad)
       this.planunidadService.verificarPlanUnidad(this.generar_planunidadForm.value.unidad.idUnidad,
-        this.generar_planunidadForm.value.asignatura.id_asignatura, this.generar_planunidadForm.value.modalidad.id_modalidad,
-        this.generar_planunidadForm.value.curso.id_curso).subscribe(resp => {
+        this.generar_planunidadForm.value.asignatura.id_asignatura, this.generar_planunidadForm.value.curso.id_curso,
+        this.generar_planunidadForm.value.paralelo.id_paralelo, this.generar_planunidadForm.value.periodo.id_periodo,
+        this.generar_planunidadForm.value.modalidad.id_modalidad).subscribe(resp => {
           if (resp == false) {
             this.generar_planunidadForm.value.empleado = this.id_empleado;
             this.generar_planunidadForm.value.estado = "Pendiente";

@@ -16,6 +16,7 @@ export class PlanUnidad {
     fecha_inicio?: Date;
     fecha_fin?: Date;
     estado: string = "";
+    obsevaciones: string = "";
     unidad: Unidad = new Unidad();
     empleado: empleado = new empleado();
     asignatura: Asignatura = new Asignatura();
