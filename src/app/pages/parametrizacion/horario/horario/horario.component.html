@@ -8,9 +8,9 @@
                     <button pButton pRipple type="button" label="Nuevo Horario" (click)="nuevoHorario()"
                         class="p-button-raised mr-2" icon="fa fa-plus-square"></button>
 
-                    <p-dropdown [options]="listperiodo" [(ngModel)]="selectperiodo" optionLabel="vigencia" name="periodo"
-                        (onChange)="selecPeriodo()" [filter]="true" filterBy="name" [showClear]="true" class=" mr-2"
-                        placeholder="Seleccione el Periodo">
+                    <p-dropdown [options]="listperiodo" [(ngModel)]="selectperiodo" optionLabel="vigencia"
+                        name="periodo" (onChange)="selecPeriodo()" [filter]="true" filterBy="name" [showClear]="true"
+                        class=" mr-2" placeholder="Seleccione el Periodo">
                         <ng-template pTemplate="selectedItem">
                             <div class="country-item country-item-value  mt-2" *ngIf="selectperiodo">
                                 <div>{{selectperiodo.ano_inicio}}-{{selectperiodo.ano_fin}}:
@@ -20,8 +20,10 @@
                         </ng-template>
                         <ng-template let-p pTemplate="item">
                             <div class="p-item">
-                                <div>{{p.ano_inicio}}-{{p.ano_fin}}: {{p.fecha_inicio| date: 'MM/yyyy'}}-{{p.fecha_fin|
-                                    date: 'MM/yyyy'}}: {{p.malla.descripcion}} </div>
+                                <div>{{p.ano_inicio}}-{{p.ano_fin}}: {{p.fecha_inicio| date:
+                                    'MM/yyyy'}}-{{p.fecha_fin|
+                                    date: 'MM/yyyy'}}: {{p.malla.descripcion}},
+                                    Modalidad:{{p.malla.id_modalidad.descripcion}} </div>
                             </div>
                         </ng-template>
                     </p-dropdown>
@@ -33,29 +35,29 @@
                     </div>
                     <div *ngIf="seleccursos">
                         <p-dropdown [options]="listParalelo" [(ngModel)]="selectParalelo" (onChange)=" Paraleloselect()"
-                        optionLabel="id_paralelo" [filter]="true" filterBy="name" [showClear]="true"
-                        name="paralelo" placeholder="Seleccione El Paralelo">
-                        <ng-template pTemplate="selectedItem">
-                            <div class="tutor-item tutor-item-value" *ngIf="selectParalelo">
-                                <div>{{selectParalelo.id_paralelo.descripcion}}:
-                                    Tutor{{selectParalelo.id_empleado.persona.apellido}}{{selectParalelo.id_empleado.persona.nombre}}
+                            optionLabel="id_paralelo" [filter]="true" filterBy="name" [showClear]="true" name="paralelo"
+                            placeholder="Seleccione El Paralelo">
+                            <ng-template pTemplate="selectedItem">
+                                <div class="tutor-item tutor-item-value" *ngIf="selectParalelo">
+                                    <div>{{selectParalelo.id_paralelo.descripcion}}:
+                                        Tutor{{selectParalelo.id_empleado.persona.apellido}}{{selectParalelo.id_empleado.persona.nombre}}
+                                    </div>
                                 </div>
-                            </div>
-                        </ng-template>
-                        <ng-template let-t pTemplate="item">
-                            <div class="tutor-item">
-                                {{t.id_paralelo.descripcion}}: Tutor
-                                {{t.id_empleado.persona.apellido}}{{t.id_empleado.persona.nombre}}
-                            </div>
-                        </ng-template>
-                    </p-dropdown>
+                            </ng-template>
+                            <ng-template let-t pTemplate="item">
+                                <div class="tutor-item">
+                                    {{t.id_paralelo.descripcion}}: Tutor
+                                    {{t.id_empleado.persona.apellido}}{{t.id_empleado.persona.nombre}}
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
                     </div>
                 </ng-template>
             </p-toolbar>
 
             <div style="font-size: 12px;" *ngIf="listhorario.length!=0">
 
-                <p-table [value]="listhorario" styleClass="p-datatable-gridlines cal" responsiveLayout="scroll"
+                <p-table [value]="listOrHor" styleClass="p-datatable-gridlines cal" responsiveLayout="scroll"
                     class="cal">
                     <ng-template pTemplate="caption">
                         <div class="flex align-items-center justify-content-between">
@@ -72,9 +74,16 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-h>
                         <tr>
-                            <td class="horas">{{h.tiempo_inicio}}-{{h.tiempo_fin}}</td>
-                            <td class="Lengua">{{h.id_asignatura.descripcion}}</td>
-                            <td></td>
+                            <td class="horas">{{h.hora_inicio}}-{{h.hora_fin}}</td>
+
+
+                            <td class="Lengua">
+                                {{h.materia1}}
+                            </td>
+                            <td class="Mates">
+
+                                {{h.materia2}}
+                            </td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="summary">

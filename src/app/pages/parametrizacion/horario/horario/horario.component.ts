@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Horas_Intensivo, Horas_NoIntensivo } from 'src/app/material/horas';
+import { horarioCompleto, Horas_Intensivo, Horas_NoIntensivo } from 'src/app/material/horas';
 import { Curso } from 'src/app/Model/Parametrizacion/Curso';
 import { Horario } from 'src/app/Model/Parametrizacion/Horario';
 import { Periodo } from 'src/app/Model/Parametrizacion/Periodo';
@@ -50,25 +50,21 @@ export class HorarioComponent implements OnInit {
   listParalelo: tutor[] = [];
   selectParalelo!: tutor;
   selecCurso() {
-    this.listParalelo = new Array
+    this.listParalelo = new Array();
     for (let index = 0; index < this.selectperiodo.listaHorario.length; index++) {
       if (this.selectperiodo.listaHorario[index].id_tutor.id_curso.id_curso == this.seleccursos.id_curso) {
         this.listParalelo.push(this.selectperiodo.listaHorario[index].id_tutor);
+
       }
     }
 
-    for (var ib = 0; ib <= this.listParalelo.length; ib++) {
-      for (var j = 0; j < this.listParalelo.length - 1; j++) {
-        if (ib != j) {
-          if (this.listParalelo[ib].id_paralelo.id_paralelo == this.listParalelo[j].id_paralelo.id_paralelo) {
-            this.listParalelo.splice(ib, 1);
-          }
-        }
-      }
-    }
-
+    var hash:any[]=[];
+    this.listParalelo = this.listParalelo.filter(function(current) {
+      var exists = !hash[current.id_tutor];
+      hash[current.id_tutor] = true;
+      return exists;
+    });
   }
-  listOrHor: any[] = [];
 
   Paraleloselect() {
     this.listhorario = new Array;
@@ -81,29 +77,39 @@ export class HorarioComponent implements OnInit {
     this.listar();
   }
 
+  hi: Horas_Intensivo = new Horas_Intensivo;
+  hn: Horas_NoIntensivo = new Horas_NoIntensivo;
+
+  listOrHor: horarioCompleto[] = [];
+  selechor: horarioCompleto = new horarioCompleto;
   listar() {
+    this.listOrHor=new Array;
     let horas: any[];
     if (this.selectperiodo.malla.id_modalidad.descripcion.toLowerCase() == "intensivo") {
-      horas = Horas_Intensivo.horas;
-
+      horas = this.hi.horas;
     } else {
-      horas = Horas_NoIntensivo.horas;
+      horas = this.hn.horas;
     }
-    let listado: any[] = [];
-    
+
     for (let index = 0; index < horas.length; index++) {
-      
-      listado.push({
-        id: horas[index].id,
-        hora_inicio: horas[index].inicio,
-        hora_fin: horas[index].fin,
-
-      })
+      this.selechor = new horarioCompleto;
+      this.selechor.id = horas[index].id;
+      this.selechor.hora_inicio = horas[index].inicio;
+      this.selechor.hora_fin = horas[index].fin;
+      this.selechor.materia1 = "";
+      this.selechor.materia2 = "";
+      this.listOrHor.push(this.selechor);
     }
-    this.listOrHor.push(listado);
-    console.log(this.listOrHor)
+
+    for (let j = 0; j < this.listhorario.length; j++) {
+      for (let i = 0; i < this.listOrHor.length; i++) {
+        if (this.listhorario[j].tiempo_inicio == this.listOrHor[i].hora_inicio && this.listhorario[j].dia == 1) {
+          this.listOrHor[i].materia1 = this.listhorario[j].id_asignatura.descripcion;
+        }
+        if (this.listhorario[j].tiempo_inicio == this.listOrHor[i].hora_inicio && this.listhorario[j].dia == 2) {
+          this.listOrHor[i].materia2 = this.listhorario[j].id_asignatura.descripcion;
+        }
+      }
+    }
   }
-
-
-
 }

@@ -32,18 +32,23 @@ export class HorarioCreateComponent implements OnInit {
 
   listperiodo: Periodo[] = [];
   selectperiodo: Periodo = new Periodo;
-  horas!: any[];
-  selehoras: any;
+  horas: any[] = [];
+  selehoras: any=null;
   selectasignatura!: Asignatura;
-  selecDocente!: empleado;
+  selecDocente: empleado=new empleado;
   selectCurso!: Curso;
   listCurso: Curso[] = []
   listParalelo: tutor[] = [];
-  selectParalelo: tutor = new tutor;
+  selectParalelo!: tutor;
   listhorario: Horario[] = [];
   listAsig: Asignatura[] = [];
   listdia: any[] = dia.dia;
   selectdia: any;
+  vh: boolean = false;
+  value: number = 0;
+  hi: Horas_Intensivo = new Horas_Intensivo;
+  hn: Horas_NoIntensivo = new Horas_NoIntensivo;
+
   ngOnInit(): void {
     this.llenarTablas();
 
@@ -52,12 +57,8 @@ export class HorarioCreateComponent implements OnInit {
   llenarTablas() {
     this.servicePeriodo.getAllPerdiodo().subscribe(data => {
       this.listperiodo = data;
-      console.log(data);
     })
 
-    this.serviceCurso.getAllTutor().subscribe(data => {
-      this.listParalelo = data;
-    })
 
     this.servicehorario.getAllHorario().subscribe(data => {
       this.listhorario = data;
@@ -82,34 +83,41 @@ export class HorarioCreateComponent implements OnInit {
 
     }
   }
-  vh: boolean = false;
 
-  verHoras() {
-
+  llenarHoras() {
+    this.horas = new Array;
+    this.hi = new Horas_Intensivo;
+    this.hn = new Horas_NoIntensivo;
     if (this.selectperiodo.malla.id_modalidad.descripcion.toLowerCase() == "intensivo") {
-      this.horas = Horas_Intensivo.horas;
+      this.horas = this.hi.horas;
     } else {
-      this.horas = Horas_NoIntensivo.horas;
+      this.horas = this.hn.horas;
     }
 
-    for (let indexperiodo = 0; indexperiodo < this.selectperiodo.listaHorario.length; indexperiodo++) {
+  }
 
-      for (let index = 0; index < this.listhorario.length; index++) {
+  verHoras() {
+    try {
+      this.horas = new Array;
+      this.llenarHoras();
+      for (let indexperiodo = 0; indexperiodo < this.selectperiodo.listaHorario.length; indexperiodo++) {
+        for (let index = 0; index < this.listhorario.length; index++) {
+          for (let index2 = 0; index2 < this.horas.length; index2++) {
+            if (
+              this.horas[index2].inicio == this.listhorario[index].tiempo_inicio &&
+              this.selectperiodo.listaHorario[indexperiodo].id_horario == this.listhorario[index].id_horario &&
+              this.selectperiodo.listaHorario[indexperiodo].id_tutor.id_tutor == this.selectParalelo.id_tutor &&
+              this.selectperiodo.listaHorario[indexperiodo].id_tutor.id_curso.id_curso == this.selectCurso.id_curso &&
+              this.selectperiodo.listaHorario[indexperiodo].dia == this.selectdia.id &&
+              this.selectperiodo.listaHorario[indexperiodo].id_tutor.id_paralelo.id_paralelo == this.selectParalelo.id_paralelo.id_paralelo) {
 
-        for (let index2 = 0; index2 < this.horas.length; index2++) {
-          console.log(this.selectperiodo.listaHorario[indexperiodo].dia + " " + this.selectdia.id)
-          if (
-            this.horas[index2].inicio == this.listhorario[index].tiempo_inicio &&
-            this.selectperiodo.listaHorario[indexperiodo].id_horario == this.listhorario[index].id_horario &&
-            this.selectperiodo.listaHorario[indexperiodo].id_tutor.id_tutor == this.selectParalelo.id_tutor &&
-            this.selectperiodo.listaHorario[indexperiodo].id_tutor.id_curso.id_curso == this.selectCurso.id_curso &&
-            this.selectperiodo.listaHorario[indexperiodo].dia == this.selectdia.id &&
-            this.selectperiodo.listaHorario[indexperiodo].id_tutor.id_paralelo.id_paralelo == this.selectParalelo.id_paralelo.id_paralelo) {
-            this.horas.splice(index2, 1);
+              this.horas.splice(index2, 1);
+            }
           }
         }
       }
-      console.log(this.horas)
+    } catch (error) {
+
     }
   }
 
@@ -127,19 +135,7 @@ export class HorarioCreateComponent implements OnInit {
     }
   }
 
-  veriParalelo() {
-    let p: any[] = [];
-    for (let index = 0; index < this.listParalelo.length; index++) {
-      if (this.selectCurso.id_curso == this.listParalelo[index].id_curso.id_curso) {
-        p.push(this.listParalelo[index]);
-      }
-    }
-    this.listParalelo = new Array;
-    this.listParalelo = p;
-  }
-
   cerrarC() {
-    //this.horas = new Array;
     try {
       this.selehoras = null;
       this.selecDocente = new empleado;
@@ -179,5 +175,23 @@ export class HorarioCreateComponent implements OnInit {
 
   cancelar() {
     this.router.navigate(['parametrizacion/horario']);
+  }
+
+  llenarParalelo() {
+    this.serviceCurso.getAllTutor().subscribe(data => {
+      //this.listParalelo = data;
+      this.selectParalelo = new tutor;
+      this.listParalelo = new Array;
+      this.selectdia=new Array;
+      this.selectParalelo=new tutor;
+      this.horas = [];
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].id_curso.id_curso == this.selectCurso.id_curso) {
+          this.listParalelo.push(data[i]);
+        }
+
+      }
+
+    })
   }
 }

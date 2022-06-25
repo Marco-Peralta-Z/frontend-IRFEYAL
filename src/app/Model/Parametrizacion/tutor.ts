@@ -4,7 +4,7 @@ import { Paralelo } from "./Paralelo";
 
 export class tutor{
     
-    id_tutor!:Number;
+    id_tutor!:any;
 
     id_curso!:Curso;
 

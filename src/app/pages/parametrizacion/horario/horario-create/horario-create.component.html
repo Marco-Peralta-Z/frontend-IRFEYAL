@@ -35,7 +35,7 @@
                                     <br>
                                     <!--Curso-->
                                     <div class="form-group">
-                                        <p-dropdown [options]="listCurso" (onClear)="cerrarC()"
+                                        <p-dropdown [options]="listCurso" (onClear)="cerrarC()" (onChange)="llenarParalelo()"
                                             [(ngModel)]="selectCurso" name="curso" placeholder="Seleccione el Curso"
                                             optionLabel="descripcion" [showClear]="true">
                                         </p-dropdown>
@@ -43,8 +43,9 @@
                                     <!--Paralelo-->
                                     <div class="form-group" *ngIf="selectCurso">
                                         <p-dropdown [options]="listParalelo" [(ngModel)]="selectParalelo"
-                                            optionLabel="id_paralelo" [filter]="true" filterBy="name" [showClear]="true"
-                                            name="paralelo" placeholder="Seleccione El Paralelo">
+                                            (onChange)="llenarHoras()" optionLabel="id_paralelo" [filter]="true"
+                                            filterBy="name" [showClear]="true" name="paralelo"
+                                            placeholder="Seleccione El Paralelo">
                                             <ng-template pTemplate="selectedItem">
                                                 <div class="tutor-item tutor-item-value" *ngIf="selectParalelo">
                                                     <div>{{selectParalelo.id_paralelo.descripcion}}:
@@ -66,6 +67,27 @@
                                             (onChange)="verHoras()" placeholder="Seleccione el Dia" optionLabel="dia"
                                             [showClear]="true">
                                         </p-dropdown>
+                                    </div>
+
+                                    <div class="form-group" *ngIf="selectdia">
+                                        <p-dropdown [options]="horas" [(ngModel)]="selehoras" optionLabel="inicio"
+                                            name="horas" [filter]="true" filterBy="inicio" [showClear]="true"
+                                            placeholder="Seleccione el horario" (onChange)="verihora()">
+                                            <ng-template pTemplate="selectedItem">
+                                                <div class="horas-item horas-item-value" *ngIf="selehoras">
+                                                    <div>{{selehoras.inicio}}-{{selehoras.fin}}</div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template let-h pTemplate="item">
+                                                <div class="horas-item">
+                                                    {{h.inicio}}-{{h.fin}}
+                                                    <div *ngIf="h.code === 'rc'" style="color: red;">
+                                                        RECESO
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </p-dropdown>
+
                                     </div>
                                     <!--Asignaturas-->
                                     <div class="form-group">
@@ -94,26 +116,7 @@
                                         </p-dropdown>
                                     </div>
                                     <!--Horas-->
-                                    <div class="form-group">
-                                        <p-dropdown [options]="horas" [(ngModel)]="selehoras" optionLabel="inicio"
-                                            name="horas" [filter]="true" filterBy="inicio" [showClear]="true"
-                                            placeholder="Seleccione el horario" (onClick)="verihora()">
-                                            <ng-template pTemplate="selectedItem">
-                                                <div class="horas-item horas-item-value" *ngIf="selehoras">
-                                                    <div>{{selehoras.inicio}}-{{selehoras.fin}}</div>
-                                                </div>
-                                            </ng-template>
-                                            <ng-template let-h pTemplate="item">
-                                                <div class="horas-item">
-                                                    {{h.inicio}}-{{h.fin}}
-                                                    <div *ngIf="h.code === 'rc'" style="color: red;">
-                                                        RECESO
-                                                    </div>
-                                                </div>
-                                            </ng-template>
-                                        </p-dropdown>
 
-                                    </div>
 
 
                                     <div class="card">
