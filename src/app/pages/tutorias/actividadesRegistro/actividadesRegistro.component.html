@@ -51,7 +51,7 @@
           <div class="col-4"><br>
             <button type="submit" class="btn btn-success" [disabled]="listarBoolean"
               (click)=" llenarregistros()">LISTAR</button>
-            <button type="submit" style="margin-left: 35px;" class="btn btn-warning" [disabled]="limpiarBoolean"
+            <button type="submit" style="margin-left: 35px;" class="btn btn-primary" [disabled]="limpiarBoolean"
               (click)="limpiarFormulario()">NUEVA CONSULTA</button>
           </div>
         </div>
@@ -73,57 +73,50 @@
             </ng-template> -->
           <ng-template pTemplate="header">
             <tr>
-              <th style="width:110px; font-weight: 700;" pFrozenColumn>CEDULA</th>
-              <th style="width:210px; font-weight: 700;" pFrozenColumn>NOMBRE</th>
-              <th style="width:50px" class="verticalText">APORTE 1</th>
-              <th style="width:50px" class="verticalText">APORTE 2</th>
-              <th style="width:50px" class="verticalText">APORTE 3</th>
-              <th style="width:50px" class="verticalText">APORTE 4</th>
-              <th style="width:50px" class="verticalText">PRUEBA 1</th>
-              <th style="width:50px" class="verticalText">APORTE 5</th>
-              <th style="width:50px" class="verticalText">APORTE 6</th>
-              <th style="width:50px" class="verticalText">APORTE 7</th>
-              <th style="width:50px" class="verticalText">APORTE 8</th>
-              <th style="width:50px" class="verticalText">PRUEBA 2</th>
-              <th style="width:55px" class="verticalText">FINAL<br>EXAMEN</th>
-              <th style="width:55px" class="verticalText">FINAL<br>PROMEDIO</th>
-              <th style="width:55px" class="verticalText">SUPLETORIO<br>EXAMEN</th>
-              <th style="width:55px" class="verticalText">SUPLETORIO<br>PROMEDIO</th>
-              <th style="width:55px" class="verticalText">REMEDIAL<br>EXAMEN</th>
-              <th style="width:55px" class="verticalText">REMEDIAL<br>PROMEDIO</th>
-              <th style="width:55px" class="verticalText">GRACIA<br>EXAMEN</th>
-              <th style="width:55px" class="verticalText">GRACIA<br>PROMEDIO</th>
-              <th style="width:50px" class="verticalText">CONDUCTA</th>
+              <th style="width:250px; font-weight: 700; text-align: center;"><label>NOMBRE</label></th>
+              <th style="width:70px; background-color: sandybrown; text-align: center;"><label>Aporte 1<br>40%</label>
+              </th>
+              <th style="width:70px; background-color: sandybrown; text-align: center;"><label>Aporte 2<br>40%</label>
+              </th>
+              <th style="width:95px; background-color: sandybrown; text-align: center;"><label>Examen I
+                  Quimestre<br>20%</label></th>
+              <th style="width:125px; background-color: sandybrown; text-align: center;"><label>PROMEDIO I
+                  QUIMESTRE<br>A1+A2+EI</label></th>
+              <th style="width:70px; background-color: moccasin; text-align: center;"><label>Aporte 1<br>40%</label>
+              </th>
+              <th style="width:70px; background-color: moccasin; text-align: center;"><label>Aporte 2<br>40%</label>
+              </th>
+              <th style="width:95px; background-color: moccasin; text-align: center;"><label>Examen II
+                  Quimestre<br>20%</label></th>
+              <th style="width:130px; background-color: moccasin; text-align: center;"><label>PROMEDIO II
+                  QUIMESTRE<br>A1+A2+EII</label></th>
+              <th style="width:95px; background-color: palegreen; text-align: center;"><label>Examen Supletorio</label>
+              </th>
+              <th style="width:85px; background-color: thistle; text-align: center;"><label>Examen Remedial</label></th>
+              <th style="width:80px; background-color: lightpink; text-align: center;"><label>Examen Gracia</label></th>
+              <th style="width:90px; background-color: silver; text-align: center;"><label>NOTA
+                  FINAL<br>(PI+PII)/2</label></th>
               <th style="width:100px">ESTADO</th>
               <th></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-registro>
             <tr>
-              <td style="width:110px; font-weight: 700; " pFrozenColumn>
-                {{registro.id_matricula.estudiante.id_persona.cedula}}</td>
-              <td style="width:210px; font-weight: 700;" pFrozenColumn>
+              <td style="width:250px; font-weight: 700;" pFrozenColumn>
                 {{registro.id_matricula.estudiante.id_persona.apellido}}<br>{{registro.id_matricula.estudiante.id_persona.nombre}}
               </td>
-              <td style="width:50px">{{registro.aporte1}}</td>
-              <td style="width:50px">{{registro.aporte2}}</td>
-              <td style="width:50px">{{registro.aporte3}}</td>
-              <td style="width:50px">{{registro.aporte4}}</td>
-              <td style="width:50px">{{registro.evaluacion1}}</td>
-              <td style="width:50px">{{registro.aporte5}}</td>
-              <td style="width:50px">{{registro.aporte6}}</td>
-              <td style="width:50px">{{registro.aporte7}}</td>
-              <td style="width:50px">{{registro.aporte8}}</td>
-              <td style="width:50px">{{registro.evaluacion2}}</td>
-              <td style="width:55px">{{registro.examenfinal}}</td>
-              <td style="width:55px">{{registro.promediofinal}}</td>
-              <td style="width:55px">{{registro.examen_supletorio}}</td>
-              <td style="width:55px">{{registro.promedio_supletorio}}</td>
-              <td style="width:55px">{{registro.examen_remedial}}</td>
-              <td style="width:55px">{{registro.promedio_remedial}}</td>
-              <td style="width:55px">{{registro.examen_gracia}}</td>
-              <td style="width:55px">{{registro.promedio_gracia}}</td>
-              <td style="width:50px">{{registro.comportamiento}}</td>
+              <td style="width:70px">{{registro.aporte1}}</td>
+              <td style="width:70px">{{registro.aporte2}}</td>
+              <td style="width:95px">{{registro.examen_Iquimestre}}</td>
+              <td style="width:125px">{{registro.promedio_Iquimestre}}</td>
+              <td style="width:70px">{{registro.aporte3}}</td>
+              <td style="width:70px">{{registro.aporte4}}</td>
+              <td style="width:95px">{{registro.examen_IIquimestre}}</td>
+              <td style="width:130px">{{registro.promedio_IIquimestre}}</td>
+              <td style="width:95px">{{registro.examen_supletorio}}</td>
+              <td style="width:85px">{{registro.examen_remedial}}</td>
+              <td style="width:80px">{{registro.examen_gracia}}</td>
+              <td style="width:90px">{{registro.nota_final}}</td>
               <td style="width:100px">{{registro.estado}}</td>
               <td>
                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
@@ -133,67 +126,52 @@
           </ng-template>
         </p-table>
       </div>
-      <p-dialog [(visible)]="Dialog" [style]="{width: '450px'}" header="Detalles" [modal]="true" styleClass="p-fluid">
+      <p-dialog [(visible)]="Dialog" [style]="{width: '450px'}" header="EDITAR" [modal]="true" styleClass="p-fluid">
         <ng-template pTemplate="content">
-          <div class="field">
-            <label for="ap1">Aporte 1:</label>
-            <input type="number" pInputText id="ap1" [(ngModel)]="selectRegistro.aporte1" autofocus />
-          </div>
-          <div class="field">
-            <label for="ap2">Aporte 2:</label>
-            <input type="number" pInputText id="ap2" [(ngModel)]="selectRegistro.aporte2" autofocus />
-          </div>
-          <div class="field">
-            <label for="ap3">Aporte 3:</label>
-            <input type="number" pInputText id="ap3" [(ngModel)]="selectRegistro.aporte3" autofocus />
-          </div>
-          <div class="field">
-            <label for="ap4">Aporte 4:</label>
-            <input type="number" pInputText id="ap4" [(ngModel)]="selectRegistro.aporte4" autofocus />
-          </div>
-          <div class="field">
-            <label for="ev1">Evaluacion 1:</label>
-            <input type="number" pInputText id="ev1" [(ngModel)]="selectRegistro.evaluacion1" autofocus />
-          </div>
-          <div class="field">
-            <label for="ap5">Aporte 5:</label>
-            <input type="number" pInputText id="ap5" [(ngModel)]="selectRegistro.aporte5" autofocus />
-          </div>
-          <div class="field">
-            <label for="ap6">Aporte 6:</label>
-            <input type="number" pInputText id="ap6" [(ngModel)]="selectRegistro.aporte6" autofocus />
-          </div>
-          <div class="field">
-            <label for="ap7">Aporte 7:</label>
-            <input type="number" pInputText id="ap7" [(ngModel)]="selectRegistro.aporte7" autofocus />
-          </div>
-          <div class="field">
-            <label for="ap8">Aporte 8:</label>
-            <input type="number" pInputText id="ap8" [(ngModel)]="selectRegistro.aporte8" autofocus />
-          </div>
-          <div class="field">
-            <label for="ev2">Evaluacion 2:</label>
-            <input type="number" pInputText id="ev2" [(ngModel)]="selectRegistro.evaluacion2" autofocus />
-          </div>
-          <div class="field">
-            <label for="exf">Examen Final:</label>
-            <input type="number" pInputText id="exf" [(ngModel)]="selectRegistro.examenfinal" autofocus />
-          </div>
-          <div class="field">
-            <label for="exs">Examen Supletorio:</label>
-            <input type="number" pInputText id="exs" [(ngModel)]="selectRegistro.examen_supletorio" autofocus />
-          </div>
-          <div class="field">
-            <label for="exr">Examen Remedial:</label>
-            <input type="number" pInputText id="exr" [(ngModel)]="selectRegistro.examen_remedial" autofocus />
-          </div>
-          <div class="field">
-            <label for="exg">Examen Gracia:</label>
-            <input type="number" pInputText id="exg" [(ngModel)]="selectRegistro.examen_gracia" autofocus />
-          </div>
-          <div class="field">
-            <label for="comp">Comportamiento:</label>
-            <input type="number" pInputText id="comp" [(ngModel)]="selectRegistro.comportamiento" autofocus />
+          <div class="row">
+            <div style="text-align: center;"><label for="ev1">PRIMER QUIMESTRE:</label></div>
+            <div class="col-4">
+              <label for="ap1">Aporte 1:</label>
+              <input type="number" pInputText id="ap1" [(ngModel)]="selectRegistro.aporte1" />
+            </div>
+            <div class="col-4">
+              <label for="ap2">Aporte 2:</label>
+              <input type="number" pInputText id="ap2" [(ngModel)]="selectRegistro.aporte2" />
+            </div>
+            <div class="col-4">
+              <label for="ev1">E. I Quimestre:</label>
+              <input type="number" pInputText id="ev1" [(ngModel)]="selectRegistro.examen_Iquimestre" />
+            </div>
+          </div><br>
+          <div class="row">
+            <div style="text-align: center;"><label for="ev1">SEGUNDO QUIMESTRE:</label></div>
+            <div class="col-4">
+              <label for="ap3">Aporte 1:</label>
+              <input type="number" pInputText id="ap1" [(ngModel)]="selectRegistro.aporte3" />
+            </div>
+            <div class="col-4">
+              <label for="ap4">Aporte 2:</label>
+              <input type="number" pInputText id="ap2" [(ngModel)]="selectRegistro.aporte4" />
+            </div>
+            <div class="col-4">
+              <label for="ev2">E. II Quimestre:</label>
+              <input type="number" pInputText id="ev1" [(ngModel)]="selectRegistro.examen_IIquimestre" />
+            </div>
+          </div><br>
+          <div class="row">
+            <div style="text-align: center;"><label for="ev1">EXAMENES SUPLETORIOS:</label></div>
+            <div class="col-4">
+              <label for="exs">E. Supletorio:</label>
+              <input type="number" pInputText id="exs" [(ngModel)]="selectRegistro.examen_supletorio" />
+            </div>
+            <div class="col-4">
+              <label for="exr">E.Remedial:</label>
+              <input type="number" pInputText id="exr" [(ngModel)]="selectRegistro.examen_remedial" />
+            </div>
+            <div class="col-4">
+              <label for="exg">E. Gracia:</label>
+              <input type="number" pInputText id="exg" [(ngModel)]="selectRegistro.examen_gracia" />
+            </div>
           </div>
         </ng-template>
         <ng-template pTemplate="footer">

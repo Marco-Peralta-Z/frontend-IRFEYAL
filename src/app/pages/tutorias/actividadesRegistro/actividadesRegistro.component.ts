@@ -126,60 +126,47 @@ export class ActividadesRegistroComponent implements OnInit {
   validarAprobaciones(registro: Registro) {
     if (registro.aporte1 == null) registro.aporte1 = 0;
     if (registro.aporte2 == null) registro.aporte2 = 0;
+    if (registro.examen_Iquimestre == null) registro.examen_Iquimestre = 0;
+    if (registro.promedio_Iquimestre == null) registro.promedio_Iquimestre = 0;
     if (registro.aporte3 == null) registro.aporte3 = 0;
     if (registro.aporte4 == null) registro.aporte4 = 0;
-    if (registro.aporte5 == null) registro.aporte5 = 0;
-    if (registro.aporte6 == null) registro.aporte6 = 0;
-    if (registro.aporte7 == null) registro.aporte7 = 0;
-    if (registro.aporte8 == null) registro.aporte8 = 0;
-    if (registro.evaluacion1 == null) registro.evaluacion1 = 0;
-    if (registro.evaluacion2 == null) registro.evaluacion2 = 0;
-    if (registro.examenfinal == null) registro.examenfinal = 0;
-    if (registro.promediofinal == null) registro.promediofinal = 0;
+    if (registro.examen_IIquimestre == null) registro.examen_IIquimestre = 0;
+    if (registro.promedio_IIquimestre == null) registro.promedio_IIquimestre = 0;
     if (registro.examen_supletorio == null) registro.examen_supletorio = 0;
-    if (registro.promedio_supletorio == null) registro.promedio_supletorio = 0;
     if (registro.examen_remedial == null) registro.examen_remedial = 0;
-    if (registro.promedio_remedial == null) registro.promedio_remedial = 0;
     if (registro.examen_gracia == null) registro.examen_gracia = 0;
-    if (registro.promedio_gracia == null) registro.promedio_gracia = 0;
-    if (registro.comportamiento == null) registro.comportamiento = 0;
-    registro.promediofinal = Math.round(((parseInt(registro.aporte1.toString()) + parseInt(registro.aporte2.toString()) +
-      parseInt(registro.aporte3.toString()) + parseInt(registro.aporte4.toString()) + parseInt(registro.aporte5.toString()) + parseInt(registro.aporte6.toString()) +
-      parseInt(registro.aporte7.toString()) + parseInt(registro.aporte8.toString()) + parseInt(registro.evaluacion1.toString()) + parseInt(registro.evaluacion2.toString()) +
-      parseInt(registro.examenfinal.toString())) * 10) / 11);
-    registro.promedio_supletorio = 0;
-    registro.promedio_remedial = 0;
-    registro.promedio_gracia = 0;
-    if (parseInt(registro.promediofinal.toString()) >= 70 && registro.examenfinal >= 5) {
-      registro.estado = "APROBADO";
-      registro.examen_supletorio = 0;
-      registro.examen_remedial = 0;
-      registro.examen_gracia = 0;
-    } else {
-      if (parseInt(registro.promediofinal.toString()) >= 40) {
+    if (registro.nota_final == null) registro.nota_final = 0;
+    registro.promedio_Iquimestre = parseFloat(((parseFloat(registro.aporte1.toString()) * 0.4) +
+      (parseFloat(registro.aporte2.toString()) * 0.4) +
+      (parseFloat(registro.examen_Iquimestre.toString()) * 0.2)).toFixed(2));
+    registro.promedio_IIquimestre = parseFloat(((parseFloat(registro.aporte3.toString()) * 0.4) +
+      (parseFloat(registro.aporte4.toString()) * 0.4) +
+      (parseFloat(registro.examen_IIquimestre.toString()) * 0.2)).toFixed(2));
+    registro.nota_final = Math.round(((parseFloat(registro.promedio_Iquimestre.toString()) + parseFloat(registro.promedio_IIquimestre.toString())) / 2));
+    if (registro.promedio_Iquimestre >= 4) {
+      if (registro.nota_final >= 7) {
+        registro.estado = "APROBADO";
+      } else {
         if (registro.examen_supletorio == 0) {
           registro.estado = "SUPLETORIO";
         } else {
-          registro.promedio_supletorio = Math.round((parseInt(registro.promediofinal.toString()) + parseInt(registro.examen_supletorio.toString())));
-          if (registro.promedio_supletorio >= 70 && registro.examen_supletorio >= 5) {
+          if (registro.examen_supletorio >= 7) {
             registro.estado = "APROBADO";
-            registro.examen_remedial = 0;
-            registro.examen_gracia = 0;
+            registro.examen_supletorio = 7;
           } else {
             if (registro.examen_remedial == 0) {
               registro.estado = "REMEDIAL";
             } else {
-              registro.promedio_remedial = Math.round((parseInt(registro.promediofinal.toString()) + parseInt(registro.examen_supletorio.toString()) + parseInt(registro.examen_remedial.toString())));
-              if (registro.promedio_remedial >= 70 && registro.examen_remedial >= 5) {
+              if (registro.examen_remedial >= 7) {
                 registro.estado = "APROBADO";
-                registro.examen_gracia = 0;
+                registro.examen_remedial = 7;
               } else {
                 if (registro.examen_gracia == 0) {
                   registro.estado = "GRACIA";
                 } else {
-                  registro.promedio_gracia = Math.round((parseInt(registro.promediofinal.toString()) + parseInt(registro.examen_supletorio.toString()) + parseInt(registro.examen_remedial.toString()) + parseInt(registro.examen_gracia.toString())));
-                  if (registro.promedio_gracia >= 70 && registro.examen_gracia >= 5) {
+                  if (registro.examen_gracia >= 7) {
                     registro.estado = "APROBADO";
+                    registro.examen_gracia = 7;
                   } else {
                     registro.estado = "REPROBADO";
                   }
@@ -188,8 +175,24 @@ export class ActividadesRegistroComponent implements OnInit {
             }
           }
         }
+      }
+    } else {
+      if (registro.examen_remedial == 0) {
+        registro.estado = "REMEDIAL";
       } else {
-        registro.estado = "REPROBADO";
+        if (registro.examen_remedial >= 7) {
+          registro.estado = "APROBADO";
+        } else {
+          if (registro.examen_gracia == 0) {
+            registro.estado = "GRACIA";
+          } else {
+            if (registro.examen_gracia >= 7) {
+              registro.estado = "APROBADO";
+            } else {
+              registro.estado = "REPROBADO";
+            }
+          }
+        }
       }
     }
   }
