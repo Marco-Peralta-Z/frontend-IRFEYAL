@@ -4,7 +4,6 @@ import { Matricula } from '../../../../Model/Matriculas/matricula';
 import { MatriculaService } from '../../../../Servicio/moduloMatricula/matriculaServices/matricula.service';
 import { Modalidad } from '../../../../Model/Parametrizacion/Modalidad';
 import { Historial } from '../../../../Model/Matriculas/historial';
-import { Curso } from '../../../../Model/Parametrizacion/Curso';
 
 @Component({
   selector: 'app-listar-matricula',
@@ -77,7 +76,7 @@ export class ListarMatriculaComponent implements OnInit {
       this.matriculaService.getHistorialMatriculas(id_matricula)
       .subscribe(historial => {
         this.historialMatricula=historial;
-        let aux=0;
+        let aux:any=0;
       for (let i = 0; i < this.historialMatricula.length; i++) {
         if (i == 0) {
            aux= this.historialMatricula[i].id_periodo.malla.id_malla!;
@@ -85,7 +84,7 @@ export class ListarMatriculaComponent implements OnInit {
         }
         if (aux != this.historialMatricula[i].id_periodo.malla.id_malla) {
             this.historial.push({
-              mallaNombre: this.historialMatricula[i].id_periodo.malla.descripcion!, 
+              mallaNombre: String(this.historialMatricula[i].id_periodo.malla.descripcion!), 
               matriculas: this.matHistorial,
 
             });
@@ -101,7 +100,7 @@ export class ListarMatriculaComponent implements OnInit {
         }
          if (i == this.historialMatricula.length-1) {
           this.historial.push({
-            mallaNombre: this.historialMatricula[i].id_periodo.malla.descripcion!, 
+            mallaNombre: String(this.historialMatricula[i].id_periodo.malla.descripcion!), 
             matriculas: this.matHistorial,
           });
          }  

@@ -9,7 +9,6 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DividerModule } from 'primeng/divider';
-import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { BlockUIModule } from 'primeng/blockui';
@@ -47,33 +46,35 @@ import { TabViewModule } from 'primeng/tabview';
 import { StyleClassModule } from 'primeng/styleclass';
 import { SkeletonModule } from 'primeng/skeleton';
 import { PasswordModule } from 'primeng/password';
-import {TabMenuModule} from 'primeng/tabmenu';
+import { TabMenuModule } from 'primeng/tabmenu';
 import { CheckboxModule } from 'primeng/checkbox';
-import {RadioButtonModule} from 'primeng/radiobutton';
 import { PickListModule } from 'primeng/picklist';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DragDropModule } from 'primeng/dragdrop';
 import { AccordionModule } from 'primeng/accordion';
-import {AutoCompleteModule} from 'primeng/autocomplete';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputMaskModule } from 'primeng/inputmask';
-import {ConfirmPopupModule} from 'primeng/confirmpopup';
-import {InputSwitchModule} from 'primeng/inputswitch';
-import {BadgeModule} from 'primeng/badge';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import {TreeSelectModule} from 'primeng/treeselect';
 
 @NgModule({
 
   exports: [
-    AutoCompleteModule,InputMaskModule,ConfirmPopupModule,
-    DragDropModule,AccordionModule ,FileUploadModule ,
+    InputNumberModule,
+    InputMaskModule, ConfirmPopupModule, DynamicDialogModule,
+    DragDropModule, AccordionModule, FileUploadModule,
     SplitterModule, AvatarModule, AvatarGroupModule,
-    PanelMenuModule, TreeModule, MessagesModule,
-    DialogModule, DynamicDialogModule, ChipModule, MultiSelectModule,
+    PanelMenuModule, TreeModule, MessagesModule, SelectButtonModule,
+    DialogModule, ChipModule, MultiSelectModule,TreeSelectModule,
     MegaMenuModule, TieredMenuModule, MessageModule,
     MenubarModule, CarouselModule, ImageModule,
-    InputTextModule, TriStateCheckboxModule,
+    InputTextModule, TriStateCheckboxModule, AutoCompleteModule,
     ButtonModule, CalendarModule, TimelineModule,
     ToastModule, DropdownModule, CardModule,
     OverlayPanelModule, ListboxModule, SlideMenuModule,
@@ -84,9 +85,8 @@ import {BadgeModule} from 'primeng/badge';
     FocusTrapModule, ToolbarModule, TabViewModule,
     SidebarModule, StepsModule, SkeletonModule,
     SplitButtonModule, StyleClassModule, PasswordModule,
-    TabMenuModule,CheckboxModule, InputTextareaModule,
-    ConfirmDialogModule,PickListModule,MatIconModule,RadioButtonModule,
-    InputSwitchModule, BadgeModule
+    TabMenuModule, CheckboxModule, InputTextareaModule,
+    ConfirmDialogModule, PickListModule, MatIconModule
   ]
 
 })

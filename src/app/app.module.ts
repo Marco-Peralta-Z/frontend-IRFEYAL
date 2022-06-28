@@ -45,6 +45,15 @@ import { ListarasistenciaComponent } from './pages/modulo_asistencia/listarasist
 import { RegistrarasistenciaComponent } from './pages/modulo_asistencia/registrarasistencia/registrarasistencia.component';
 import { GenerarPlanunidadComponent } from './pages/documentos_academicos/generar-planunidad/generar-planunidad.component';
 import { RevisarPlanunidadComponent } from './pages/documentos_academicos/revisar-planunidad/revisar-planunidad.component';
+import { HorarioCreateComponent } from './pages/parametrizacion/horario/horario-create/horario-create.component';
+import { PeriodoCreateComponent } from './pages/parametrizacion/periodo/periodo-create/periodo-create/periodo-create.component';
+import { SelectMallasComponent } from './pages/parametrizacion/malla/select-malla/select-mallas/select-mallas.component';
+import { MallaCreateComponent } from './pages/parametrizacion/malla/select-malla/malla-create/malla-create.component';
+import { HorarioComponent } from './pages/parametrizacion/horario/horario/horario.component';
+import { TutorComponent } from './pages/parametrizacion/cursos/malla_curso/tutor/tutor.component';
+import { MallaCursoComponent } from './pages/parametrizacion/cursos/malla_curso/malla-curso/malla-curso.component'
+import { AsignaturaPeriodoComponent } from './pages/parametrizacion/asignaturas/asignatura_periodo/asignatura-periodo/asignatura-periodo.component';
+import { ListarMatriculaComponent } from './pages/matricula/matricula/listar-matricula/listar-matricula.component';
 
 
 registerLocaleData(localeES);
@@ -52,6 +61,14 @@ registerLocaleData(localeES);
 @NgModule({
   declarations: [
     AppComponent,
+    MallaCursoComponent,
+    TutorComponent,
+    ListarMatriculaComponent,
+    PeriodoCreateComponent,
+    SelectMallasComponent,
+    AsignaturaPeriodoComponent,
+    MallaCreateComponent,
+    HorarioComponent,
     ActividadesRegistroComponent,
     HomeComponent,
     Error404Component,
@@ -65,6 +82,7 @@ registerLocaleData(localeES);
     ListarasistenciaComponent,
     RegistrarasistenciaComponent,
     GenerarPlanunidadComponent,
+    HorarioCreateComponent,
     RevisarPlanunidadComponent,
 
   ],

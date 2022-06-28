@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { data } from 'jquery';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Subscription } from 'rxjs';
+import { Area } from 'src/app/Model/Parametrizacion/Area';
 import { Asignatura } from 'src/app/Model/Parametrizacion/Asignatura';
-import { Asignatura_Empleado } from 'src/app/Model/Parametrizacion/Asignatura_Empleado';
 import { empleado } from 'src/app/Model/rolesTS/empleado';
 import { AsignaturaService } from 'src/app/Servicio/parametrizacion/Service Asignatura/asignatura.service';
 
@@ -22,55 +23,51 @@ import { AsignaturaService } from 'src/app/Servicio/parametrizacion/Service Asig
 })
 export class AsignaturasComponent implements OnInit {
   @ViewChild('dt') table!: Table;
-  constructor(private serviceasig: AsignaturaService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
-  asigemp: Asignatura_Empleado[] = [];
+  constructor(
+    private serviceasig: AsignaturaService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService) { }
+
   items: MenuItem[] = [];
   activeItem!: MenuItem;
   listasig: Asignatura[] = [];
   asig: Asignatura = new Asignatura;
-  ac1: boolean = false;
-  ac2: boolean = false;
-  ac3: boolean = false;
   panelAsig: boolean = false;
   panelAsigUpdate: boolean = false;
   submitted: boolean = false;
-  empelados: empleado[] = [];
+  empleados: empleado[] = [];
   asig2: Asignatura = new Asignatura
-
+  listarea: Area[] = [];
+  selectArea!: Area;
+  
   ngOnInit(): void {
-    this.ac1 = true;
-    this.items = [
-      {
-        label: 'Asignaturas', icon: 'pi pi-fw pi-home', command: () => {
-          this.ac1 = true;
-          this.ac2 = false;
-          this.ac3 = false;
-        }
-      },
-      {
-        label: 'Asignaturas y Docentes', icon: 'fa fa-user-md', command: () => {
-          this.ac1 = false;
-          this.ac2 = true;
-          this.ac3 = false;
-        }
-      },
-      {
-        label: 'Asignaturas y Mallas', icon: 'fa fa-file-text', command: () => {
-          this.ac1 = false;
-          this.ac2 = false;
-          this.ac3 = true;
-        }
-      },
-    ];
     this.activeItem = this.items[0];
     this.llenarTabalAsignatura();
+  }
 
+  veriAsign: Boolean = true;
+  vertabla() {
+    if (!this.veriAsign || this.selectArea != null) {
+      this.listasig = this.selectArea.listaAsignaturas;
+      this.veriAsign = false;
+    }
   }
 
   llenarTabalAsignatura() {
-    this.listasig = new Array;
-    this.serviceasig.getAsignaturas().subscribe(data => {
-      this.listasig = data;
+
+    this.serviceasig.getEmpleados().subscribe(data => {
+      this.empleados = new Array();
+      for (let index = 0; index < data.length; index++) {
+        if (data[index].cargo == "contratacion_docente") {
+          this.empleados.push(data[index]);
+        }
+
+      }
+      this.empleados.sort();
+    })
+
+    this.serviceasig.getAllArea().subscribe(data => {
+      this.listarea = data.sort();
     })
   }
 
@@ -78,18 +75,25 @@ export class AsignaturasComponent implements OnInit {
     this.asig = new Asignatura;
     this.panelAsig = true;
     this.submitted = false;
+    this.empleados = new Array;
+    this.selecempleadodoc = new Array
+    this.llenarTabalAsignatura();
   }
 
   updateAsig(a: Asignatura) {
     this.panelAsigUpdate = true;
     this.submitted = false;
     this.asig = a;
+    this.selecempleadodoc = this.asig.empleados
   }
 
   cancelar() {
     this.asig = new Asignatura;
     this.panelAsig = false;
     this.panelAsigUpdate = false;
+    this.selectArea = new Area;
+    this.veriAsign = true;
+    this.listasig = new Array;
     this.llenarTabalAsignatura();
   }
 
@@ -97,9 +101,17 @@ export class AsignaturasComponent implements OnInit {
     if (this.asig.descripcion == null) {
       this.submitted = true;
     } else {
+      this.selecempleadodoc.forEach(element => {
+        this.asig.empleados.push(element)
+      });
       this.serviceasig.createAsignatura(this.asig).subscribe(data => {
         if (data != null) {
-          this.cancelar();
+          this.selectArea.listaAsignaturas.push(data.asignatura);
+          this.serviceasig.UpdateArea(this.selectArea).subscribe(data => {
+            if (data) {
+              this.cancelar();
+            }
+          })
         }
       })
     }
@@ -109,6 +121,9 @@ export class AsignaturasComponent implements OnInit {
     if (this.asig.descripcion == null) {
       this.submitted = true;
     } else {
+      this.selecempleadodoc.forEach(element => {
+        this.asig.empleados.push(element)
+      });
       this.serviceasig.updateAsignatura(this.asig).subscribe(data => {
         if (data != null) {
           this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Actualizacion Correcta' });
@@ -125,7 +140,18 @@ export class AsignaturasComponent implements OnInit {
       message: 'Estas Seguro Que Deseas Eliminar Esta Asignatura?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        for (let index = 0; index < this.selectArea.listaAsignaturas.length; index++) {
+          if (a.id_asignatura == this.selectArea.listaAsignaturas[index].id_asignatura) {
+            this.selectArea.listaAsignaturas.splice(index, 1);
+            this.serviceasig.UpdateArea(this.selectArea).subscribe(data => {
+              if (data) {
 
+              }
+            })
+            break
+
+          }
+        }
         this.serviceasig.deleteAsig(a).subscribe(data => {
           if (data) {
             this.cancelar()
@@ -143,6 +169,28 @@ export class AsignaturasComponent implements OnInit {
   }
 
   //Asignaturas y Empleados
+
+  a!: Asignatura;
+  selecempleadodoc: empleado[] = [];
+
+  asigna(a1: Asignatura) {
+    this.a = a1;
+  }
+
+  paneldeletedocenteasig(empe: empleado) {
+    for (let index = 0; index < this.a.empleados.length; index++) {
+      if (this.a.empleados[index].id_empleado == empe.id_empleado) {
+        this.a.empleados.splice(index, 1);
+        this.serviceasig.updateAsignatura(this.a).subscribe(data => {
+          if (data != null) {
+            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Docente Eliminado Correctamente' });
+            this.cancelar();
+          }
+        })
+      }
+
+    }
+  }
 
 
 }

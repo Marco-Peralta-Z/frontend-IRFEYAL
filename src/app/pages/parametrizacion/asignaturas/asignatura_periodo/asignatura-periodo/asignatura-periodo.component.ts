@@ -15,7 +15,7 @@ export class AsignaturaPeriodoComponent implements OnInit {
   ngOnInit(): void {
     let id = localStorage.getItem("id_malla")?.toString();
     this.sevicemalla.getidMalla(id).subscribe(data => {
-    this.listasig=data.asignaturas;
+      this.listasig = data.listaAsignaturas;
     });
   }
 

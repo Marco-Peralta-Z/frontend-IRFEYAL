@@ -1,29 +1,30 @@
+import { Horario } from "./Horario";
 import { Malla } from "./Malla";
+import { Modalidad } from "./Modalidad";
 
 export class Periodo {
 
-    id_periodo: number = 0;
+    id_periodo !: any;
 
-    periodo_academico: string = "";
+    ano_inicio !: Date;
 
-    fecha_actividad?: Date;
+    ano_fin !: Date;
 
-    fecha_creacion?:Date;
+    fecha_creacionDate = new Date;
 
-    fecha_inicio?: Date;
+    fecha_inicio !: Date;
 
-    fecha_fin?: Date;
+    fecha_fin!: Date;
 
-    ano_inicio?:        string;
+    costo_mensualidad!: Number;
 
-    ano_fin?:           string;
+    costo_matricula!: Number;
 
-    vigencia?:          boolean;
-    
-    costo_mensualidad: number = 0;
+    malla!: Malla;
 
-    costo_matricula: number = 0;
+    modalidad!: Modalidad;
 
-    malla: Malla = new Malla();
+    vigencia!: Boolean;
 
+    listaHorario!: Horario[];
 }

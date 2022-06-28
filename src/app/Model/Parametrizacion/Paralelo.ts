@@ -1,9 +1,9 @@
 export class Paralelo {
 
-    id_paralelo: number = 0;
+    id_paralelo: Number = 0;
 
-    descripcion: string = "";
+    descripcion!: String;
 
-    fec_creacion?: Date ;
+    fec_creacion: Date = new Date;
 
 }

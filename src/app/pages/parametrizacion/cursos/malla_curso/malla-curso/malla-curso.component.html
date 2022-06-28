@@ -14,30 +14,63 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th style="min-width:200px" pSortableColumn="descripcion">Curso<p-sortIcon field="descripcion">
+                <th style="width: 3rem"></th>
+                <th pSortableColumn="descripcion">Curso<p-sortIcon field="descripcion">
                     </p-sortIcon>
                 </th>
-                <th>Nombres del Dirigente</th>
-                <th>Correo del Dirigente</th>
-                <th>Extension del Dirigente</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-c let-expanded="expanded">
-            <tr>
-
-                <td style="min-width:200px; text-align: left;">{{c.descripcion}}</td>
-                <td>{{c.empleado.id_persona.cedula}}</td>
-                <td>{{c.empleado.id_persona.apellido}} {{c.empleado.id_persona.nombre}}</td>
-                <td>{{c.empleado.correo.correo}}</td>
-                <td>{{c.empleado.extension.nombre_extension}}</td>
+            <tr style="text-align: justify;">
+                <td>
+                    <button type="button" pButton pRipple [pRowToggler]="c" (click)="buscarParalelo(c)"
+                        class="p-button-text p-button-rounded p-button-plain" pTooltip="Ver Palelos"
+                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                </td>
+                <td>
+                    {{c.descripcion}}
+                </td>
             </tr>
         </ng-template>
 
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="6">No sea encontrado ningun Curso</td>
+                <td colspan="5">No sea encontrado ningun Curso</td>
             </tr>
         </ng-template>
+
+
+        <ng-template pTemplate="rowexpansion" let-c>
+            <tr>
+                <td colspan="10">
+                    <div class="p-3 card">
+                        <p-table [value]="listtutor" dataKey="id_tutor">
+                            <ng-template pTemplate="header">
+            <tr>
+                <th>Palelo</th>
+                <th colspan="6">Tutor</th>
+            </tr>
+
+        </ng-template>
+        <ng-template pTemplate="body" let-tu>
+            <tr style="text-align: left;" >
+                <td>{{tu.id_paralelo.descripcion}}</td>
+                <td colspan="6">{{tu.id_empleado.persona.cedula}} {{tu.id_empleado.persona.apellido}}
+                    {{tu.id_empleado.persona.nombre}}</td>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6">No sea encontrado ningun Paralelo</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+</tr>
+</ng-template>
 
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">

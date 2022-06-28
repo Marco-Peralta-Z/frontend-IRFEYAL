@@ -1,16 +1,19 @@
 <div class="container-fluid page">
-    <div class="d-flex page__box p-3 mt-2">Mallas Curriculares</div>
+    <div class="d-flex page__box p-3 mt-2">Periodos Academicos</div>
     <div class="page__content shadow p-3 ">
 
         <!--Inicio Contenido-->
+        <p-toast></p-toast>
+        <p-confirmPopup></p-confirmPopup>
 
         <div class="card">
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
-                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"></button>
-                    <!--<button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger"
-                        (click)="deleteSelectedProducts()"
-                        [disabled]="!selectedProducts || !selectedProducts.length"></button>-->
+                    <button pButton pRipple label="Nuevo Periodo" icon="pi pi-plus" class="p-button-success mr-2"
+                        (click)="nuevoPeriodo()"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-danger"
+                        (click)="deletePeriodo($event)"
+                        [disabled]="!selectedPeriodo || !selectedPeriodo.length"></button>
                 </ng-template>
 
                 <ng-template pTemplate="right">
@@ -18,71 +21,99 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="perdiodoList" [rows]="10" [paginator]="true" responsiveLayout="scroll" dataKey="id"
-                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Mallas Curriculares"
-                [showCurrentPageReport]="true">
+            <p-table #dt [value]="perdiodoList" [rows]="10" [paginator]="true" responsiveLayout="scroll"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Periodos Academicos"
+                [showCurrentPageReport]="true" dataKey="id_periodo" [(selection)]="selectedPeriodo"  scrollHeight="400px"
+                [globalFilterFields]="['periodo_academico','ano_inicio']">
                 <ng-template pTemplate="caption">
                     <div class="flex align-items-center justify-content-between">
-                        <h5 class="m-0">Lista de Perdiodo</h5>
+                        <h5 class="m-0">Lista de Periodo</h5>
                         <span class="p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <!--<input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                placeholder="Search..." />-->
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Buscar..." />
                         </span>
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>Actividad</th>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="ano_inicio">Ciclo Escolar</th>
                         <th>Fecha Inicio</th>
                         <th>Fecha Fin</th>
-                        <th>Costo Mensualidad</th>
-                        <th>Costo Matricula </th>
-                        <th>Descripcion Malla </th>
+                        <th style="font-size: 13px;">Costo Mensualidad</th>
+                        <th style="font-size: 13px;">Costo Matricula </th>
+                        <th>Malla</th>
                         <th>Materias Asignadas</th>
+                        <th>Curso</th>
+                        <th></th>
                         <th style="width: 8rem">
                             <div class="flex justify-content-center align-items-center">
-                                Estado
+                                Vigencia
+                                <p-columnFilter type="boolean" field="vigencia" display="menu"></p-columnFilter>
                             </div>
                         </th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-p>
-                    <tr>
+                    <tr style="font-size: 13px;">
                         <td>
-                            {{p.actividades}}
+                            <p-tableCheckbox [value]="p"></p-tableCheckbox>
+                        </td>
+                       
+                        <td>
+                            {{p.ano_inicio | date: 'yyyy'}}-{{p.ano_fin | date: 'yyyy'}}
                         </td>
                         <td>
-                            {{p.fecha_activiti | date: 'MM/dd/yyyy'}}
+                            {{p.fecha_inicio | date: 'MM/yyyy'}}
                         </td>
                         <td>
-                            {{p.fecha_activiti | date: 'MM/dd/yyyy'}}
+                            {{p.fecha_fin | date: 'MM/yyyy'}}
                         </td>
                         <td>
-                            {{p.costo_mensualidad}}
+                            {{p.costo_mensualidad | currency: 'USD'}}
                         </td>
                         <td>
-                            {{p.costo_matricula}}
+                            {{p.costo_matricula | currency: 'USD'}}
                         </td>
-                        <td style="text-align: justify;">
-                            {{p.id_malla.descripcion}}
+                       <td>
+                           {{p.malla.descripcion}}
+                       </td>
+                        <td>
+                            <div class="flex justify-content-center align-items-center">
+                                <button pButton pRipple type="button" icon="fa fa-eye" (click)=" verAsignaturas(p)"
+                                    class="p-button-rounded p-button-secondary p-button-text"></button>
+                            </div>
                         </td>
                         <td>
                             <div class="flex justify-content-center align-items-center">
-                                <button pButton pRipple type="button" icon="fa fa-eye"
-                                    class="p-button-rounded p-button-warning p-button-text"></button>
+                                <button pButton pRipple type="button" icon="fa fa-eye" (click)=" verCurso(p)"
+                                    class="p-button-rounded p-button-secondary p-button-text"></button>
                             </div>
                         </td>
-                        <td class="text-center">
                         <td>
-                            <p-toggleButton [(ngModel)]="p.id_malla.estado" onLabel="Activo" offLabel="Expirado"
-                                onIcon="'pi pi-check'" offIcon="pi pi-times" [style]="{'width': '10em'}"></p-toggleButton>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                                (click)="updatePeriodo(p)"></button>
+
                         </td>
+                        <td class="text-center">
+                            
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': p.vigencia, 'false-icon pi-times-circle': !p.vigencia}"></i>
+                        </td>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="6">No sea encontrado ningun Periodo</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="summary">
                     <div class="flex align-items-center justify-content-between">
-                        En total se encontro {{malla ? malla.length : 0 }} Mallas Curriculares.
+                        En total se encontro {{perdiodoList ?perdiodoList.length : 0 }} Periodos Academicos
                     </div>
                 </ng-template>
             </p-table>

@@ -1,1 +1,157 @@
-<p>cursos works!</p>
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2">Cursos</div>
+    <div class="page__content shadow p-3 ">
+        <div *ngIf="star">
+            <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+        </div>
+        <!--Inicio Contenido-->
+
+        <p-toast [style]="{marginTop: '80px'}"></p-toast>
+        <p-confirmPopup></p-confirmPopup>
+
+        <!--Panel para Asignaturas y Docentes-->
+        <div class="card">
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="Nuevo Curso" icon="pi pi-plus" class="p-button-success mr-2"
+                        (click)="activePanelCurso()"></button>
+
+                </ng-template>
+
+                <ng-template pTemplate="right">
+
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="listcursos" dataKey="descripcion" responsiveLayout="scroll" [scrollable]="true"
+                scrollHeight="400px" [rows]="5" [paginator]="true" [globalFilterFields]="['descripcion']"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Asignaturas">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">Lista de las Cursos</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Search..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem"></th>
+                        <th pSortableColumn="descripcion">Curso<p-sortIcon field="descripcion">
+                            </p-sortIcon>
+                        </th>
+                        <th>
+                            Asignar Paralelos
+                        </th>
+                        <th>Accion</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-c let-expanded="expanded">
+                    <tr style="text-align: justify;">
+                        <td>
+                            <button type="button" pButton pRipple [pRowToggler]="c" (click)="buscarParalelo(c)"
+                                class="p-button-text p-button-rounded p-button-plain" pTooltip="Ver Palelos"
+                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                        <td>
+                            {{c.descripcion}}
+                        </td>
+                        <td>
+                            <button pButton pRipple icon="fa fa-plus-square-o" pTooltip="Asignar paralelo"
+                                class="p-button-rounded p-button-success" (click)="AsignarTutor(c)"></button>
+                        </td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" (click)="updateCurso(c)"
+                                class="p-button-rounded p-button-success mr-2"></button>
+                            <button pButton pRipple icon="pi pi-trash" (click)=" deleteCurso(c,$event)"
+                                class="p-button-rounded p-button-warning"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="5">No sea encontrado ningun Curso</td>
+                    </tr>
+                </ng-template>
+
+
+                <ng-template pTemplate="rowexpansion" let-c>
+                    <tr>
+                        <td colspan="7">
+                            <div class="p-3">
+                                <p-table [value]="listtutor" dataKey="id_tutor">
+                                    <ng-template pTemplate="header">
+                    <tr>
+                        <th>Palelo</th>
+                        <th style="width: 3rem">Tutor</th>
+                        <th></th>
+                    </tr>
+
+                </ng-template>
+                <ng-template pTemplate="body" let-tu>
+                    <tr>
+                        <td>{{tu.id_paralelo.descripcion}}</td>
+                        <td>{{tu.id_empleado.persona.cedula}} {{tu.id_empleado.persona.apellido}}
+                            {{tu.id_empleado.persona.nombre}}</td>
+                        <td><button pButton pRipple icon="pi pi-trash" (click)="deleteTutor(tu,$event)"
+                                class="p-button-rounded p-button-warning"></button></td>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="6">No sea encontrado ningun Paralelo</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+
+        </tr>
+        </ng-template>
+
+
+
+
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total se encontro {{listcursos ? listcursos.length : 0 }} Cursos
+            </div>
+        </ng-template>
+        </p-table>
+
+    </div>
+
+    <p-dialog [(visible)]="panelCursosNuevo" [style]="{width: '500px',height: '500px'}" header="Nuevo Curso"
+        [modal]="true" styleClass="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="card card-body text-left" styleClass="mb-5">
+
+                <p-toast position="top-left" key="tl"></p-toast>
+                <div class="field">
+                    <label for="name">Ingrese el Nombre del nuevo Curso</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="selectcurso.descripcion" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !selectcurso.descripcion">Se requiere el Nombre del
+                        nuevo Curso</small>
+                </div>
+                <br>
+
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                (click)="cancelar()"></button>
+            <button pButton pRipple label="Save" icon="fa fa-floppy-o" class="p-button-text"
+                (click)="saveCurso()"></button>
+        </ng-template>
+    </p-dialog>
+
+
+    <!--FinContenido-->
+
+</div>
+</div>

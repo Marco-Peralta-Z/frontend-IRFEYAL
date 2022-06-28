@@ -1,0 +1,74 @@
+<div class="container-fluid page">
+    <div class="d-flex page__box p-2 mt-2">{{tipo}}</div>
+    <div class="page__content shadow p-3 ">
+        <div class="p-field">
+            <div class="col-xs-11 col-sm-8 col-md-5 mx-auto">
+                <div class="p-grid p-fluid">
+                    <div class="p-col-12 p-md-6 p-lg-10">
+                        <div class="card-header" style="text-align: center;">
+                            <h3>{{tipo}}</h3>
+                        </div>
+
+
+                        <div class="card-body text-center">
+                            <form action="">
+                                <p-toast [style]="{marginTop: '80px'}"></p-toast>
+                                
+
+                                <div class="form-group">
+                                    <p-calendar [(ngModel)]="periodo.ano_inicio" view="year" dateFormat="yy"
+                                        name="periodo.ano_inicio" inputId="yearpicker"
+                                        placeholder="Seleccione Año del ciclo escolar">
+                                    </p-calendar>
+                                </div>
+
+                                <div class="form-group">
+                                    <p-calendar [(ngModel)]="periodo.fecha_inicio" view="month" dateFormat="mm/yy"
+                                        [readonlyInput]="true" inputId="monthpicker" name="periodo.fecha_inicio"
+                                        placeholder="Seleccione mes y año que inicia el periodo" (onSelect)="veriFecha2()">
+                                    </p-calendar>
+                                </div>
+
+                                <div class="form-group">
+                                    <p-calendar [(ngModel)]="periodo.fecha_fin" view="month" dateFormat="mm/yy"
+                                        name="periodo.fecha_fin" [readonlyInput]="true" inputId="monthpicker"
+                                        placeholder="Seleccione mes y año que finaliza el periodo"  (onSelect)="verFecha()" >
+                                    </p-calendar>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" (click)="show()" pButton icon="fa fa-search"
+                                        label={{select}}></button>
+                                </div>
+
+                               
+
+                                <div class="form-group">
+                                    <p-inputNumber [(ngModel)]="periodo.costo_mensualidad" inputId="currency-us"
+                                        mode="currency" currency="USD" locale="en-US" name="costo_mensualidad"
+                                        placeholder="Ingrese El costo de la mensualidad">
+                                    </p-inputNumber>
+                                </div>
+                                <div class="form-group">
+                                    <p-inputNumber [(ngModel)]="periodo.costo_matricula" inputId="currency-us"
+                                        mode="currency" currency="USD" locale="en-US" name="costo_matricula"
+                                        placeholder="Ingrese El costo de la matricula">
+                                    </p-inputNumber>
+                                </div>
+                                <div class="form-group">
+                                    <p-selectButton [options]="stateOptions" [(ngModel)]="value1" optionLabel="label"
+                                        optionValue="value" name="vigencia"></p-selectButton>
+                                </div>
+                                <button pButton type="submit" class="ui-button-rounded ui-button-success"
+                                    label="Guardar" (click)=" savePeriodo()"></button>
+                                <br>
+                                <button class="btn btn-link" (click)="cancelar()">Cancelar </button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

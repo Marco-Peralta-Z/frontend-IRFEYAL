@@ -5,100 +5,18 @@
         <!--Inicio Contenido-->
         <p-toast [style]="{marginTop: '80px'}"></p-toast>
         <p-confirmPopup></p-confirmPopup>
-        <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
-
-        <!--Panel para Asignaturas -->
-        <div class="card" *ngIf="ac1">
-            <p-toolbar styleClass="mb-4">
-                <ng-template pTemplate="left">
-                    <button pButton pRipple label="Nueva Asignatura" (click)="nuevaAsig()" icon="pi pi-plus"
-                        class="p-button-success mr-2"></button>
-
-                </ng-template>
-
-                <ng-template pTemplate="right">
-
-                </ng-template>
-            </p-toolbar>
-            <p-table #dt [value]="listasig" [rows]="5" [paginator]="true" responsiveLayout="scroll" dataKey="id"
-                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Asignatura"
-                [showCurrentPageReport]="true" [globalFilterFields]="['descripcion']" [showCurrentPageReport]="true">
-                <ng-template pTemplate="caption">
-                    <div class="flex align-items-center justify-content-between">
-                        <h5 class="m-0">Lista de Asignaturas</h5>
-                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                            placeholder="Search..." />
-
-                    </div>
-                </ng-template>
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th pSortableColumn="descripcion">Asignatura <p-sortIcon field="descripcion"></p-sortIcon>
-                        </th>
-                        <th>Accion</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-a>
-                    <tr>
-                        <td>{{a.descripcion}}</td>
-                        <td> <button pButton pRipple icon="pi pi-pencil" (click)="updateAsig(a)"
-                                class="p-button-rounded p-button-success mr-2"></button>
-                            <button pButton pRipple icon="pi pi-trash" (click)=" deleteAsig(a,$event)"
-                                class="p-button-rounded p-button-warning"></button>
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="summary">
-                    <div class="flex align-items-center justify-content-between">
-                        En total se encontro {{listasig ? listasig.length : 0 }} Asignaturas
-                    </div>
-                </ng-template>
-            </p-table>
-            <p-dialog [(visible)]="panelAsig" [style]="{width: '450px'}" header="Agregar Asignaturas" [modal]="true"
-                styleClass="p-fluid">
-                <ng-template pTemplate="content">
-                    <div class="field">
-                        <label for="name">Ingrese el Nombre de la nueva asignatura</label>
-                        <input type="text" pInputText id="name" [(ngModel)]="asig.descripcion" required autofocus />
-                        <small class="p-error" *ngIf="submitted && !asig.descripcion">Se requiere el nombre de la
-                            Asignatura</small>
-                    </div>
-                </ng-template>
-                <ng-template pTemplate="footer">
-                    <button pButton pRipple label="Cancel" (click)="cancelar()" icon="pi pi-times"
-                        class="p-button-text"></button>
-                    <button pButton pRipple label="Save" icon="pi pi-check" (click)="saveasignatura()"
-                        class="p-button-text"></button>
-                </ng-template>
-            </p-dialog>
-
-            <p-dialog [(visible)]="panelAsigUpdate" [style]="{width: '450px'}" header="Agregar Asignaturas"
-                [modal]="true" styleClass="p-fluid">
-                <ng-template pTemplate="content">
-                    <div class="field">
-                        <label for="name">Ingrese el Nombre de la nueva asignatura</label>
-                        <input type="text" pInputText id="name" [(ngModel)]="asig.descripcion" required autofocus />
-                        <small class="p-error" *ngIf="submitted && !asig.descripcion">Se requiere el nombre de la
-                            Asignatura</small>
-                    </div>
-                </ng-template>
-                <ng-template pTemplate="footer">
-                    <button pButton pRipple label="Cancel" (click)="cancelar()" icon="pi pi-times"
-                        class="p-button-text"></button>
-                    <button pButton pRipple label="Save" icon="pi pi-check" (click)="updateAsign()"
-                        class="p-button-text"></button>
-                </ng-template>
-            </p-dialog>
-        </div>
-
-
 
         <!--Panel para Asignaturas y Docentes-->
-        <div class="card" *ngIf="ac2">
+        <div class="card">
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
-                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"></button>
+                    <p-dropdown [options]="listarea" [(ngModel)]="selectArea" placeholder="Seleccione el Area"
+                        [filter]="true" optionLabel="descripcion" class=" mr-2" (onClick)="vertabla()"></p-dropdown>
 
+                    <button pButton pRipple label="Nueva Asignatura" (click)="nuevaAsig()" [disabled]="veriAsign"
+                        icon="pi pi-plus" class="p-button-success mr-2"></button>
+                    <!--<button pButton pRipple label="Asignar Tutor a Asignatura" icon="pi pi-plus"
+                        class="p-button-success mr-2" (click)="actvpanelladddocente()" [disabled]="veriAsign"></button>-->
                 </ng-template>
 
                 <ng-template pTemplate="right">
@@ -122,21 +40,22 @@
                         <th style="min-width:200px" pSortableColumn="descripcion">Asignatura <p-sortIcon
                                 field="descripcion"></p-sortIcon>
                         </th>
-<<<<<<< HEAD
-=======
                         <th>Accion</th>
->>>>>>> origin
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-a let-expanded="expanded">
                     <tr>
                         <td>
-                            <button type="button" pButton pRipple [pRowToggler]="a"
-                                class="p-button-text p-button-rounded p-button-plain"
+                            <button type="button" pButton pRipple [pRowToggler]="a" (click)="asigna(a)"
+                                class="p-button-text p-button-rounded p-button-plain" pTooltip="Ver Docente"
                                 [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                         </td>
                         <td style="min-width:200px; text-align: left;">{{a.descripcion}}</td>
-
+                        <td> <button pButton pRipple icon="pi pi-pencil" (click)="updateAsig(a)"
+                                class="p-button-rounded p-button-success mr-2"></button>
+                            <button pButton pRipple icon="pi pi-trash" (click)=" deleteAsig(a,$event)"
+                                class="p-button-rounded p-button-warning"></button>
+                        </td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="rowexpansion" let-a>
@@ -153,6 +72,7 @@
                         <th>Nombres del Docente</th>
                         <th>Correo del Docente</th>
                         <th>Extension del Docente</th>
+                        <th></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-docente>
@@ -160,8 +80,13 @@
 
                         <td>{{docente.persona.cedula}}</td>
                         <td>{{docente.persona.apellido}} {{docente.persona.nombre}}</td>
-                        <td>{{docente.correoElectronico.correo}}</td>
+                        <td>{{docente.correo.correo}}</td>
                         <td>{{docente.extension.nombre_extension}}</td>
+                        <td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-trash" (click)="paneldeletedocenteasig(docente)"
+                                class="p-button-rounded p-button-warning"></button>
+                        </td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
@@ -174,20 +99,156 @@
         </td>
         </tr>
         </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6">No sea encontrado ninguna Asignatura</td>
+            </tr>
+        </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">
                 En total se encontro {{listasig ? listasig.length : 0 }} Asignaturas
             </div>
         </ng-template>
         </p-table>
+
+        <!-- <p-dialog [(visible)]="paneladddocnete" [style]="{width: '500px',height: '500px'}" header="Agregar Asignaturas"
+            [modal]="true" styleClass="p-fluid">
+            <ng-template pTemplate="content">
+
+                <div class="card card-body text-left" styleClass="mb-5">
+                   
+                    <div class="card-header" style="text-align: center;">
+                        <h3> AREA: {{selectArea.descripcion}}</h3>
+                    </div>
+                    <p-dropdown [options]="listasig" [(ngModel)]="selecAsig" optionLabel="descripcion" ng-disable
+                        [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Seleccione Asignatura"
+                        styleClass="mb-5">
+                        <ng-template pTemplate="selecAsig">
+                            <div class="country-item country-item-value" *ngIf="selecAsig">
+                                <div>{{selecAsig.descripcion}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-asig pTemplate="item">
+                            <div class="country-item">
+                                <p-scrollPanel>
+                                    <div>{{asig.descripcion}}</div>
+                                </p-scrollPanel>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <br><br>
+
+                    <p-dropdown [options]="empleados" [(ngModel)]="selecempleadodoc" optionLabel="persona.apellido"
+                        styleClass="mb-5" [filter]="true" filterBy="persona.apellido" [showClear]="true"
+                        placeholder="Seleccione Docente">
+                        <ng-template pTemplate="selecempleadodoc">
+                            <div class="country-item country-item-value" *ngIf="selecempleadodoc">
+                                <div>{{selecempleadodoc.persona.apellido}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-em pTemplate="item">
+                            <div class="country-item">
+                                <div style="text-transform:uppercase">
+                                    {{em.cargo}}: {{em.persona.apellido}}{{em.persona.nombre}}
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+
+                    <br><br>
+
+
+                </div>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                    (click)="cancelpanelladddocente()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                    (click)="savedocenteasig()"></button>
+            </ng-template>
+        </p-dialog>
+-->
+
+        <p-dialog [(visible)]="panelAsig" [style]="{width: '500px',height: '500px'}" header="Agregar Asignaturas"
+            [modal]="true" styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="card-header" style="text-align: center;">
+                    <h3> AREA: {{selectArea.descripcion}}</h3>
+                </div>
+                <br>
+                <div class="field">
+                    <label for="name">Ingrese el Nombre de la nueva asignatura</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="asig.descripcion" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !asig.descripcion">Se requiere el nombre de la
+                        Asignatura</small>
+                </div>
+                <p-multiSelect [options]="empleados" [(ngModel)]="selecempleadodoc" defaultLabel="Seleccione empleado"
+                optionLabel="cargo" class="multiselect-custom">
+                <ng-template let-value pTemplate="selectedItems">
+                    <div class="empleado-item empleado-item-value" *ngFor="let empe of selecempleadodoc">
+                        <div>{{empe.cargo}}: {{empe.persona.apellido}}{{empe.persona.nombre}}</div>
+                    </div>
+                    <div *ngIf="!selecempleadodoc || selecempleadodoc.length === 0" class="country-placeholder">
+                        Seleccione El Empleado
+                    </div>
+                </ng-template>
+                <ng-template let-em pTemplate="item">
+                    <div class="empleado-item">
+                        {{em.cargo}}: {{em.persona.apellido}}{{em.persona.nombre}}
+                    </div>
+                </ng-template>
+            </p-multiSelect>
+                
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" (click)="cancelar()" icon="pi pi-times"
+                    class="p-button-text"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" (click)="saveasignatura()"
+                    class="p-button-text"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="panelAsigUpdate" [style]="{width: '500px',height: '500px'}" header="Agregar Asignaturas"
+            [modal]="true" styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <div class="card-header" style="text-align: center;">
+                        <h3> AREA: {{selectArea.descripcion}}</h3>
+                    </div>
+                    <label for="name">Ingrese el Nombre de la nueva asignatura</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="asig.descripcion" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !asig.descripcion">Se requiere el nombre de la
+                        Asignatura</small>
+                </div>
+
+                <p-multiSelect [options]="empleados" [(ngModel)]="selecempleadodoc" defaultLabel="Seleccione empleado"
+                    optionLabel="cargo" class="multiselect-custom">
+                    <ng-template let-value pTemplate="selectedItems">
+                        <div class="empleado-item empleado-item-value" *ngFor="let empe of selecempleadodoc">
+                            <div>{{empe.cargo}}: {{empe.persona.apellido}}{{empe.persona.nombre}}</div>
+                        </div>
+                        <div *ngIf="!selecempleadodoc || selecempleadodoc.length === 0" class="country-placeholder">
+                            Seleccione El Empleado
+                        </div>
+                    </ng-template>
+                    <ng-template let-em pTemplate="item">
+                        <div class="empleado-item">
+                            {{em.cargo}}: {{em.persona.apellido}}{{em.persona.nombre}}
+                        </div>
+                    </ng-template>
+                </p-multiSelect>
+
+
+               
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" (click)="cancelar()" icon="pi pi-times"
+                    class="p-button-text"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" (click)="updateAsign()"
+                    class="p-button-text"></button>
+            </ng-template>
+        </p-dialog>
     </div>
-    <!--Panel para Asignaturas y Mallas Curriculares-->
-    <div class="card" *ngIf="ac3">
-        hola3s
-    </div>
-
-
-
     <!--Fin Contenido-->
 </div>
 </div>

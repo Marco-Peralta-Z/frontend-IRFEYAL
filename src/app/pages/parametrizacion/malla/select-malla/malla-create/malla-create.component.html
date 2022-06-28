@@ -1,0 +1,91 @@
+<div class="container-fluid page">
+    <div class="d-flex page__box p-3 mt-2">{{tipo}}</div>
+    <div class="page__content shadow p-3 ">
+
+        <div class="p-field">
+            <div class="col-xs-11 col-sm-8 col-md-5 mx-auto">
+                <div class="p-grid p-fluid">
+                    <div class="p-col-12 p-md-6 p-lg-10">
+                        <div class="card-header" style="text-align: center;">
+                            <h3>{{tipo}}</h3>
+                        </div>
+                        <p-toast></p-toast>
+
+                        <div class="card-body text-center">
+                            <form action="">
+                                
+                                <div class="form-group">
+                                    <input pInputText type="text" class="form-control" name="descripcion"
+                                        [ngModelOptions]="{standalone: true}"
+                                        placeholder="Ingresa Nombre de la Malla Curricular"
+                                        [(ngModel)]="malla.descripcion" minlength="3" maxlength="50">
+                                </div>
+
+                                <div class="form-group">
+                                    <p-multiSelect [options]="listarea" [(ngModel)]="selectArea"
+                                    defaultLabel="Seleccione el Area" optionLabel="descripcion"
+                                    class="multiselect-custom" display="chip" name="area" (onClick)="llenarArea()">
+
+                                </p-multiSelect>
+                                </div>
+
+                                <div class="form-group">
+                                    <p-multiSelect [options]="listAsig" [(ngModel)]="selectAsignatura" (onClick)="veriAreaAsig()"
+                                        defaultLabel="Seleccione las Asignaturas" optionLabel="descripcion"
+                                        class="multiselect-custom" display="chip" name="descripcion2">
+
+                                    </p-multiSelect>
+                                </div>
+
+                                <div class="form-group">
+                                    <p-multiSelect [options]="listCurso" [(ngModel)]="selectCurso"
+                                        defaultLabel="Seleccione Los Cursos" optionLabel="descripcion"
+                                        class="multiselect-custom" display="chip" name="descripcion">
+
+                                    </p-multiSelect>
+                                </div>
+                                <div class="form-group">
+                                    <p-dropdown [options]="Listmodalidad" [(ngModel)]="selectModalidad"
+                                        name="descripcion 2" optionLabel="descripcion" [filter]="true"
+                                        filterBy="descripcion" [showClear]="true"
+                                        placeholder="Seleccione la Modalidad del selectModalidad">
+                                        <ng-template pTemplate="selectedItem">
+                                            <div class="Listmodalidad-item Listmodalidad-item-value"
+                                                *ngIf="selectModalidad">
+                                                <div>{{selectModalidad.descripcion}}</div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template let-mo pTemplate="item">
+                                            <div class="Listmodalidad-item">
+                                                <div>{{mo.descripcion}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="form-group">
+                                    <p-selectButton [options]="stateOptions" [(ngModel)]="value1" optionLabel="label"
+                                        optionValue="value" name="estado"></p-selectButton>
+                                </div>
+
+                                <div class="form-group">
+                                    <button pButton type="button" class="ui-button-rounded ui-button-success"
+                                        label="Guardar" (click)="saveAsignatura()"></button>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <button pButton type="button" label="Cancelar" class="p-button-text"
+                                        (click)="cancelar()"> </button>
+                                </div>
+                            </form>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
