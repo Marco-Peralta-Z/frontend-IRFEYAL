@@ -28,23 +28,26 @@ export class GenerarPlanunidadComponent implements OnInit {
   periodos: Periodo[] = [];
   planunidadaprobados: PlanUnidad[] = [];
   planunidadrechazados: PlanUnidad[] = [];
+  planunidadpendientes: PlanUnidad[] = [];
   cursos: any;
   paralelos: any;
 
   aprobado: String = "Aprobado";
   rechazado: String = "Rechazado";
+  pendiente: String = "Pendiente";
   id: any;
 
-  mostrarFormGenerar: boolean = true;
-  mostrarAprobados: boolean = false;
+  mostrarFormGenerar: boolean = false;
+  mostrarAprobados: boolean = true;
   mostrarRechazados: boolean = false;
+  mostrarPendientes: boolean = false;
   mostrarBotonEnviar: boolean = true;
   mostrarCambiosEditar: boolean = false;
-  mostrarbtnTodos: boolean = true;
-  mostrarbtnMisPlanes: boolean = false;
   mostrarObservaciones: boolean = false;
   panelEncabezado: boolean = true;
+  mostrarBtnsEstados: boolean = true;
   showSelectAsig: boolean = true;
+  mostrarBtnCancelGenerarPlan: boolean = false;
 
   // Variables para capturar el select de Unidad
   opcionSelectUnidad: any;
@@ -106,6 +109,9 @@ export class GenerarPlanunidadComponent implements OnInit {
       this.usuario = resp;
       this.id_empleado = this.usuario.empleado.id_empleado;
       this.NombreApellidoEmpleado = this.usuario.empleado.persona.nombre + " " + this.usuario.empleado.persona.apellido;
+      this.cargarPlanesUnidadEmpleado(this.aprobado);
+      this.cargarPlanesUnidadEmpleado(this.pendiente);
+      this.cargarPlanesUnidadEmpleado(this.rechazado);
     },
       error => { console.error(error) }
     );
@@ -156,9 +162,6 @@ export class GenerarPlanunidadComponent implements OnInit {
       }
     });
 
-    this.cargarPlanesUnidadEmpleado(this.aprobado);
-    this.cargarPlanesUnidadEmpleado(this.rechazado);
-
   }
 
   capturarSelectUnidad() {
@@ -192,7 +195,7 @@ export class GenerarPlanunidadComponent implements OnInit {
   }
 
   capturarSelectParalelo() {
-    // Pasamos el valor seleccionado a la variable verSeleccionUnidad
+    // Pasamos el valor seleccionado a la variable verSeleccionParalelo
     if (this.opcionSelectParalelo != null) {
       this.verSelectParalelo = this.opcionSelectParalelo.descripcion;
     }
@@ -209,35 +212,48 @@ export class GenerarPlanunidadComponent implements OnInit {
 
 
   verFormGenerar() {
+    this.panelEncabezado = true;
+    this.mostrarBtnCancelGenerarPlan = true;
+    this.mostrarBtnsEstados = false;
     this.mostrarFormGenerar = true;
     this.mostrarAprobados = false;
     this.mostrarRechazados = false;
     this.mostrarObservaciones = false;
-    this.panelEncabezado = true;
+    this.mostrarPendientes = false;
   }
 
   verTablaAprobados() {
-    this.mostrarFormGenerar = false;
     this.mostrarAprobados = true;
+    this.mostrarBtnsEstados = true;
+    this.mostrarFormGenerar = false;
     this.mostrarRechazados = false;
+    this.mostrarPendientes = false;
+    this.mostrarBtnCancelGenerarPlan = false;
     this.cargarPlanesUnidadEmpleado(this.aprobado);
   }
 
   verTablaRechazados() {
+    this.mostrarRechazados = true;
+    this.mostrarBtnsEstados = true;
     this.mostrarFormGenerar = false;
     this.mostrarAprobados = false;
-    this.mostrarRechazados = true;
+    this.mostrarPendientes = false;
+    this.mostrarBtnCancelGenerarPlan = false;
     this.cargarPlanesUnidadEmpleado(this.rechazado);
   }
 
+  verTablaPendientes() {
+    this.mostrarPendientes = true;
+    this.mostrarBtnsEstados = true;
+    this.mostrarFormGenerar = false;
+    this.mostrarAprobados = false;
+    this.mostrarRechazados = false;
+    this.mostrarBtnCancelGenerarPlan = false;
+    this.cargarPlanesUnidadEmpleado(this.pendiente);
+  }
+
   enviar(): void {
-    if (this.generar_planunidadForm.get("fecha_inicio")?.value == "" ||
-      this.generar_planunidadForm.get("fecha_fin")?.value == "" ||
-      this.generar_planunidadForm.get("titulo_unidad")?.value == "" ||
-      this.generar_planunidadForm.get("objetivos")?.value == "" ||
-      this.generar_planunidadForm.get("contenidos")?.value == "" ||
-      this.generar_planunidadForm.get("criterios_evaluacion")?.value == "" ||
-      this.generar_planunidadForm.get("destrezas")?.value == "") {
+    if (this.verificarForm() == false) {
       Swal.fire({
         position: 'center',
         icon: 'error',
@@ -257,6 +273,12 @@ export class GenerarPlanunidadComponent implements OnInit {
             this.generar_planunidadForm.value.observaciones = "Sin observaciones";
             this.planunidadService.savePlanUnidad(this.generar_planunidadForm.value).subscribe(resp => {
               this.cleanForm();
+              this.mostrarPendientes = true;
+              this.mostrarFormGenerar = false;
+              this.mostrarBtnsEstados = true;
+              this.mostrarBtnCancelGenerarPlan = false;
+              //Actualizar tablas
+              this.cargarDatos();
               //Alerta success
               Swal.fire({
                 position: 'center',
@@ -272,7 +294,7 @@ export class GenerarPlanunidadComponent implements OnInit {
                 Swal.fire({
                   position: 'center',
                   icon: 'error',
-                  title: 'Plan de Unidad No Enviado, ocurrio un error',
+                  title: 'Plan de Unidad no enviado, ocurrio un error',
                   showConfirmButton: false,
                   timer: 2500
                 })
@@ -292,43 +314,65 @@ export class GenerarPlanunidadComponent implements OnInit {
             })
           }
         },
-          error => { console.error(error) }
+          error => {
+            console.error(error)
+            //Alerta error
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'Plan de Unidad No Enviado, ocurrio un error',
+              showConfirmButton: false,
+              timer: 2500
+            })
+          }
         );
     }
   }
 
   guardaredit() {
-    this.generar_planunidadForm.value.estado = "Pendiente";
-    this.planunidadService.updatePlanUnidad(this.id, this.generar_planunidadForm.value).subscribe(resp => {
-      this.cleanForm();
-      //Mostramos el btn Enviar y ocultamos btn Guardar Cambios y  btn Cancelar
-      this.mostrarBotonEnviar = true;
-      this.mostrarCambiosEditar = false;
-      this.mostrarFormGenerar = false;
-      this.mostrarRechazados = true;
-      //Actualizar tablas
-      this.cargarDatos();
-      //Alerta success
+    if (this.verificarForm() == false) {
       Swal.fire({
         position: 'center',
-        icon: 'success',
-        title: 'Plan de Unidad modificado con exito!',
+        icon: 'error',
+        title: 'Plan de Unidad No modificado, llene todos los campos',
         showConfirmButton: false,
         timer: 2500
       })
-    },
-      error => {
-        console.error(error)
-        //Alerta error
+    } else {
+      this.generar_planunidadForm.value.estado = "Pendiente";
+      this.planunidadService.updatePlanUnidad(this.id, this.generar_planunidadForm.value).subscribe(resp => {
+        this.cleanForm();
+        //Mostramos el btn Enviar y ocultamos btn Guardar Cambios y  btn Cancelar
+        this.mostrarBotonEnviar = true;
+        this.mostrarCambiosEditar = false;
+        this.mostrarFormGenerar = false;
+        this.mostrarRechazados = true;
+        this.mostrarBtnsEstados = true;
+        this.mostrarBtnCancelGenerarPlan = false;
+        //Actualizar tablas
+        this.cargarDatos();
+        //Alerta success
         Swal.fire({
           position: 'center',
-          icon: 'error',
-          title: 'Plan de Unidad no modificado, ocurrio un error',
+          icon: 'success',
+          title: 'Plan de Unidad modificado con exito!',
           showConfirmButton: false,
           timer: 2500
         })
-      }
-    )
+      },
+        error => {
+          console.error(error)
+          //Alerta error
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Plan de Unidad no modificado, ocurrio un error',
+            showConfirmButton: false,
+            timer: 2500
+          })
+        }
+      )
+    }
   }
 
   cancelaredit() {
@@ -349,6 +393,26 @@ export class GenerarPlanunidadComponent implements OnInit {
         this.mostrarCambiosEditar = false;
         this.mostrarFormGenerar = false;
         this.mostrarRechazados = true;
+        this.mostrarBtnsEstados = true;
+        this.mostrarBtnCancelGenerarPlan = false;
+      }
+    })
+  }
+
+  cancelarGenerar() {
+    Swal.fire({
+      title: 'Esta seguro?',
+      text: "Cancelar creacion de nuevo Plan de Unidad!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Si, Cancelar!',
+      cancelButtonText: 'No, Continuar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cleanForm();
+        this.verTablaAprobados();
       }
     })
   }
@@ -400,6 +464,7 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.mostrarRechazados = false;
     this.mostrarObservaciones = true;
     this.panelEncabezado = false;
+    this.mostrarBtnsEstados = false;
   }
 
 
@@ -430,7 +495,7 @@ export class GenerarPlanunidadComponent implements OnInit {
     })
   }
 
-  // validaciones de campos del formulario
+  // validaciones de campos del formulario para mostrar mensaje (Campo obligatori)
   validarCampo(valor: string): boolean {
     return this.generar_planunidadForm.controls[valor].errors!
       && this.generar_planunidadForm.controls[valor].touched
@@ -440,10 +505,10 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.planunidadService.getAllPlanUnidadesByEmpleado(this.id_empleado, estado).subscribe(resp => {
       if (estado == "Aprobado") {
         this.planunidadaprobados = resp;
-        this.mostrarbtnTodos = true;
-        this.mostrarbtnMisPlanes = false;
       } else if (estado == "Rechazado") {
         this.planunidadrechazados = resp;
+      } else if (estado == "Pendiente") {
+        this.planunidadpendientes = resp;
       }
     },
       error => { console.error(error) }
@@ -468,7 +533,7 @@ export class GenerarPlanunidadComponent implements OnInit {
         Swal.fire({
           position: 'center',
           icon: 'error',
-          title: 'Ocurrio un error al descargar el plan de unidad',
+          title: 'Error al descargar el plan de unidad',
           showConfirmButton: false,
           timer: 2500
         })
@@ -486,5 +551,26 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.opcionSelectCurso = null;
     this.opcionSelectParalelo = null;
     this.opcionSelectAsig = null;
+  }
+
+  //verificar los campos vacios del formulario
+  verificarForm(): boolean {
+    if (this.opcionSelectUnidad == null ||
+      this.opcionSelectModalidad == null ||
+      this.opcionSelectPeriodo == null ||
+      this.opcionSelectCurso == null ||
+      this.opcionSelectParalelo == null ||
+      this.opcionSelectAsig == null ||
+      this.generar_planunidadForm.get("fecha_inicio")?.value == "" ||
+      this.generar_planunidadForm.get("fecha_fin")?.value == "" ||
+      this.generar_planunidadForm.get("titulo_unidad")?.value == "" ||
+      this.generar_planunidadForm.get("objetivos")?.value == "" ||
+      this.generar_planunidadForm.get("contenidos")?.value == "" ||
+      this.generar_planunidadForm.get("criterios_evaluacion")?.value == "" ||
+      this.generar_planunidadForm.get("destrezas")?.value == "") {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

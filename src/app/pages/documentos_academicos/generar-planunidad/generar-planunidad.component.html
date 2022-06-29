@@ -3,21 +3,34 @@
     <div class="page__content shadow p-3 ">
         <!--Inicio Contenido-->
         <h1 *ngIf="mostrarCambiosEditar">EDITANDO PLAN DE UNIDAD</h1>
-        <div *ngIf="mostrarBotonEnviar" class="container-fluid"><br>
+        <div *ngIf="mostrarBotonEnviar">
+            <p-toolbar styleClass="mb-1">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="Nuevo Plan de Unidad" icon="pi pi-plus" class="p-button-success mr-2"
+                        (click)="verFormGenerar()"></button>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <button pButton pRipple label="Cancelar" icon="pi pi-arrow-circle-left"
+                        *ngIf="mostrarBtnCancelGenerarPlan" class="p-button-secondary mr-2"
+                        (click)="cancelarGenerar()"></button>
+                </ng-template>
+            </p-toolbar>
+        </div>
+        <div *ngIf="mostrarBtnsEstados" class="container-fluid"><br>
             <div class="row">
                 <div class="col-sm-4" style="text-align:center;">
-                    <button pButton [disabled]="mostrarFormGenerar == true" type="button" label="Generar Plan de Unidad"
-                        icon="pi pi-plus" class="p-button-text" (click)="verFormGenerar()"></button>
+                    <button pButton [disabled]="mostrarAprobados == true" type="button" label="Aprobados"
+                        icon="pi pi-check" class="p-button-text p-button-success"
+                        (click)="verTablaAprobados()"></button>
+                </div>
+                <div class="col-sm-4" style="text-align:center;">
+                    <button pButton [disabled]="mostrarPendientes == true" type="button" label="Pendientes"
+                        icon="pi pi-spinner" class="p-button-text" (click)="verTablaPendientes()"></button>
                 </div>
                 <div class="col-sm-4" style="text-align:center;">
                     <button pButton [disabled]="mostrarRechazados == true" type="button" label="Rechazados"
                         icon="pi pi-times" class="p-button-text p-button-danger"
                         (click)="verTablaRechazados()"></button>
-                </div>
-                <div class="col-sm-4" style="text-align:center;">
-                    <button pButton [disabled]="mostrarAprobados == true" type="button" label="Aprobados"
-                        icon="pi pi-check" class="p-button-text p-button-success"
-                        (click)="verTablaAprobados()"></button>
                 </div>
             </div>
             <hr>
@@ -37,22 +50,25 @@
                             <div class="col-sm-4" style="text-align:left;">
                                 <label>Unidad:</label> <br>
                                 <p-dropdown [options]="unidades" [(ngModel)]="opcionSelectUnidad" placeholder="Select"
-                                    [style]="{'width':'200px'}" [showClear]="true" optionLabel="nombre_unidad"
-                                    formControlName="unidad" id="unidad" (onChange)="capturarSelectUnidad()">
+                                    [style]="{'width':'200px','border': '1px solid #C0C0C0'}" [showClear]="true"
+                                    optionLabel="nombre_unidad" formControlName="unidad" id="unidad"
+                                    (onChange)="capturarSelectUnidad()">
                                 </p-dropdown>
                                 <br><br>
                                 <label>Curso:</label> <br>
                                 <p-dropdown [options]="cursos" [(ngModel)]="opcionSelectCurso" placeholder="Select"
-                                    [style]="{'width':'200px'}" [showClear]="true" optionLabel="descripcion"
-                                    formControlName="curso" (onChange)="capturarSelectCurso()">
+                                    [style]="{'width':'200px','border': '1px solid #C0C0C0'}" [showClear]="true"
+                                    optionLabel="descripcion" formControlName="curso"
+                                    (onChange)="capturarSelectCurso()">
                                 </p-dropdown>
                                 <br><br>
                             </div>
                             <div class="col-sm-4" style="text-align:left;">
                                 <label>Periodo:</label> <br>
                                 <p-dropdown [options]="periodos" [(ngModel)]="opcionSelectPeriodo" placeholder="Select"
-                                    [style]="{'width':'200px'}" [showClear]="true" optionLabel="periodo_academico"
-                                    formControlName="periodo" (onChange)="capturarSelectPeriodo()">
+                                    [style]="{'width':'200px','border': '1px solid #C0C0C0'}" [showClear]="true"
+                                    optionLabel="periodo_academico" formControlName="periodo"
+                                    (onChange)="capturarSelectPeriodo()">
                                     <ng-template let-periodo pTemplate="item">
                                         <div class="flex align-items-center operatingSystems-item">
                                             <div>{{periodo.fecha_inicio | date:'dd/MM/yyyy'}} a {{periodo.fecha_fin |
@@ -64,8 +80,8 @@
                                 <br><br>
                                 <label>Paralelo:</label> <br>
                                 <p-dropdown [options]="paralelos" [(ngModel)]="opcionSelectParalelo"
-                                    placeholder="Select" [style]="{'width':'200px'}" [showClear]="true"
-                                    optionLabel="descripcion" formControlName="paralelo"
+                                    placeholder="Select" [style]="{'width':'200px','border': '1px solid #C0C0C0'}"
+                                    [showClear]="true" optionLabel="descripcion" formControlName="paralelo"
                                     (onChange)="capturarSelectParalelo()">
                                 </p-dropdown>
                                 <br><br>
@@ -73,15 +89,15 @@
                             <div class="col-sm-4" style="text-align:left;">
                                 <label>Modalidad:</label> <br>
                                 <p-dropdown [options]="modalidades" [(ngModel)]="opcionSelectModalidad"
-                                    placeholder="Select" [style]="{'width':'200px'}" [showClear]="true"
-                                    optionLabel="descripcion" formControlName="modalidad"
+                                    placeholder="Select" [style]="{'width':'200px','border': '1px solid #C0C0C0'}"
+                                    [showClear]="true" optionLabel="descripcion" formControlName="modalidad"
                                     (onChange)="capturarSelectModalidad()">
                                 </p-dropdown>
                                 <br><br>
                                 <label>Asignatura:</label> <br>
                                 <p-dropdown [options]="asignaturas" [(ngModel)]="opcionSelectAsig" placeholder="Select"
-                                    [style]="{'width':'200px'}" [showClear]="true" optionLabel="descripcion"
-                                    formControlName="asignatura" [disabled]="showSelectAsig"
+                                    [style]="{'width':'200px','border': '1px solid #C0C0C0'}" [showClear]="true"
+                                    optionLabel="descripcion" formControlName="asignatura" [disabled]="showSelectAsig"
                                     (onChange)="capturarSelectAsig()">
                                 </p-dropdown>
                             </div>
@@ -256,7 +272,7 @@
         </form>
         <!--Implementacion de la tabla de planes de unidad aprobados-->
         <div *ngIf="mostrarAprobados" class="container-fluid px-4">
-            <h1 *ngIf="mostrarbtnTodos">PLANES DE UNIDAD APROBADOS</h1>
+            <h1>PLANES DE UNIDAD APROBADOS</h1>
             <p-table #dt [value]="planunidadaprobados" [rows]="10" [paginator]="true"
                 [globalFilterFields]="['asignatura.descripcion','titulo_unidad','unidad.idUnidad']"
                 responsiveLayout="scroll" [rowHover]="true" dataKey="id_plan_unidad"
@@ -286,11 +302,8 @@
                         <th pSortableColumn="titulo_unidad">Titulo
                             <p-sortIcon field="titulo_unidad"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="fecha_inicio">Fecha_Inicio
+                        <th pSortableColumn="fecha_inicio">Inicio-Fin
                             <p-sortIcon field="fecha_inicio"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="fecha_fin">Fecha_Fin
-                            <p-sortIcon field="fecha_fin"></p-sortIcon>
                         </th>
                         <th pSortableColumn="estado">Estado </th>
                         <th></th>
@@ -302,13 +315,63 @@
                         <td>{{item.asignatura.descripcion}}</td>
                         <td>{{item.unidad.idUnidad}}</td>
                         <td>{{item.titulo_unidad}}</td>
-                        <td>{{item.fecha_inicio | date:'MMM dd,yyyy'}}</td>
-                        <td>{{item.fecha_fin | date:'MMM dd,yyyy'}}</td>
+                        <td>{{item.fecha_inicio | date:'MMMdd,yyyy'}} a {{item.fecha_fin | date:'MMMdd,yyyy'}}</td>
                         <td>{{item.estado}}</td>
                         <td>
                             <button pButton pRipple icon="pi pi-download" class="p-button-rounded p-button-success mr-2"
                                 (click)="reportePDFplanUnidad(item)"></button>
                         </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <!--Implementacion de la tabla de planes de unidad pendientes-->
+        <div *ngIf="mostrarPendientes" class="container-fluid px-4">
+            <h1>PLANES DE UNIDAD PENDIENTES</h1>
+            <p-table #dt [value]="planunidadpendientes" [rows]="10" [paginator]="true"
+                [globalFilterFields]="['asignatura.descripcion','titulo_unidad','unidad.idUnidad']"
+                responsiveLayout="scroll" [rowHover]="true" dataKey="id_plan_unidad"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex align-items-center justify-content-between">
+                        <h5 class="m-0">Administrar Planes de unidad por (Asignatura, Unidad o Titulo)</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Search..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="id_plan_unidad">Id
+                            <p-sortIcon field="id_plan_unidad"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="asignatura.descripcion">Asignatura
+                            <p-sortIcon field="asignatura.descripcion"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="unidad.idUnidad">Unidad
+                            <p-sortIcon field="unidad.idUnidad"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="titulo_unidad">Titulo
+                            <p-sortIcon field="titulo_unidad"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="fecha_inicio">Inicio-Fin
+                            <p-sortIcon field="fecha_inicio"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="estado">Estado </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td>{{item.id_plan_unidad}}</td>
+                        <td>{{item.asignatura.descripcion}}</td>
+                        <td>{{item.unidad.idUnidad}}</td>
+                        <td>{{item.titulo_unidad}}</td>
+                        <td>{{item.fecha_inicio | date:'MMMdd,yyyy'}} a {{item.fecha_fin | date:'MMMdd,yyyy'}}</td>
+                        <td>{{item.estado}}</td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -345,11 +408,8 @@
                         <th pSortableColumn="titulo_unidad">Titulo
                             <p-sortIcon field="titulo_unidad"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="fecha_inicio">Fecha_Inicio
+                        <th pSortableColumn="fecha_inicio">Inicio-Fin
                             <p-sortIcon field="fecha_inicio"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="fecha_fin">Fecha_Fin
-                            <p-sortIcon field="fecha_fin"></p-sortIcon>
                         </th>
                         <th pSortableColumn="estado">Estado </th>
                         <th></th>
@@ -361,8 +421,7 @@
                         <td>{{item.asignatura.descripcion}}</td>
                         <td>{{item.unidad.idUnidad}}</td>
                         <td>{{item.titulo_unidad}}</td>
-                        <td>{{item.fecha_inicio | date:'MMM dd,yyyy'}}</td>
-                        <td>{{item.fecha_fin | date:'MMM dd,yyyy'}}</td>
+                        <td>{{item.fecha_inicio | date:'MMMdd,yyyy'}} a {{item.fecha_fin | date:'MMMdd,yyyy'}}</td>
                         <td>{{item.estado}}</td>
                         <td>
                             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
