@@ -34,7 +34,7 @@
                 <div class="field">
                     <label for="periodo" class="block">Periodo</label>
                     <select [compareWith]="compararPeriodo" class="form-select" formControlName="periodo">
-                        <option *ngFor="let periodo of periodos"  [ngValue]="periodo">{{periodo.ano_inicio}} - {{periodo.ano_fin}} -{{periodo.periodo_academico}}</option>
+                        <option *ngFor="let periodo of periodos"  [ngValue]="periodo">{{periodo.ano_inicio}} - {{periodo.ano_fin}}</option>
                     </select>
                 </div>
                 <!-- modulos -->

@@ -64,13 +64,13 @@ export class CrearEditarKitComponent implements OnInit {
     });
   }
   getPeriodos = () => {
-    this._periodoService.getPeridos().subscribe({
-      next: (resp) => {
+    this._periodoService.getAllPerdiodo().subscribe({
+      next: (resp:any) => {
         console.log(resp);
         
         this.periodos = resp as Periodo [];
       },
-      error: (error) => {
+      error: (error:any) => {
         this.periodos = [];
       }
     });
