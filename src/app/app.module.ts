@@ -52,6 +52,7 @@ import { HorarioComponent } from './pages/parametrizacion/horario/horario/horari
 import { TutorComponent } from './pages/parametrizacion/cursos/malla_curso/tutor/tutor.component';
 import { MallaCursoComponent } from './pages/parametrizacion/cursos/malla_curso/malla-curso/malla-curso.component'
 import { AsignaturaPeriodoComponent } from './pages/parametrizacion/asignaturas/asignatura_periodo/asignatura-periodo/asignatura-periodo.component';
+import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 
 registerLocaleData(localeES);
@@ -105,7 +106,7 @@ registerLocaleData(localeES);
     RolesRoutingModule,
     TutoriasRoutingModule,
     ReactiveFormsModule,
-
+    PDFExportModule ,
     //Importar de encima de este Routin
     ErrorRoutingModule
 

@@ -5,10 +5,10 @@ export class Curso {
 
     id_curso!:any;
 
-    descripcion: String = "";
+    descripcion!: String;
 
-    tipo_curso: String = "";
+    tipo_curso!: String ;
 
-    fec_creacion: Date = new Date;
+    fec_creacion!: Date;
     
 }

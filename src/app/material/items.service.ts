@@ -6,6 +6,7 @@ import { MenuItem } from 'primeng/api';
     providedIn: 'root'
 })
 
+
 /**
 * Si desea agregar otro rol de hacerlo asi: "ROLE_" + "nombre del rol de la bd" = 'ROLE_estudiante'
 * Revisar el import.sql del back la tabla roles
@@ -27,31 +28,11 @@ export class ItemsService {
                 visible: true
             },
             {
-                label: 'Roles y Usuario',
-                icon: 'fa fa-users',
-                // si tiene el rol de acceso
-                visible: this.hasRolUser(
-                    ['ROLE_Administrador']
-                ),
-                items: [
-                    {
-                        label: 'Crear Empleado',
-                        icon: 'fa fa-user',
-                        routerLink: 'roles/empleado'
-                    },
-                    {
-                        label: 'Crear Usuario',
-                        icon: 'fa fa-user',
-                        routerLink: 'roles/usuarios'
-                    }
-                ]
-            },
-            {
                 label: 'Parametrizacion',
                 icon: 'pi pi-fw pi-book',
                 // si tiene el rol de acceso
                 visible: this.hasRolUser(
-                    ['ROLE_Administrador', 'ROLE_Coordinador administrativo', 'ROLE_Coordinador academico']
+                    ['ROLE_Administrador', 'ROLE_secretaria', 'ROLE_coordinador administrativo']
                 ),
                 items: [
                     {
@@ -70,6 +51,38 @@ export class ItemsService {
                         icon: 'fa fa-book',
                         routerLink: 'parametrizacion/asignatura',
 
+                    },
+                    {
+                        label: 'Cursos',
+                        icon: 'fa fa-graduation-cap',
+                        routerLink: 'parametrizacion/curso',
+
+                    },
+                    {
+                        label: 'Hararios',
+                        icon: 'fa fa-calendar',
+                        routerLink: 'parametrizacion/horario',
+
+                    }
+                ]
+            },
+            {
+                label: 'Roles y Usuario',
+                icon: 'fa fa-users',
+                // si tiene el rol de acceso
+                visible: this.hasRolUser(
+                    ['ROLE_Administrador']
+                ),
+                items: [
+                    {
+                        label: 'Crear Empleado',
+                        icon: 'fa fa-user',
+                        routerLink: 'roles/empleado'
+                    },
+                    {
+                        label: 'Crear Usuario',
+                        icon: 'fa fa-user',
+                        routerLink: 'roles/usuarios'
                     }
                 ]
             },
@@ -267,7 +280,7 @@ export class ItemsService {
                         icon: 'fa fa-plus-square',
                         routerLink: 'pagos/crearComprobante'
                     }
-                    
+
                 ]
             },
             {

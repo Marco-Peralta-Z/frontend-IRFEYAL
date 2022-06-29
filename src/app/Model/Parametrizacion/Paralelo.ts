@@ -4,6 +4,6 @@ export class Paralelo {
 
     descripcion!: String;
 
-    fec_creacion: Date = new Date;
+    fec_creacion!: Date;
 
 }

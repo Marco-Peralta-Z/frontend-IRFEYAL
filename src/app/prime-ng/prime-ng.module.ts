@@ -49,7 +49,7 @@ import { PasswordModule } from 'primeng/password';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { CheckboxModule } from 'primeng/checkbox';
 import { PickListModule } from 'primeng/picklist';
-import {BadgeModule} from 'primeng/badge';
+import { BadgeModule } from 'primeng/badge';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -62,7 +62,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import {TreeSelectModule} from 'primeng/treeselect';
+import { TreeSelectModule } from 'primeng/treeselect';
 
 @NgModule({
 
@@ -72,12 +72,12 @@ import {TreeSelectModule} from 'primeng/treeselect';
     DragDropModule, AccordionModule, FileUploadModule,
     SplitterModule, AvatarModule, AvatarGroupModule,
     PanelMenuModule, TreeModule, MessagesModule, SelectButtonModule,
-    DialogModule, ChipModule, MultiSelectModule,TreeSelectModule,
+    DialogModule, ChipModule, MultiSelectModule, TreeSelectModule,
     MegaMenuModule, TieredMenuModule, MessageModule,
     MenubarModule, CarouselModule, ImageModule,
     InputTextModule, TriStateCheckboxModule, AutoCompleteModule,
     ButtonModule, CalendarModule, TimelineModule,
-    ToastModule, DropdownModule, CardModule,BadgeModule,
+    ToastModule, DropdownModule, CardModule, BadgeModule,
     OverlayPanelModule, ListboxModule, SlideMenuModule,
     DividerModule, DataViewModule, SpeedDialModule,
     TooltipModule, TableModule, ProgressBarModule,

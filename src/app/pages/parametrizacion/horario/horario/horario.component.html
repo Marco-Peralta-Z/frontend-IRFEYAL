@@ -4,13 +4,13 @@
         <!--Inicio Contenido-->
         <div class="card">
             <p-toolbar styleClass="mb-4">
-                <ng-template pTemplate="left">
+                <div class="p-toolbar-group-left">
                     <button pButton pRipple type="button" label="Nuevo Horario" (click)="nuevoHorario()"
                         class="p-button-raised mr-2" icon="fa fa-plus-square"></button>
 
                     <p-dropdown [options]="listperiodo" [(ngModel)]="selectperiodo" optionLabel="vigencia"
-                        name="periodo" (onChange)="selecPeriodo()" [filter]="true" filterBy="name" [showClear]="true"
-                        class=" mr-2" placeholder="Seleccione el Periodo">
+                        name="periodo" (onChange)="selecPeriodo()" (onClear)="closePeriodo()" [filter]="true"
+                        filterBy="name" [showClear]="true" class=" mr-2" placeholder="Seleccione el Periodo">
                         <ng-template pTemplate="selectedItem">
                             <div class="country-item country-item-value  mt-2" *ngIf="selectperiodo">
                                 <div>{{selectperiodo.ano_inicio}}-{{selectperiodo.ano_fin}}:
@@ -27,16 +27,16 @@
                             </div>
                         </ng-template>
                     </p-dropdown>
-                    <div *ngIf="selectperiodo">
+                    <div *ngIf="b1">
                         <p-dropdown [options]="listcursos" [(ngModel)]="seleccursos" class="mr-2"
-                            (onChange)="selecCurso()" placeholder="Seleccione el curso" optionLabel="descripcion"
-                            name="cursos" [showClear]="true"></p-dropdown>
+                            (onClear)="closeCurso()" (onChange)="selecCurso()" placeholder="Seleccione el curso"
+                            optionLabel="descripcion" name="cursos" [showClear]="true"></p-dropdown>
 
                     </div>
-                    <div *ngIf="seleccursos">
+                    <div *ngIf="b2">
                         <p-dropdown [options]="listParalelo" [(ngModel)]="selectParalelo" (onChange)=" Paraleloselect()"
-                            optionLabel="id_paralelo" [filter]="true" filterBy="name" [showClear]="true" name="paralelo"
-                            placeholder="Seleccione El Paralelo">
+                            (onClear)="closePalelo()" optionLabel="id_paralelo" [filter]="true" filterBy="name"
+                            [showClear]="true" name="paralelo" placeholder="Seleccione El Paralelo">
                             <ng-template pTemplate="selectedItem">
                                 <div class="tutor-item tutor-item-value" *ngIf="selectParalelo">
                                     <div>{{selectParalelo.id_paralelo.descripcion}}:
@@ -52,49 +52,66 @@
                             </ng-template>
                         </p-dropdown>
                     </div>
-                </ng-template>
+
+                </div>
+                <div class="p-toolbar-group-right" *ngIf="b3">
+
+                    <button type="button" pButton pRipple icon="pi pi-file-pdf" 
+                    (click)="pdf.saveAs(print)"
+                        class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+
+                </div>
+
             </p-toolbar>
 
-            <div style="font-size: 12px;" *ngIf="listhorario.length!=0">
+            <kendo-pdf-export #pdf paperSize="A2" margin="2cm" [repeatHeaders]="repeatHeaders">
+                <div style="font-size: 12px;" *ngIf="b3">
+                    <p-table [value]="listOrHor" styleClass="p-datatable-gridlines cal" responsiveLayout="scroll"
+                        class="cal">
+                        <ng-template pTemplate="caption">
+                            <div class="flex align-items-center justify-content-between">
+                                HORARIO DE CLASES DE: {{seleccursos.descripcion}}
+                                "{{selectParalelo.id_paralelo.descripcion}}"
 
-                <p-table [value]="listOrHor" styleClass="p-datatable-gridlines cal" responsiveLayout="scroll"
-                    class="cal">
-                    <ng-template pTemplate="caption">
-                        <div class="flex align-items-center justify-content-between">
-                            HORARIO DE CLASES
-                        </div>
-                    </ng-template>
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th></th>
-                            <th>Sabado</th>
-                            <th>Domingo</th>
+                                <div class="ml-auto">
+                                    Dirigente: {{selectParalelo.id_empleado.persona.apellido}}
+                                    {{selectParalelo.id_empleado.persona.nombre}}
+                                </div>
 
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-h>
-                        <tr>
-                            <td class="horas">{{h.hora_inicio}}-{{h.hora_fin}}</td>
+                            </div>
 
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Horas </th>
+                                <th> Sabado</th>
+                                <th>Domingo</th>
 
-                            <td class="Lengua">
-                                {{h.materia1}}
-                            </td>
-                            <td class="Mates">
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-h>
+                            <tr style="text-align: center;">
 
-                                {{h.materia2}}
-                            </td>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="summary">
-                        <div class="flex align-items-center justify-content-between">
-                            <caption>curso {{selectperiodo.ano_inicio}}-{{selectperiodo.ano_fin}}</caption>
-                        </div>
-                    </ng-template>
-                </p-table>
+                                <td class="horas">{{h.hora_inicio}}-{{h.hora_fin}}</td>
 
 
-            </div>
+                                <td class="Lengua">
+                                    <div [innerHTML]="h.materia1"> </div>
+
+                                </td>
+                                <td class="Ingles">
+                                    <div [innerHTML]="h.materia2"> </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+                            <div class="flex align-items-center justify-content-between">
+                                <caption>CICLO ESCOLAR {{selectperiodo.ano_inicio}}-{{selectperiodo.ano_fin}}</caption>
+                            </div>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </kendo-pdf-export>
         </div>
         <!--Fin Contenido-->
     </div>

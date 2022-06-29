@@ -48,6 +48,7 @@ export class HorarioCreateComponent implements OnInit {
   value: number = 0;
   hi: Horas_Intensivo = new Horas_Intensivo;
   hn: Horas_NoIntensivo = new Horas_NoIntensivo;
+  horariosave: Horario = new Horario;
 
   ngOnInit(): void {
     this.llenarTablas();
@@ -147,7 +148,6 @@ export class HorarioCreateComponent implements OnInit {
     }
   }
 
-  horariosave: Horario = new Horario;
   guardar() {
     this.horariosave.id_tutor = this.selectParalelo;
     this.horariosave.id_asignatura = this.selectasignatura;
