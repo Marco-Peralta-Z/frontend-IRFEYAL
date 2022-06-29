@@ -49,6 +49,7 @@ import { PasswordModule } from 'primeng/password';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { CheckboxModule } from 'primeng/checkbox';
 import { PickListModule } from 'primeng/picklist';
+import {BadgeModule} from 'primeng/badge';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -76,7 +77,7 @@ import {TreeSelectModule} from 'primeng/treeselect';
     MenubarModule, CarouselModule, ImageModule,
     InputTextModule, TriStateCheckboxModule, AutoCompleteModule,
     ButtonModule, CalendarModule, TimelineModule,
-    ToastModule, DropdownModule, CardModule,
+    ToastModule, DropdownModule, CardModule,BadgeModule,
     OverlayPanelModule, ListboxModule, SlideMenuModule,
     DividerModule, DataViewModule, SpeedDialModule,
     TooltipModule, TableModule, ProgressBarModule,

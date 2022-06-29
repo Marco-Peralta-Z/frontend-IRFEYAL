@@ -52,7 +52,6 @@ export class ListarEstudianteComponent implements OnInit {
     this.estudianteService.getProvincias()
       .subscribe(provincia => this.provincias = provincia);
 
-
       this.estudianteService.getParroquia()
       .subscribe(parroquia => this.parroquias = parroquia);
 

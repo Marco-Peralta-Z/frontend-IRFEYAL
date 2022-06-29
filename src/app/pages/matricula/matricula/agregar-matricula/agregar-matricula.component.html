@@ -237,13 +237,13 @@
 
 
                             </div>
-                            <div class="col" *ngIf="controlMatricula.length>0">
+                            <div class="col" >
 
                                 <div class="row">
                                     <label class="mt-2">Estudiantes por Paralelos:</label>
                                     <div class="card">
                                         <div *ngFor="let paralelo of controlMatricula">
-                                            <label>Paralelo: {{paralelo.descripcion}}</label>
+                                            <label>Paralelo: {{paralelo.descripcion}} {{paralelo.contador}}/45</label>
                                             <p-progressBar [value]="paralelo.contador" unit="/45"></p-progressBar>
                                         </div>
 
@@ -306,7 +306,7 @@
 
                                 <span class="p-float-label mt-4">
                                     <input id="float-input" type="text"
-                                        [ngModel]="matricula.modalidad.descripcion | titlecase" pInputText readonly
+                                        [ngModel]="matricula.modalidad.descripcion.toString() | titlecase" pInputText readonly
                                         formControlName="Rmodalidad">
                                     <label for="float-input">Modalidad de Estudio</label>
                                 </span>
@@ -314,7 +314,7 @@
 
                                 <span class="p-float-label mt-4">
                                     <input id="float-input" type="text"
-                                        [ngModel]="matricula.id_periodo.periodo_academico | titlecase" pInputText
+                                        [ngModel]="matricula.id_periodo.ano_inicio " pInputText
                                         readonly formControlName="Rlectivo">
                                     <label for="float-input">Año Lectivo</label>
                                 </span>

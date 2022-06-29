@@ -28,7 +28,6 @@ import { ErrorRoutingModule } from './Routing/error/error-routing.module';
 import { AsistenciaRoutingModule } from './Routing/asistencia/asistencia-routing.module';
 import { DocumentacionAcademicosRoutingModule } from './Routing/documentacion-academicos/documentacion-academicos-routing.module';
 import { InventariosRoutingModule } from './Routing/inventarios/inventarios-routing.module';
-import { MatriculasRoutingModule } from './Routing/matriculas/matriculas-routing.module';
 import { PagosRoutingModule } from './Routing/pagos/pagos-routing.module';
 import { RolesRoutingModule } from './Routing/roles/roles-routing.module';
 import { TutoriasRoutingModule } from './Routing/tutorias/tutorias-routing.module';
@@ -53,7 +52,6 @@ import { HorarioComponent } from './pages/parametrizacion/horario/horario/horari
 import { TutorComponent } from './pages/parametrizacion/cursos/malla_curso/tutor/tutor.component';
 import { MallaCursoComponent } from './pages/parametrizacion/cursos/malla_curso/malla-curso/malla-curso.component'
 import { AsignaturaPeriodoComponent } from './pages/parametrizacion/asignaturas/asignatura_periodo/asignatura-periodo/asignatura-periodo.component';
-import { ListarMatriculaComponent } from './pages/matricula/matricula/listar-matricula/listar-matricula.component';
 
 
 registerLocaleData(localeES);
@@ -63,7 +61,6 @@ registerLocaleData(localeES);
     AppComponent,
     MallaCursoComponent,
     TutorComponent,
-    ListarMatriculaComponent,
     PeriodoCreateComponent,
     SelectMallasComponent,
     AsignaturaPeriodoComponent,

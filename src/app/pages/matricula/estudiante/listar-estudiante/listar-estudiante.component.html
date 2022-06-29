@@ -4,8 +4,6 @@
         <p-toast></p-toast>
 
         <div class="card">
-            <!-- <p-table [value]="customers" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" responsiveLayout="scroll"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"> -->
 
             <p-table #dt [value]="estudiantes" [rows]="rows" [paginator]="true"
                 [globalFilterFields]="['id_persona.cedula','id_persona.nombre','id_persona.apellido']"
@@ -96,7 +94,7 @@
                         <label for="nacimientoUpdate">Fecha Nacimiento:</label>
                         <label>Ingresada:</label>
                         <!-- <input type="date"  max="2004-12-31" pInputText id="nacimientoUpdate" [value]="estudiante.id_persona.fechaNacimiento | date: 'yyyy-MM-dd'" [disabled]="esditable" required />                 -->
-                        <input type="date" max="2004-12-31" pInputText id="nacimientoUpdate"
+                        <input type="date"  pInputText id="nacimientoUpdate"
                             [(ngModel)]="estudiante.id_persona.fechaNacimiento" [disabled]="esditable" required />
 
                         <!-- <textarea id="description" pInputTextarea [(ngModel)]="estudiante.id_persona.cedula" required rows="3" cols="20"></textarea> -->
@@ -109,15 +107,6 @@
                         <!-- <textarea id="description" pInputTextarea [(ngModel)]="estudiante.id_persona.cedula" required rows="3" cols="20"></textarea> -->
                     </div>
                 </div>
-
-                <!-- <div class="field">
-            <label for="inventoryStatus">Inventory Status</label>
-            <p-dropdown [(ngModel)]="estudiante.estadoEstudiantes" inputId="inventoryStatus" [options]="statuses" placeholder="Select">
-                <ng-template let-option pTemplate="item">
-                    <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
-                </ng-template>
-            </p-dropdown>
-        </div> -->
                 <hr>
                 <div class="field">
                     <label class="mb-3">Contactos</label>

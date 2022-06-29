@@ -70,11 +70,8 @@ export class AgregarMatriculaComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarMallas();
-      this.matriculaService.getMatriculasActivas()
-      .subscribe(matriculasActivas =>{
-        this.matriculas=matriculasActivas;
-      });
-
+     
+    this.refreshMatriculas();
     this.estudianteService.getEstudiantePersonas()
       .subscribe(persona => this.personas = persona);
   }
@@ -168,6 +165,7 @@ export class AgregarMatriculaComponent implements OnInit {
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Nueva Matricula', detail: `Matricula creada con exito!` });
         this.enviarCorreo(newMatricula);
         this.limpiarFormulario();
+        this.refreshMatriculas();
       });
 
   }
@@ -202,6 +200,13 @@ export class AgregarMatriculaComponent implements OnInit {
       && this.matriculaFormulario.controls[valor].touched
   }
 
+  refreshMatriculas(){
+    this.matriculaService.getMatriculasActivas()
+    .subscribe(matriculasActivas =>{
+      this.matriculas=matriculasActivas;
+    });
+  }
+
   obtenerPeriodo() {
     this.matricula.id_periodo = this.peridoSelectd;
 
@@ -227,10 +232,10 @@ export class AgregarMatriculaComponent implements OnInit {
       .subscribe({
         next: (periodo) => {
           this.periodos = periodo;
-          for (let i = 0; i < this.periodos.length; i++) {
-            this.periodos[i].periodo_academico=this.periodos[i].ano_inicio! +"-" + this.periodos[i].ano_fin!;
+          // for (let i = 0; i < this.periodos.length; i++) {
+          //   this.periodos[i].ano_inicio=this.periodos[i].ano_inicio! +"-" + this.periodos[i].ano_fin!;
             
-          }    
+          // }    
         },
       });
 
@@ -268,16 +273,16 @@ export class AgregarMatriculaComponent implements OnInit {
     let cont = 0;
     for (let i = 0; i < this.matriculas.length; i++) {
       if (this.matriculas[i].curso.id_curso == curso && this.matriculas[i].modalidad.id_modalidad == modalidad && this.matriculas[i].id_periodo.id_periodo == periodo) {
-        cont++;
         if (this.controlMatricula.length == 0) {
           this.controlMatricula.push({
-            descripcion: this.matriculas[i].id_paralelo.descripcion,
-            contador: cont
+            descripcion: this.matriculas[i].id_paralelo.descripcion.toString(),
+            contador: 1
           });
-        } else {
+        } else { 
+          cont++;
           let aux = 0;
           for (let u = 0; u < this.controlMatricula.length; u++) {
-            if (this.controlMatricula[u].descripcion?.includes(this.matriculas[i].id_paralelo.descripcion)) {
+            if (this.controlMatricula[u].descripcion?.includes(this.matriculas[i].id_paralelo.descripcion.toString())) {
               this.controlMatricula[u].contador = cont;
               aux++;
             }
@@ -285,8 +290,8 @@ export class AgregarMatriculaComponent implements OnInit {
           if (aux == 0) {
             cont = 1;
             this.controlMatricula.push({
-              descripcion: this.matriculas[i].id_paralelo.descripcion,
-              contador: cont
+              descripcion: this.matriculas[i].id_paralelo.descripcion.toString(),
+              contador: 1
             });
           }
 
@@ -294,19 +299,22 @@ export class AgregarMatriculaComponent implements OnInit {
       }
     }
     console.log("Esto antes de llenar lo demas: ", this.controlMatricula, "el contador: ", cont);
-    for (let a = 0; a < this.paralelos.length; a++) {
-      let aux = 0;
-      for (let j = 0; j < this.controlMatricula.length; j++) {
-        if (this.controlMatricula[j].descripcion?.includes(this.paralelos[a].descripcion)) {
-          aux++;
+    if (this.controlMatricula.length<3) {
+      for (let a = 0; a < this.paralelos.length; a++) {
+        let aux = 0;
+        for (let j = 0; j < this.controlMatricula.length; j++) {
+          if (this.controlMatricula[j].descripcion?.includes(this.paralelos[a].descripcion.toString())) {
+            aux++;
+          }
         }
-      }
-      if (aux == 0) {
-        this.controlMatricula.push({
-          descripcion: this.paralelos[a].descripcion,
-          contador: aux
-        });
-      }
+        if (aux == 0) {
+          this.controlMatricula.push({
+            descripcion: this.paralelos[a].descripcion.toString(),
+            contador: aux
+          });
+        }
+      } 
     }
+    
   }
 }

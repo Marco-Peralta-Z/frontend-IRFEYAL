@@ -7,7 +7,7 @@
 
 
             <p-table #dt [value]="matriculas" [rows]="rows" [paginator]="true"
-                [globalFilterFields]="['estudiante.id_persona.cedula','estudiante.id_persona.nombre','estudiante.id_persona.apellido','curso.descripcion','modalidad.descripcion']"
+                [globalFilterFields]="['estudiante.id_persona.cedula','estudiante.id_persona.nombre','estudiante.id_persona.apellido','curso.descripcion','id_paralelo.descripcion']"
                 responsiveLayout="scroll" [(selection)]="selectedMatricula" [rowHover]="true" dataKey="id"
                 currentPageReportTemplate="De {first} a {last} de {totalRecords} existentes"
                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]">
@@ -38,9 +38,9 @@
                         <th pSortableColumn="curso.descripcion">Curso <p-sortIcon field="curso.descripcion">
                             </p-sortIcon>
                         </th>
-                        <!-- <th pSortableColumn="modalidad.descripcion">Modalidad <p-sortIcon field="modalidad.descripcion">
+                        <th pSortableColumn="id_paralelo.descripcion">Paralelo <p-sortIcon field="id_paralelo.descripcion">
                             </p-sortIcon>
-                        </th> -->
+                        </th>
                         <th></th>
                     </tr>
                     <tr>
@@ -65,6 +65,11 @@
                                 (input)="dt.filter($event.target.value, 'curso.descripcion', 'contains')"
                                 placeholder="Buscar por Curso" class="p-column-filter">
                         </th>
+                        <th>
+                            <input pInputText type="text"
+                                (input)="dt.filter($event.target.value, 'id_paralelo.descripcion', 'contains')"
+                                placeholder="Buscar por Paralelo" class="p-column-filter">
+                        </th>
                         <!-- <th>
                             <p-dropdown [options]="modalidades" optionLabel="descripcion"
                                 (input)="dt.filter($event.target.value, 'modalidad.descripcion', 'contains')"
@@ -80,7 +85,7 @@
                         <td>{{matricula.estudiante.id_persona.nombre | titlecase}}</td>
                         <td>{{matricula.estudiante.id_persona.apellido | titlecase}}</td>
                         <td>{{matricula.curso.descripcion | titlecase}}</td>
-                        <!-- <td>{{matricula.modalidad.descripcion | titlecase}}</td> -->
+                        <td>{{matricula.id_paralelo.descripcion | titlecase}}</td>
                         <td>
                             <button pButton pRipple icon="pi pi-eye"
                                 class="p-button-rounded p-button-warning p-button-outlined mr-2"
@@ -136,12 +141,12 @@
                                     <div class="field col-6">
                                         <label><b>Curso</b></label>
                                         <input type="text" pInputText
-                                            [ngModel]="matricula.curso.descripcion | titlecase" readonly />
+                                            [ngModel]="matricula.curso.descripcion.toString() | titlecase" readonly />
                                     </div>
                                     <div class="field col-6">
                                         <label><b>Modalidad de Estudio</b></label>
                                         <input type="text" pInputText
-                                            [ngModel]="matricula.modalidad.descripcion | titlecase" readonly />
+                                            [ngModel]="matricula.modalidad.descripcion.toString() | titlecase" readonly />
                                     </div>
 
                                     <div class="field col-6">
@@ -162,7 +167,7 @@
                     <p-tabPanel header="Historial" rightIcon="pi pi-inbox" tooltip="Historial">
                         <p-accordion [multiple]="true" *ngFor="let historial of historial">
                             <p-accordionTab header="{{historial.mallaNombre | titlecase}}">
-                                <p-accordionTab header="{{detalle.curso.descripcion | titlecase}}"
+                                <p-accordionTab header="{{detalle.curso.descripcion.toString() | titlecase}}"
                                     *ngFor="let detalle of historial.matriculas">
                                     <ng-template pTemplate="content">
 
@@ -175,7 +180,7 @@
                                             </div>
                                             <div class="field col-6">
                                                 <label><b>Modalidad</b></label>
-                                                <input type="text" pInputText value="{{detalle.modalidad.descripcion}}"
+                                                <input type="text" pInputText value="{{detalle.modalidad.descripcion.toString()}}"
                                                     readonly />
                                             </div>
                                             <div class="field col-6">

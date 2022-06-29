@@ -12,7 +12,6 @@ import { Periodo } from '../../../Model/Parametrizacion/Periodo';
 import { Paralelo } from '../../../Model/Parametrizacion/Paralelo';
 import { Malla } from '../../../Model/Parametrizacion/Malla';
 import { persona } from '../../../Model/rolesTS/persona';
-import { ControlMatricula } from '../../../Model/Matriculas/controlMatricula';
 
 
 
@@ -94,9 +93,9 @@ getPeronas():Observable<persona[]>{
   return this.http.get<persona[]>(`${this.baseUrl}mapPersona/persona`);
 }
 
-private url=Api.url+"malla"
+private url=this.baseUrl+"malla"
   getAllMalla(){
-    return this.http.get<Malla[]>(this.url)
+    return this.http.get<Malla[]>(this.baseUrl)
   }
 
 }
