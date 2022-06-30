@@ -28,8 +28,14 @@ export class DireccionService {
     return this.http.get<canton[]>(`${this._baseUrl}mapCanton/canton`);
   }
 
+  getCantonesporProvincia(id:number): Observable<canton[]>{
+    return this.http.get<canton[]>(`${this._baseUrl}mapCanton/canton/${id}`);
+  }
   getParroquias(): Observable<parroquia[]>{
     return this.http.get<parroquia[]>(`${this._baseUrl}mapParroquia/parroquia`);
+  }
+  getParroquiasporCanton(id:number): Observable<parroquia[]>{
+    return this.http.get<parroquia[]>(`${this._baseUrl}mapParroquia/parroquia/${id}`);
   }
   
 }

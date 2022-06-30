@@ -78,8 +78,8 @@ export class EmpleadoComponent implements OnInit {
     this.getGeneros();
     this.getPaises();
     this.getProvincias();
-    this.getCantones();
-    this.getParroquias();
+    // this.getCantones();
+    // this.getParroquias();
     this.getExtensiones();
   }
 
@@ -105,14 +105,14 @@ export class EmpleadoComponent implements OnInit {
     next: (resp) => this.provincias = resp,
     error: (err) => this.provincias = [],
   });
-  getCantones = () => this._direccionServices.getCantones().subscribe({
-    next: (resp) => this.cantones = resp,
-    error: (err) => this.cantones = [],
-  });
-  getParroquias = () => this._direccionServices.getParroquias().subscribe({
-    next: (resp) => this.parroquias = resp,
-    error: (err) => this.parroquias = [],
-  });
+  // getCantones = () => this._direccionServices.getCantones().subscribe({
+  //   next: (resp) => this.cantones = resp,
+  //   error: (err) => this.cantones = [],
+  // });
+  // getParroquias = () => this._direccionServices.getParroquias().subscribe({
+  //   next: (resp) => this.parroquias = resp,
+  //   error: (err) => this.parroquias = [],
+  // });
   getExtensiones = () => this._empresaExtensionService.getExtensiones().subscribe({
     next: (resp) => this.extensiones = resp,
     error: (err) => this.extensiones = [],
@@ -150,6 +150,29 @@ export class EmpleadoComponent implements OnInit {
       correo: empleado.correo.correo,
       cargo: empleado.cargo,
     });
+  }
+
+  seleccionarProvincia(provincia:provincia){
+    console.log(provincia);
+    this.cantones=[];
+    this.parroquias=[];
+    this._direccionServices.getCantonesporProvincia(provincia.idProvincia).subscribe({
+      next:(resp)=> {
+        console.log(resp);
+        this.cantones = resp;
+      }, error:(err) => this.cantones = []
+    })
+  }
+
+  seleccionarCanton(canton:canton){
+    console.log(canton);
+    this.parroquias= [];
+    this._direccionServices.getParroquiasporCanton(canton.idCanton).subscribe({
+      next:(resp)=> {
+        console.log(resp);
+        this.parroquias = resp;
+      }, error:(err) => this.parroquias = []
+    })
   }
 
 

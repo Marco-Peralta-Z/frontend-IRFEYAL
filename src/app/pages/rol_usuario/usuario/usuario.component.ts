@@ -104,9 +104,19 @@ export class UsuarioComponent implements OnInit {
 
 
   editarUsuario(usuario: usuario) {
+    console.log(usuario);
+    this.empleado= usuario.empleado;
     usuario.contrasenia='';
     this.usuario = { ...usuario };
     this.usuarioDialog = true;
+  }
+
+  revisarAccion(){
+    if(this.usuario.id_usuario){
+      this.actualizazrUsuario();
+    }else{
+      this.guardarUsuario();
+    }
   }
 
   guardarUsuario() {
@@ -124,6 +134,27 @@ export class UsuarioComponent implements OnInit {
       error: (error) => {
         console.log(error);
         this._mensajeSweetService.mensajeError('UPSS!', 'No se pudo registrar el usuario');
+        
+      }
+      
+    });
+  }
+  actualizazrUsuario() {
+    this.usuario.empleado=this.empleado;
+    
+    
+    this._usuarioService.actualizarUsuario(this.usuario.id_usuario,this.usuario).subscribe({
+      next:(resp)=>{
+        console.log(resp);
+        this.usuario=new usuario();
+        this.getUsuarios();
+        this._mensajeSweetService.mensajeOk('Usuario Actualizado');
+        this.hideDialog();
+
+      },
+      error: (error) => {
+        console.log(error);
+        this._mensajeSweetService.mensajeError('UPSS!', 'No se pudo actualizar el usuario');
       }
       
     });

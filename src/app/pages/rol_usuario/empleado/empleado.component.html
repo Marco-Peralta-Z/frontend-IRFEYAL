@@ -109,20 +109,21 @@
                 </div>
                 <div class="p-field col-6">
                     <label for="name">Provincia:</label>
-                    <p-dropdown [options]="provincias" placeholder="Seleccione Provincia" optionLabel="provincia"
+                    <p-dropdown [options]="provincias" placeholder="Seleccione Provincia" optionLabel="provincia" (onChange)="seleccionarProvincia($event.value)"
                         [showClear]="true" formControlName="provincia" [filter]="true" filterBy="provincia"></p-dropdown>
                         <small class="p-error block" *ngIf="verificarCampo('provincia')">requiere .</small>
                 </div>
                 <div class="p-field col-6">
                     <label for="name">Canton:</label>
-                    <p-dropdown [options]="cantones" placeholder="Seleccione Canton" optionLabel="canton" [showClear]="true"
+                    <p-dropdown [options]="cantones" placeholder="Seleccione Canton" optionLabel="canton" 
+                    (onChange)="seleccionarCanton($event.value)"   [showClear]="true"
                     formControlName="canton" [filter]="true" filterBy="canton">
                     </p-dropdown>
                     <small class="p-error block" *ngIf="verificarCampo('canton')">requiere .</small>
                 </div>
                 <div class="p-field col-6">
                     <label for="name">Parroquia:</label>
-                    <p-dropdown [options]="parroquias" placeholder="Seleccione Parroquia" optionLabel="parroquia"
+                    <p-dropdown [options]="parroquias" placeholder="Seleccione Parroquia" optionLabel="parroquia"   appendTo="body"
                         [showClear]="true" formControlName="parroquia" [filter]="true" filterBy="parroquia"></p-dropdown>
                         <small class="p-error block" *ngIf="verificarCampo('parroquia')">requiere .</small>
                 </div>
