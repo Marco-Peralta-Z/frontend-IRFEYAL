@@ -32,7 +32,7 @@ export class ItemsService {
                 icon: 'pi pi-fw pi-book',
                 // si tiene el rol de acceso
                 visible: this.hasRolUser(
-                    ['ROLE_Administrador', 'ROLE_secretaria', 'ROLE_coordinador administrativo']
+                    ['ROLE_Administrador', 'ROLE_Coordinador administrativo', 'ROLE_Coordinador academico']
                 ),
                 items: [
                     {
