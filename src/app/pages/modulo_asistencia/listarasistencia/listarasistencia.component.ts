@@ -52,10 +52,20 @@ export class ListarasistenciaComponent implements OnInit {
   ngOnInit(): void {
     this.idempleados=this.usuarioGuardado().empleado?.id_empleado;
     this.idususarios=this.usuarioGuardado().id_usuario
-  
-   
-   this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodos=data);
+    console.log(this.usuarioGuardado());
+    for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+   if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
 
+    this.appService.getAllPeriodo().subscribe((data:any)=>this.periodos=data);
+    return;
+  }else{
+    this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodos=data);
+    
+  }
+
+ 
+}
+ 
    
   }
   usuarioGuardado = (): usuario => this.auth.usuario;
@@ -97,9 +107,20 @@ if(this.idAsignatura==0){
       this.showparalelo=true;
       this.asignaturas=[];
       this.modalidades=[];
+      this.periodos=[];
       this.cursos=[];
       this.paralelos=[];
       this.estudiantes=[];
+      for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+        if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+     
+         this.appService.getAllPeriodo().subscribe((data:any)=>this.periodos=data);
+         return;
+       }else{
+         this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodos=data);
+       }
+     }
+     // this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodos=data);
     } 
   });
 
@@ -133,11 +154,23 @@ if(this.idAsignatura==0){
           this.paralelos=[];
           this.estudiantes=[];
          }
-        this.appService.listarcursos(this.idempleados,this.IdPeriodo ,this.idModalidad).subscribe((data:any)=>this.cursos=data);
+
+         for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+          if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+       
+            this.appService.getAllCurso().subscribe((data:any)=>this.cursos=data);
+
+           return;
+         }else{
+          this.appService.listarcursos(this.idempleados,this.IdPeriodo ,this.idModalidad).subscribe((data:any)=>this.cursos=data);
+
+         }
+       }
         }
         //------------ fin evento modalidad----------------//
         //------------ evento  periodo---------------------//
         onperiodo(id: any){
+          console.log(this.periodos);
           this.showDiv=false;
           this.IdCurso=0;
           this.idAsignatura=0;
@@ -155,7 +188,18 @@ if(this.idAsignatura==0){
         this.IdPeriodo= id;
         this.validarfiltros();
         this.showmodalidad=false;
-        this.appService.listarmodalidad(this.idempleados,this.IdPeriodo).subscribe((data:any)=>this.modalidades=data);
+        for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+          if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+       
+            this.appService.getAllModalidad().subscribe((data:any)=>this.modalidades=data);
+
+           return;
+         }else{
+          this.appService.listarmodalidad(this.idempleados,this.IdPeriodo).subscribe((data:any)=>this.modalidades=data);
+
+         }
+       }
+        
 
         if(this.IdPeriodo==0){
           this.showDiv=false;
@@ -182,7 +226,21 @@ if(this.idAsignatura==0){
         this.IdParalelo= id;
         this.validarfiltros();
         this.showasignatura=false;
-        this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturas=data);
+        for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+          if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+       
+            this.appService.getAllAsignatura().subscribe((data:any)=>this.asignaturas=data);
+      
+
+           return;
+         }else{
+          this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturas=data);
+
+         }
+       }
+
+
+        
 
         if(this.IdParalelo==0){
           this.showasignatura=true;
@@ -205,7 +263,18 @@ if(this.idAsignatura==0){
           this.IdCurso=event.value.id_curso;
           this.validarfiltros();
           this.showparalelo=false;
-          this.appService.listarparalelo(this.idempleados,this.IdPeriodo,this.idModalidad,event.value.id_curso).subscribe((data:any)=>this.paralelos=data);       
+          for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+            if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+         
+              this.appService.getAllParalelo().subscribe((data:any)=>this.paralelos=data);       
+
+             return;
+           }else{
+            this.appService.listarparalelo(this.idempleados,this.IdPeriodo,this.idModalidad,event.value.id_curso).subscribe((data:any)=>this.paralelos=data);       
+
+           }
+         }
+          
          
           if(this.IdCurso==0){
             this.showasignatura=true;
@@ -240,7 +309,13 @@ if(this.idAsignatura==0){
 
 
         reportes(){
-          console.log(this.idestudiante);
+          console.log("llego"+ this.idestudiante);
+          this.appService.exportInvoice(this.idestudiante,this.idempleados,this.idAsignatura,this.IdCurso,this.IdParalelo,this.idModalidad,this.IdPeriodo).subscribe(
+            (data:any) => {
+              const file = new Blob([data], { type: 'application/pdf' });
+    const fileURL = URL.createObjectURL(file);
+    window.open(fileURL);
+            });
         
         }
 

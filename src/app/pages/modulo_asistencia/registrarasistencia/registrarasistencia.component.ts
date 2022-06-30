@@ -20,8 +20,14 @@ import { MessageService } from 'primeng/api';
   
 })
 export class RegistrarasistenciaComponent implements OnInit {
+  dian:number =0;
+  mesn :number =0;
+  anon:number =0;
+  dia1:number =0;
+  mes1:number =0;
+  ano1:number =0;
   mydate=Date.now();
-  
+  fechaelegida: Date=new Date();
   fecha: Date= new Date();
   fechaactual: Date= new Date(this.mydate);
   fechaactualnew: Date= new Date(this.mydate);
@@ -77,10 +83,11 @@ export class RegistrarasistenciaComponent implements OnInit {
   paralelosactu: any[] = [];
   cursoactu:any[]=[];
   controlfecha=new FormControl('');
-  private fechaactualstring:any;
+  public fechaactualstring:any;
+
   convertidor:any;
   public fechaminima:Date= new Date();
-  public fechastrminima:any;
+   fechastrminima:string='';
  fechausuario:Date=new Date();
   countclase:number=0;
   validarfechaingreso:boolean=false;
@@ -89,19 +96,42 @@ export class RegistrarasistenciaComponent implements OnInit {
   valiadarfechaact=0;
   clearfecha:any='';
   
+dia:any;
+ano:any;
+mes:any;
+fecharecarga:any;
+pipe = new DatePipe('en-EC');
   constructor(private appService:AsistenciaService,private router:Router,public datepipe: DatePipe, private auth:AuthService, private messageService: MessageService) { }
+
 
   ngOnInit(): void {
     this.ntrfecha='';
+    
     this.idempleados=this.usuarioGuardado().empleado?.id_empleado;
     this.idususarios=this.usuarioGuardado().id_usuario
-    this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodos=data);
-    this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodosactu=data);
-    this.appService.buscarclase().subscribe(res=>{this.clase.idClase=res.idClase+1});
+
+    for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+      if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+   
+       this.appService.getAllPeriodo().subscribe((data:any)=>this.periodos=data);
+       this.appService.getAllPeriodo().subscribe((data:any)=>this.periodosactu=data);
+       return;
+     }else{
+       this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodos=data);
+       this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodosactu=data);
+     }
+   }
+
+
+   
+   
+    //this.appService.buscarclase().subscribe(res=>{this.clase.idClase=res.idClase+1});
     this.fechaactual=new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate());
     this.fechaactualstring =this.datepipe.transform(this.fechaactual,"yyyy-MM-dd");
     this.fechaactualnew=new Date(this.fechaactualstring);
-    this.appService.buscarclase().subscribe((data:any)=>this.clase=data);
+    this.clearfech();
+    //this.appService.buscarclase().subscribe((data:any)=>this.clase=data);
+    
   }
   usuarioGuardado = (): usuario => this.auth.usuario;
 
@@ -110,7 +140,7 @@ export class RegistrarasistenciaComponent implements OnInit {
     this.cursosfaltas=[];
     this.idAsignatura= id;
     this.validarfiltros();
-
+  
     if(this.idAsignatura==0){
      this.estudiantes=[];
      
@@ -137,10 +167,22 @@ export class RegistrarasistenciaComponent implements OnInit {
           this.curso=[];
           this.paralelos=[];
           this.estudiantes=[];
+          this.periodos=[];
           this.IdParalelo=0;
           this.IdPeriodo=0;
           this.idModalidad=0;
-          this.idAsignatura=0; 
+          this.idAsignatura=0;
+          this.IdPeriodo=0;
+          for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+            if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+         
+             this.appService.getAllPeriodo().subscribe((data:any)=>this.periodos=data);
+             return;
+           }else{
+             this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodos=data);
+           }
+         }
+
          
         } 
 
@@ -181,7 +223,19 @@ export class RegistrarasistenciaComponent implements OnInit {
       
        }
        this.habilitarfecha();
-      this.appService.listarcursos(this.idempleados, this.IdPeriodo,this.idModalidad).subscribe((data:any)=>this.curso=data);
+
+       for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+        if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+     
+          this.appService.getAllCurso().subscribe((data:any)=>this.curso=data);
+
+         return;
+       }else{
+        this.appService.listarcursos(this.idempleados,this.IdPeriodo ,this.idModalidad).subscribe((data:any)=>this.curso=data);
+
+       }
+     }
+
       
     }
     //---------------------fin de evento modalidad----------------//
@@ -206,7 +260,18 @@ export class RegistrarasistenciaComponent implements OnInit {
       this.validarfiltros();
      
       this.showmodalidad=false;
-      this.appService.listarmodalidad(this.idempleados,this.IdPeriodo).subscribe((data:any)=>this.modalidades=data);
+
+      for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+        if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+     
+          this.appService.getAllModalidad().subscribe((data:any)=>this.modalidades=data);
+
+         return;
+       }else{
+        this.appService.listarmodalidad(this.idempleados,this.IdPeriodo).subscribe((data:any)=>this.modalidades=data);
+
+       }
+     }
     
       if(this.IdPeriodo==0){
         this.showasignatura=true;
@@ -236,7 +301,19 @@ export class RegistrarasistenciaComponent implements OnInit {
       this.IdParalelo= id;
       this.validarfiltros();
       this.showasignatura=false;
-      this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturas=data);
+
+      for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+        if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+     
+          this.appService.getAllAsignatura().subscribe((data:any)=>this.asignaturas=data);
+    
+
+         return;
+       }else{
+        this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturas=data);
+
+       }
+     }
 
       if(this.IdParalelo==0){
         this.showasignatura=true;
@@ -262,7 +339,18 @@ export class RegistrarasistenciaComponent implements OnInit {
         this.IdCurso= id;
         this.validarfiltros();
         this.showparalelo=false;
-        this.appService.listarparalelo(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso).subscribe((data:any)=>this.paralelos=data);
+
+        for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+          if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+       
+            this.appService.getAllParalelo().subscribe((data:any)=>this.paralelos=data);       
+
+           return;
+         }else{
+          this.appService.listarparalelo(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso).subscribe((data:any)=>this.paralelos=data);
+
+         }
+       }
         if(this.IdCurso==0){
           this.showasignatura=true;
           this.showparalelo=true;
@@ -665,12 +753,23 @@ export class RegistrarasistenciaComponent implements OnInit {
             
           } else {
           //    this.fechaactualnew = new Date(this.convertidor.value+"T05:00:00.000+00:00");
-          this.fechaactualnew = new Date(this.fecha);
-          this.fechaactualnew.setMinutes(this.fechaactualnew.getMinutes()+this.fechaactualnew.getTimezoneOffset());
-              this.convertidor=this.controlfecha.value;
+         
+            this.fechaactualnew = new Date(this.fecha);
+            this.fechaactualnew.setMinutes(this.fechaactual.getHours()+this.fechaactual.getMinutes()+this.fechaactual.getSeconds()+this.fechaactual.getTimezoneOffset());
+             console.log(this.fechaactualnew);
+             console.log(this.fechaactual);  
+            this.convertidor=this.controlfecha.value;
+           this.anon=this.fechaactualnew.getFullYear();
+           this.mesn=this.fechaactualnew.getMonth();
+           this.dian=this.fechaactualnew.getDay();
+           this.ano1=this.fechaactual.getFullYear();
+           this.mes1=this.fechaactual.getMonth();
+           this.dia1=this.fechaactual.getDay();
+           console.log(this.anon,this.mesn,this.dian);
+           console.log(this.ano1,this.mes1,this.dia1);
              
 
-               if(this.fechaactualnew < this.fechaactual || this.fechaactualnew > this.fechaactual){
+               if(this.anon < this.ano1 || this.anon > this.ano1||this.mesn<this.mes1||this.mesn>this.mes1||this.dia1>this.dian||this.dia1<this.dian){
                this.clearfech();
                 swal.fire(
                   {
@@ -709,7 +808,8 @@ export class RegistrarasistenciaComponent implements OnInit {
 
        //----------------------limpiar  campo fecha------------------------//
           clearfech(){
-            this.clearfecha=null;
+         //   this.clearfecha=(this.pipe.transform(this.fechaactual,'yyyy-MM-dd'))!.slice(0,10);
+         this.clearfecha=null;
           }
       //--------------------------fin limpiar campo fecha---------------------//
 

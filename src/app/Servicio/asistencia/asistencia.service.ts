@@ -7,6 +7,7 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { DatePipe } from '@angular/common'
 import { empleado } from 'src/app/Model/rolesTS/empleado';
 import { usuario } from 'src/app/Model/rolesTS/usuario';
+import { Periodo } from 'src/app/Model/tutorias/registro';
 @Injectable({
   providedIn: 'root'
 })
@@ -73,6 +74,10 @@ export class AsistenciaService {
   listarperiodos(idempleado:number){
     return this.rutaconsulta.get(this.url+"/Periodos/"+idempleado);
   }
+
+  getPeriodos():Observable<Periodo[]>{
+    return this.rutaconsulta.get<Periodo[]>(`${this.url}periodo`);
+  }
   listarmodalidad(idempleado:number,idperiodo : number){
     return this.rutaconsulta.get(this.url+"/modalidades/"+idempleado+'/'+ idperiodo);
   }
@@ -108,4 +113,13 @@ export class AsistenciaService {
   returnparalelo(idcurso:number){
     return this.rutaconsulta.get(this.url+"/Paraleloaux/"+idcurso);
   }
+
+
+  exportInvoice(idEstudiante: number,idocente: number,idasignatura:number,idcurso:number,idparalelo:number,idmodalidad:number,idperiodo:number){
+    const httpOptions = {
+      responseType: 'arraybuffer' as 'json'
+      // 'responseType'  : 'blob' as 'json'        //This also worked
+    };
+    return this.rutaconsulta.get(this.url+"/exportInvoice/"+idEstudiante, httpOptions);  
+  }  
 }

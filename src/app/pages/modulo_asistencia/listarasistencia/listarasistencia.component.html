@@ -60,10 +60,10 @@
                   
                     <div class="col-4">
                       <h3>Periodo :</h3>
-                      <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="periodo_academico" filterBy="periodo_academico" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  autoWidth="false" [style]="{'width':'70%'}" [showClear]="true">
+                      <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="malla.descripcion" filterBy="malla.descripcion" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  autoWidth="false" [style]="{'width':'70%'}" [showClear]="true">
                         <ng-template let-operatingSystems pTemplate="item">
                           <div class="flex align-items-center operatingSystems-item">
-                            <div>{{operatingSystems.periodo_academico}} {{operatingSystems.fecha_inicio | date: 'yyyy-MM-dd'}}</div>
+                            <div>{{operatingSystems.malla.descripcion}}||{{operatingSystems.ano_inicio | date: 'yyyy-MM-dd'}}</div>
                 
                           </div>
                         </ng-template>
