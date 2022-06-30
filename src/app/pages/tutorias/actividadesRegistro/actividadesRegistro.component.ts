@@ -222,7 +222,7 @@ export class ActividadesRegistroComponent implements OnInit {
     this.submitted = true;
     if (this.selectRegistro.id_registro) {
       this.registro[this.findIndexById(this.selectRegistro.id_registro)] = this.selectRegistro;
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Registro Actualizado', life: 3000 });
+      this.messageService.add({ severity: 'success', summary: 'Hecho', detail: 'Registro Actualizado', life: 3000 });
       this.validarAprobaciones(this.selectRegistro);
       this.servitutorias.setRegistros(this.selectRegistro).subscribe();
     }
@@ -237,7 +237,7 @@ export class ActividadesRegistroComponent implements OnInit {
   }
 
   hideDialog() {
-    this.messageService.add({ severity: 'error', summary: '', detail: 'No Se Realizo Cambios', life: 3000 });
+    this.messageService.add({ severity: 'error', summary: 'Cancelar', detail: 'No Se Realizo Cambios', life: 3000 });
     this.Dialog = false;
     this.submitted = false;
   }

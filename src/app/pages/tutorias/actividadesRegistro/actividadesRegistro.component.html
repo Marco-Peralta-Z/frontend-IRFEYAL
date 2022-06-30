@@ -60,21 +60,20 @@
 
       <div class="container-fluid page">
         <p-table #dt [value]="registro" [rows]="7" [paginator]="true" [scrollable]="true" scrollDirection="both"
-          [globalFilterFields]="['id_matricula.estudiante.id_persona.nombre','id_matricula.estudiante.id_persona.apellido']" [(selection)]="selectRegistro"
-          [rowHover]="true" dataKey="registro.id_registro"
+          [globalFilterFields]="['id_matricula.estudiante.id_persona.nombre','id_matricula.estudiante.id_persona.apellido']"
+          [(selection)]="selectRegistro" [rowHover]="true" dataKey="registro.id_registro"
           currentPageReportTemplate="Mostrando {first} a {last} de un total de {totalRecords} registros"
           [showCurrentPageReport]="true">
-        <ng-template pTemplate="caption">
-              <div class="flex align-items-center justify-content-between">
-                  <span class="p-input-icon-left">
-                  <i class="pi pi-search"></i>
-                  <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar" />
-                </span>
-              </div> 
-            </ng-template>
+          <ng-template pTemplate="caption">
+          </ng-template>
           <ng-template pTemplate="header">
             <tr>
-              <th style="width:250px; font-weight: 700; text-align: center;"><label>NOMBRE</label></th>
+              <th style="width:250px; font-weight: 700; text-align: center;"><label>NOMBRE<br><span
+                    class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                      placeholder="Buscar" />
+                  </span></label></th>
               <th style="width:70px; background-color: sandybrown; text-align: center;"><label>Aporte 1<br>40%</label>
               </th>
               <th style="width:70px; background-color: sandybrown; text-align: center;"><label>Aporte 2<br>40%</label>
@@ -181,7 +180,6 @@
           <button pButton pRipple label="GUARDAR" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
         </ng-template>
       </p-dialog>
-      
     </div>
     <br>
   </div>
