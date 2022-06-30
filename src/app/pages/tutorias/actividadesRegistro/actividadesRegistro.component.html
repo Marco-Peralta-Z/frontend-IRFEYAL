@@ -9,8 +9,16 @@
           <div class="col-4">
             <label for="periodoEscolar">Periodo:</label>
             <div>
-              <p-dropdown [disabled]="filtrosBoolean" (onChange)="llenarmodalidades()" [options]="periodo"
-                [(ngModel)]="selectPeriodo" placeholder="Seleccione un Periodo" optionLabel="periodo_academico">
+              <p-dropdown [disabled]="filtrosBoolean" (onChange)="llenarmallas()" [options]="periodo"
+                [(ngModel)]="selectPeriodo" placeholder="Seleccione un Periodo" optionLabel="fecha_inicio">
+              </p-dropdown>
+            </div>
+          </div>
+          <div class="col-4">
+            <label for="paralelo">Malla:</label>
+            <div>
+              <p-dropdown [disabled]="filtrosBoolean" (onChange)="llenarmodalidades()" [options]="malla"
+                [(ngModel)]="selectMalla" placeholder="Seleccione una Malla" optionLabel="descripcion">
               </p-dropdown>
             </div>
           </div>
@@ -18,26 +26,25 @@
             <label for="modalidad">Modalidad:</label>
             <div>
               <p-dropdown [disabled]="filtrosBoolean" (onChange)="llenarcursos()" [options]="modalidad"
-                [(ngModel)]="selectModalidad" placeholder="Seleccione una modalidad" optionLabel="descripcion">
-              </p-dropdown>
-            </div>
-          </div>
-          <div class="col-4">
-            <label for="curso">Curso:</label>
-            <div>
-              <p-dropdown [disabled]="filtrosBoolean" (onChange)="llenarparalelos()" [options]="curso"
-                [(ngModel)]="selectCurso" placeholder="Seleccione un curso" optionLabel="descripcion">
+                [(ngModel)]="selectModalidad" placeholder="Seleccione una Modalidad" optionLabel="descripcion">
               </p-dropdown>
             </div>
           </div>
         </div>
-
         <div class="row">
+          <div class="col-4">
+            <label for="curso">Curso:</label>
+            <div>
+              <p-dropdown [disabled]="filtrosBoolean" (onChange)="llenarparalelos()" [options]="curso"
+                [(ngModel)]="selectCurso" placeholder="Seleccione un Curso" optionLabel="descripcion">
+              </p-dropdown>
+            </div>
+          </div>
           <div class="col-4">
             <label for="paralelo">Paralelo:</label>
             <div>
               <p-dropdown [disabled]="filtrosBoolean" (onChange)="llenarasignaturas()" [options]="paralelo"
-                [(ngModel)]="selectParalelo" placeholder="Seleccione un paralelo" optionLabel="descripcion">
+                [(ngModel)]="selectParalelo" placeholder="Seleccione un Paralelo" optionLabel="descripcion">
               </p-dropdown>
             </div>
           </div>
@@ -45,14 +52,18 @@
             <label for="paralelo">Asignatura:</label>
             <div>
               <p-dropdown [disabled]="filtrosBoolean" (onChange)="habilitarListar()" [options]="asignatura"
-                [(ngModel)]="selectAsignatura" placeholder="Seleccione una asignatura" optionLabel="descripcion">
+                [(ngModel)]="selectAsignatura" placeholder="Seleccione una Asignatura" optionLabel="descripcion">
               </p-dropdown>
             </div>
           </div>
-          <div class="col-4"><br>
+        </div>
+        <div class="row">
+          <div class="col-4"></div>
+          <div class="col-4"></div>
+          <div class="col-4">
             <button type="submit" class="btn btn-success" [disabled]="listarBoolean"
               (click)=" llenarregistros()">LISTAR</button>
-            <button type="submit" style="margin-left: 35px;" class="btn btn-primary" [disabled]="limpiarBoolean"
+            <button type="submit" style="margin-left: 35px;" class="btn btn-primary" [disabled]="nuevaconsultaBoolean"
               (click)="limpiarFormulario()">NUEVA CONSULTA</button>
           </div>
         </div>
@@ -64,15 +75,13 @@
           [(selection)]="selectRegistro" [rowHover]="true" dataKey="registro.id_registro"
           currentPageReportTemplate="Mostrando {first} a {last} de un total de {totalRecords} registros"
           [showCurrentPageReport]="true">
-          <ng-template pTemplate="caption">
-          </ng-template>
           <ng-template pTemplate="header">
             <tr>
               <th style="width:250px; font-weight: 700; text-align: center;"><label>NOMBRE<br><span
                     class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                      placeholder="Buscar" />
+                    <input [disabled]="nuevaconsultaBoolean" pInputText type="text"
+                      (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar" />
                   </span></label></th>
               <th style="width:70px; background-color: sandybrown; text-align: center;"><label>Aporte 1<br>40%</label>
               </th>
@@ -90,12 +99,12 @@
                   Quimestre<br>20%</label></th>
               <th style="width:130px; background-color: moccasin; text-align: center;"><label>PROMEDIO II
                   QUIMESTRE<br>A1+A2+EII</label></th>
-              <th style="width:95px; background-color: palegreen; text-align: center;"><label>Examen Supletorio</label>
-              </th>
-              <th style="width:85px; background-color: thistle; text-align: center;"><label>Examen Remedial</label></th>
-              <th style="width:80px; background-color: lightpink; text-align: center;"><label>Examen Gracia</label></th>
-              <th style="width:90px; background-color: silver; text-align: center;"><label>NOTA
+              <th style="width:90px; background-color: palegreen; text-align: center;"><label>NOTA
                   FINAL<br>(PI+PII)/2</label></th>
+              <th style="width:95px; background-color: thistle; text-align: center;"><label>Examen Supletorio</label>
+              </th>
+              <th style="width:85px; background-color: lightpink; text-align: center;"><label>Examen Remedial</label></th>
+              <th style="width:80px; background-color: silver; text-align: center;"><label>Examen Gracia</label></th>
               <th style="width:100px">ESTADO</th>
               <th></th>
             </tr>
@@ -113,10 +122,10 @@
               <td style="width:70px">{{registro.aporte4}}</td>
               <td style="width:95px">{{registro.examen_IIquimestre}}</td>
               <td style="width:130px">{{registro.promedio_IIquimestre}}</td>
+              <td style="width:90px">{{registro.nota_final}}</td>
               <td style="width:95px">{{registro.examen_supletorio}}</td>
               <td style="width:85px">{{registro.examen_remedial}}</td>
               <td style="width:80px">{{registro.examen_gracia}}</td>
-              <td style="width:90px">{{registro.nota_final}}</td>
               <td style="width:100px">{{registro.estado}}</td>
               <td>
                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"

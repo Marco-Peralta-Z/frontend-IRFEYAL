@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Periodo, Modalidad, Curso, Paralelo, Asignatura, Registro } from 'src/app/Model/tutorias/registro';
+import { Periodo, Malla, Modalidad, Curso, Paralelo, Asignatura, Registro } from 'src/app/Model/tutorias/registro';
 import { MessageService, SharedModule, ConfirmationService } from 'primeng/api';
 import { ServiceTutoriasService } from 'src/app/Servicio/tutorias/registro/servicio-tutorias.service';
 import { AuthService } from 'src/app/Servicio/auth/auth.service';
@@ -19,6 +19,8 @@ export class ActividadesRegistroComponent implements OnInit {
   Dialog!: boolean;
   periodo!: Periodo[];
   selectPeriodo!: Periodo;
+  malla!: Malla[];
+  selectMalla!: Malla;
   modalidad!: Modalidad[];
   selectModalidad!: Modalidad;
   curso!: Curso[];
@@ -30,7 +32,7 @@ export class ActividadesRegistroComponent implements OnInit {
   registro!: Registro[];
   selectRegistro!: Registro;
   listarBoolean: boolean = true;
-  limpiarBoolean: boolean = true;
+  nuevaconsultaBoolean: boolean = true;
   filtrosBoolean: boolean = false;
   idempleados: any;
 
@@ -52,6 +54,22 @@ export class ActividadesRegistroComponent implements OnInit {
     });
   }
 
+  llenarmallas() {
+    this.selectMalla = new Malla;
+    this.selectModalidad = new Modalidad;
+    this.selectCurso = new Curso;
+    this.selectParalelo = new Paralelo;
+    this.selectAsignatura = new Asignatura;
+    this.modalidad = [];
+    this.curso = [];
+    this.paralelo = [];
+    this.asignatura = [];
+    this.listarBoolean = true;
+    this.servitutorias.getMallas(this.idempleados, this.selectPeriodo).subscribe(dataMallas => {
+      this.malla = dataMallas;
+    });
+  }
+
   llenarmodalidades() {
     this.selectModalidad = new Modalidad;
     this.selectCurso = new Curso;
@@ -61,7 +79,7 @@ export class ActividadesRegistroComponent implements OnInit {
     this.paralelo = [];
     this.asignatura = [];
     this.listarBoolean = true;
-    this.servitutorias.getModalidades(this.idempleados, this.selectPeriodo).subscribe(dataModalidades => {
+    this.servitutorias.getModalidades(this.idempleados, this.selectPeriodo, this.selectMalla).subscribe(dataModalidades => {
       this.modalidad = dataModalidades;
     });
   }
@@ -73,7 +91,7 @@ export class ActividadesRegistroComponent implements OnInit {
     this.paralelo = [];
     this.asignatura = [];
     this.listarBoolean = true;
-    this.servitutorias.getCursos(this.idempleados, this.selectModalidad, this.selectPeriodo).subscribe(dataCursos => {
+    this.servitutorias.getCursos(this.idempleados, this.selectPeriodo, this.selectMalla, this.selectModalidad).subscribe(dataCursos => {
       this.curso = dataCursos;
     });
   }
@@ -83,7 +101,7 @@ export class ActividadesRegistroComponent implements OnInit {
     this.selectAsignatura = new Asignatura;
     this.asignatura = [];
     this.listarBoolean = true;
-    this.servitutorias.getParalelos(this.idempleados, this.selectCurso, this.selectModalidad, this.selectPeriodo).subscribe(dataParalelos => {
+    this.servitutorias.getParalelos(this.idempleados, this.selectPeriodo, this.selectMalla, this.selectModalidad, this.selectCurso).subscribe(dataParalelos => {
       this.paralelo = dataParalelos;
     });
   }
@@ -91,13 +109,13 @@ export class ActividadesRegistroComponent implements OnInit {
   llenarasignaturas() {
     this.selectAsignatura = new Asignatura;
     this.listarBoolean = true;
-    this.servitutorias.getAsignaturas(this.idempleados, this.selectParalelo, this.selectCurso, this.selectModalidad, this.selectPeriodo).subscribe(dataAsignatura => {
+    this.servitutorias.getAsignaturas(this.idempleados, this.selectPeriodo, this.selectMalla, this.selectModalidad, this.selectCurso, this.selectParalelo).subscribe(dataAsignatura => {
       this.asignatura = dataAsignatura;
     });
   }
 
   llenarregistros() {
-    this.servitutorias.getRegistros(this.selectParalelo, this.selectCurso, this.selectModalidad, this.selectPeriodo, this.selectAsignatura).subscribe(dataRegistro => {
+    this.servitutorias.getRegistros(this.selectPeriodo, this.selectMalla, this.selectModalidad, this.selectCurso, this.selectParalelo, this.selectAsignatura).subscribe(dataRegistro => {
       if (dataRegistro.length == 0) {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'NO HAY REGISTROS', life: 3000 });
       } else {
@@ -118,7 +136,7 @@ export class ActividadesRegistroComponent implements OnInit {
         })
         this.listarBoolean = true;
         this.filtrosBoolean = true;
-        this.limpiarBoolean = false;
+        this.nuevaconsultaBoolean = false;
       }
     });
   }
@@ -199,17 +217,8 @@ export class ActividadesRegistroComponent implements OnInit {
 
   limpiarFormulario() {
     this.filtrosBoolean = false;
-    this.limpiarBoolean = true;
-    this.selectPeriodo = new Periodo;
-    this.selectModalidad = new Modalidad;
-    this.selectCurso = new Curso;
-    this.selectParalelo = new Paralelo;
-    this.selectAsignatura = new Asignatura;
+    this.nuevaconsultaBoolean = true;
     this.listarBoolean = true;
-    this.modalidad = [];
-    this.curso = [];
-    this.paralelo = [];
-    this.asignatura = [];
     this.registro = [];
   }
 

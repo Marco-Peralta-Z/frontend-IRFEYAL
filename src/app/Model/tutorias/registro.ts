@@ -5,6 +5,11 @@ export class Periodo {
     fecha_fin: Date = new Date;
 }
 
+export class Malla {
+    id_malla: Number = 0;
+    descripcion: String = "";
+}
+
 export class Modalidad {
     id_modalidad: Number = 0;
     descripcion: String = "";
