@@ -70,7 +70,7 @@ export class AgregarMatriculaComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarMallas();
-     
+     console.log("tiene algo?:",this.mallas);
     this.refreshMatriculas();
     this.estudianteService.getEstudiantePersonas()
       .subscribe(persona => this.personas = persona);
@@ -233,8 +233,7 @@ export class AgregarMatriculaComponent implements OnInit {
         next: (periodo) => {
           this.periodos = periodo;
           // for (let i = 0; i < this.periodos.length; i++) {
-          //   this.periodos[i].ano_inicio=this.periodos[i].ano_inicio! +"-" + this.periodos[i].ano_fin!;
-            
+          //   this.periodos[i].ano_inicio=this.periodos[i].ano_inicio! +"-" + this.periodos[i].ano_fin!; 
           // }    
         },
       });

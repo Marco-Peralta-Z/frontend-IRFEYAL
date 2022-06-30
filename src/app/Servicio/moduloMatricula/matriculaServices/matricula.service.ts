@@ -95,7 +95,7 @@ getPeronas():Observable<persona[]>{
 
 private url=this.baseUrl+"malla"
   getAllMalla(){
-    return this.http.get<Malla[]>(this.baseUrl)
+    return this.http.get<Malla[]>(this.url)
   }
 
 }

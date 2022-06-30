@@ -200,8 +200,18 @@
                                     <label class="mt-2">Seleccione Periodo:</label> <br>
                                     <p-dropdown [options]="periodos" [disabled]="periodos.length==0"
                                         [(ngModel)]="peridoSelectd" placeholder="Seleccione Periodo"
-                                        formControlName="periodo" (onChange)="obtenerPeriodo()"  optionLabel="periodo_academico"
+                                        formControlName="periodo" (onChange)="obtenerPeriodo()"  optionLabel="ano_inicio"
                                         name="periodo">
+                                        <ng-template pTemplate="selectedItem">
+                                            <div class="country-item country-item-value  mt-2" *ngIf="peridoSelectd">
+                                                <div>{{peridoSelectd.fecha_inicio | date: 'MMMM-yyyy'}}-{{peridoSelectd.fecha_fin | date: 'MMMM-yyyy'}} </div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template let-p pTemplate="item">
+                                            <div class="p-item">
+                                                <div>{{p.fecha_inicio | date:'MMMM-yyyy'}}-{{p.fecha_fin | date: 'MMMM-yyyy'}} </div>
+                                            </div>
+                                        </ng-template>
                                     </p-dropdown>
                                     <span class="p-error block" *ngIf="campoValido('periodo')">
                                         Este campo es obligatorio!
@@ -306,7 +316,7 @@
 
                                 <span class="p-float-label mt-4">
                                     <input id="float-input" type="text"
-                                        [ngModel]="matricula.modalidad.descripcion.toString() | titlecase" pInputText readonly
+                                        [ngModel]="matricula.modalidad.descripcion.toString() | titlecase " pInputText readonly
                                         formControlName="Rmodalidad">
                                     <label for="float-input">Modalidad de Estudio</label>
                                 </span>
