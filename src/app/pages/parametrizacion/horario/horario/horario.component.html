@@ -56,8 +56,7 @@
                 </div>
                 <div class="p-toolbar-group-right" *ngIf="b3">
 
-                    <button type="button" pButton pRipple icon="pi pi-file-pdf" 
-                    (click)="pdf.saveAs(print)"
+                    <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="pdf.saveAs(print)"
                         class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
 
                 </div>
@@ -70,23 +69,27 @@
                         class="cal">
                         <ng-template pTemplate="caption">
                             <div class="flex align-items-center justify-content-between">
-                                HORARIO DE CLASES DE: {{seleccursos.descripcion}}
-                                "{{selectParalelo.id_paralelo.descripcion}}"
-
+                                <p-image src="{{path}}/img/logo.png" alt="Image" width="250" class="mr-2"></p-image>
+                                PERIODO: {{selectperiodo.fecha_inicio| date: 'MM/yyyy'}} - {{selectperiodo.fecha_fin|
+                                date: 'MM/yyyy'}}
+                                <br>
+                                MALLA: {{selectperiodo.malla.descripcion}}
+                                <br>
+                                MODALIDAD: {{selectperiodo.malla.id_modalidad.descripcion}}
                                 <div class="ml-auto">
+                                    HORARIO DE CLASES DE: {{seleccursos.descripcion}}
+                                    "{{selectParalelo.id_paralelo.descripcion}}"
+                                    <br>
                                     Dirigente: {{selectParalelo.id_empleado.persona.apellido}}
                                     {{selectParalelo.id_empleado.persona.nombre}}
                                 </div>
-
                             </div>
-
                         </ng-template>
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>Horas </th>
-                                <th> Sabado</th>
+                                <th>Sabado</th>
                                 <th>Domingo</th>
-
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-h>
