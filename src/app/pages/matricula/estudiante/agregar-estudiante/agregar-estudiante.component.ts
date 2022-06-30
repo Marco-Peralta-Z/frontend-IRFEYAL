@@ -30,6 +30,7 @@ export class AgregarEstudianteComponent implements OnInit {
   cantones: canton[] = [];
   parroquias: parroquia[] = [];
   extensiones: extension[] = [];
+  age: number=0;
   paises: pais[] = [];
   activeIndex1: number = 0;
   cedula: string = "";
@@ -42,15 +43,7 @@ export class AgregarEstudianteComponent implements OnInit {
   emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
   cedulaPattern: string = "[0-9]{10}";
   
-  noPuedeSerNull(control: FormControl) {
-    const fecha = control.value;
-    if (fecha == Date()) {
-      return {
-        fecha: true
-      }
-    }
-    return null;
-  }
+  
   estudentFormulario: FormGroup = this.fb.group({
     nombre: [, [Validators.required, Validators.minLength(3)]],
     apellido: [, [Validators.required, Validators.minLength(3)]],
@@ -76,22 +69,34 @@ export class AgregarEstudianteComponent implements OnInit {
   ngOnInit(): void {
 
     this.estudianteService.getProvincias()
-      .subscribe(provincia => this.provincias = provincia);
+      .subscribe(provincia => {this.provincias = provincia;});
+
     this.estudianteService.getGenero()
       .subscribe(genero => this.generos = genero);
 
     this.estudianteService.getPais()
       .subscribe(pais => this.paises = pais);
 
-    this.estudianteService.getParroquia()
-      .subscribe(parroquia => this.parroquias = parroquia);
-
-    this.estudianteService.getCanton()
-      .subscribe(canton => this.cantones = canton);
-
     this.estudianteService.getExtension()
       .subscribe(extension => this.extensiones = extension);
+  
+  }
 
+  noPuedeSerNull(control: FormControl) {
+    const fecha = control.value; 
+    const today: Date = new Date();
+    const birthDate: Date = new Date(fecha);
+    let edad:number = today.getFullYear() - birthDate.getFullYear();
+    const month: number = today.getMonth() - birthDate.getMonth();
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+        edad--;
+    }
+    if (edad<18) {
+      return {
+        fecha: true
+      }
+    }
+    return null;
   }
 
   filtrarProvincia(event: any) {
@@ -135,12 +140,12 @@ export class AgregarEstudianteComponent implements OnInit {
   }
 
   saveEstudiante() {
-    if (this.estudentFormulario.invalid) {
+    if (this.estudentFormulario.invalid || this.age<18) {
       this.estudentFormulario.markAllAsTouched();
       this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error en Formulario', detail: 'Campos erroneos o incompletos' });
       // swal.fire('Error en Formulario', 'Campos erroneos o incompletos', 'error');
       return;
-    }
+    } 
 
     if (!this.existe) {
       this.estudiante.estadoEstudiante = true;
@@ -150,16 +155,37 @@ export class AgregarEstudianteComponent implements OnInit {
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Nuevo Estudiante', detail: `Nuevo Estudiante creado con exito!` });
           this.activeIndex1 = 0;
           this.estudentFormulario.reset();
-          // swal.fire('Nuevo Estudiante', `Nuevo id: ${newEstudent.id_estudiante} creado con exito!`, 'success')
-
         });
     } else {
       this.messageService.add({ key: 'tc', severity: 'info', summary: 'Estudiante Encontrado', detail: `El estudiante con cedula: ${this.estudiante.id_persona.cedula}, ya existe` });
-      // swal.fire('Estudiante Encontrado', `El estudiante con cedula: ${this.estudiante.id_persona.cedula}, ya existe`,'error')
+      
     }
 
   }
 
+  cargarCantones(){
+    this.estudianteService.getCatonPorProvinciaId(this.estudiante.direccion.provincia.idProvincia)
+    .subscribe(cantones => this.cantones = cantones);
+  }
+
+  cargarParroquias(){
+    this.estudianteService.getParroquiaPorCantonId(this.estudiante.direccion.canton.idCanton)
+    .subscribe(parroquias => this.parroquias=parroquias)
+  }
+
+  CalculateAge() {
+     const today: Date = new Date();
+    const birthDate: Date = new Date(this.estudiante.id_persona.fechaNacimiento!);
+    this.age = today.getFullYear() - birthDate.getFullYear();
+    const month: number = today.getMonth() - birthDate.getMonth();
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+        this.age--;
+    }
+    if (this.age<18) {
+      this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Menor de Edad', detail: `Fecha ingresada incorrecta`});
+    }
+
+}
   validaExistenciaEstudiante(): boolean {
       this.validador=this.validatorService.validarCedu(this.estudiante.id_persona.cedula.trim());
     if (this.validador) {

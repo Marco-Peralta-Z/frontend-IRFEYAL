@@ -5,7 +5,7 @@ export class Curso {
 
     id_curso!:any;
 
-    descripcion!: String;
+    descripcion: String="";
 
     tipo_curso!: String ;
 

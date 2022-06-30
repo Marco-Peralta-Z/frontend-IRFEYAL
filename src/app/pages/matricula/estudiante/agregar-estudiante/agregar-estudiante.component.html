@@ -40,7 +40,7 @@
                                  <label >Fecha de Nacimiento:</label>
                                 <span class="p-float-label">
                                     <input id="float-input" type="date"
-                                        [(ngModel)]="estudiante.id_persona.fechaNacimiento" name="fecha" formControlName="fecha" pInputText >                                   
+                                        [(ngModel)]="estudiante.id_persona.fechaNacimiento" (ngModelChange)="CalculateAge()" name="fecha" formControlName="fecha" pInputText >                                   
                                 </span>
                                 <span class="form-text text-danger" *ngIf="campoValido('fecha')">
                                     Este campo es obligatorio!
@@ -106,8 +106,8 @@
                             </div>
                             <div class="col">
                                 <label >Provincia:</label><br>                                    
-                                    <p-dropdown [options]="provincias" [(ngModel)]="estudiante.direccion.provincia" formControlName="provincia" optionLabel="provincia" [filter]="true" filterBy="provincia" placeholder="Selecionar Una">
-                                        <ng-template pTemplate="selectedItem">
+                                    <p-dropdown [options]="provincias" (onChange)="cargarCantones()" [(ngModel)]="estudiante.direccion.provincia" formControlName="provincia" optionLabel="provincia" [filter]="true" filterBy="provincia" placeholder="Selecionar Una">
+                                        <ng-template pTemplate="selectedItem" >
                                             <div class="country-item country-item-value"  *ngIf="estudiante.direccion.provincia">
                                                 <div>{{estudiante.direccion.provincia.provincia}}</div>
                                             </div>
@@ -124,7 +124,7 @@
                                     </span>
                                     <br>
                                 <label class="mt-1">Canton:</label><br>                                    
-                                    <p-dropdown [options]="cantones" [(ngModel)]="estudiante.direccion.canton" formControlName="canton" optionLabel="canton" [filter]="true" filterBy="canton" placeholder="Selecionar Una">
+                                    <p-dropdown [options]="cantones" (onChange)="cargarParroquias()"[(ngModel)]="estudiante.direccion.canton" formControlName="canton" optionLabel="canton" [filter]="true" filterBy="canton" placeholder="Selecionar Una">
                                         <ng-template pTemplate="selectedItem">
                                             <div class="country-item country-item-value"  *ngIf="estudiante.direccion.canton">
                                                 
@@ -185,7 +185,7 @@
                                 </span><br>
 
                                 <label for="float-input" class="mt-1">Correo Electronico:</label><br>
-                                    <input id="float-input" type="text" [(ngModel)]="estudiante.correo.correo" pInputText
+                                    <input class="lowercase" id="float-input" type="text" [(ngModel)]="estudiante.correo.correo" pInputText
                                     name="email" formControlName="email" placeholder="ejemplo@gmail.com" >
                                 <span class="form-text text-danger" *ngIf="campoValido('email')">
                                     Este campo es obligatorio!

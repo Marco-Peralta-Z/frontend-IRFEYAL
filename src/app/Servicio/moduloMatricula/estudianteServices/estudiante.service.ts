@@ -86,6 +86,14 @@ private baseUrl: string = Api.url;
   getParroquia(): Observable<parroquia[]>{
     return this.http.get<parroquia[]>(`${this.baseUrl}mapParroquia/parroquia`);
   }
+  getCatonPorProvinciaId(id: number):Observable<canton[]>{
+    return this.http.get<canton[]>(`${this.baseUrl}mapCanton/canton/${id}`);
+  }
+
+  getParroquiaPorCantonId(id: number):Observable<parroquia[]>{
+    return this.http.get<parroquia[]>(`${this.baseUrl}mapParroquia/parroquia/${id}`);
+  }
+
   getCanton(): Observable<canton[]>{
     return this.http.get<canton[]>(`${this.baseUrl}mapCanton/canton`);
   }
