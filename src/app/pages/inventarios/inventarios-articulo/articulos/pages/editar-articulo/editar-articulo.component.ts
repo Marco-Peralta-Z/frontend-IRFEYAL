@@ -94,7 +94,6 @@ export class EditarArticuloComponent implements OnInit {
         if ( response ) {
           this.articuloForm.patchValue(response);
           this.selectArticulo = response;
-          // TODO: revisar error dropdown
         }
       },
       error: (error) => {        
