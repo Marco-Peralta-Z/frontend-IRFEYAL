@@ -1,14 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Api } from 'src/app/config';
-import { Matricula } from 'src/app/Model/Matriculas/matricula';
-import { Asignatura } from 'src/app/Model/Parametrizacion/Asignatura';
-import { Curso } from 'src/app/Model/Parametrizacion/Curso';
-import { Malla } from 'src/app/Model/Parametrizacion/Malla';
-import { Modalidad } from 'src/app/Model/Parametrizacion/Modalidad';
-import { Paralelo } from 'src/app/Model/Parametrizacion/Paralelo';
-import { Periodo } from 'src/app/Model/Parametrizacion/Periodo';
-import { Registro } from 'src/app/Model/tutorias/registro';
+import { Periodo, Malla, Modalidad, Curso, Paralelo, Asignatura, Registro } from 'src/app/Model/tutorias/registro';
 
 @Injectable({
   providedIn: 'root'
@@ -42,8 +35,8 @@ export class ServiceTutoriasService {
     return this.http.get<Asignatura[]>(this.url + "registro/Asignaturas/" + id_empleado + "/" + periodo.id_periodo + "/" + malla.id_malla + "/" + modalidad.id_modalidad + "/" + curso.id_curso + "/" + paralelo.id_paralelo)
   }
 
-  getRegistros(periodo: Periodo, matricula: Matricula, asignatura: Asignatura) {
-    return this.http.get<Registro[]>(this.url + "registro/Filtrocompleto/" + periodo.id_periodo + "/" + matricula.id_matricula + "/" + asignatura.id_asignatura)
+  getRegistros(periodo: Periodo, , asignatura: Asignatura) {
+    return this.http.get<Registro[]>(this.url + "registro/Filtrocompleto/" + periodo.id_periodo + "/" + malla.id_malla + "/" + modalidad.id_modalidad + "/" + curso.id_curso + "/" + paralelo.id_paralelo + "/" + asignatura.id_asignatura)
   }
 
   setRegistros(registro: Registro) {
