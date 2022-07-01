@@ -71,7 +71,7 @@
 
       <div class="container-fluid page">
         <p-table #dt [value]="registro" [rows]="7" [paginator]="true" [scrollable]="true" scrollDirection="both"
-          [globalFilterFields]="['id_matricula.estudiante.id_persona.nombre','id_matricula.estudiante.id_persona.apellido']"
+          [globalFilterFields]="['matricula.estudiante.id_persona.nombre','matricula.estudiante.id_persona.apellido']"
           [(selection)]="selectRegistro" [rowHover]="true" dataKey="registro.id_registro"
           currentPageReportTemplate="Mostrando {first} a {last} de un total de {totalRecords} registros"
           [showCurrentPageReport]="true">
@@ -112,7 +112,7 @@
           <ng-template pTemplate="body" let-registro>
             <tr>
               <td style="width:250px; font-weight: 700;" pFrozenColumn>
-                {{registro.id_matricula.estudiante.id_persona.apellido}}<br>{{registro.id_matricula.estudiante.id_persona.nombre}}
+                {{registro.matricula.estudiante.id_persona.apellido}}<br>{{registro.matricula.estudiante.id_persona.nombre}}
               </td>
               <td style="width:70px">{{registro.aporte1}}</td>
               <td style="width:70px">{{registro.aporte2}}</td>

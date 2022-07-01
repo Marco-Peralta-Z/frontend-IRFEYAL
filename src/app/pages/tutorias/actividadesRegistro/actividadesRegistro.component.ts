@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Periodo, Malla, Modalidad, Curso, Paralelo, Asignatura, Registro } from 'src/app/Model/tutorias/registro';
+import { Registro } from 'src/app/Model/tutorias/registro';
 import { MessageService, SharedModule, ConfirmationService } from 'primeng/api';
 import { ServiceTutoriasService } from 'src/app/Servicio/tutorias/registro/servicio-tutorias.service';
 import { AuthService } from 'src/app/Servicio/auth/auth.service';
 import { usuario } from 'src/app/Model/rolesTS/usuario';
+import { Periodo } from 'src/app/Model/Parametrizacion/Periodo';
+import { Malla } from 'src/app/Model/Parametrizacion/Malla';
+import { Modalidad } from 'src/app/Model/Parametrizacion/Modalidad';
+import { Curso } from 'src/app/Model/Parametrizacion/Curso';
+import { Paralelo } from 'src/app/Model/Parametrizacion/Paralelo';
+import { Asignatura } from 'src/app/Model/Parametrizacion/Asignatura';
 
 @Component({
   selector: 'app-actividadesRegistro',
@@ -115,20 +121,21 @@ export class ActividadesRegistroComponent implements OnInit {
   }
 
   llenarregistros() {
-    this.servitutorias.getRegistros(this.selectPeriodo, this.selectMalla, this.selectModalidad, this.selectCurso, this.selectParalelo, this.selectAsignatura).subscribe(dataRegistro => {
+    console.log(this.selectRegistro);
+    this.servitutorias.getRegistros(this.selectPeriodo, this.selectRegistro.matricula, this.selectAsignatura).subscribe(dataRegistro => {
       if (dataRegistro.length == 0) {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'NO HAY REGISTROS', life: 3000 });
       } else {
         this.registro = dataRegistro;
         for (let i = 0; i < this.registro.length; i++) {
           this.validarAprobaciones(this.registro[i]);
-          this.registro[i].id_matricula.estudiante.id_persona.apellido = this.registro[i].id_matricula.estudiante.id_persona.apellido.toUpperCase();
-          this.registro[i].id_matricula.estudiante.id_persona.nombre = this.registro[i].id_matricula.estudiante.id_persona.nombre.toUpperCase();
+          this.registro[i].matricula.estudiante.id_persona.apellido = this.registro[i].matricula.estudiante.id_persona.apellido.toUpperCase();
+          this.registro[i].matricula.estudiante.id_persona.nombre = this.registro[i].matricula.estudiante.id_persona.nombre.toUpperCase();
         }
         this.registro.sort((o1, o2) => {
-          if (o1.id_matricula.estudiante.id_persona.apellido < o2.id_matricula.estudiante.id_persona.apellido) {
+          if (o1.matricula.estudiante.id_persona.apellido < o2.matricula.estudiante.id_persona.apellido) {
             return -1;
-          } else if (o1.id_matricula.estudiante.id_persona.apellido > o2.id_matricula.estudiante.id_persona.apellido) {
+          } else if (o1.matricula.estudiante.id_persona.apellido > o2.matricula.estudiante.id_persona.apellido) {
             return 1;
           } else {
             return 0;
@@ -234,7 +241,7 @@ export class ActividadesRegistroComponent implements OnInit {
       this.registro[this.findIndexById(this.selectRegistro.id_registro)] = this.selectRegistro;
       this.messageService.add({ severity: 'success', summary: 'Hecho', detail: 'Registro Actualizado', life: 3000 });
       this.validarAprobaciones(this.selectRegistro);
-      this.selectRegistro.id_asignatura = this.selectAsignatura;
+      this.selectRegistro.asignatura = this.selectAsignatura;
       console.log(this.selectRegistro);
 
       this.servitutorias.setRegistros(this.selectRegistro).subscribe();
