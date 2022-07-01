@@ -7,7 +7,8 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { DatePipe } from '@angular/common'
 import { empleado } from 'src/app/Model/rolesTS/empleado';
 import { usuario } from 'src/app/Model/rolesTS/usuario';
-import { Periodo } from 'src/app/Model/tutorias/registro';
+import { Periodo } from 'src/app/Model/Parametrizacion/Periodo';
+
 @Injectable({
   providedIn: 'root'
 })
