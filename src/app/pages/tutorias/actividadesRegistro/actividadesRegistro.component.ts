@@ -137,6 +137,7 @@ export class ActividadesRegistroComponent implements OnInit {
         this.listarBoolean = true;
         this.filtrosBoolean = true;
         this.nuevaconsultaBoolean = false;
+        console.log(this.registro);
       }
     });
   }
@@ -233,6 +234,9 @@ export class ActividadesRegistroComponent implements OnInit {
       this.registro[this.findIndexById(this.selectRegistro.id_registro)] = this.selectRegistro;
       this.messageService.add({ severity: 'success', summary: 'Hecho', detail: 'Registro Actualizado', life: 3000 });
       this.validarAprobaciones(this.selectRegistro);
+      this.selectRegistro.id_asignatura = this.selectAsignatura;
+      console.log(this.selectRegistro);
+
       this.servitutorias.setRegistros(this.selectRegistro).subscribe();
     }
     else {

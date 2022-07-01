@@ -35,11 +35,11 @@ export class ServiceTutoriasService {
     return this.http.get<Asignatura[]>(this.url + "registro/Asignaturas/" + id_empleado + "/" + periodo.id_periodo + "/" + malla.id_malla + "/" + modalidad.id_modalidad + "/" + curso.id_curso + "/" + paralelo.id_paralelo)
   }
 
-  getRegistros(periodo: Periodo, malla: Malla, modalidad: Modalidad, curso: Curso, paralelo: Paralelo, asignatura: Asignatura) {
+  getRegistros(periodo: Periodo, , asignatura: Asignatura) {
     return this.http.get<Registro[]>(this.url + "registro/Filtrocompleto/" + periodo.id_periodo + "/" + malla.id_malla + "/" + modalidad.id_modalidad + "/" + curso.id_curso + "/" + paralelo.id_paralelo + "/" + asignatura.id_asignatura)
   }
 
   setRegistros(registro: Registro) {
-    return this.http.put<Registro>(this.url + "registro/Update/" + registro.id_registro, registro)
+    return this.http.put<Registro>(this.url + "registro/UpdateRegistro/" + registro.id_registro, registro)
   }
 }
