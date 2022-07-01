@@ -121,7 +121,7 @@ export class ActividadesRegistroComponent implements OnInit {
   }
 
   llenarregistros() {
-    this.servitutorias.getRegistros(this.selectPeriodo,this.selectMalla,this.selectModalidad,this.selectCurso,this.selectParalelo,this.selectAsignatura).subscribe(dataRegistro => {
+    this.servitutorias.getRegistros(this.selectPeriodo, this.selectMalla, this.selectModalidad, this.selectCurso, this.selectParalelo, this.selectAsignatura).subscribe(dataRegistro => {
       if (dataRegistro.length == 0) {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'NO HAY REGISTROS', life: 3000 });
       } else {
@@ -227,6 +227,7 @@ export class ActividadesRegistroComponent implements OnInit {
     this.nuevaconsultaBoolean = true;
     this.listarBoolean = true;
     this.registro = [];
+    this.selectAsignatura = new Asignatura;
   }
 
   edit(selectRegistro: Registro) {
