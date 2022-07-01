@@ -41,14 +41,13 @@ export class CrearEditarComponent implements OnInit {
   getCategoriasArticulo = () => {
     this._categoriaArticuloService.getCategorias().subscribe({
       next: (resp) => this.categoriasArticulos = resp,
-      error: (err) => console.log
+      error: (err) => this.categoriasArticulos = []
     })
   }
 
   realizarAccion = () => {    
     if ( this.inventarioForm.valid ) {
       let inventario = this.getInfoInventoriedForm();
-      console.log(inventario);
       this.crear( inventario );
     } else {
       this.inventarioForm.markAllAsTouched();

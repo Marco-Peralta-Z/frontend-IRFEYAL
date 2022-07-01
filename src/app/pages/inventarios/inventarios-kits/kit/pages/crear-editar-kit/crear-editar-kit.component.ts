@@ -65,9 +65,7 @@ export class CrearEditarKitComponent implements OnInit {
   }
   getPeriodos = () => {
     this._periodoService.getAllPerdiodo().subscribe({
-      next: (resp:any) => {
-        console.log(resp);
-        
+      next: (resp:any) => {        
         this.periodos = resp as Periodo [];
       },
       error: (error:any) => {
@@ -78,9 +76,7 @@ export class CrearEditarKitComponent implements OnInit {
 
   verificarAccion = () => {
     if( this.kitForm.valid ) {
-      let kit: Kit = this.kitForm.value;
-      console.log(kit);
-      
+      let kit: Kit = this.kitForm.value;      
       if ( this.id ) {
         this.actualizarKit( kit );
       } else {

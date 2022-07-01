@@ -56,7 +56,6 @@ export class LoginComponent implements OnInit {
                     this.router.navigate(['/home'])
                 }, 
                 error: (err) => {
-                    console.log(err);
                     Swal.close()
                     this.onIsError();
                 }

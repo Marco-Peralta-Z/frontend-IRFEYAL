@@ -24,9 +24,7 @@ export class SalidaArticuloService {
     return this._http.post<ResSalida>(`${this._baseUrl}salidaarticulo/crear`, salida)
       .pipe(
         map( (response: ResSalida) =>  response.status),
-        catchError( err => {
-          console.log(err);
-          
+        catchError( err => {          
           return of(false)
         })
       );

@@ -39,18 +39,17 @@ export class PrestarComponent implements OnInit {
 
   getInventario = () => this._inventarioService.getInventarios().subscribe({
     next: (resp) => this.inventarioArticulos = resp,
-    error: (err) => console.log
+    error: (err) => this.inventarioArticulos = []
   });
 
   getEmpleados = () => this._empleadosService.getEmpleados().subscribe({
     next: (resp) => this.empleados = resp,
-    error: (err) => console.log
+    error: (err) => this.empleados = []
   });
 
   realizarAccion = () => {    
     if ( this.prestarArticuloForm.valid ) {
       let salida = this.prestarArticuloForm.value;
-      console.log(salida);
       this.crear( salida );
     } else {
       this.prestarArticuloForm.markAllAsTouched();

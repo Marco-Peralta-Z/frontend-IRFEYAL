@@ -25,7 +25,6 @@ export class KitService {
           return response.status;
         }),
         catchError( err => {
-          console.log(err);
           return of(false);
         })
       );
@@ -38,7 +37,6 @@ export class KitService {
           return response.status;
         }),
         catchError( err => {
-          console.log(err);
           return of(false);
         })
       );
@@ -51,7 +49,6 @@ export class KitService {
           return response.status;
         }),
         catchError( (err) => {
-          console.log(err);
           return of(false);
         })
       )

@@ -27,7 +27,6 @@ export class EntregarKitService {
           return response.status;
         }),
         catchError( err => {
-          console.log(err);
           return of(false);
         })
       );
@@ -40,7 +39,6 @@ export class EntregarKitService {
           return response.status;
         }),
         catchError( err => {
-          console.log(err);
           return of(false);
         })
       );
@@ -53,7 +51,6 @@ export class EntregarKitService {
           return response.status;
         }),
         catchError( (err) => {
-          console.log(err);
           return of(false);
         })
       );

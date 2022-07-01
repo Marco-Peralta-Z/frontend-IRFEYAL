@@ -44,10 +44,9 @@ export class ListarComponent implements OnInit {
   getInventarios = () => {
     this._inventarioService.getStockArticulos().subscribe({
       next: (resp) => {
-        console.log(resp);
         this.stockArticulos = resp;
       },
-      error: (err) => console.log
+      error: (err) => this.stockArticulos = []
     });
   }
 
@@ -55,9 +54,7 @@ export class ListarComponent implements OnInit {
     if ( this.bajaDetalleForm.valid && this.selectArticulo) {
       let detalleBaja: DetallebajaArti = this.bajaDetalleForm.value;
       detalleBaja.id_inventario = {id_inventario: this.selectArticulo.id_articulo};
-      console.log(detalleBaja);
       this.abrirDialogDarBajaArticulo( detalleBaja );
-      
     } else {
       this.bajaDetalleForm.markAllAsTouched();
     }
@@ -90,12 +87,10 @@ export class ListarComponent implements OnInit {
 
 
   showDialog(stockArticulo: StockArticulo) {
-    console.log(stockArticulo.listaArticulos);
     this.selectStockArticulo = stockArticulo;
     this.displayArticulos = true;
   }
   showDialogBajaArticulo(articulo: Articulo) {
-    console.log(articulo);
     this.selectArticulo = articulo;
     this.displayBajaArticulo = true;
   }

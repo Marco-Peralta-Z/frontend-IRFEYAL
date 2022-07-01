@@ -26,7 +26,7 @@ export class CrearEditarComponent implements OnInit {
     detalleControl: [ , [ Validators.required ]],
     estadoAproba: [ false , [ Validators.required ]],
     fechaAprobacion: [ , [ Validators.required ]],
-    estudiantePago: [ , [ Validators.required, Validators.minLength(3) ]],
+    estudiantePago: [ , [ Validators.required]],
   });
   public kits: Kit [] = [];
 
@@ -70,14 +70,10 @@ export class CrearEditarComponent implements OnInit {
     })
   }
 
-  getEstudiantesPago = () => {
-    console.log('hola');
-    
+  getEstudiantesPago = () => {    
     this._aprobacionService.getEstudiatesPago().subscribe({
       next: (resp) => {
         this.estudiantesPago = resp
-        console.log(resp);
-        
       },
       error: (error) => {
         this.estudiantesPago = [];
@@ -89,12 +85,10 @@ export class CrearEditarComponent implements OnInit {
     if ( this.entregarKitForm.valid ) {
       let {tipoAprobacion, detalleControl, estadoAproba, fechaAprobacion, estudiantePago} =  this.entregarKitForm.value;
       let aprobacion: Aprobacion = {
-        tipoAprobacion, detalleControl, estadoAproba, fechaAprobacion, estudiante: estudiantePago.estudiante
+        tipoAprobacion, detalleControl, estadoAproba, fechaAprobacion, estudiante: estudiantePago.estudiante, kit: estudiantePago.kit
       };
       // asigno id del usuario loggeado
-      aprobacion.administrador = new empleado(this._authService.usuario.empleado?.id_empleado);
-      console.log(aprobacion);
-      
+      aprobacion.administrador = new empleado(this._authService.usuario.empleado?.id_empleado);      
       if ( this.id ) {
         aprobacion.id_aprobacion = this.id;
         this.actualizarAprobacion( aprobacion );
@@ -109,10 +103,11 @@ export class CrearEditarComponent implements OnInit {
 
   crearAprobacion = ( aprobacion: Aprobacion ) => {
     this._aprobacionService.crearAprobacion(aprobacion).subscribe({
-      next: (response) => {        
+      next: (response) => {                
         if ( response === 'ok') {
           this._mensajesSweetService.mensajeOk('Aprobación registrada');
           this.entregarKitForm.reset();
+          this.entregarKitForm.get('estadoAproba')?.setValue(false);
         } else {
           this._mensajesSweetService.mensajeError('Upss!', 'No se pudo registrar la aprobación',);
         }
@@ -156,12 +151,10 @@ export class CrearEditarComponent implements OnInit {
   }
 
   get identificacionErrorMsg(): string{
-    const errors = this.entregarKitForm.get('estudiante')?.errors;    
+    const errors = this.entregarKitForm.get('estudiantePago')?.errors;    
     if (errors?.['required']){
-      return 'La identificación es requerida';
-    } else if(errors?.['minlength']){
-      return 'Ingrese mínimo 7 caracteres';
-    } 
+      return 'Estudiante es requerido';
+    }
     return '';
   }
 
