@@ -68,48 +68,37 @@
                 <!-- estudiante -->
                 <div class="field">
                     <label for="fecha" class="block">Estudiante</label>
-                    <p-autoComplete [emptyMessage]="'No hay estudiantes con esa identificación'"
-                                    [showEmptyMessage]=" estudiantes.length ===  0 "
-                                    panelStyleClass="w-100"
-                                    inputStyleClass="w-100"
-                                    styleClass="w-100"
-                                    [ngClass]="{'ng-invalid ng-dirty' : verificarCampo('estudiante')}"
-                                    placeholder="Ingrese identificación del estudiante"
-                                    (completeMethod)="getEstudiante($event)"
-                                    [suggestions]="estudiantes"
-                                    field="id_persona.cedula"
-                                    [disabled]="getValorCheck() && id"
-                                    formControlName="estudiante">
+                    <p-dropdown [options]="estudiantesPago"
+                                [styleClass]=" !verificarCampo('estudiantePago') ? 'border w-100' : 'w-100'"   
+                                [ngClass]="{'ng-invalid ng-dirty ' : verificarCampo('estudiantePago')}"
+                                optionLabel="estudiante.id_persona.cedula"
+                                [showClear]="true"
+                                [filter]="true"
+                                [filterBy]="'estudiante.id_persona.cedula'"
+                                [filterPlaceholder]="'Ingrese cédula'"
+                                emptyMessage="No hay estudiantes"
+                                [disabled]="getValorCheck() && id"
+                                placeholder="Seleccione un estudiante"
+                                formControlName="estudiantePago">
                         <ng-template let-estudiante pTemplate="item">
                             <div class="country-item">
-                                <div>{{estudiante.id_persona.nombre}} {{estudiante.id_persona.apellido}} ID: {{estudiante.id_persona.cedula}}</div>
+                                <div>
+                                    {{estudiante.estudiante.id_persona.nombre}} {{estudiante.estudiante.id_persona.apellido}} ID: {{estudiante.estudiante.id_persona.cedula}}
+                                    <br>
+                                    <small>
+                                        Nombre Kit: {{estudiante.kit.nombrekit}} - 
+                                        Precio: {{estudiante.kit.precioKit | currency }} - 
+                                        Total pagado: {{estudiante.valorPagado | currency }}
+                                    </small>
+                                </div>
                             </div>
                         </ng-template>
-                    </p-autoComplete>
-                    <small  class="p-error block"
-                            *ngIf="verificarCampo('estudiante')">
-                            {{identificacionErrorMsg}}
-                    </small>
-                </div>
-                <!-- kit -->
-                <div class="field">
-                    <label for="kit" class="block">Kit</label>
-                    <p-dropdown [options]="kits"
-                                [styleClass]=" !verificarCampo('kit') ? 'border w-100' : 'w-100'"   
-                                [ngClass]="{'ng-invalid ng-dirty ' : verificarCampo('kit')}"
-                                optionLabel="nombrekit"
-                                [showClear]="true"
-                                emptyMessage="No hay kits"
-                                [disabled]="getValorCheck() && id"
-                                placeholder="Seleccione un kit"
-                                formControlName="kit">
                     </p-dropdown>
                     <small  class="p-error block"
-                            *ngIf="verificarCampo('kit')">
-                            El kit es requerido.
+                            *ngIf="verificarCampo('estudiantePago')">
+                            {{identificacionErrorMsg}}
                     </small>
-                </div>
-               
+                </div>  
             </div>
         </div>
         <div class="row">

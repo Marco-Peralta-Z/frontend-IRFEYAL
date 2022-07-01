@@ -11,6 +11,7 @@ import { AuthService } from '../../../../../../Servicio/auth/auth.service';
 import { empleado } from '../../../../../../Model/rolesTS/empleado';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResAprobacion } from '../../../../../../Model/Inventarios/interfaces/res_aprobacion.interface';
+import { EstudiantePago } from '../../../../../../Model/Inventarios/EstudiantePago';
 
 @Component({
   selector: 'app-crear-editar',
@@ -25,12 +26,11 @@ export class CrearEditarComponent implements OnInit {
     detalleControl: [ , [ Validators.required ]],
     estadoAproba: [ false , [ Validators.required ]],
     fechaAprobacion: [ , [ Validators.required ]],
-    estudiante: [ , [ Validators.required, Validators.minLength(3) ]],
-    kit: [  , [ Validators.required ]],
+    estudiantePago: [ , [ Validators.required, Validators.minLength(3) ]],
   });
   public kits: Kit [] = [];
 
-  public estudiantes: Estudiante [] = [];
+  public estudiantesPago: EstudiantePago [] = [];
 
   public id?: number;
 
@@ -47,6 +47,7 @@ export class CrearEditarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getKits();
+    this.getEstudiantesPago();
     this.getAprobacionIdParam();
   }
 
@@ -69,29 +70,31 @@ export class CrearEditarComponent implements OnInit {
     })
   }
 
-  getEstudiante = (event: any) => {
-    this.estudiantes = [];
-    let query = event.query.trim();
-    if ( query.length >= 3) {
-      this._estudianteService.getEstudiantesPorCedula( query ).subscribe({
-        next: (resp) => {
-          this.estudiantes = resp
-          console.log(resp);
-          
-        },
-        error: (error) => {
-          this.estudiantes = [];
-        }
-      });
-    }
+  getEstudiantesPago = () => {
+    console.log('hola');
+    
+    this._aprobacionService.getEstudiatesPago().subscribe({
+      next: (resp) => {
+        this.estudiantesPago = resp
+        console.log(resp);
+        
+      },
+      error: (error) => {
+        this.estudiantesPago = [];
+      }
+    });
   }
 
   realizarAccion = () => {
     if ( this.entregarKitForm.valid ) {
-      let aprobacion: Aprobacion = this.entregarKitForm.value;
+      let {tipoAprobacion, detalleControl, estadoAproba, fechaAprobacion, estudiantePago} =  this.entregarKitForm.value;
+      let aprobacion: Aprobacion = {
+        tipoAprobacion, detalleControl, estadoAproba, fechaAprobacion, estudiante: estudiantePago.estudiante
+      };
       // asigno id del usuario loggeado
       aprobacion.administrador = new empleado(this._authService.usuario.empleado?.id_empleado);
-
+      console.log(aprobacion);
+      
       if ( this.id ) {
         aprobacion.id_aprobacion = this.id;
         this.actualizarAprobacion( aprobacion );
