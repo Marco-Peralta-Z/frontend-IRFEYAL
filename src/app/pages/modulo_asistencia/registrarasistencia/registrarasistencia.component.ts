@@ -627,8 +627,18 @@ pipe = new DatePipe('en-EC');
             this.paralelosactu=[];
             this.asistenciaactualizar=[]; 
            }
+           for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+            if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
          
-           this.appService.listarcursos(this.idempleados,this.IdPeriodo ,this.idModalidad).subscribe((data:any)=>this.cursoactu=data);
+              this.appService.getAllCurso().subscribe((data:any)=>this.cursoactu=data);
+  
+             return;
+           }else{
+            this.appService.listarcursos(this.idempleados,this.IdPeriodo ,this.idModalidad).subscribe((data:any)=>this.cursoactu=data);
+  
+           }
+         }
+           //this.appService.listarcursos(this.idempleados,this.IdPeriodo ,this.idModalidad).subscribe((data:any)=>this.cursoactu=data);
  
           
           }
@@ -638,7 +648,19 @@ pipe = new DatePipe('en-EC');
           onperiodoactualizar(id: any){
           this.IdPeriodo= id;
           this.validarfiltros();
-          this.appService.listarmodalidad(this.idempleados,this.IdPeriodo).subscribe((data:any)=>this.modalidadesactu=data);
+
+          for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+            if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+         
+              this.appService.getAllModalidad().subscribe((data:any)=>this.modalidadesactu=data);
+              this.showmodalidadactu=false;
+             return;
+           }else{
+            this.appService.listarmodalidad(this.idempleados,this.IdPeriodo).subscribe((data:any)=>this.modalidadesactu=data);
+  
+           }
+         };
+          //this.appService.listarmodalidad(this.idempleados,this.IdPeriodo).subscribe((data:any)=>this.modalidadesactu=data);
           this.showmodalidadactu=false;
           if(this.IdPeriodo==0){
             this.showasignaturaactu=true;
@@ -668,7 +690,19 @@ pipe = new DatePipe('en-EC');
             this.asignaturasactu=[];
             this.asistenciaactualizar=[]; 
            }
-           this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturasactu=data);
+           for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+            if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+         
+              this.appService.getAllAsignatura().subscribe((data:any)=>this.asignaturasactu=data);
+        
+  
+             return;
+           }else{
+            this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturasactu=data);
+  
+           }
+         }
+           //this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturasactu=data);
          
           }
       //************* fin  evento paralelo actualizar**********//
@@ -685,7 +719,18 @@ pipe = new DatePipe('en-EC');
               this.asignaturasactu=[];
               this.asistenciaactualizar=[]; 
              }
-            this.appService.listarparalelo(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso).subscribe((data:any)=>this.paralelosactu=data);
+
+             for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+              if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+           
+                this.appService.getAllParalelo().subscribe((data:any)=>this.paralelosactu=data);       
+  
+               return;
+             }else{
+              this.appService.listarparalelo(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso).subscribe((data:any)=>this.paralelosactu=data);
+  
+             }
+           }
 
     
             }
@@ -714,6 +759,25 @@ pipe = new DatePipe('en-EC');
                      
                     }
                   )
+                  this.showasignaturaactu=true;
+                  this.showmodalidadactu=true;
+                  this.showcursoactu=true;
+                  this.showparaleloactu=true;
+                  this.asignaturasactu=[];
+                  this.modalidadesactu=[];
+                  this.cursoactu=[];
+                  this.paralelosactu=[];
+                  this.asistenciaactualizar=[]; 
+                  this.periodosactu=[];
+                  for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+                    if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+                 
+                     this.appService.getAllPeriodo().subscribe((data:any)=>this.periodosactu=data);
+                     return;
+                   }else{
+                     this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodosactu=data);
+                   }
+                 }
                 } 
               });
               this.valiadarfecha==0;
