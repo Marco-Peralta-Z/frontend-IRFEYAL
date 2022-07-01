@@ -61,6 +61,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { InputMaskModule } from 'primeng/inputmask';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
 import {InputSwitchModule} from 'primeng/inputswitch';
+import {InputNumberModule} from 'primeng/inputnumber';
 
 @NgModule({
 
@@ -85,7 +86,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     SplitButtonModule, StyleClassModule, PasswordModule,
     TabMenuModule,CheckboxModule, InputTextareaModule,
     ConfirmDialogModule,PickListModule,MatIconModule,RadioButtonModule,
-    InputSwitchModule
+    InputSwitchModule,InputNumberModule
   ]
 
 })

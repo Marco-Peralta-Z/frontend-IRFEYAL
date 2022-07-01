@@ -253,17 +253,12 @@ export class ItemsService {
             },
             {
                 label: 'Pagos',
-                icon: 'pi pi-folder',
+                icon: 'pi pi-dollar',
                 items: [
                     {
-                        label: 'Consultar Pagos',
+                        label: 'Comprobantes',
                         icon: 'fa fa-book',
                         routerLink: 'pagos/listarComprobante'
-                    },
-                    {
-                        label: 'Cobros',
-                        icon: 'fa fa-plus-square',
-                        routerLink: 'pagos/crearComprobante'
                     }
                     
                 ]
@@ -274,7 +269,7 @@ export class ItemsService {
                 items: [
                     {
                         label: 'Bitacora',
-                        icon: 'fa fa-plus-square',
+                        icon: 'fa fa-book',
                         routerLink: 'secretaria/listarBitacora'
                     },
                     {
@@ -285,11 +280,6 @@ export class ItemsService {
                                 label: 'Lista de Documentos',
                                 icon: 'fa fa-book',
                                 routerLink: 'secretaria/listarDocumento'
-                            },
-                            {
-                                label: 'Agregar Documentos',
-                                icon: 'fa fa-plus-square',
-                                routerLink: 'secretaria/agregarDocumento'
                             }
                         ]
                     },
@@ -299,12 +289,12 @@ export class ItemsService {
                         items: [
                             {
                                 label: 'Certificado de Matricula',
-                                icon: 'fa fa-plus-square',
+                                icon: 'pi pi-file-o',
                                 routerLink: 'secretaria/generarCertificadoMatricula'
                             },
                             {
                                 label: 'Certificado de Promocion',
-                                icon: 'fa fa-plus-square',
+                                icon: 'pi pi-file-o',
                                 routerLink: 'secretaria/generarCertificadoPromocion'
                             }
                         ]
@@ -315,7 +305,7 @@ export class ItemsService {
                         items: [
                             {
                                 label: 'Nomina Estudiantil',
-                                icon: 'fa fa-plus-square',
+                                icon: 'pi pi-file-o',
                                 routerLink: 'secretaria/nominaEstudiantil'
                             }
                         ]

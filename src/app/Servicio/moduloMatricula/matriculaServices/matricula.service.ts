@@ -68,4 +68,11 @@ sendEmail(matricula: Matricula): Observable<any>{
   );
 }
 
+  //metodo para buscar estudiante por cedula usado en el modulo de pagos
+
+getMatriculaPorCedula(cedula: string){
+  return this.http.get<Matricula[]>(`${this.baseUrl}api/matricula/${cedula}`)
+}
+
+
 }

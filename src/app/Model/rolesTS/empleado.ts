@@ -22,6 +22,7 @@ export class empleado {
     CorreoElectronico: correoElectronico = new correoElectronico;
 
     id_persona: persona = new persona();
+    persona?: persona;
 
     constructor(id_empleado?: number) {
         this.id_empleado = id_empleado ?? 0;

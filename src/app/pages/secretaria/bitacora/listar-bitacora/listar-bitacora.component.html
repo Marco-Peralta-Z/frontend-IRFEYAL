@@ -1,63 +1,114 @@
 <div class="container-fluid page">
     <div class="centro">
         <div class="d-flex page__box p-3 mt-2">Bitacora de Registro de Documentos</div>
-        <div class="page__content shadow p-3 ">
-            <br><br>
-            <p-table [value]="bitacoras" responsiveLayout="scroll" [paginator]="true" [rows]="7"
-                [rowsPerPageOptions]="[7,14]" [rowHover]="true">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th style="text-align: center">Código</th>
-                        <th style="text-align: center">Documento / Tipo</th>
-                        <th style="text-align: center">Solicitante</th>
-                        <th style="text-align: center">Emisor</th>
-                        <th style="text-align: center">Fecha</th>
-                        <th style="text-align: center">Hora</th>
-                        <th style="text-align: center">Estado</th>
-                        <th style="text-align: center">Descripción</th>
-                        <th style="text-align: center">Procesar</th>
-                    </tr>
+        <div class="page__content shadow p-3 position-relative">
+            <br>
+
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                        (click)="openNew()"></button>
+
                 </ng-template>
-                <ng-template pTemplate="body" let-bitacora >
-                    <tr>
-                        <td style="text-align: center">{{bitacora.id_registro_bitacora}}</td>
-                        <td *ngIf="bitacora.estado==='Pendiente'||bitacora.estado==='PENDIENTE' ; else elseBlock">
-
-
-                            <select name="miselect" 
-                            style="text-align: center ; margin-left: 16%;"  >
-                            <option value="" disabled selected hidden >SELECCIONE</option>
-                            <option [ngValue]="bitacora" *ngFor="let objeto of documentos">{{objeto.tipo_documento}}</option>-->
-                         
-                            </select>
-
-                        </td>
-                        <ng-template #elseBlock>
-                            <td style="text-align: center">{{bitacora.documento.tipo_documento}}</td>
-                        </ng-template>
-                        <td style="text-align: center">{{bitacora.solicitante | titlecase}}</td>
-                        <td style="text-align: center">{{bitacora.emisor | titlecase}}</td>
-                        <td style="text-align: center">{{bitacora.fecha | date: 'MMMM dd, yyyy'}}</td>
-                        <td style="text-align: center">{{bitacora.fecha | date:'HH:mm:ss'}}</td>
-                        <td style="text-align: center">{{bitacora.estado}}</td>
-                        <td style="text-align: center">{{bitacora.documento.descripcion}}</td>
-                        <td *ngIf="bitacora.estado==='Pendiente'||bitacora.estado==='PENDIENTE'">
-                            <button type="submit" class="btn btn-dark" style="margin-left: 10%;"
-                                (click)="procesar(bitacora)">Procesar</button>
-                        </td>
-                    </tr>
-                </ng-template>
-               
-            </p-table>
-            <br><br>
-            <div class="row">
-                <div class="col-sm-12 col-md-4" style="margin-left: auto;margin-right: auto;">
-                    <button type="submit" class="btn btn-dark" (click)="ingreso()">Nuevo documento</button>
-                    <button type="submit" class="btn btn-dark" style="margin-left: 35px;"
-                        (click)="refrescar()">Actualizar</button>
-                    <button type="submit" class="btn btn-dark" style="margin-left: 35px;"
-                        (click)="regresarHome()">Cancelar</button>
-                </div>
+            </p-toolbar>
+            <div class="input-group">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" id="search" placeholder="Codigo" />
+                </span>
+                <br><br>
+                <p-button label="Buscar" icon="pi pi-search" type="submit"></p-button>
             </div>
+            <br><br>
+            <span class="card mt-2">
+                <p-table [value]="bitacoras" responsiveLayout="scroll" [paginator]="true" [rows]="7"
+                    [rowsPerPageOptions]="[7,14]" [rowHover]="true">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="text-align: center">Código</th>
+                            <th style="text-align: center">Documento / Tipo</th>
+                            <th style="text-align: center">Solicitante</th>
+                            <th style="text-align: center">Emisor</th>
+                            <th style="text-align: center">Fecha</th>
+                            <th style="text-align: center">Hora</th>
+                            <th style="text-align: center">Estado</th>
+                            <th style="text-align: center">Descripción</th>
+                            <th style="text-align: center">Procesar</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-bitacora>
+                        <tr>
+                            <td style="text-align: center">{{bitacora.id_registro_bitacora}}</td>
+                            <td style="text-align: center">{{bitacora.documento.tipo_documento}}</td>
+                            <td style="text-align: center">{{bitacora.solicitante | titlecase}}</td>
+                            <td style="text-align: center">{{bitacora.emisor | titlecase}}</td>
+                            <td style="text-align: center">{{bitacora.fecha | date: 'MMMM dd, yyyy'}}</td>
+                            <td style="text-align: center">{{bitacora.fecha | date:'HH:mm:ss'}}</td>
+                            <td style="text-align: center">{{bitacora.estado}}</td>
+                            <td style="text-align: center">{{bitacora.documento.descripcion}}</td>
+                            <td *ngIf="bitacora.estado==='Pendiente'||bitacora.estado==='PENDIENTE'">
+                                <button type="submit" class="btn btn-dark" style="margin-left: 10%;"
+                                    (click)="procesar(bitacora)">Procesar</button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+
+
+
+
+                <p-dialog [(visible)]="comprobanteDialog" [style]="{width: '450px'}" header="Comprobante" [modal]="true"
+                    styleClass="p-fluid">
+                    <ng-template pTemplate="content">
+
+
+                        <form [formGroup]="addForm">
+                            <br>
+                            <div class="centro">
+                                <label><b>Solicitante: </b></label>
+                                <input type="text" pInputText formControlName="solicitante"
+                                    placeholder="Ingrese soliciante" name="solicitante" class="form-control"
+                                    id="solicitante">
+                            </div>
+                            <br>
+                            <div class="centro">
+                                <label><b>Emisor: </b></label>
+                                <input type="text" pInputText formControlName="emisor" placeholder="Ingrese emisor"
+                                    name="emisor" class="form-control" id="emisor">
+                            </div>
+                            <br>
+                            <div class="centro">
+                                <label><b>Documento: </b></label>
+                                <form [formGroup]="documentoFormulario">
+                                    <select formControlName="documentSelec"
+                                        style="text-align: center ; margin-left: 16%;">
+                                        <option *ngFor="let objeto of documentos" [value]="objeto.id_documento"
+                                            [selected]="0">
+                                            {{objeto.tipo_documento}}
+                                        </option>
+                                    </select>
+                                </form>
+                            </div>
+                            <br>
+
+
+                        </form>
+
+
+                    </ng-template>
+
+
+                    <ng-template pTemplate="footer">
+                        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                            (click)="hideDialog()"></button>
+                        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                            (click)="ingreso()"></button>
+                    </ng-template>
+
+
+                </p-dialog>
+            </span>
         </div>
     </div>
+</div>

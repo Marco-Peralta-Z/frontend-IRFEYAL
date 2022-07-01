@@ -7,7 +7,7 @@ export class extension {
 
     nombre_extension: string = "";
 
-    direccion?: direccion;
+    id_direccion?: direccion;
 
     empresa?: empresa;
 }

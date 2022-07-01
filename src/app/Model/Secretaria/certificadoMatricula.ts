@@ -9,8 +9,9 @@ export class CertificadoMatricula{
     fecha: Date= new Date();
     id_empleado: empleado = new empleado();
     id_matricula: Matricula = new Matricula();
-    id_direccion: direccion = new direccion();
-    estudiantes: Estudiante [] = [];
-    certificadoMatricula: Matricula[] = [];
+    
+
+
+    
     
 }
