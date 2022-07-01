@@ -121,8 +121,7 @@ export class ActividadesRegistroComponent implements OnInit {
   }
 
   llenarregistros() {
-    
-    this.servitutorias.getRegistros(this.selectPeriodo, this.selectRegistro.id_matricula, this.selectAsignatura).subscribe(dataRegistro => {
+    this.servitutorias.getRegistros(this.selectPeriodo,this.selectMalla,this.selectModalidad,this.selectCurso,this.selectParalelo,this.selectAsignatura).subscribe(dataRegistro => {
       if (dataRegistro.length == 0) {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'NO HAY REGISTROS', life: 3000 });
       } else {
