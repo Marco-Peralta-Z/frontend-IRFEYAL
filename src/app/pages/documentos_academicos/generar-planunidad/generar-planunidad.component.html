@@ -67,7 +67,7 @@
                                 <label>Periodo:</label> <br>
                                 <p-dropdown [options]="periodos" [(ngModel)]="opcionSelectPeriodo" placeholder="Select"
                                     [style]="{'width':'200px','border': '1px solid #C0C0C0'}" [showClear]="true"
-                                    optionLabel="periodo_academico" formControlName="periodo"
+                                    optionLabel="fecha_inicio" formControlName="periodo"
                                     (onChange)="capturarSelectPeriodo()">
                                     <ng-template let-periodo pTemplate="item">
                                         <div class="flex align-items-center operatingSystems-item">

@@ -10,6 +10,11 @@ p-table {
     border-radius: 20px 20px 20px 20px;
     padding: 2%;
     margin: 2%;
+    
+}
+p-image {
+    width: 24%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
 }
 
 caption {
@@ -91,8 +96,7 @@ th {
 }
 
 .horas {
-    margin: 0;
-    padding: 0;
+    font-weight: bolder;
     background-color: #FFD180;
 }
 
@@ -153,4 +157,6 @@ kendo-pdf-export {
     font-family: "DejaVu Sans", "Arial", sans-serif;
     font-size: 12px;
 }
+
+
 

@@ -101,6 +101,7 @@ export class AsignaturasComponent implements OnInit {
     if (this.asig.descripcion == null) {
       this.submitted = true;
     } else {
+      console.log(this.selecempleadodoc)
       this.selecempleadodoc.forEach(element => {
         this.asig.empleados.push(element)
       });
@@ -121,6 +122,7 @@ export class AsignaturasComponent implements OnInit {
     if (this.asig.descripcion == null) {
       this.submitted = true;
     } else {
+      this.asig.empleados=new Array;
       this.selecempleadodoc.forEach(element => {
         this.asig.empleados.push(element)
       });

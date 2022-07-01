@@ -8,6 +8,6 @@ export class Asignatura {
 
 	fecha_creacion!: Date;
 
-	empleados!: empleado[];
+	empleados: empleado[]=[];
 
 } 

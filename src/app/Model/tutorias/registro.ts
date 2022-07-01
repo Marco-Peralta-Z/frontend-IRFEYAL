@@ -1,49 +1,5 @@
-export class Periodo {
-    id_periodo: Number = 0;
-    periodo_academico: String = "";
-    fecha_inicio: Date = new Date;
-    fecha_fin: Date = new Date;
-}
-
-export class Modalidad {
-    id_modalidad: Number = 0;
-    descripcion: String = "";
-}
-
-export class Curso {
-    id_curso: Number = 0;
-    descripcion: String = "";
-}
-
-export class Paralelo {
-    id_paralelo: Number = 0;
-    descripcion: String = "";
-}
-
-export class Asignatura {
-    id_asignatura: Number = 0;
-    descripcion: String = "";
-}
-
-export class id_persona {
-    apellido: String = "";
-    cedula: String = "";
-    nombre: String = ""
-}
-
-export class Estudiante {
-    id_estudiante: Number = 0;
-    id_persona: id_persona = new id_persona;
-}
-
-export class id_matricula {
-    id_matricula: Number = 0;
-    estudiante: Estudiante = new Estudiante;
-    id_periodo: Periodo = new Periodo;
-    modalidad: Modalidad = new Modalidad;
-    curso: Curso = new Curso;
-    id_paralelo: Paralelo = new Paralelo;
-}
+import { Matricula } from "../Matriculas/matricula";
+import { Asignatura } from "../Parametrizacion/Asignatura";
 
 export class Registro {
     id_registro: Number = 0;
@@ -59,7 +15,7 @@ export class Registro {
     examen_remedial: Number = 0;
     examen_gracia: Number = 0;
     nota_final: Number = 0;
-    id_matricula: id_matricula = new id_matricula;
+    id_matricula: Matricula = new Matricula;
     id_asignatura: Asignatura = new Asignatura;
     estado: String = "";
 }

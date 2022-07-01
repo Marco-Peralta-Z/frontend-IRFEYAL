@@ -6,6 +6,7 @@ import { Horario } from 'src/app/Model/Parametrizacion/Horario';
 import { Periodo } from 'src/app/Model/Parametrizacion/Periodo';
 import { tutor } from 'src/app/Model/Parametrizacion/tutor';
 import { PeriodoService } from 'src/app/Servicio/parametrizacion/Service Periodo/periodo.service';
+import { Path } from 'src/app/config';
 
 @Component({
   selector: 'app-horario',
@@ -30,12 +31,11 @@ export class HorarioComponent implements OnInit {
   hn: Horas_NoIntensivo = new Horas_NoIntensivo;
   listOrHor: horarioCompleto[] = [];
   selechor: horarioCompleto = new horarioCompleto;
-
   public repeatHeaders = true;
   b1: boolean = false;
   b2: boolean = false;
   b3: boolean = false;
-
+  path = Path.url;
   ngOnInit(): void {
     this.llenarTablas();
   }
@@ -170,6 +170,6 @@ export class HorarioComponent implements OnInit {
     this.print = "HORARIO DE CLASES DE_" +
       this.seleccursos.descripcion + "_PARALELO_" +
       this.selectParalelo.id_paralelo.descripcion +
-      "_CICLO ESCOLAR_" + this.selectperiodo.ano_inicio + "_" + this.selectperiodo.ano_fin + ".pdf";  
+      "_CICLO ESCOLAR_" + this.selectperiodo.ano_inicio + "_" + this.selectperiodo.ano_fin + ".pdf";
   }
 }
