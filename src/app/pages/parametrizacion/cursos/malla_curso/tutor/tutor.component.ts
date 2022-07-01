@@ -47,6 +47,11 @@ export class TutorComponent implements OnInit {
     let id_curso = localStorage.getItem("id_curso")
     this.serviceasign.getEmpleados().subscribe(data => {
       this.listempleado = data;
+      for (let index = 0; index < data.length; index++) {
+        if (data[index].cargo == "contratacion_docente") {
+          this.listempleado.push(data[index]);
+        }
+      }
     })
 
     this.servicecurso.getIdCursos(id_curso).subscribe(data => {

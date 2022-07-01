@@ -39,7 +39,7 @@ export class AsignaturasComponent implements OnInit {
   asig2: Asignatura = new Asignatura
   listarea: Area[] = [];
   selectArea!: Area;
-  
+
   ngOnInit(): void {
     this.activeItem = this.items[0];
     this.llenarTabalAsignatura();
@@ -54,14 +54,12 @@ export class AsignaturasComponent implements OnInit {
   }
 
   llenarTabalAsignatura() {
-
     this.serviceasig.getEmpleados().subscribe(data => {
       this.empleados = new Array();
       for (let index = 0; index < data.length; index++) {
         if (data[index].cargo == "contratacion_docente") {
           this.empleados.push(data[index]);
         }
-
       }
       this.empleados.sort();
     })
@@ -122,7 +120,7 @@ export class AsignaturasComponent implements OnInit {
     if (this.asig.descripcion == null) {
       this.submitted = true;
     } else {
-      this.asig.empleados=new Array;
+      this.asig.empleados = new Array;
       this.selecempleadodoc.forEach(element => {
         this.asig.empleados.push(element)
       });
