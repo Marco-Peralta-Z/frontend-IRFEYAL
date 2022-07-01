@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Periodo, Malla, Modalidad, Curso, Paralelo, Asignatura, Registro } from 'src/app/Model/tutorias/registro';
+import { Registro } from 'src/app/Model/tutorias/registro';
 import { MessageService, SharedModule, ConfirmationService } from 'primeng/api';
 import { ServiceTutoriasService } from 'src/app/Servicio/tutorias/registro/servicio-tutorias.service';
 import { AuthService } from 'src/app/Servicio/auth/auth.service';
 import { usuario } from 'src/app/Model/rolesTS/usuario';
+import { Periodo } from 'src/app/Model/Parametrizacion/Periodo';
+import { Malla } from 'src/app/Model/Parametrizacion/Malla';
+import { Modalidad } from 'src/app/Model/Parametrizacion/Modalidad';
+import { Curso } from 'src/app/Model/Parametrizacion/Curso';
+import { Paralelo } from 'src/app/Model/Parametrizacion/Paralelo';
+import { Asignatura } from 'src/app/Model/Parametrizacion/Asignatura';
 
 @Component({
   selector: 'app-actividadesRegistro',
@@ -115,7 +121,8 @@ export class ActividadesRegistroComponent implements OnInit {
   }
 
   llenarregistros() {
-    this.servitutorias.getRegistros(this.selectPeriodo, this.selectMalla, this.selectModalidad, this.selectCurso, this.selectParalelo, this.selectAsignatura).subscribe(dataRegistro => {
+    
+    this.servitutorias.getRegistros(this.selectPeriodo, this.selectRegistro.id_matricula, this.selectAsignatura).subscribe(dataRegistro => {
       if (dataRegistro.length == 0) {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'NO HAY REGISTROS', life: 3000 });
       } else {
