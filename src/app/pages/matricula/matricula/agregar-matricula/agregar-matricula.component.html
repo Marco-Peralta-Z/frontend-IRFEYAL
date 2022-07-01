@@ -324,7 +324,7 @@
 
                                 <span class="p-float-label mt-4">
                                     <input id="float-input" type="text"
-                                        [ngModel]="matricula.id_periodo.ano_inicio " pInputText
+                                        [ngModel]="(matricula.id_periodo.fecha_inicio | date:'MMMM-yyyy') + '-' +(matricula.id_periodo.fecha_fin | date:'MMMM-yyyy')" pInputText
                                         readonly formControlName="Rlectivo">
                                     <label for="float-input">Año Lectivo</label>
                                 </span>
