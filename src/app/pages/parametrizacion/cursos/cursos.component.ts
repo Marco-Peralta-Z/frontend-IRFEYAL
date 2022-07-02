@@ -28,7 +28,7 @@ export class CursosComponent implements OnInit {
   listcursos!: Curso[];
   panelCursosNuevo!: Boolean;
   star!: Boolean;
-  empleados: empleado[] = [];
+  empleados: any[] = [];
   selecempleadodoc!: empleado;
   selectcurso: Curso = new Curso;
   submitted: boolean = false;
@@ -50,16 +50,19 @@ export class CursosComponent implements OnInit {
       this.listcursos.sort();
     });
 
-    this.serviceasig.getEmpleados().subscribe(data => {
+    this.serviceasig.getRolUsuario().subscribe(data => {
       this.empleados = new Array();
+      console.log(data)
       for (let index = 0; index < data.length; index++) {
-        if (data[index].cargo == "contratacion_docente") {
-          this.empleados.push(data[index]);
+        if (data[index].rol.descripcion.toLocaleLowerCase() == "docente") {
+          console.log(data[index])
+          this.empleados.push(data[index].usuario.empleado);
         }
-
       }
       this.empleados.sort();
-    });
+      console.log(this.empleados);
+    })
+
 
     /*this.serviceparalelo.getAllParalelo().subscribe(data => {
       this.listparalelo = data;

@@ -4,6 +4,8 @@ import { Api } from 'src/app/config';
 import { Area } from 'src/app/Model/Parametrizacion/Area';
 import { Asignatura } from 'src/app/Model/Parametrizacion/Asignatura';
 import { empleado } from 'src/app/Model/rolesTS/empleado';
+import { rolUsuario } from 'src/app/Model/rolesTS/rolUsuario';
+import { usuario } from 'src/app/Model/rolesTS/usuario';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +14,7 @@ export class AsignaturaService {
   constructor(private http: HttpClient) { }
   private url = Api.url + "asignatura";
   private url2 = Api.url + "mapEmpleado";
+  private url3 = Api.url + "mapRolUsuario";
 
   getAsignaturas() {
     return this.http.get<Asignatura[]>(this.url);
@@ -35,6 +38,10 @@ export class AsignaturaService {
 
   getEmpleados() {
     return this.http.get<empleado[]>(this.url2 + "/empleado")
+  }
+
+  getRolUsuario(){
+    return this.http.get<rolUsuario[]>(this.url3+"/rolUsuario")
   }
 
   //Area
