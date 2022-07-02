@@ -1,7 +1,7 @@
 <div class="container-fluid page">
     <div class="d-flex page__box p-3 mt-2">Lista de Estudiantes</div>
     <div class="page__content shadow p-3 position-relative">
-        <p-toast></p-toast>
+        <p-toast position="top-right" key="tc"></p-toast>
 
         <div class="card">
 
@@ -60,112 +60,159 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="productDialog" [style]="{width: '650px'}" header="Información Estudiante" [modal]="true"
+            <p-dialog [(visible)]="productDialog" [style]="{width: '650px'}" header="Información Estudiante" [modal]="true"
             styleClass="p-fluid">
             <hr>
-            <ng-template pTemplate="content">
+            <ng-template pTemplate="content" >
                 <h3>Desea Editar?</h3>
                 <p-toggleButton [(ngModel)]="esditable" onLabel="Habilitar" offLabel="Deshabilitar" onIcon="pi pi-check"
-                    offIcon="pi pi-times" [style]="{'width': '10em'}"></p-toggleButton>
+                    offIcon="pi pi-times" [style]="{'width': '10em'}" ></p-toggleButton>
                 <!-- <img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.image" class="product-image" *ngIf="product.image"> -->
                 <hr>
-                <div class="formgrid grid">
-                    <div class="field col-6">
-                        <label for="identidadUpdate">Cedula/Pasaporte</label>
-                        <input type="text" pInputText id="identidadUpdate" [(ngModel)]="estudiante.id_persona.cedula"
-                            [disabled]="esditable" required autofocus />
-                        <small class="p-error" *ngIf="submitted && !estudiante.id_persona.cedula">Nombre es
-                            requerido.</small>
+                <div [formGroup]="editEstudiante">
+                    <div class="formgrid grid" >
+                        <div class="field col-6">
+                            <label for="identidadUpdate">Cedula/Pasaporte</label>
+                            <input type="text" pInputText id="identidadUpdate" [(ngModel)]="estudiante.id_persona.cedula"
+                                [readonly]="esditable" (change)="validaExistenciaEstudiante()" name="cedula" formControlName="cedula" />
+                            <small class="p-error" *ngIf="campoValido('cedula')">Campo requerido.</small>
+                        </div>
+                        <div class="field col-6">
+                            <label for="nombreUpdate">Nombre</label>
+                            <input type="text" pInputText id="nombreUpdate" [(ngModel)]="estudiante.id_persona.nombre"
+                                [readonly]="esditable" formControlName="nombre" name="nombre"/>
+                            <small class="p-error" *ngIf="campoValido('nombre')">Campo requerido.</small>
+                        </div>
+                        <div class="field col-6">
+                            <label for="apellidoUpdate">Apellido</label>
+                            <input type="text" pInputText id="apellidoUpdate" [(ngModel)]="estudiante.id_persona.apellido"
+                                [readonly]="esditable" formControlName="apellido" name="apellido"/>
+                                <small class="p-error" *ngIf="campoValido('apellido')">Campo
+                                    requerido.</small>
+                        </div>
+                        <div class="field col-6">
+                            <label for="nacimientoUpdate">Fecha Nacimiento:</label>
+                            <!-- <input type="date"  max="2004-12-31" pInputText id="nacimientoUpdate" [value]="estudiante.id_persona.fechaNacimiento | date: 'yyyy-MM-dd'" [readonly]="esditable" required />                 -->
+                            <input type="date"  pInputText id="nacimientoUpdate"
+                                [(ngModel)]="estudiante.id_persona.fechaNacimiento" (ngModelChange)="CalculateAge()" name="fecha" [readonly]="esditable" formControlName="fecha" />
+                                <small class="p-error" *ngIf="campoValido('fecha')">Campo
+                                    requerido.</small>
+                        </div>
+                        <div class="field col-6">
+                            <label for="generoUpdate">Genero</label>
+                            <p-dropdown [options]="generos" [(ngModel)]="estudiante.id_persona.genero"
+                                placeholder="Seleccione Genero" optionLabel="genero" [showClear]="true"
+                                [readonly]="esditable" formControlName="genero" name="genero"></p-dropdown>
+                                <small class="p-error" *ngIf="campoValido('genero')">Campo
+                                    requerido.</small>
+                        </div>
                     </div>
-                    <div class="field col-6">
-                        <label for="nombreUpdate">Nombre</label>
-                        <input type="text" pInputText id="nombreUpdate" [(ngModel)]="estudiante.id_persona.nombre"
-                            [disabled]="esditable" required />
-                        <small class="p-error" *ngIf="submitted && !estudiante.id_persona.nombre">Nombre es
-                            requerido.</small>
+                    <hr>
+                    <div class="field">
+                        <label class="mb-3">Contactos</label>
+                        <div class="formgrid grid">
+                            <div class="fiel col-6">
+                                <label for="telfUpdate">Telefono</label>
+                                <p-inputMask mask="(99)-999-9999" id="telfUpdate" [(ngModel)]="estudiante.telefono.telefono"
+                                    [readonly]="esditable" formControlName="telefono" name="telefono"></p-inputMask>
+                                    <small class="p-error" *ngIf="campoValido('telefono')">Campo requerido.</small>
+                            </div>
+                            <div class="fiel col-6">
+                                <label for="celUpdate">Celular</label>
+                                <p-inputMask mask="999-999-9999" id="celUpdate"
+                                    [(ngModel)]="estudiante.telefono.numCelular " name="celular" [readonly]="esditable" formControlName="celular"></p-inputMask>
+                                    <small class="p-error" *ngIf="campoValido('celular')">Campo requerido.</small>    
+                            </div>
+                            <div class="fiel col-8">
+                                <label for="emailUpdate">Correo</label>
+                                <input class="lowercase" type="text" pInputText id="emailUpdate" [(ngModel)]="estudiante.correo.correo"
+                                    [readonly]="esditable" formControlName="email" name="email" />
+                                    <small class="p-error" *ngIf="campoValido('email')">Campo requerido.</small>
+                            </div>
+                        </div>
                     </div>
-                    <div class="field col-6">
-                        <label for="apellidoUpdate">Apellido</label>
-                        <input type="text" pInputText id="apellidoUpdate" [(ngModel)]="estudiante.id_persona.apellido"
-                            [disabled]="esditable" required />
-                        <!-- <textarea id="description" pInputTextarea [(ngModel)]="estudiante.id_persona.cedula" required rows="3" cols="20"></textarea> -->
+    
+                    <hr>
+    
+                    <div class="field">
+                        <label class="mb-3">Dirección</label>
+                        <div class="formgrid grid">
+                            <div class="fiel col-6">
+                                <label for="telfUpdate">Calle Principal</label>
+                                <input type="text" id="telfUpdate" pInputText [(ngModel)]="estudiante.direccion.avPrincipal"
+                                    [readonly]="esditable" formControlName="calleFirts"/>
+                                    <small class="p-error" *ngIf="campoValido('calleFirts')">Campo requerido.</small>
+                            </div>
+                            <div class="fiel col-6">
+                                <label for="celUpdate">Calle Secundaria</label>
+                                <input type="text" id="celUpdate" pInputText [(ngModel)]="estudiante.direccion.avSecundaria"
+                                    [readonly]="esditable" formControlName="calleSecond"/>
+                                    <small class="p-error" *ngIf="campoValido('calleSecond')">Campo requerido.</small>
+                            </div>
+                            <div class="fiel col-6">
+                                <label for="emailUpdate">Provincia</label>
+                                <p-dropdown [options]="provincias" [(ngModel)]="estudiante.direccion.provincia"
+                                    placeholder="Seleccione Provincia" [filter]="true" filterBy="provincia" optionLabel="provincia" [showClear]="true"
+                                    [readonly]="esditable" formControlName="provincia">
+                                    <ng-template pTemplate="selectedItem" >
+                                        <div class="country-item country-item-value"  *ngIf="estudiante.direccion.provincia">
+                                            <div>{{estudiante.direccion.provincia.provincia}}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-provincias pTemplate="item">
+                                        <div class="country-item">
+                                            <div>{{provincias.provincia}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                                <small class="p-error" *ngIf="campoValido('provincia')">Campo
+                                    requerido.</small>
+                            </div>
+                            <div class="fiel col-6">
+                                <label for="emailUpdate">Canton</label>
+                                <p-dropdown [options]="cantones" [(ngModel)]="estudiante.direccion.canton"
+                                    placeholder="Seleccione Canton"[filter]="true" filterBy="canton" optionLabel="canton" [showClear]="true"
+                                    [readonly]="esditable" formControlName="canton">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="country-item country-item-value"  *ngIf="estudiante.direccion.canton">
+                                            
+                                            <div>{{estudiante.direccion.canton.canton}}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-cantones pTemplate="item">
+                                        <div class="country-item">
+                                            <div>{{cantones.canton}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                                <small class="p-error" *ngIf="campoValido('canton')">Campo
+                                    requerido.</small>
+                            </div>
+                            <div class="fiel col-6">
+                                <label for="emailUpdate">Parroquia</label>
+                                <p-dropdown [options]="parroquias" [(ngModel)]="estudiante.direccion.parroquia"
+                                    placeholder="Seleccione parroquia" [filter]="true" filterBy="parroquia" optionLabel="parroquia" [showClear]="true"
+                                    [readonly]="esditable" formControlName="parroquia">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="country-item country-item-value"  *ngIf="estudiante.direccion.parroquia">
+                                            
+                                            <div>{{estudiante.direccion.parroquia.parroquia}}</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-parroquias pTemplate="item">
+                                        <div class="country-item">
+                                            <div>{{parroquias.parroquia}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                                <small class="p-error" *ngIf="campoValido('parroquia')">Campo
+                                    requerido.</small>
+                            </div>
+                        </div>
                     </div>
-                    <div class="field col-6">
-                        <label for="nacimientoUpdate">Fecha Nacimiento:</label>
-                        <label>Ingresada:</label>
-                        <!-- <input type="date"  max="2004-12-31" pInputText id="nacimientoUpdate" [value]="estudiante.id_persona.fechaNacimiento | date: 'yyyy-MM-dd'" [disabled]="esditable" required />                 -->
-                        <input type="date"  pInputText id="nacimientoUpdate"
-                            [(ngModel)]="estudiante.id_persona.fechaNacimiento" [disabled]="esditable" required />
-
-                        <!-- <textarea id="description" pInputTextarea [(ngModel)]="estudiante.id_persona.cedula" required rows="3" cols="20"></textarea> -->
-                    </div>
-                    <div class="field col-6">
-                        <label for="generoUpdate">Genero</label>
-                        <p-dropdown [options]="generos" [(ngModel)]="estudiante.id_persona.genero"
-                            placeholder="Seleccione Genero" optionLabel="genero" [showClear]="true"
-                            [disabled]="esditable"></p-dropdown>
-                        <!-- <textarea id="description" pInputTextarea [(ngModel)]="estudiante.id_persona.cedula" required rows="3" cols="20"></textarea> -->
-                    </div>
+                
                 </div>
-                <hr>
-                <div class="field">
-                    <label class="mb-3">Contactos</label>
-                    <div class="formgrid grid">
-                        <div class="fiel col-6">
-                            <label for="telfUpdate">Telefono</label>
-                            <p-inputMask mask="(99)-999-9999" id="telfUpdate" [(ngModel)]="estudiante.telefono.telefono"
-                                [disabled]="esditable"></p-inputMask>
-                        </div>
-                        <div class="fiel col-6">
-                            <label for="celUpdate">Celular</label>
-                            <p-inputMask mask="999-999-9999" id="celUpdate"
-                                [(ngModel)]="estudiante.telefono.numCelular " [disabled]="esditable"></p-inputMask>
-                        </div>
-                        <div class="fiel col-8">
-                            <label for="emailUpdate">Correo</label>
-                            <input class="lowercase" type="text" pInputText id="emailUpdate" [(ngModel)]="estudiante.correo.correo"
-                                [disabled]="esditable" required />
-                        </div>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="field">
-                    <label class="mb-3">Dirección</label>
-                    <div class="formgrid grid">
-                        <div class="fiel col-6">
-                            <label for="telfUpdate">Calle Principal</label>
-                            <input type="text" id="telfUpdate" pInputText [(ngModel)]="estudiante.direccion.avPrincipal"
-                                [disabled]="esditable" required />
-                        </div>
-                        <div class="fiel col-6">
-                            <label for="celUpdate">Calle Secundaria</label>
-                            <input type="text" id="celUpdate" pInputText [(ngModel)]="estudiante.direccion.avSecundaria"
-                                [disabled]="esditable" required />
-                        </div>
-                        <div class="fiel col-6">
-                            <label for="emailUpdate">Provincia</label>
-                            <p-dropdown [options]="provincias" [(ngModel)]="estudiante.direccion.provincia"
-                                placeholder="Seleccione Provincia" optionLabel="provincia" [showClear]="true"
-                                [disabled]="esditable"></p-dropdown>
-
-                        </div>
-                        <div class="fiel col-6">
-                            <label for="emailUpdate">Canton</label>
-                            <p-dropdown [options]="cantones" [(ngModel)]="estudiante.direccion.canton"
-                                placeholder="Seleccione Canton" optionLabel="canton" [showClear]="true"
-                                [disabled]="esditable"></p-dropdown>
-                        </div>
-                        <div class="fiel col-6">
-                            <label for="emailUpdate">Parroquia</label>
-                            <p-dropdown [options]="parroquias" [(ngModel)]="estudiante.direccion.parroquia"
-                                placeholder="Seleccione parroquia" optionLabel="parroquia" [showClear]="true"
-                                [disabled]="esditable"></p-dropdown>
-                        </div>
-                    </div>
-                </div>
-
+                    
             </ng-template>
 
             <ng-template pTemplate="footer">
@@ -175,7 +222,7 @@
                     (click)="saveEstudent()" [disabled]="esditable"></button>
             </ng-template>
         </p-dialog>
-
-        <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+            
+        <!-- <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog> -->
     </div>
 </div>
