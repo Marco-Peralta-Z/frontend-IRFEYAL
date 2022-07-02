@@ -101,7 +101,7 @@
                         <div class="field col-6">
                             <label for="generoUpdate">Genero</label>
                             <p-dropdown [options]="generos" [(ngModel)]="estudiante.id_persona.genero"
-                                placeholder="Seleccione Genero" optionLabel="genero" [showClear]="true"
+                                placeholder="Seleccione Genero" optionLabel="genero" 
                                 [readonly]="esditable" formControlName="genero" name="genero"></p-dropdown>
                                 <small class="p-error" *ngIf="campoValido('genero')">Campo
                                     requerido.</small>
@@ -152,7 +152,7 @@
                             <div class="fiel col-6">
                                 <label for="emailUpdate">Provincia</label>
                                 <p-dropdown [options]="provincias" [(ngModel)]="estudiante.direccion.provincia"
-                                    placeholder="Seleccione Provincia" [filter]="true" filterBy="provincia" optionLabel="provincia" [showClear]="true"
+                                    placeholder="Seleccione Provincia" [filter]="true" filterBy="provincia" optionLabel="provincia" 
                                     [readonly]="esditable" formControlName="provincia">
                                     <ng-template pTemplate="selectedItem" >
                                         <div class="country-item country-item-value"  *ngIf="estudiante.direccion.provincia">
@@ -171,7 +171,7 @@
                             <div class="fiel col-6">
                                 <label for="emailUpdate">Canton</label>
                                 <p-dropdown [options]="cantones" [(ngModel)]="estudiante.direccion.canton"
-                                    placeholder="Seleccione Canton"[filter]="true" filterBy="canton" optionLabel="canton" [showClear]="true"
+                                    placeholder="Seleccione Canton"[filter]="true" filterBy="canton" optionLabel="canton" 
                                     [readonly]="esditable" formControlName="canton">
                                     <ng-template pTemplate="selectedItem">
                                         <div class="country-item country-item-value"  *ngIf="estudiante.direccion.canton">
@@ -191,7 +191,7 @@
                             <div class="fiel col-6">
                                 <label for="emailUpdate">Parroquia</label>
                                 <p-dropdown [options]="parroquias" [(ngModel)]="estudiante.direccion.parroquia"
-                                    placeholder="Seleccione parroquia" [filter]="true" filterBy="parroquia" optionLabel="parroquia" [showClear]="true"
+                                    placeholder="Seleccione parroquia" [filter]="true" filterBy="parroquia" optionLabel="parroquia" 
                                     [readonly]="esditable" formControlName="parroquia">
                                     <ng-template pTemplate="selectedItem">
                                         <div class="country-item country-item-value"  *ngIf="estudiante.direccion.parroquia">
