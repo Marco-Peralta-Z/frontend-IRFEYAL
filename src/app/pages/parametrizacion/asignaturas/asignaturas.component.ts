@@ -35,11 +35,11 @@ export class AsignaturasComponent implements OnInit {
   panelAsig: boolean = false;
   panelAsigUpdate: boolean = false;
   submitted: boolean = false;
-  empleados: empleado[] = [];
+  empleados: any[] = [];
   asig2: Asignatura = new Asignatura
   listarea: Area[] = [];
   selectArea!: Area;
-  
+
   ngOnInit(): void {
     this.activeItem = this.items[0];
     this.llenarTabalAsignatura();
@@ -54,16 +54,17 @@ export class AsignaturasComponent implements OnInit {
   }
 
   llenarTabalAsignatura() {
-
-    this.serviceasig.getEmpleados().subscribe(data => {
+    this.serviceasig.getRolUsuario().subscribe(data => {
       this.empleados = new Array();
+      console.log(data)
       for (let index = 0; index < data.length; index++) {
-        if (data[index].cargo == "contratacion_docente") {
-          this.empleados.push(data[index]);
+        if (data[index].rol.descripcion.toLocaleLowerCase() == "docente") {
+          console.log(data[index])
+          this.empleados.push(data[index].usuario.empleado);
         }
-
       }
       this.empleados.sort();
+      console.log(this.empleados);
     })
 
     this.serviceasig.getAllArea().subscribe(data => {
@@ -122,7 +123,7 @@ export class AsignaturasComponent implements OnInit {
     if (this.asig.descripcion == null) {
       this.submitted = true;
     } else {
-      this.asig.empleados=new Array;
+      this.asig.empleados = new Array;
       this.selecempleadodoc.forEach(element => {
         this.asig.empleados.push(element)
       });

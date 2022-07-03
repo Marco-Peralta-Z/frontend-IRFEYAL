@@ -310,7 +310,7 @@ if(this.idAsignatura==0){
 
         reportes(){
           console.log("llego"+ this.idestudiante);
-          this.appService.exportInvoice(this.idestudiante,this.idempleados,this.idAsignatura,this.IdCurso,this.IdParalelo,this.idModalidad,this.IdPeriodo).subscribe(
+          this.appService.exportInvoice(this.idestudiante,this.idempleados).subscribe(
             (data:any) => {
               const file = new Blob([data], { type: 'application/pdf' });
     const fileURL = URL.createObjectURL(file);

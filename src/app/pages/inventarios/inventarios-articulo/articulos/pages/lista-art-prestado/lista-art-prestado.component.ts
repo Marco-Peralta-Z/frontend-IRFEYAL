@@ -28,7 +28,7 @@ export class ListaArtPrestadoComponent implements OnInit {
   getSalidaArticulos = () => {
     this._salidaArticuloService.getSalidaArticulos().subscribe({
       next: ( resp ) => this.articulosPrestados = resp,
-      error: (err) => console.log
+      error: (err) => this.articulosPrestados = []
     })
   }
 
@@ -53,9 +53,7 @@ export class ListaArtPrestadoComponent implements OnInit {
     });
   }
 
-  showDialog(articuloPrestado: SalidaArticulo) {
-    console.log(articuloPrestado);
-    
+  showDialog(articuloPrestado: SalidaArticulo) {    
     this.selectArticuloSalida = articuloPrestado;
     this.displayEmpleado = true;
   }

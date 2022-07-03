@@ -55,12 +55,11 @@ export class EditarArticuloComponent implements OnInit {
   getCategoriasArticulo = () => {
     this._categoriaArticuloService.getCategorias().subscribe({
       next: (resp) => this.categoriasArticulos = resp,
-      error: (err) => console.log
+      error: (err) => this.categoriasArticulos = []
     })
   }
 
   realizarAccion = () => {    
-    console.log(this.articuloForm.value);
     if ( this.articuloForm.valid && this.selectArticulo ) {
       let { cateId, artinombre, artimarca, artiprecio, artidescrip } = this.articuloForm.value;
       this.selectArticulo.cateId = cateId;

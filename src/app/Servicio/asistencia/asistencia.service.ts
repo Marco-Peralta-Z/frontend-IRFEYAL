@@ -116,11 +116,11 @@ export class AsistenciaService {
   }
 
 
-  exportInvoice(idEstudiante: number,idocente: number,idasignatura:number,idcurso:number,idparalelo:number,idmodalidad:number,idperiodo:number){
+  exportInvoice(idEstudiante: number, idDocente:number){
     const httpOptions = {
       responseType: 'arraybuffer' as 'json'
       // 'responseType'  : 'blob' as 'json'        //This also worked
     };
-    return this.rutaconsulta.get(this.url+"/exportInvoice/"+idEstudiante, httpOptions);  
+    return this.rutaconsulta.get(this.url+"/exportInvoice/"+idEstudiante+'/'+idDocente, httpOptions);  
   }  
 }

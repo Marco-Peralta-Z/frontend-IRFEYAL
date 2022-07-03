@@ -30,9 +30,7 @@ export class ListarComponent implements OnInit {
   getKitsEntregados = () => {
     this._entregarKitService.getKitsEntregados().subscribe({
       next: (resp) => {
-        this.aprobaciones = resp as Aprobacion[];
-        console.log(this.aprobaciones);
-        
+        this.aprobaciones = resp as Aprobacion[];        
       }
     });
   }

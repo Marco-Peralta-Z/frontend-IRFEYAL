@@ -186,7 +186,7 @@
                 optionLabel="cargo" class="multiselect-custom">
                 <ng-template let-value pTemplate="selectedItems">
                     <div class="empleado-item empleado-item-value" *ngFor="let empe of selecempleadodoc">
-                        <div>{{empe.cargo}}: {{empe.persona.apellido}}{{empe.persona.nombre}}</div>
+                        <div>{{empe.cargo}}: {{empe.persona.apellido}} {{empe.persona.nombre}}</div>
                     </div>
                     <div *ngIf="!selecempleadodoc || selecempleadodoc.length === 0" class="country-placeholder">
                         Seleccione El Empleado
@@ -194,7 +194,7 @@
                 </ng-template>
                 <ng-template let-em pTemplate="item">
                     <div class="empleado-item">
-                        {{em.cargo}}: {{em.persona.apellido}}{{em.persona.nombre}}
+                        Docente: {{em.cargo}}: {{em.persona.apellido}}{{em.persona.nombre}}
                     </div>
                 </ng-template>
             </p-multiSelect>

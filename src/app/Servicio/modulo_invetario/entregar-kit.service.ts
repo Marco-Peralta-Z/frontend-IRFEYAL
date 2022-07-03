@@ -7,6 +7,7 @@ import { ResAprobacion } from '../../Model/Inventarios/interfaces/res_aprobacion
 import { map, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Estudiante } from 'src/app/Model/Matriculas/estudiante';
+import { EstudiantePago } from '../../Model/Inventarios/EstudiantePago';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,6 @@ export class EntregarKitService {
           return response.status;
         }),
         catchError( err => {
-          console.log(err);
           return of(false);
         })
       );
@@ -39,7 +39,6 @@ export class EntregarKitService {
           return response.status;
         }),
         catchError( err => {
-          console.log(err);
           return of(false);
         })
       );
@@ -52,7 +51,6 @@ export class EntregarKitService {
           return response.status;
         }),
         catchError( (err) => {
-          console.log(err);
           return of(false);
         })
       );
@@ -64,6 +62,10 @@ export class EntregarKitService {
 
   getKitsEntregados = () => {
     return this._http.get(`${this._baseUrl}aprobacionkit/list`);
+  }
+
+  getEstudiatesPago = () => {
+    return this._http.get<EstudiantePago[]>(`${this._baseUrl}aprobacionkit/estudiantespagokit`);
   }
 
 }

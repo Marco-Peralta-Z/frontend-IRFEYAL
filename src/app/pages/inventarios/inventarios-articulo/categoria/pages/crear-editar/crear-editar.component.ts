@@ -94,7 +94,6 @@ export class CrearEditarComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.log(error); 
         if (error.status === 404) {
           this._mensajesSweetService.mensajeError('Upss!', 'No se pudo encontrar esa categoría',);
           this._router.navigate(['/inventariosModule/categoria/listar']);
