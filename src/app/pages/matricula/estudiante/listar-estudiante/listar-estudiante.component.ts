@@ -104,9 +104,9 @@ export class ListarEstudianteComponent implements OnInit {
     .subscribe(genero => this.generos= genero);
   }
 
-  openNew() {
-      // aqui se puede redireccionar a la pagina agregar para crear un nuevo estudiante
-  }
+  // openNew() {
+  //     // aqui se puede redireccionar a la pagina agregar para crear un nuevo estudiante
+  // }
 
   filtrarProvincia(event: any) {
     let filtered: any[] = [];

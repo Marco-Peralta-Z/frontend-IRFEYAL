@@ -116,19 +116,18 @@ export class AgregarMatriculaComponent implements OnInit {
     this.matriculaFormulario.controls['Rcurso'].setValue('');
     this.cargarPeriodo();
     let filtered: any[] = [];
+    console.log(this.mallaSelectd.listaCursos);
     filtered.push(this.mallaSelectd.listaCursos);
     for (let i = 0; i < filtered.length; i++) {
       let curso = filtered[i];
       this.cursos = curso;
-
     }
-
     this.cargarModalidadesPorMalla();
 
   }
   buscar() {
-    if (this.personaSelectd.cedula !== "") {
-      this.estudianteService.getEstudiantePorCedula(this.personaSelectd.cedula.trim())
+    if (this.personaSelectd) {
+      this.estudianteService.getEstudiantePorCedula(this.personaSelectd.cedula.trim()) 
         .subscribe(estudiante => {
           this.estudiante = estudiante
           this.matricula.estudiante = estudiante;
@@ -188,11 +187,6 @@ export class AgregarMatriculaComponent implements OnInit {
     let filtered: any[] = [];
     filtered.push(this.mallaSelectd.id_modalidad);
     this.modalidades = filtered;
-
-    this.matriculaService.getParalelos()
-      .subscribe(paralelos => {
-        this.paralelos = paralelos;
-      })
   }
 
   campoValido(valor: string): boolean {
@@ -209,11 +203,17 @@ export class AgregarMatriculaComponent implements OnInit {
 
   obtenerPeriodo() {
     this.matricula.id_periodo = this.peridoSelectd;
+    if (this.modalidadSelectd != null && this.peridoSelectd !=null) {
+      this.contadorDeMatriculasByParalelos(this.matricula.curso.id_curso, this.matricula.modalidad.id_modalidad, this.matricula.id_periodo.id_periodo);
+    }
 
   }
   obtenerModalidad() {
     this.matricula.modalidad = this.modalidadSelectd;
     this.contadorDeMatriculasByParalelos(this.matricula.curso.id_curso, this.matricula.modalidad.id_modalidad, this.matricula.id_periodo.id_periodo);
+    if (this.cursoSelectd != null && this.peridoSelectd !=null) {
+      this.contadorDeMatriculasByParalelos(this.matricula.curso.id_curso, this.matricula.modalidad.id_modalidad, this.matricula.id_periodo.id_periodo);
+    }
   }
   obtenerParalelo() {
     this.matricula.id_paralelo = this.paraleloSelectd;
@@ -224,6 +224,11 @@ export class AgregarMatriculaComponent implements OnInit {
     if (this.modalidadSelectd != null && this.peridoSelectd !=null) {
       this.contadorDeMatriculasByParalelos(this.matricula.curso.id_curso, this.matricula.modalidad.id_modalidad, this.matricula.id_periodo.id_periodo);
     }
+
+    this.matriculaService.getParalelosPorCurso(this.matricula.curso.id_curso)
+    .subscribe(paralelos => {
+      this.paralelos = paralelos;
+    });
   }
 
   cargarPeriodo() {
@@ -231,10 +236,7 @@ export class AgregarMatriculaComponent implements OnInit {
     this.matriculaService.getPeriodoPorMalla(this.mallaSelectd.id_malla!)
       .subscribe({
         next: (periodo) => {
-          this.periodos = periodo;
-          // for (let i = 0; i < this.periodos.length; i++) {
-          //   this.periodos[i].ano_inicio=this.periodos[i].ano_inicio! +"-" + this.periodos[i].ano_fin!; 
-          // }    
+          this.periodos = periodo;   
         },
       });
 
@@ -297,23 +299,23 @@ export class AgregarMatriculaComponent implements OnInit {
         }
       }
     }
-    console.log("Esto antes de llenar lo demas: ", this.controlMatricula, "el contador: ", cont);
-    if (this.controlMatricula.length<3) {
-      for (let a = 0; a < this.paralelos.length; a++) {
-        let aux = 0;
-        for (let j = 0; j < this.controlMatricula.length; j++) {
-          if (this.controlMatricula[j].descripcion?.includes(this.paralelos[a].descripcion.toString())) {
-            aux++;
-          }
-        }
-        if (aux == 0) {
-          this.controlMatricula.push({
-            descripcion: this.paralelos[a].descripcion.toString(),
-            contador: aux
-          });
-        }
-      } 
-    }
+    // console.log("Esto antes de llenar lo demas: ", this.controlMatricula, "el contador: ", cont);
+    // if (this.controlMatricula.length<3) {
+    //   for (let a = 0; a < this.paralelos.length; a++) {
+    //     let aux = 0;
+    //     for (let j = 0; j < this.controlMatricula.length; j++) {
+    //       if (this.controlMatricula[j].descripcion?.includes(this.paralelos[a].descripcion.toString())) {
+    //         aux++;
+    //       }
+    //     }
+    //     if (aux == 0) {
+    //       this.controlMatricula.push({
+    //         descripcion: this.paralelos[a].descripcion.toString(),
+    //         contador: aux
+    //       });
+    //     }
+    //   } 
+    // }
     
   }
 }
