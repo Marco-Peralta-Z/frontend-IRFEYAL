@@ -56,7 +56,6 @@ export class AsignaturasComponent implements OnInit {
   llenarTabalAsignatura() {
     this.serviceasig.getRolUsuario().subscribe(data => {
       this.empleados = new Array();
-      console.log(data)
       for (let index = 0; index < data.length; index++) {
         if (data[index].rol.descripcion.toLocaleLowerCase() == "docente") {
           console.log(data[index])
@@ -64,7 +63,6 @@ export class AsignaturasComponent implements OnInit {
         }
       }
       this.empleados.sort();
-      console.log(this.empleados);
     })
 
     this.serviceasig.getAllArea().subscribe(data => {

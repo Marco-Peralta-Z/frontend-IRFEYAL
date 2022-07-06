@@ -59,7 +59,7 @@ export class ItemsService {
 
                     },
                     {
-                        label: 'Hararios',
+                        label: 'Horarios',
                         icon: 'fa fa-calendar',
                         routerLink: 'parametrizacion/horario',
 
