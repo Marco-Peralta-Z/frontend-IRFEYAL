@@ -108,7 +108,7 @@ export class CursosComponent implements OnInit {
       this.selectcurso.id_curso = this.idGlobal;
       /*this.selectcurso.id_empleado = this.selecempleadodoc;
       this.selectcurso.id_paralelo = this.selectparalelo;*/
-      this.selectcurso.descripcion = this.descr;
+      //this.selectcurso.descripcion = this.descr;
       this.servicecursos.putCurso(this.selectcurso).subscribe(data => {
         if (data == null) {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No Se Pudo Guardar ' });
@@ -143,6 +143,7 @@ export class CursosComponent implements OnInit {
     //this.selecempleadodoc = curso.id_empleado;
     //this.selectparalelo = curso.id_paralelo;
     this.descr = curso.descripcion;
+    this.selectcurso = curso;
     this.panelCursosNuevo = true;
     this.idGlobal = curso.id_curso;
     this.update = true;

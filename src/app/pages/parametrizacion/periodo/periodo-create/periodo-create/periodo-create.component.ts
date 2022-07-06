@@ -131,6 +131,7 @@ export class PeriodoCreateComponent implements OnInit {
           this.formattedDate = this.daten;
           this.periodo.ano_fin = this.formattedDate;
           this.periodo.malla = this.selectMalla;
+          this.periodo.vigencia = true;
           this.servicePeriodo.postPeriodo(this.periodo).subscribe(data => {
             if (data) {
               this.cancelar();
