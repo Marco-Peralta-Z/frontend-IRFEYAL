@@ -26,19 +26,18 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="id_empleado">ID <p-sortIcon field="id_empleado"></p-sortIcon></th>
+                <!-- <th pSortableColumn="id_empleado">ID <p-sortIcon field="id_empleado"></p-sortIcon></th> -->
                 <th pSortableColumn="persona.nombre">Nombre <p-sortIcon field="persona.nombre"></p-sortIcon></th>
                 <th pSortableColumn="persona.apellido">Apellido <p-sortIcon field="persona.apellido"></p-sortIcon></th>
                 <th pSortableColumn="persona.cedula">Cedula <p-sortIcon field="persona.cedula"></p-sortIcon></th>
                 <th pSortableColumn="cargo">Cargo <p-sortIcon field="cargo"></p-sortIcon></th>
                 <th pSortableColumn=" ">Genero <p-sortIcon field=" "></p-sortIcon></th>
-                <!-- <th pSortableColumn="estUsuario"> fecha de nacimiento<p-sortIcon field="estUsuario"></p-sortIcon></th> -->
                 <th></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-empleado>
             <tr>
-                <td>{{empleado.id_empleado}}</td>
+                <!-- <td>{{empleado.id_empleado}}</td> -->
                 <td>{{empleado.persona.nombre}}</td>
                 <td>{{empleado.persona.apellido}}</td>
                 <td>{{empleado.persona.cedula}}</td>

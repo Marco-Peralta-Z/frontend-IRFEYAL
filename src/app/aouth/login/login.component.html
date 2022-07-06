@@ -21,7 +21,9 @@
         </div>
         <div class="form-field d-flex align-items-center">
             <span class="p-float-label">
-                <input id="float-input" type="password" autocomplete="off"  size="30" formControlName="password" pInputText> 
+            <!-- <label for="contrasenia">Contraseña:</label> -->
+                <p-password  id="float-input" type="password" autocomplete="off"  size="30" formControlName="password"  [toggleMask]="true" [feedback]="false"  ></p-password>
+                <!-- <input id="float-input" type="password" autocomplete="off"  size="30" formControlName="password"  pInputText>  -->
                 <label for="float-input" style="color: slategray;">Password</label>
             </span>
         </div>
