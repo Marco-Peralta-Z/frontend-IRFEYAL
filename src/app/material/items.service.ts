@@ -288,22 +288,6 @@ export class ItemsService {
                         routerLink: 'secretaria/listarBitacora'
                     },
                     {
-                        label: 'Documentos',
-                        icon: 'pi pi-folder',
-                        items: [
-                            {
-                                label: 'Lista de Documentos',
-                                icon: 'fa fa-book',
-                                routerLink: 'secretaria/listarDocumento'
-                            },
-                            {
-                                label: 'Agregar Documentos',
-                                icon: 'fa fa-plus-square',
-                                routerLink: 'secretaria/agregarDocumento'
-                            }
-                        ]
-                    },
-                    {
                         label: 'Certificados',
                         icon: 'pi pi-folder',
                         items: [
