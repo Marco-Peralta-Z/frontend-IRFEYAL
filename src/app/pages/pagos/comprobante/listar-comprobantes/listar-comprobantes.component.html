@@ -1,60 +1,167 @@
 <div class="container-fluid page">
     <div class="centro">
-        <div class="d-flex page__box p-3 mt-2">Consultar Comprobantes</div>
+        <div class="d-flex page__box p-3 mt-2">Comprobantes de Pago</div>
         <div class="page__content shadow p-3 position-relative">
-
-            <br>
-            <div class="input-group">
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                    
+                </ng-template>
+            </p-toolbar>
+            <span class= "card mt-2">
+            
+        <p-table #dt [value]="detalleComprobantes" [rows]="10" [paginator]="true" [globalFilterFields]="['idDetalleComprobante','idComprobante.idMatricula.estudiante.id_persona.cedula']" responsiveLayout="scroll"
+        [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" id="search" placeholder="Codigo" /> 
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar..." />
                 </span>
-                <br><br>
-                <p-button label="Buscar" icon="pi pi-search" type="submit" (click)="buscarComprobante()"></p-button>
             </div>
-            <br><br>
-            <span class= "card mt-2">
-            <p-table [value]="detalleComprobantes" responsiveLayout="scroll">
-                <ng-template pTemplate="header"> 
-                    <tr>
-                        <th>Codigo Comprobante</th>
-                        <th>Estudiante</th>
-                        <th><p-dropdown pSortableColumn="curso" placeholder="Curso"></p-dropdown></th>
-                        <th><p-dropdown pSortableColumn="modalidad" placeholder="Modalidad"></p-dropdown></th>
-                        <th><p-dropdown pSortableColumn="periodo" placeholder="Periodo"></p-dropdown></th>
-                        <th><p-dropdown pSortableColumn="conceptoPago" placeholder="Concepto Pago"></p-dropdown></th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-comprobante>
-                    <tr>
-                        <td>{{comprobante.idDetalleComprobante}}</td>
-                        <td>{{comprobante.idComprobante.idMatricula.estudiante.id_persona.nombre | titlecase}}
-                            {{comprobante.idComprobante.idMatricula.estudiante.id_persona.apellido | titlecase}}
-                        </td>
-                        <td>{{comprobante.idComprobante.idMatricula.curso.descripcion | titlecase}}</td>
-                        <td>{{comprobante.idComprobante.idMatricula.modalidad.descripcion | titlecase}}</td>
-                        <td>{{comprobante.idComprobante.idMatricula.id_periodo.fecha_creacion | date: 'MMMM, yyyy'}}
-                            {{comprobante.idComprobante.idMatricula.id_periodo.fecha_fin | date: 'MMMM, yyyy'}}
-                        </td>
-                        <td>{{comprobante.idComprobante.tipoComprobante.concepto_pago | titlecase}}</td>
-                        <td>{{comprobante.idComprobante.fecha | date: 'MMMM dd, yyyy'}}</td>
-                        <td>{{comprobante.idComprobante.estado}}</td>
-                        <td><button class="btn btn-danger" style="margin-left: 35px;" (click)="eliminarComprobante(comprobante.idDetalleComprobante)">Eliminar</button></td>
-                    </tr>
-                </ng-template>
-            </p-table>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="idDetalleComprobante">Cod<p-sortIcon field="idDetalleComprobante"></p-sortIcon></th>
+                <th>Cedula</th>
+                <th pSortableColumn="idComprobante.idMatricula.estudiante.id_persona.nombre">Estudiante
+                    <p-sortIcon field="idComprobante.idMatricula.estudiante.id_persona.nombre"></p-sortIcon>
+                </th>
+                <th>Curso</th>
+                <th>Modalidad</th>
+                <th>Periodo</th>
+                <th>Concepto Pago</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
 
-            <br><br>
-                <div class="row">
-                    <div class="col-sm-12 col-md-4" style="margin-left: auto;margin-right: auto;">                   
-                        <button type="submit" class="btn btn-dark" style="margin-left: 35px;" (click)="imprimirLista()">Imprimir</button>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-comp>
+            <tr>
+                <td >
+                    No hay comprobantes.
+                </td>
+            </tr>
+        </ng-template>
+        
+        <ng-template pTemplate="body" let-comprobante>
+            <tr>
+                <td>{{comprobante.idDetalleComprobante}}</td>
+                <td>{{comprobante.idComprobante.idMatricula.estudiante.id_persona.cedula}}</td>
+                <td>{{comprobante.idComprobante.idMatricula.estudiante.id_persona.nombre | titlecase}}
+                    {{comprobante.idComprobante.idMatricula.estudiante.id_persona.apellido | titlecase}}
+                </td>
+                <td>{{comprobante.idComprobante.idMatricula.curso.descripcion | titlecase}}</td>
+                <td>{{comprobante.idComprobante.idMatricula.modalidad.descripcion | titlecase}}</td>
+                <td>{{comprobante.idComprobante.idMatricula.id_periodo.fecha_creacion | date: 'MMMM, yyyy'}}
+                    {{comprobante.idComprobante.idMatricula.id_periodo.fecha_fin | date: 'MMMM, yyyy'}}
+                </td>
+                <td>{{comprobante.idComprobante.tipoComprobante?.concepto_pago | titlecase}}</td>
+                <td>{{comprobante.idComprobante.fecha | date: 'MMMM dd, yyyy'}}</td>
+                <td>{{comprobante.idComprobante.estado}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarComprobante(comprobante)"></button>
+                    <button pButton pRipple icon="pi pi-print" class="p-button-rounded p-button-success mr-2" (click)="showDialog(comprobante)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                En total hay {{detalleComprobantes ? detalleComprobantes.length : 0 }} comprobantes.
+            </div>
+        </ng-template>
+    </p-table>
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+            <p-dialog [(visible)]="comprobanteDialog" (onHide)="hideDialog()" [style]="{width: '450px'}" header="Comprobante" [modal]="true" styleClass="p-fluid">
+                <ng-template pTemplate="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Cedula del estudiante matriculado:</h3>
+                            <p-autoComplete styleClass="w-100" placeholder="010..." [showEmptyMessage]="true" [suggestions]="matriculas" [(ngModel)]="matricula" (completeMethod)="getMatriculaPorCedula($event)" field="estudiante.id_persona.cedula" [minLength]="1"></p-autoComplete>
+                        </div>
                     </div>
-    
-                </div>
+                    <div class="row" *ngIf="matricula && matricula.id_matricula! > 0; else NoHayMatricula">
+                        <h3><b>Estudiante:</b> <small>{{matricula.estudiante.id_persona.nombre}} 
+                            {{matricula.estudiante.id_persona.apellido}}
+                            <br>
+                            <b>CI:</b> {{matricula.estudiante.id_persona.cedula}}
+                            <br>
+                            <b>Curso:</b>{{matricula.curso.descripcion}}
+                        </small></h3>
+                        <form [formGroup]="comprobanteForm">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div>
+                                        <label for="tipoPago" class="block">Tipo de Pago</label>
+                                        <p-dropdown formControlName="tipoPago" [options]="tiposPago" optionLabel="descripcion" [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Seleccione tipo pago">         
+                                        </p-dropdown>
+                                        <small  class="p-error block"
+                                            *ngIf="verificarCampo('tipoPago')">
+                                            El tipo de pago es requerido.
+                                        </small>
+                                    </div>
+                                    <label for="tipoPago" class="block">Concepto de Pago</label>
+                                        <p-dropdown formControlName="tipoComprobante" [options]="tiposComprobante" (onChange)="seleccionTipoComp($event.value)" optionLabel="concepto_pago" [filter]="true" filterBy="concepto_pago" [showClear]="true" placeholder="Seleccione tipo comprobante">
+                                            
+                                        </p-dropdown>
+                                        <small  class="p-error block"
+                                            *ngIf="verificarCampo('tipoComprobante')">
+                                            El concepto de pago es requerido.
+                                        </small>
+                                        <div class="w-100">
+                                            <div class="mt-2">
+                                                
+                                                <p *ngIf="esTipoMatricula">
+                                                    <b>Costo Matricula:</b> ${{matricula.id_periodo.costo_matricula}}
+                                                </p>
+                                                <p *ngIf="esTipoMensual">
+                                                    <b>Costo Mensualidad:</b> ${{matricula.id_periodo.costo_mensualidad}}
+                                                </p>
+                                                <div>
+                                                    <label for="Monto ingresado:">Monto ingresado:</label>
+                                                    <p-inputNumber formControlName="valor_total" styleClass="w-100" mode="decimal" locale="en-US" [minFractionDigits]="2"></p-inputNumber>
+                                                    <small  class="p-error block"
+                                                        *ngIf="verificarCampo('valor_total')">
+                                                        El monto es requerido.
+                                                    </small>
+                                                </div>
+                                                <div>
+                                                    <label for="Valor final:">Valor Final:</label>
+                                                    <p-inputNumber [disabled]="true" formControlName="valor" styleClass="w-100" mode="decimal" locale="en-US" [minFractionDigits]="2"></p-inputNumber>
+                                                </div>
+                                                <div>
+                                                    <label for="Monto ingresado:">Detalle:</label>
+                                                    <textarea formControlName="detalle" rows="1" cols="30" pInputTextarea [autoResize]="true"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <ng-template #NoHayMatricula>
+                        <div class="row text-center">
+                            <h3>Pro favor primero seleccione una matricula</h3>
+                        </div>
+                    </ng-template>
+                </ng-template>
+            
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="crearComprobante()"></button>
+                </ng-template>
+            </p-dialog>
             </span>
         </div>
     </div>
 </div>
+<p-dialog header="Comprobante de Pago" [(visible)]="displayComprobante" [style]="{width: '50vw'}" (onHide)="closeDialog()">
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="closeDialog()" label="Cancelar" styleClass="p-button-text"></p-button>
+        <button type="button" class="btn btn-primary" (click)="generarComprobantePdf(false)">Descargar</button>
+        <button type="button" class="btn btn-primary" (click)="generarComprobantePdf(true)">Imprimir</button>
+    </ng-template>
+</p-dialog>

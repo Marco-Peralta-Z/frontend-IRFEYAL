@@ -1,25 +1,118 @@
 <div class="container-fluid page">
-    <div class="d-flex page__box p-3 mt-2">Nomina Estudiantil</div>
-    <div class="page__content shadow p-3 position-relative">
-        <div class="dropdown">
-            <select name="select">
-                <option value="value1">Value</option>
-            </select>
+    <div class="centro">
+        <div class="d-flex page__box p-3 mt-2">Certificado de Promocion</div>
+        <div class="page__content shadow p-3 position-relative">
+            <br>
 
-            <select name="select">
-                <option value="value1">Value</option>
-            </select>
+            <p-table #dt [value]="registros" [rows]="10" [paginator]="true" responsiveLayout="scroll" dataKey="id"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Certificado de Matricula"
+                [showCurrentPageReport]="true" [globalFilterFields]="['certificados']" [showCurrentPageReport]="true">
 
-            <select name="select">
-                <option value="value1">Value</option>
-            </select>
+
+                <ng-template pTemplate="caption">
+
+                    <div class="col-sm-12 col-md-4" style="margin-left: auto;margin-right: auto;">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" id="search" placeholder="Buscar por cedula" #txtCedula />
+                        </span>
+                        <br><br>
+                        <p-button label="Buscar" icon="pi pi-search" type="submit"
+                            (click)="getCedulaPorEstudiante(txtCedula)">
+                        </p-button>
+
+                    </div>
+
+
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="codigo">Codigo</th>
+                        <th pSortableColumn="estudiante">Estudiante</th>
+                        <th>
+                            <p-dropdown pSortableColumn="curso" placeholder="Curso"></p-dropdown>
+                        </th>
+                        <th>
+                            <p-dropdown pSortableColumn="modalidad" placeholder="Modalidad"></p-dropdown>
+                        </th>
+                        <th pSortableColumn="cedula">Cedula</th>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-certificadoPromo>
+                    <tr>
+                        <td>{{certificadoPromo.id_registro}}</td>
+                        <td>{{certificadoPromo.id_matricula.estudiante?.id_persona.nombre | titlecase}}
+                            {{certificadoPromo.id_matricula.estudiante?.id_persona.apellido| titlecase}}</td>
+                        <td>{{certificadoPromo.id_matricula.curso.descripcion | titlecase}}</td>
+                        <td>{{certificadoPromo.id_matricula.modalidad.descripcion | titlecase}}</td>
+                        <td>{{certificadoPromo.id_matricula.estudiante?.id_persona.cedula }}</td>
+                        <td>
+                            <button type="submit" class="btn btn-primary"
+                                (click)="showDialog(certificadoPromo)">Imprimir</button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+            
         </div>
-
-        <button type="button" class="btn btn-primary">Generar Certificado</button>
-
-        <div>
-
-        </div>
-
     </div>
 </div>
+
+<p-dialog header="Certificado" [(visible)]="displayMatricula" [style]="{width: '50vw'}" (onHide)="closeDialog()">
+    <div class="">
+        <div class="row">
+            <div class="col-6">
+                <p-dropdown [options]="empleados" [(ngModel)]="selectRector" placeholder="Seleccione Rector/a"
+                    optionLabel="cargo" [showClear]="true"></p-dropdown>
+            </div>
+            <div class="col-6">
+                <p-dropdown [options]="empleados" [(ngModel)]="selectSecretaria" placeholder="Seleccione Secretaria/o"
+                    optionLabel="cargo" [showClear]="true"></p-dropdown>
+            </div>
+        </div>
+    </div>
+
+    <div class="" *ngIf="selectRegistro && selectRector && selectSecretaria">
+        <div class="row">
+            <div class="col-12 text-center">
+                <img src="../../../../../assets/img/logoMatricula.jpeg" alt="">
+            </div>
+            <div class="col-12 text-center">
+                <h3>
+                    UNIDAD EDUCATIVA FISCOMISIONAL
+                </h3>
+                <h3>
+                    “JOSÉ MARÍA VELAZ, S.J.”
+                </h3>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-6 text-center mt-4">
+                <p>________________________________</p>
+                <p>{{selectRector.persona?.nombre | uppercase}} {{selectRector.persona?.apellido | uppercase}}</p>
+                <p>RECTORA</p>
+
+            </div>
+            <div class="col-6 text-center mt-4">
+                <p>_______________________________</p>
+                <p>{{selectSecretaria.persona?.nombre | uppercase}} {{selectRector.persona?.apellido | uppercase}}</p>
+                <p>SECRETARIA</p>
+
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="closeDialog()" label="Cancelar" styleClass="p-button-text"></p-button>
+        <button type="button" class="btn btn-primary" (click)="generarPdf(false)">Descargar</button>
+        <button type="button" class="btn btn-primary" (click)="generarPdf(true)">Imprimir</button>
+    </ng-template>
+
+</p-dialog>

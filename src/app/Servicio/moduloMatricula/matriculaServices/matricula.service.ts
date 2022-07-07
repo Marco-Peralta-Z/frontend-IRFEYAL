@@ -98,4 +98,11 @@ private url=this.baseUrl+"malla"
     return this.http.get<Malla[]>(this.url)
   }
 
+
+//metodo para buscar estudiante por cedula usado en el modulo de pagos
+
+getMatriculaPorCedula(cedula: string){
+  return this.http.get<Matricula[]>(`${this.baseUrl}api/matricula/${cedula}`)
+}
+
 }

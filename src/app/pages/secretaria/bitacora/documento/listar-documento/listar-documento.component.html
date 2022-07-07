@@ -1,33 +1,39 @@
 <div class="container-fluid page">
     <div class="centro">
-        ves ves
         <div class="d-flex page__box p-3 mt-2">Documentos</div>
-        <div class="page__content shadow p-3 ">
-    <br><br>
-            <p-table [value]="documentos" responsiveLayout="scroll">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th>Tipo de Documento</th>
-                        <th>Descripcion</th>
-                        <th>Ubicacion</th>
-                        
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-documento>
-                    <tr >
-                        <td>{{documento.tipo_documento | titlecase}}</td>
-                        <td>{{documento.descripcion | titlecase}}</td>
-                        <td>{{documento.ubicacion}}</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-    <br><br>
-            <div class="row">
-                <div class="col-sm-12 col-md-4" style="margin-left: auto;margin-right: auto;">
-                    <button type="submit" class="btn btn-dark" (click)="eliminar()">Eliminar</button>
-                    <button type="submit" class="btn btn-dark" style="margin-left: 35px;" (click)="regresarHome()">Cancelar</button>
-                </div>
-    
+        <div class="page__content shadow p-3 position-relative">
+            <br>
+
+            
+            <div class="input-group">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" id="search" placeholder="Codigo" />
+                </span>
+                <br><br>
+                <p-button label="Buscar" icon="pi pi-search" type="submit"></p-button>
+            </div>
+            <br><br>
+            <span class="card mt-2">
+                <p-table [value]="documentos" responsiveLayout="scroll">
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Tipo de Documento</th>
+                            <th>Descripcion</th>
+
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-documento>
+                        <tr>
+                            <td>{{documento.id_documento}}</td>
+                            <td>{{documento.tipo_documento | titlecase}}</td>
+                            <td>{{documento.descripcion | titlecase}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </span>
         </div>
     </div>
-    </div>
+</div>
