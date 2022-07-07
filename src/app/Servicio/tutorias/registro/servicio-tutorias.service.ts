@@ -48,4 +48,9 @@ export class ServiceTutoriasService {
   setRegistros(registro: Registro) {
     return this.http.put<Registro>(this.url + "registro/UpdateRegistro/" + registro.id_registro, registro)
   }
+
+  //metodo para buscar estudiante por cedula del modulo de secertaria
+  getCedulaPorEstudiante(cedula: string){
+    return this.http.get<Registro[]>(`${this.url}registro/buscarcedulaEstudiante/${cedula}`);
+  }
 }

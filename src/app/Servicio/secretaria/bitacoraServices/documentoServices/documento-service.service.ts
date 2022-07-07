@@ -20,4 +20,8 @@ export class DocumentoServiceService {
     console.log(documento);
     return this.http.post<Documento>(`${this.baseUrl}api/documentos`, documento);
   }
+
+  getDocumentoId(id: number): Observable<Documento> {
+    return this.http.get<Documento>(`${this.baseUrl}api/documentos/${id}`);
+  }
 }

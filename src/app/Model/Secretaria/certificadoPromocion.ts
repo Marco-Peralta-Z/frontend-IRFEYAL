@@ -1,6 +1,7 @@
 import { Curso } from "../Parametrizacion/Curso";
 import { empleado } from "../rolesTS/empleado";
-import { registro } from "../tutorias/registro";
+import { Registro } from "../tutorias/registro";
+
 
 export class CertificadoPromocion{
 
@@ -11,6 +12,6 @@ export class CertificadoPromocion{
     fecha: Date = new Date();
     rectora: string = "";
     id_empleado: empleado = new empleado();
-    id_registro: registro = new registro();
+    id_registro: Registro = new Registro();
     id_curso: Curso = new Curso();
 }

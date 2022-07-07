@@ -11,6 +11,6 @@ export class Comprobante {
     estado: boolean = false;
     idMatricula: Matricula = new Matricula();
     id_empleado: empleado = new empleado();
-    idTipoComprobante: TipoComprobante = new TipoComprobante();
+    tipoComprobante: TipoComprobante = new TipoComprobante();
     id_tipo_pago: TipoPago = new TipoPago();
 }

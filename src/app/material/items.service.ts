@@ -265,22 +265,14 @@ export class ItemsService {
             },
             {
                 label: 'Pagos',
-                icon: 'pi pi-folder',
-                visible: this.hasRolUser(
-                    ['ROLE_Administrador', 'ROLE_Secretaria']
-                ),
+                icon: 'pi pi-dollar',
                 items: [
                     {
-                        label: 'Consultar Pagos',
+                        label: 'Comprobantes',
                         icon: 'fa fa-book',
                         routerLink: 'pagos/listarComprobante'
-                    },
-                    {
-                        label: 'Cobros',
-                        icon: 'fa fa-plus-square',
-                        routerLink: 'pagos/crearComprobante'
                     }
-
+                    
                 ]
             },
             {
