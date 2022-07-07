@@ -36,6 +36,7 @@ export class GenerarComprobantePdfService {
     docPdf.text(`COSTO: ${detalleComprobante.valor}`,45,135);
     docPdf.text(`MONTO INGRESADO: ${detalleComprobante.idComprobante.valor_total}`,20 ,140);
     docPdf.text(`TOTAL: ${detalleComprobante.valor}`,45,145);
+    docPdf.text(`SALDO: ${detalleComprobante.idComprobante.saldo}`,45 ,150);
 
     if (imprimir) {
       docPdf.autoPrint();

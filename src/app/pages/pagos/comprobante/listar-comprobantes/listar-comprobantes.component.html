@@ -24,16 +24,17 @@
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="idDetalleComprobante">Cod<p-sortIcon field="idDetalleComprobante"></p-sortIcon></th>
-                <th>Cedula</th>
+                <th pSortableColumn="idComprobante.idMatricula.estudiante.id_persona.cedula">Cédula
+                    <p-sortIcon field="idComprobante.idMatricula.estudiante.id_persona.cedula"></p-sortIcon>
+                </th>
                 <th pSortableColumn="idComprobante.idMatricula.estudiante.id_persona.nombre">Estudiante
                     <p-sortIcon field="idComprobante.idMatricula.estudiante.id_persona.nombre"></p-sortIcon>
                 </th>
-                <th>Curso</th>
-                <th>Modalidad</th>
-                <th>Periodo</th>
                 <th>Concepto Pago</th>
                 <th>Fecha</th>
                 <th>Estado</th>
+                <th>Abonado</th>
+                <th>Saldo</th>
                 <th>Acciones</th>
             </tr>
 
@@ -53,17 +54,24 @@
                 <td>{{comprobante.idComprobante.idMatricula.estudiante.id_persona.nombre | titlecase}}
                     {{comprobante.idComprobante.idMatricula.estudiante.id_persona.apellido | titlecase}}
                 </td>
-                <td>{{comprobante.idComprobante.idMatricula.curso.descripcion | titlecase}}</td>
-                <td>{{comprobante.idComprobante.idMatricula.modalidad.descripcion | titlecase}}</td>
-                <td>{{comprobante.idComprobante.idMatricula.id_periodo.fecha_creacion | date: 'MMMM, yyyy'}}
-                    {{comprobante.idComprobante.idMatricula.id_periodo.fecha_fin | date: 'MMMM, yyyy'}}
-                </td>
                 <td>{{comprobante.idComprobante.tipoComprobante?.concepto_pago | titlecase}}</td>
                 <td>{{comprobante.idComprobante.fecha | date: 'MMMM dd, yyyy'}}</td>
-                <td>{{comprobante.idComprobante.estado}}</td>
                 <td>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarComprobante(comprobante)"></button>
+                    <div *ngIf="comprobante.idComprobante.estado && comprobante.idComprobante.saldo === 0 else pendiente">Completo</div>
+                        <ng-template #pendiente>
+                            <div>Pendiente</div>
+                        </ng-template>
+                </td>
+                <td>
+                    {{comprobante.idComprobante.valor_total}}
+                </td>
+                <td>
+                    {{comprobante.idComprobante.saldo}}
+                </td>
+                <td>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mr-2" (click)="eliminarComprobante(comprobante)"></button>
                     <button pButton pRipple icon="pi pi-print" class="p-button-rounded p-button-success mr-2" (click)="showDialog(comprobante)"></button>
+                    <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-help mr-2" (click)="showDialogDetalles(comprobante)"></button>
                 </td>
             </tr>
         </ng-template>
@@ -80,7 +88,7 @@
                     <div class="row">
                         <div class="col-12">
                             <h3>Cedula del estudiante matriculado:</h3>
-                            <p-autoComplete styleClass="w-100" placeholder="010..." [showEmptyMessage]="true" [suggestions]="matriculas" [(ngModel)]="matricula" (completeMethod)="getMatriculaPorCedula($event)" field="estudiante.id_persona.cedula" [minLength]="1"></p-autoComplete>
+                            <p-autoComplete styleClass="w-100" placeholder="010..." appendTo="body" [showEmptyMessage]="true" [suggestions]="matriculas" [(ngModel)]="matricula" (completeMethod)="getMatriculaPorCedula($event)" field="estudiante.id_persona.cedula" [minLength]="1"></p-autoComplete>
                         </div>
                     </div>
                     <div class="row" *ngIf="matricula && matricula.id_matricula! > 0; else NoHayMatricula">
@@ -96,7 +104,7 @@
                                 <div class="col-12">
                                     <div>
                                         <label for="tipoPago" class="block">Tipo de Pago</label>
-                                        <p-dropdown formControlName="tipoPago" [options]="tiposPago" optionLabel="descripcion" [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Seleccione tipo pago">         
+                                        <p-dropdown formControlName="tipoPago" [options]="tiposPago" appendTo="body" optionLabel="descripcion" [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Seleccione tipo pago">         
                                         </p-dropdown>
                                         <small  class="p-error block"
                                             *ngIf="verificarCampo('tipoPago')">
@@ -104,7 +112,7 @@
                                         </small>
                                     </div>
                                     <label for="tipoPago" class="block">Concepto de Pago</label>
-                                        <p-dropdown formControlName="tipoComprobante" [options]="tiposComprobante" (onChange)="seleccionTipoComp($event.value)" optionLabel="concepto_pago" [filter]="true" filterBy="concepto_pago" [showClear]="true" placeholder="Seleccione tipo comprobante">
+                                        <p-dropdown formControlName="tipoComprobante" appendTo="body" [options]="tiposComprobante" (onChange)="seleccionTipoComp($event.value)" optionLabel="concepto_pago" [filter]="true" filterBy="concepto_pago" [showClear]="true" placeholder="Seleccione tipo comprobante">
                                             
                                         </p-dropdown>
                                         <small  class="p-error block"
@@ -117,8 +125,20 @@
                                                 <p *ngIf="esTipoMatricula">
                                                     <b>Costo Matricula:</b> ${{matricula.id_periodo.costo_matricula}}
                                                 </p>
+                                                <p *ngIf="esTipoMatricula && comporbanteSaldo">
+                                                    <b style="color: #dc3545;">Saldo Matricula:</b> ${{comporbanteSaldo?.saldo}}
+                                                </p>
                                                 <p *ngIf="esTipoMensual">
                                                     <b>Costo Mensualidad:</b> ${{matricula.id_periodo.costo_mensualidad}}
+                                                </p>
+                                                <p *ngIf="esTipoMensual  && comporbanteSaldo">
+                                                    <b style="color: #dc3545;">Saldo Mensualidad:</b> ${{comporbanteSaldo?.saldo}}
+                                                </p>
+                                                <p *ngIf="esTipoKit">
+                                                    <b>Costo Kit:</b> ${{precioKit?.precioKit}}
+                                                </p>
+                                                <p *ngIf="esTipoKit  && comporbanteSaldo">
+                                                    <b style="color: #dc3545;">Saldo Kit:</b> ${{comporbanteSaldo?.saldo}}
                                                 </p>
                                                 <div>
                                                     <label for="Monto ingresado:">Monto ingresado:</label>
@@ -163,5 +183,35 @@
         <p-button icon="pi pi-check" (click)="closeDialog()" label="Cancelar" styleClass="p-button-text"></p-button>
         <button type="button" class="btn btn-primary" (click)="generarComprobantePdf(false)">Descargar</button>
         <button type="button" class="btn btn-primary" (click)="generarComprobantePdf(true)">Imprimir</button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Comprobante de Pago" [(visible)]="displayComprobanteDetalle" [style]="{width: '50vw'}" (onHide)="closeDialog()">
+    <div class="" *ngIf="selectComprobante">
+        <p-table [value]="[selectComprobante]" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Curso</th>
+                    <th>Modalidad</th>
+                    <th>Periodo</th>
+                    <th>Detalle</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-comprobante>
+                <tr>
+                    <td>{{comprobante.idComprobante.idMatricula.curso.descripcion | titlecase}}</td>
+                    <td>{{comprobante.idComprobante.idMatricula.modalidad.descripcion | titlecase}}</td>
+                    <td>
+                        {{comprobante.idComprobante.idMatricula.id_periodo.fecha_creacion | date: 'MMMM, yyyy'}}
+                        {{comprobante.idComprobante.idMatricula.id_periodo.fecha_fin | date: 'MMMM, yyyy'}}
+                    </td>
+                    <td>{{comprobante.detalle}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="closeDialog()" label="Cerrar" styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>

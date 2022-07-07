@@ -15,6 +15,8 @@ import { DetalleComprobanteService } from 'src/app/Servicio/pagos/detalleComprob
 import { GenerarComprobantePdfService } from 'src/app/Servicio/pagos/generarComprobante-pdf.service';
 import { TipoComprobanteService } from 'src/app/Servicio/pagos/tipoComprobante.service';
 import { TipoPagoService } from 'src/app/Servicio/pagos/tipoPago.service';
+import { TipoPagokit } from '../../../../Model/Pagos/tipoPago';
+import { Comprobante } from '../../../../Model/Pagos/comprobante';
 
 
 @Component({
@@ -32,13 +34,16 @@ export class ListarComprobantesComponent implements OnInit {
   matricula: Matricula = new Matricula;
   kits: Kit[]=[];
   kit: Kit = new Kit;
+  precioKit?: TipoPagokit;
   tiposComprobante: TipoComprobante[] = [];
   tiposPago: TipoPago[]=[];
   
   peridoActual = 0;
 
   selectComprobante?: DetalleComprobante| null;
+  comporbanteSaldo?: Comprobante;
   displayComprobante: boolean = false;
+  displayComprobanteDetalle: boolean = false;
 
   esTipoMatricula: boolean = false;
   esTipoMensual: boolean = false;
@@ -66,6 +71,7 @@ export class ListarComprobantesComponent implements OnInit {
     private _detalleComprobanteService: DetalleComprobanteService,
     private _genearComprobanteService: GenerarComprobantePdfService,
     private _mensajeSweetService: MensajesSweetService,
+    private _comprobanteService: ComprobanteService,
     private _authService: AuthService ) { }
   date?:Date;
   ngOnInit(): void {
@@ -78,6 +84,9 @@ export class ListarComprobantesComponent implements OnInit {
   }
 
   getMatriculaPorCedula(event:any){
+    this.esTipoMensual = false;
+    this.esTipoMatricula = false;
+    this.esTipoKit = false;
     this._matriculaService.getMatriculaPorCedula(event.query.trim()).subscribe({
       next:(resp)=>{
         console.log(resp);
@@ -150,18 +159,28 @@ export class ListarComprobantesComponent implements OnInit {
   }
 
   seleccionTipoComp(tipoComprobante: TipoComprobante){
+    this.comporbanteSaldo = undefined;
     switch (tipoComprobante.concepto_pago) {
       case 'Matricula':
         this.esTipoMatricula = true;
         this.esTipoMensual = false;
         this.esTipoKit = false;
         this.comprobanteForm.patchValue({valor: tipoComprobante.id_periodo.costo_matricula});
+        this.getComprobanteSaldo(this.matricula.id_matricula!, tipoComprobante.idTipoComprobante!);
         break;
       case 'Mensual':
         this.esTipoMensual = true;
         this.esTipoMatricula = false;
         this.esTipoKit = false;
         this.comprobanteForm.patchValue({valor: tipoComprobante.id_periodo.costo_mensualidad});
+        this.getComprobanteSaldo(this.matricula.id_matricula!, tipoComprobante.idTipoComprobante!);
+        break;
+      case 'Kit':
+        this.esTipoMensual = false;
+        this.esTipoMatricula = false;
+        this.esTipoKit = true;
+        this.getComprobanteSaldo(this.matricula.id_matricula!, tipoComprobante.idTipoComprobante!);
+        this.getPrecioKit();
         break;
       default:
         break;
@@ -169,52 +188,78 @@ export class ListarComprobantesComponent implements OnInit {
     
   }
   
-  
+  getPrecioKit = () => {
+    this._comprobanteService.getKitPrecio(this.matricula.estudiante.id_estudiante!).subscribe({
+      next: (resp) => {
+        this.precioKit = resp;
+        this.comprobanteForm.patchValue({valor: resp.precioKit});
+      },
+      error: (error) => console.log
+    })
+  }
+
+  getComprobanteSaldo = (idMatricula: number, idTipoCom: number) => {
+    this._comprobanteService.getcomprobateSaldo(idMatricula,idTipoCom).subscribe({
+      next: (resp) => {
+        console.log(resp);
+        this.comporbanteSaldo = resp.comprobante;
+        
+      },
+      error: (error) => this.comporbanteSaldo = undefined
+    })
+  }
 
   crearComprobante(){
-    console.log(this.comprobanteForm.value);
     if (this.comprobanteForm.invalid) {
       this.comprobanteForm.markAllAsTouched();
       return;
+    }    
+    let {valor, detalle, valor_total, tipoPago, tipoComprobante} = this.comprobanteForm.value;
+    let estado: boolean = true;
+    let saldo: number = 0;
+    if ( valor_total < valor) {
+      if ( this.comporbanteSaldo ) {
+        saldo = this.comporbanteSaldo.saldo - valor_total;
+        saldo === 0 ? estado = true : estado = false; 
+      } else {
+        saldo = valor - valor_total;
+        estado = false;
+      }
     }
-    let {valor, detalle, valor_total, id_tipo_pago, idTipoComprobante} = this.comprobanteForm.value;
-    
     let detalleComprobante: DetalleComprobante = {
       detalle,
       valor,    
       idComprobante:  {
-        estado: true,
+        saldo,
+        estado,
         fecha: new Date(),
         idMatricula: this.matricula,
-        tipoComprobante: idTipoComprobante,
-        id_empleado: this._authService.usuario.empleado!,
-        id_tipo_pago: id_tipo_pago,
+        tipoComprobante,
+        empleado: this._authService.usuario.empleado!,
+        tipoPago,
         imagen: '',
         valor_total
       }
-      
-    };
-
+    };    
     this._detalleComprobanteService.crearDetalleComprobante(detalleComprobante).subscribe({
-      next: (resp)=>{
-        console.log(resp);
-        
+      next: (resp)=>{        
         this.comprobanteForm.reset();
+        if ( this.comporbanteSaldo ) {
+          this._comprobanteService.actualizarComprobante(this.comporbanteSaldo?.id!).subscribe();
+        }
         this.getComprobantes();
         this.esTipoMatricula=false;
         this.esTipoMensual=false;
+        this.esTipoKit = false;
         this.matricula=new Matricula();
         this._mensajeSweetService.mensajeOk('Comprobante registrado');
       },
       error: (error)=>{
         console.log(error);
         this._mensajeSweetService.mensajeError('Ups!', 'No se puedo registrar el comprobante');
-        
       }
       
-    });
-    console.log(detalleComprobante);
-    
+    });    
   }
 
   openNew() {
@@ -224,6 +269,8 @@ export class ListarComprobantesComponent implements OnInit {
   hideDialog() {
     this.comprobanteDialog = false;
     this.matricula=new Matricula();
+    this.precioKit = {};
+    this.comporbanteSaldo = undefined;
   }
 
   verificarCampo  = ( campo: string ): boolean => {
@@ -257,8 +304,16 @@ export class ListarComprobantesComponent implements OnInit {
     this.displayComprobante = true;
   }
 
+  showDialogDetalles(comprobantes: DetalleComprobante){
+    console.log(comprobantes);
+    
+    this.selectComprobante = comprobantes;
+    this.displayComprobanteDetalle = true;
+  }
+
   closeDialog(){
     this.displayComprobante = false;
+    this.displayComprobanteDetalle = false;
     this.selectComprobante = null;
   }
 

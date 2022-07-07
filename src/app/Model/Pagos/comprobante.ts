@@ -4,13 +4,19 @@ import { empleado } from "../rolesTS/empleado";
 import { TipoPago } from './tipoPago';
 
 export class Comprobante {
-    idComprobante?: number;
+    id?: number;
     fecha: Date= new Date;
     imagen: string = "";
     valor_total: number = 0;
+    saldo: number = 0;
     estado: boolean = false;
     idMatricula: Matricula = new Matricula();
-    id_empleado: empleado = new empleado();
+    empleado: empleado = new empleado();
     tipoComprobante: TipoComprobante = new TipoComprobante();
-    id_tipo_pago: TipoPago = new TipoPago();
+    tipoPago: TipoPago = new TipoPago();
+}
+
+export interface StatusComprobante {
+    status?:    string;
+    comprobante?: any;
 }
