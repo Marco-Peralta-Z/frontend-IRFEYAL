@@ -4,17 +4,28 @@
   <div class="page__content shadow p-3 position-relative">
 
     <div class="card">
-      <div class="container">
+      <div class="container-fluid">
         <div class="row">
-          <div class="col-4">
+          <div class="col-3">
             <label for="periodoEscolar">Periodo:</label>
             <div>
               <p-dropdown [disabled]="filtrosBoolean" (onChange)="llenarmallas()" [options]="periodo"
                 [(ngModel)]="selectPeriodo" placeholder="Seleccione un Periodo" optionLabel="fecha_inicio">
+                <ng-template pTemplate="selectedItem">
+                  <div *ngIf="selectPeriodo">
+                    <div>De {{selectPeriodo.fecha_inicio | date:'dd/MM/yyyy'}} a {{selectPeriodo.fecha_fin |
+                      date:'dd/MM/yyyy'}} </div>
+                  </div>
+                </ng-template>
+                <ng-template let-p pTemplate="item">
+                  <div class="p-item">
+                    <div>De {{p.fecha_inicio | date:'dd/MM/yyyy'}} a {{p.fecha_fin | date:'dd/MM/yyyy'}} </div>
+                  </div>
+                </ng-template>
               </p-dropdown>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-3">
             <label for="paralelo">Malla:</label>
             <div>
               <p-dropdown [disabled]="filtrosBoolean" (onChange)="llenarmodalidades()" [options]="malla"
@@ -22,7 +33,7 @@
               </p-dropdown>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-3">
             <label for="modalidad">Modalidad:</label>
             <div>
               <p-dropdown [disabled]="filtrosBoolean" (onChange)="llenarcursos()" [options]="modalidad"
@@ -30,9 +41,7 @@
               </p-dropdown>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-4">
+          <div class="col-3">
             <label for="curso">Curso:</label>
             <div>
               <p-dropdown [disabled]="filtrosBoolean" (onChange)="llenarparalelos()" [options]="curso"
@@ -40,7 +49,9 @@
               </p-dropdown>
             </div>
           </div>
-          <div class="col-4">
+        </div><br>
+        <div class="row">
+          <div class="col-3">
             <label for="paralelo">Paralelo:</label>
             <div>
               <p-dropdown [disabled]="filtrosBoolean" (onChange)="llenarasignaturas()" [options]="paralelo"
@@ -48,7 +59,7 @@
               </p-dropdown>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-3">
             <label for="paralelo">Asignatura:</label>
             <div>
               <p-dropdown [disabled]="filtrosBoolean" (onChange)="habilitarListar()" [options]="asignatura"
@@ -56,19 +67,17 @@
               </p-dropdown>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-4"></div>
-          <div class="col-4"></div>
-          <div class="col-4">
-            <button type="submit" class="btn btn-success" [disabled]="listarBoolean"
-              (click)=" llenarregistros()">LISTAR</button>
-            <button type="submit" style="margin-left: 35px;" class="btn btn-primary" [disabled]="nuevaconsultaBoolean"
-              (click)="limpiarFormulario()">NUEVA CONSULTA</button>
+          <div class="col-6">
+            <label for="paralelo"></label>
+            <div>
+              <button type="submit" class="btn btn-primary" [disabled]="listarBoolean"
+                (click)=" llenarregistros()">LISTAR</button>
+              <button type="submit" style="margin-left: 20px;" class="btn btn-primary" [disabled]="nuevaconsultaBoolean"
+                (click)="limpiarFormulario()">NUEVA CONSULTA</button>
+            </div>
           </div>
         </div>
-      </div>
-
+      </div><br>
       <div class="container-fluid page">
         <p-table #dt [value]="registro" [rows]="7" [paginator]="true" [scrollable]="true" scrollDirection="both"
           [globalFilterFields]="['id_matricula.estudiante.id_persona.nombre','id_matricula.estudiante.id_persona.apellido']"
@@ -99,7 +108,8 @@
                   Quimestre<br>20%</label></th>
               <th style="width:130px; background-color: moccasin; text-align: center;"><label>PROMEDIO II
                   QUIMESTRE<br>A1+A2+EII</label></th>
-              <th style="width:90px; background-color: palegreen; text-align: center;"><label>NOTA
+              <th style="width:90px; text-align: center;"><label>Conducta</label></th>
+              <th style="width:90px; background-color: paleturquoise;"><label>NOTA
                   FINAL<br>(PI+PII)/2</label></th>
               <th style="width:95px; background-color: thistle; text-align: center;"><label>Examen Supletorio</label>
               </th>
@@ -122,7 +132,8 @@
               <td style="width:70px">{{registro.aporte3}}</td>
               <td style="width:70px">{{registro.aporte4}}</td>
               <td style="width:95px">{{registro.examen_IIquimestre}}</td>
-              <td style="width:130px">{{registro.promedio_IIquimestre}}</td>
+              <td style="width:130px">{{registro.promedio_Iquimestre}}</td>
+              <td style="width:90px">{{registro.conducta}}</td>
               <td style="width:90px">{{registro.nota_final}}</td>
               <td style="width:95px">{{registro.examen_supletorio}}</td>
               <td style="width:85px">{{registro.examen_remedial}}</td>
@@ -135,6 +146,13 @@
             </tr>
           </ng-template>
         </p-table>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <button style="margin-left: 15px;" type="submit" class="btn btn-success" [disabled]="nuevaconsultaBoolean"><i
+              class="pi pi-print"></i>
+            IMPRIMIR REGISTRO <i class="pi pi-file-pdf"></i></button>
+        </div>
       </div>
       <p-dialog [(visible)]="Dialog" [style]="{width: '450px'}" header="EDITAR" [modal]="true" styleClass="p-fluid">
         <ng-template pTemplate="content">
@@ -166,6 +184,12 @@
             <div class="col-4">
               <label for="ev2">E. II Quimestre:</label>
               <input type="number" pInputText id="ev1" [(ngModel)]="selectRegistro.examen_IIquimestre" />
+            </div>
+          </div><br>
+          <div class="row">
+            <div class="col-4">
+              <label for="ap3">Conducta:</label>
+              <input type="number" pInputText id="ap1" [(ngModel)]="selectRegistro.conducta" />
             </div>
           </div><br>
           <div class="row">

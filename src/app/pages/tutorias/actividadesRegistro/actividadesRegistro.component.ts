@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Registro } from 'src/app/Model/tutorias/registro';
-import { MessageService, SharedModule, ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ServiceTutoriasService } from 'src/app/Servicio/tutorias/registro/servicio-tutorias.service';
 import { AuthService } from 'src/app/Servicio/auth/auth.service';
 import { usuario } from 'src/app/Model/rolesTS/usuario';
@@ -15,7 +15,7 @@ import { Asignatura } from 'src/app/Model/Parametrizacion/Asignatura';
   selector: 'app-actividadesRegistro',
   templateUrl: './actividadesRegistro.component.html',
   styleUrls: ['./actividadesRegistro.component.scss'],
-  providers: [MessageService, SharedModule, ConfirmationService]
+  providers: [MessageService]
 })
 export class ActividadesRegistroComponent implements OnInit {
 
@@ -41,6 +41,8 @@ export class ActividadesRegistroComponent implements OnInit {
   nuevaconsultaBoolean: boolean = true;
   filtrosBoolean: boolean = false;
   idempleados: any;
+  porcentajeAportes: number = 0.4;
+  porcentajeExamenesQuimestre: number = 0.2;
 
   ngOnInit(): void {
     this.idempleados = this.usuarioGuardado().empleado?.id_empleado;
@@ -49,10 +51,6 @@ export class ActividadesRegistroComponent implements OnInit {
   }
 
   usuarioGuardado = (): usuario => this.auth.usuario;
-
-  habilitarListar() {
-    this.listarBoolean = false;
-  }
 
   llenarperiodos() {
     this.servitutorias.getPeriodos(this.idempleados).subscribe(dataPeriodos => {
@@ -120,8 +118,12 @@ export class ActividadesRegistroComponent implements OnInit {
     });
   }
 
+  habilitarListar() {
+    this.listarBoolean = false;
+  }
+
   llenarregistros() {
-    this.servitutorias.getRegistros(this.selectPeriodo, this.selectMalla, this.selectModalidad, this.selectCurso, this.selectParalelo, this.selectAsignatura).subscribe(dataRegistro => {
+    this.servitutorias.getRegistros(this.idempleados, this.selectPeriodo, this.selectMalla, this.selectModalidad, this.selectCurso, this.selectParalelo, this.selectAsignatura).subscribe(dataRegistro => {
       if (dataRegistro.length == 0) {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'NO HAY REGISTROS', life: 3000 });
       } else {
@@ -157,16 +159,17 @@ export class ActividadesRegistroComponent implements OnInit {
     if (registro.aporte4 == null) registro.aporte4 = 0;
     if (registro.examen_IIquimestre == null) registro.examen_IIquimestre = 0;
     if (registro.promedio_IIquimestre == null) registro.promedio_IIquimestre = 0;
+    if (registro.conducta == null) registro.conducta = 0;
     if (registro.examen_supletorio == null) registro.examen_supletorio = 0;
     if (registro.examen_remedial == null) registro.examen_remedial = 0;
     if (registro.examen_gracia == null) registro.examen_gracia = 0;
     if (registro.nota_final == null) registro.nota_final = 0;
-    registro.promedio_Iquimestre = parseFloat(((parseFloat(registro.aporte1.toString()) * 0.4) +
-      (parseFloat(registro.aporte2.toString()) * 0.4) +
-      (parseFloat(registro.examen_Iquimestre.toString()) * 0.2)).toFixed(2));
-    registro.promedio_IIquimestre = parseFloat(((parseFloat(registro.aporte3.toString()) * 0.4) +
-      (parseFloat(registro.aporte4.toString()) * 0.4) +
-      (parseFloat(registro.examen_IIquimestre.toString()) * 0.2)).toFixed(2));
+    registro.promedio_Iquimestre = parseFloat(((parseFloat(registro.aporte1.toString()) * this.porcentajeAportes) +
+      (parseFloat(registro.aporte2.toString()) * this.porcentajeAportes) +
+      (parseFloat(registro.examen_Iquimestre.toString()) * this.porcentajeExamenesQuimestre)).toFixed(2));
+    registro.promedio_IIquimestre = parseFloat(((parseFloat(registro.aporte3.toString()) * this.porcentajeAportes) +
+      (parseFloat(registro.aporte4.toString()) * this.porcentajeAportes) +
+      (parseFloat(registro.examen_IIquimestre.toString()) * this.porcentajeExamenesQuimestre)).toFixed(2));
     registro.nota_final = Math.round(((parseFloat(registro.promedio_Iquimestre.toString()) + parseFloat(registro.promedio_IIquimestre.toString())) / 2));
     if (registro.promedio_Iquimestre >= 4) {
       if (registro.nota_final >= 7) {
@@ -237,20 +240,12 @@ export class ActividadesRegistroComponent implements OnInit {
 
   save() {
     this.submitted = true;
-    if (this.selectRegistro.id_registro) {
-      this.registro[this.findIndexById(this.selectRegistro.id_registro)] = this.selectRegistro;
-      this.messageService.add({ severity: 'success', summary: 'Hecho', detail: 'Registro Actualizado', life: 3000 });
-      this.validarAprobaciones(this.selectRegistro);
-      this.selectRegistro.id_asignatura = this.selectAsignatura;
-      console.log(this.selectRegistro);
-
-      this.servitutorias.setRegistros(this.selectRegistro).subscribe();
-    }
-    else {
-      this.selectRegistro.id_registro = this.createId();
-      this.registro.push(this.selectRegistro);
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Registro Creado', life: 3000 });
-    }
+    this.registro[this.findIndexById(this.selectRegistro.id_registro)] = this.selectRegistro;
+    this.messageService.add({ severity: 'success', summary: 'Hecho', detail: 'Registro Actualizado', life: 3000 });
+    this.validarAprobaciones(this.selectRegistro);
+    this.selectRegistro.id_asignatura = this.selectAsignatura;
+    console.log(this.selectRegistro);
+    this.servitutorias.setRegistros(this.selectRegistro).subscribe();
     this.registro = [...this.registro];
     this.Dialog = false;
     this.selectRegistro = { ...this.selectRegistro };
@@ -271,14 +266,6 @@ export class ActividadesRegistroComponent implements OnInit {
       }
     }
     return index;
-  }
-
-  createId(): Number {
-    let id = 0;
-    for (var i = 0; i < 5; i++) {
-      id += (Math.floor(Math.random()));
-    }
-    return id;
   }
 
 }

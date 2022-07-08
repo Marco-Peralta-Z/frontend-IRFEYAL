@@ -11,6 +11,7 @@ export class Registro {
     aporte4: Number = 0;
     examen_IIquimestre: Number = 0;
     promedio_IIquimestre: Number = 0;
+    conducta: Number = 0;
     examen_supletorio: Number = 0;
     examen_remedial: Number = 0;
     examen_gracia: Number = 0;
