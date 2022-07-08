@@ -114,7 +114,7 @@ export class CrearEditarKitComponent implements OnInit {
           this._mensajesSweetService.mensajeOk('Kit creado');
           this.kitForm.reset();
         } else {
-          this._mensajesSweetService.mensajeError('Upss!', 'No se pudo crear el kit',);
+          this._mensajesSweetService.mensajeError('Upss!', 'El curso seleccionado ya tiene un Kit asignado',);
         }
       }
     })
