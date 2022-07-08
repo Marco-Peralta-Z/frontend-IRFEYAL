@@ -28,6 +28,13 @@
                             El precio requerido
                     </small>
                 </div>
+                <!-- curso -->
+                <div class="field">
+                    <label for="curso" class="block">Curso</label>
+                    <select [compareWith]="compararPeriodo" class="form-select" formControlName="curso">
+                        <option *ngFor="let curso of cursos"  [ngValue]="curso">{{curso.descripcion}}</option>
+                    </select>
+                </div>
             </div>
             <div class="col-6 p-4">
                 <!-- periodo -->

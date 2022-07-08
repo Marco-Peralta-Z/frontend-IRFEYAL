@@ -9,6 +9,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ResKit } from '../../../../../../Model/Inventarios/interfaces/res_kit.interface';
 import { PeriodoService } from '../../../../../../Servicio/parametrizacion/Service Periodo/periodo.service';
 import { Periodo } from '../../../../../../Model/Parametrizacion/Periodo';
+import { CursosService } from 'src/app/Servicio/parametrizacion/Service Curso/cursos.service';
+import { Curso } from 'src/app/Model/Parametrizacion/Curso';
 
 @Component({
   selector: 'app-crear-editar-kit',
@@ -21,10 +23,13 @@ export class CrearEditarKitComponent implements OnInit {
     nombrekit: [ , [ Validators.required]],
     precioKit: [ , [ Validators.required]],
     periodo: [  , [ Validators.required]],
+    curso: [ , [ Validators.required]],
     listaModulos: [ ],
+    
   });
 
   public id?: number;
+  public cursos: Curso [] = [];
   public modulos: Modulo [] = [];
   public periodos: Periodo [] = [];
   public selectPeriodo?: Periodo;
@@ -42,6 +47,7 @@ export class CrearEditarKitComponent implements OnInit {
     this.getKitIdParam();
     this.getModulos();
     this.getPeriodos();
+    this.getCursos();
   }
   getKitIdParam = () => {
     this._activatedRoute.paramMap.subscribe( params => {      
@@ -60,6 +66,19 @@ export class CrearEditarKitComponent implements OnInit {
       },
       error: (error) => {
         this.modulos = [];
+      }
+    });
+  }
+  getCursos = () => {
+    console.log('resp');
+    this._kitService.getCursos().subscribe({
+      next: (resp) => {
+        
+        this.cursos = resp as Curso [];
+      },
+      error: (error) => {
+        
+        this.cursos = [];
       }
     });
   }
@@ -88,6 +107,7 @@ export class CrearEditarKitComponent implements OnInit {
   }
 
   crearKit = ( kit: Kit ) => {
+    console.log('crearKit', kit);
     this._kitService.crearKit( kit ).subscribe({
       next: (response) => {
         if ( response === 'ok') {

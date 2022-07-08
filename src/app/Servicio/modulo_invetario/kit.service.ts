@@ -61,4 +61,8 @@ export class KitService {
   getKits = ()  => {
     return this._http.get(`${this._baseUrl}kit/list/`);
   }
+
+  getCursos = ()  => {
+    return this._http.get(`${this._baseUrl}kit/cursosKit/`);
+  }
 }

@@ -17,9 +17,9 @@ export class CrearEditarComponent implements OnInit {
   public moduloForm: FormGroup = this._formBuilder.group({
     nombreModulo: [ , [ Validators.required ] ],
     codModulo: [ , [ Validators.required ] ],
-    curso: [ , [ Validators.required ] ],
+    // curso: [ , [ Validators.required ] ],
     cantidad: [ , [ Validators.required ] ],
-    numero: [ , [ Validators.required ] ],
+    //numero: [ , [ Validators.required ] ],
     numeroModulo: [ , [ Validators.required ] ],
   });
 
