@@ -54,6 +54,10 @@ export class KitService {
       )
   }
 
+
+
+
+
   getKitPorId = (id: number) => {
     return this._http.get<ResKit>(`${this._baseUrl}kit/${id}`);
   }

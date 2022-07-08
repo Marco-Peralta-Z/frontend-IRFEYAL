@@ -40,16 +40,16 @@ export class ListarKitsComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         rejectButtonStyleClass: 'p-button-danger p-button-text',
         accept: () => {
-          // this._kitService.eliminarPorId(kit.id_kit!).subscribe({
-          //   next: (resp) => {;
-          //     if ( resp === 'ok' ) {
-          //       this._mensajesSweetService.mensajeOk('Módulo eliminado');
-          //       this.kits = this.kits.filter(kit => kit.id_kit !== kit.id_kit);
-          //     } else {
-          //       this._mensajesSweetService.mensajeError('Upps!', `No se pudo eliminar el kit: ${kit.nombrekit}`);
-          //     }
-          //   }
-          // });
+          this._kitService.eliminarPorId(kit.id_kit!).subscribe({
+            next: (resp) => {;
+              if ( resp === 'ok' ) {
+                this._mensajesSweetService.mensajeOk('Módulo eliminado');
+                this.kits = this.kits.filter(kit => kit.id_kit !== kit.id_kit);
+              } else {
+                this._mensajesSweetService.mensajeError('Upps!', `No se pudo eliminar el kit: ${kit.nombrekit}`);
+              }
+            }
+          });
         }
     });
   }
