@@ -12,6 +12,7 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
+                <th pSortableColumn="curso">Curso <p-sortIcon field="curso"></p-sortIcon></th>
                 <th pSortableColumn="nombrekit">Nombre <p-sortIcon field="nombrekit"></p-sortIcon></th>
                 <th pSortableColumn="precioKit">Precio <p-sortIcon field="precioKit"></p-sortIcon></th>
                 <th pSortableColumn="periodo">Periodo <p-sortIcon field="periodo"></p-sortIcon></th>
@@ -29,7 +30,7 @@
         
         <ng-template pTemplate="body" let-kit>
             <tr>
-
+                <td>{{kit.curso.descripcion}}</td>
                 <td>{{kit.nombrekit}}</td>
                 <td>{{kit.precioKit}}</td>
                 <td>{{kit.periodo.ano_inicio}} - {{kit.periodo.ano_fin}}   {{kit.periodo.periodo_academico}}</td>
