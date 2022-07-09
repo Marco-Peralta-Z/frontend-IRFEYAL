@@ -100,12 +100,12 @@
 
 <p-dialog header="Certificado de Matricula" [(visible)]="displayMatricula" [style]="{width: '50vw'}" (onHide)="closeDialog()">
     <div class="">
-        <div class="row" style="height: 17vw;">
+        <div class="row">
             <div class="col-6">
-                <p-dropdown [options]="empleados" [(ngModel)]="selectRector" placeholder="Seleccione Rector/a" optionLabel="cargo" [showClear]="true"></p-dropdown>
+                <p-dropdown [options]="empleados" [(ngModel)]="selectRector" appendTo="body" placeholder="Seleccione Rector/a" optionLabel="cargo" [showClear]="true"></p-dropdown>
             </div>
             <div class="col-6">
-                <p-dropdown [options]="empleados" [(ngModel)]="selectSecretaria" placeholder="Seleccione Secretaria/o" optionLabel="cargo" [showClear]="true"></p-dropdown>
+                <p-dropdown [options]="empleados" [(ngModel)]="selectSecretaria" appendTo="body" placeholder="Seleccione Secretaria/o" optionLabel="cargo" [showClear]="true"></p-dropdown>
             </div>
         </div>
     </div>
@@ -133,15 +133,15 @@
         </div>
         <div class="row">
             <div class="col-6">
-                Provincia: {{selectMatricula.estudiante.direccion?.provincia?.provincia}} 
+                Provincia: {{selectMatricula.estudiante.id_extension.id_direccion?.provincia?.provincia}} 
             </div>
             <div class="col-6">
-                Cantón: {{selectMatricula.estudiante.id_extension.direccion?.canton?.canton}}
+                Cantón: {{selectMatricula.estudiante.id_extension.id_direccion?.canton?.canton}}
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                Lugar: {{selectMatricula.estudiante.id_extension.direccion?.canton?.canton}}  
+                Lugar: {{selectMatricula.estudiante.id_extension.id_direccion?.canton?.canton}}  
             </div>
         </div>
         <div class="row">
@@ -160,8 +160,7 @@
             </div>
             <div class="col-12" style="text-align: justify;">
                 CERTIFICAMOS: Que el (la) estudiante <b>{{selectMatricula.estudiante.id_persona.nombre | uppercase}} {{selectMatricula.estudiante.id_persona.apellido | uppercase}}</b>, previo al cumplimiento de los 
-                requisitos legales y reglamentarios, se matriculó en el <b>BACHILLERATO GENERAL 
-                UNIFICADO-CIENCIAS {{selectMatricula.modalidad.descripcion}}  (1ro, 2do,  3ro)</b>, de este establecimiento Educativo, el {{selectMatricula.fechaMatricula | date: 'longDate'}}.
+                requisitos legales y reglamentarios, se matriculó en el <b> {{selectMatricula.id_periodo.malla.descripcion.toLocaleUpperCase()}} {{selectMatricula.modalidad.descripcion.toLocaleUpperCase()}}  ({{selectMatricula.curso.descripcion.toLocaleUpperCase()}})</b>, de este establecimiento Educativo, el {{selectMatricula.fechaMatricula | date: 'longDate'}}.
             </div>
             <div class="col-12">
                 Así está anotado en el folio {{selectMatricula.id_matricula}} del libro respectivo.
@@ -179,7 +178,7 @@
             </div>
             <div class="col-6 text-center mt-4">
                 <p>_______________________________</p>
-                <p>{{selectSecretaria.persona?.nombre | uppercase}} {{selectRector.persona?.apellido | uppercase}}</p>    
+                <p>{{selectSecretaria.persona?.nombre | uppercase}} {{selectSecretaria.persona?.apellido | uppercase}}</p>    
                 <p>SECRETARIA</p>         
         
             </div>
@@ -187,7 +186,6 @@
     </div>
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-check" (click)="closeDialog()" label="Cancelar" styleClass="p-button-text"></p-button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="crearCertificado()"></button>
         <button type="button" class="btn btn-primary" (click)="generarPdf(false)">Descargar</button>
         <button type="button" class="btn btn-primary" (click)="generarPdf(true)">Imprimir</button>
     </ng-template>

@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Estudiante } from 'src/app/Model/Matriculas/estudiante';
 import { CertificadoMatricula } from 'src/app/Model/Secretaria/certificadoMatricula';
@@ -8,9 +7,7 @@ import { CertificadoMatriculaServiceService } from 'src/app/Servicio/secretaria/
 import { empleado } from 'src/app/Model/rolesTS/empleado';
 import { GenerarPdfService } from 'src/app/Servicio/secretaria/certificadosService/generar-pdf.service';
 import { ReimprimirMatService } from 'src/app/Servicio/secretaria/certificadosService/reimprimirMat.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { AuthService } from 'src/app/Servicio/auth/auth.service';
-import { MensajesSweetService } from 'src/app/Servicio/modulo_invetario/mensajes-sweet.service';
+import { MensajesSweetService } from '../../../../Servicio/modulo_invetario/mensajes-sweet.service';
 
 @Component({
   selector: 'app-generar-certificadomatricula',
@@ -34,14 +31,13 @@ export class GenerarCertificadomatriculaComponent implements OnInit {
   selectSecretaria?: empleado| null;
   selectRector?: empleado| null;
 
-  constructor(private router: Router
-    ,private matriculaService: MatriculaService
+  constructor(
+    private matriculaService: MatriculaService
     ,private _certificadoMatriculaService: CertificadoMatriculaServiceService
     ,private _generarPdfService: GenerarPdfService
-    ,private _formBuilder: FormBuilder
-    ,private _reimprimirCertMat: ReimprimirMatService
-    ,private _authService: AuthService
-    ,private _mensajeSweetService: MensajesSweetService) { }
+    ,private _reimprimirCertMat: ReimprimirMatService,
+    private _mensajeSweetService: MensajesSweetService
+    ) { }
 
   ngOnInit(): void {
     this.getMatriculas();
@@ -107,16 +103,19 @@ export class GenerarCertificadomatriculaComponent implements OnInit {
     
   }
 
-  crearCertificado(){
-    
-  }
-
   generarPdf(imprimir: boolean){
-    this._generarPdfService.generarCertificado(this.selectMatricula!,this.selectSecretaria!,this.selectRector!, imprimir);
+    if (this.selectSecretaria && this.selectRector) {
+      this._generarPdfService.generarCertificado(this.selectMatricula!,this.selectSecretaria!,this.selectRector!, imprimir);
+      this.closeDialog();
+    } else {
+      this._mensajeSweetService.mensajeError('Por favor', 'Seleccione al rector y secretaria');
+    }
   }
   
   showDialog(matricula: Matricula) {
     this.selectMatricula = matricula;
+    console.log(matricula);
+    
     this.displayMatricula = true;
   }
   closeDialog() {
