@@ -70,7 +70,7 @@ export class AgregarMatriculaComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarMallas();
-     console.log("tiene algo?:",this.mallas);
+    //  console.log("tiene algo?:",this.mallas);
     this.refreshMatriculas();
     this.estudianteService.getEstudiantePersonas()
       .subscribe(persona => this.personas = persona);
@@ -116,7 +116,7 @@ export class AgregarMatriculaComponent implements OnInit {
     this.matriculaFormulario.controls['Rcurso'].setValue('');
     this.cargarPeriodo();
     let filtered: any[] = [];
-    console.log(this.mallaSelectd.listaCursos);
+    // console.log(this.mallaSelectd.listaCursos);
     filtered.push(this.mallaSelectd.listaCursos);
     for (let i = 0; i < filtered.length; i++) {
       let curso = filtered[i];

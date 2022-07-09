@@ -152,7 +152,7 @@
                                     <div class="field col-6">
                                         <label><b>Año Lectivo</b></label>
                                         <input type="text" pInputText
-                                            [ngModel]="matricula.id_periodo.ano_inicio + ' - ' + matricula.id_periodo.ano_fin"
+                                            [ngModel]="(matricula.id_periodo.fecha_inicio | date : 'MMMM/YYYY' )+ ' - ' + (matricula.id_periodo.fecha_fin | date : 'MMMM/YYYY')"
                                             readonly />
                                     </div>
                                     <div class="field col-6">
@@ -186,7 +186,7 @@
                                             <div class="field col-6">
                                                 <label><b>Periodo Academico</b></label>
                                                 <input type="text" pInputText
-                                                    value="{{detalle.id_periodo.ano_inicio + ' - ' + detalle.id_periodo.ano_fin}}"
+                                                    value="{{(matricula.id_periodo.fecha_inicio | date : 'MMMM/YYYY' )+ ' - ' + (matricula.id_periodo.fecha_fin | date : 'MMMM/YYYY')}}"
                                                     readonly />
                                             </div>
 
