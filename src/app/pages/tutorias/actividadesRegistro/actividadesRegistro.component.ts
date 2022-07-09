@@ -251,6 +251,16 @@ export class ActividadesRegistroComponent implements OnInit {
     this.selectRegistro = { ...this.selectRegistro };
   }
 
+  imprimirPdf() {
+    this.servitutorias.getPDF(this.selectPeriodo, this.selectMalla, this.selectModalidad, this.selectCurso, this.selectParalelo, this.selectAsignatura).subscribe(
+      (data: any) => {
+        const file = new Blob([data], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      });
+
+  }
+
   hideDialog() {
     this.messageService.add({ severity: 'error', summary: 'Cancelar', detail: 'No Se Realizo Cambios', life: 3000 });
     this.Dialog = false;

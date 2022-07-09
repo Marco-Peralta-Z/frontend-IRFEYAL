@@ -57,6 +57,14 @@ export class ServiceTutoriasService {
     return this.http.put<Registro>(this.url + "registro/Update/" + registro.id_registro, registro)
   }
 
+  //metodo para realizar pdf.
+  getPDF(periodo: Periodo, malla: Malla, modalidad: Modalidad, curso: Curso, paralelo: Paralelo, asignatura: Asignatura) {
+    const httpOptions = {
+      responseType: 'arraybuffer' as 'json'
+    };
+    return this.http.get(this.url + "registro/exportInvoice/" + periodo.id_periodo + "/" + malla.id_malla + "/" + modalidad.id_modalidad + "/" + curso.id_curso + "/" + paralelo.id_paralelo + "/" + asignatura.id_asignatura, httpOptions);
+  }
+
   //metodo para buscar estudiante por cedula del modulo de secertaria
   getCedulaPorEstudiante(cedula: string) {
     return this.http.get<Registro[]>(`${this.url}registro/buscarcedulaEstudiante/${cedula}`);

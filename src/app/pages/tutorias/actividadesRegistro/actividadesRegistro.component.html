@@ -149,8 +149,8 @@
       </div>
       <div class="row">
         <div class="col-4">
-          <button style="margin-left: 15px;" type="submit" class="btn btn-success" [disabled]="nuevaconsultaBoolean"><i
-              class="pi pi-print"></i>
+          <button style="margin-left: 15px;" type="submit" class="btn btn-success" [disabled]="nuevaconsultaBoolean"
+            (click)="imprimirPdf()"><i class="pi pi-print"></i>
             IMPRIMIR REGISTRO <i class="pi pi-file-pdf"></i></button>
         </div>
       </div>
@@ -188,8 +188,8 @@
           </div><br>
           <div class="row">
             <div class="col-4">
-              <label for="ap3">Conducta:</label>
-              <input type="number" pInputText id="ap1" [(ngModel)]="selectRegistro.conducta" />
+              <label for="c">Conducta:</label>
+              <input type="number" pInputText id="c" [(ngModel)]="selectRegistro.conducta" />
             </div>
           </div><br>
           <div class="row">
