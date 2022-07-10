@@ -88,6 +88,13 @@ export class MallaComponent implements OnInit {
 
             this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'No se Eliminado' });
           }
+        },
+        err => {
+          if (err.status == 500) {
+            console.log(err)
+            this.messageService.add({ severity: 'error', summary: 'No Eliminado', detail: err.error.mensaje });
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Es posible que este MALLA este siendo ocupado' });
+          }
         });
       },
       reject: () => {

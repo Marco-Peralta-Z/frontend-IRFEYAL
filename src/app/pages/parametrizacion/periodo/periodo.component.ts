@@ -44,6 +44,7 @@ export class PeriodoComponent implements OnInit {
       console.log(this.perdiodoList)
     })
   }
+
   verAsignaturas(selectperiodo: Periodo) {
     localStorage.setItem("id_malla", selectperiodo.malla.id_malla.toString())
     this.ref = this.dialogService.open(AsignaturaPeriodoComponent, {
@@ -78,9 +79,18 @@ export class PeriodoComponent implements OnInit {
       accept: () => {
         this.selectedPeriodo.forEach(element => {
           this.serviceperiodo.deltePeriodo(element).subscribe(data => {
-            this.messageService.add({ severity: 'success', summary: 'Eliminado', detail: 'Periodo: Eliminado con exito', life: 3000 });
-            this.llenarTable();
-          });
+            if (data) {
+              this.messageService.add({ severity: 'success', summary: 'Eliminado', detail: 'Periodo: Eliminado con exito', life: 3000 });
+              this.llenarTable();
+            }
+          },
+            err => {
+              if (err.status == 500) {
+                console.log(err)
+                this.messageService.add({ severity: 'error', summary: 'No Eliminado', detail: err.error.mensaje });
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Es posible que este PERIODO: ' + element.ano_inicio + '-' + element.ano_fin + ' este siendo ocupado' });
+              }
+            });
         });
 
       },

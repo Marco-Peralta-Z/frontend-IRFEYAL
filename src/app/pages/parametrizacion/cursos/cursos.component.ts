@@ -186,6 +186,13 @@ export class CursosComponent implements OnInit {
           } else {
             this.messageService.add({ severity: 'error', summary: 'Error al Eliminar ', detail: 'No se pudo eliminar con exito' });
           }
+        },
+        err => {
+          if (err.status == 500) {
+            console.log(err)
+            this.messageService.add({ severity: 'error', summary: 'No Eliminado', detail: err.error.mensaje });
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Es posible que este CURSO este siendo ocupado' });
+          }
         })
 
       },

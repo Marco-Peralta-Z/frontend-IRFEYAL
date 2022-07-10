@@ -144,11 +144,7 @@ export class AsignaturasComponent implements OnInit {
         for (let index = 0; index < this.selectArea.listaAsignaturas.length; index++) {
           if (a.id_asignatura == this.selectArea.listaAsignaturas[index].id_asignatura) {
             this.selectArea.listaAsignaturas.splice(index, 1);
-            this.serviceasig.UpdateArea(this.selectArea).subscribe(data => {
-              if (data) {
-
-              }
-            })
+            this.serviceasig.UpdateArea(this.selectArea).subscribe(data => { })
             break
 
           }
@@ -161,7 +157,14 @@ export class AsignaturasComponent implements OnInit {
 
             this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'No se Eliminado' });
           }
-        });
+        },
+          err => {
+            if (err.status == 500) {
+              console.log(err)
+              this.messageService.add({ severity: 'error', summary: 'No Eliminado', detail: err.error.mensaje });
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Es posible que este ASIGNATURA este siendo ocupado' });
+            }
+          });
       },
       reject: () => {
         this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Cancelado' });
