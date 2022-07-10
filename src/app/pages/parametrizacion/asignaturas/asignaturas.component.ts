@@ -39,6 +39,7 @@ export class AsignaturasComponent implements OnInit {
   asig2: Asignatura = new Asignatura
   listarea: Area[] = [];
   selectArea!: Area;
+  star!: Boolean;
 
   ngOnInit(): void {
     this.activeItem = this.items[0];
@@ -64,7 +65,11 @@ export class AsignaturasComponent implements OnInit {
       this.empleados.sort();
     })
     this.serviceasig.getAllArea().subscribe(data => {
-      this.listarea = data.sort();
+      this.star = true;
+      if (data) {
+        this.star = false;
+        this.listarea = data.sort();
+      }
     })
   }
 

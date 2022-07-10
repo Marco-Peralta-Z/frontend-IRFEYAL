@@ -32,6 +32,7 @@ export class PeriodoComponent implements OnInit {
   panelAsingaturas: boolean = false;
   ref!: DynamicDialogRef;
   selectedPeriodo: Periodo[] = [];
+  star!: Boolean;
 
   ngOnInit(): void {
     localStorage.setItem("id_periodoupdate", "");
@@ -39,8 +40,12 @@ export class PeriodoComponent implements OnInit {
   }
 
   llenarTable() {
+    this.star=true;
     this.serviceperiodo.getAllPerdiodo().subscribe(data => {
-      this.perdiodoList = data;
+      if(data){
+        this.perdiodoList = data;
+        this.star=false;
+      }
     })
   }
 
@@ -104,10 +109,13 @@ export class PeriodoComponent implements OnInit {
               }
             });
         });
-
       },
       reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Cancelado', detail: 'No se realizo ningun cambio' });
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Cancelado',
+          detail: 'No se realizo ningun cambio'
+        });
       }
     });
 

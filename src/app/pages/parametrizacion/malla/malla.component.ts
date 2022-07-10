@@ -36,15 +36,20 @@ export class MallaComponent implements OnInit {
   peridos!: Periodo[];
   selecperiodo!: Periodo;
   ref!: DynamicDialogRef;
-  
+  star!: Boolean;
+
   ngOnInit(): void {
     localStorage.setItem("id_malla",'');
     this.llenartabla();
   }
 
   llenartabla() {
+    this.star=true;
     this.servicemalla.getAllMalla().subscribe(data => {
-      this.malla = data;
+      if(data){
+        this.malla = data;
+        this.star=false;
+      }
     })
   }
 

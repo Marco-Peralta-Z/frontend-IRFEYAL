@@ -3,6 +3,9 @@
     <div class="page__content shadow p-3 ">
 
         <!--Inicio Contenido-->
+        <div *ngIf="star">
+            <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+        </div>
         <p-toast></p-toast>
         <p-confirmPopup></p-confirmPopup>
 
