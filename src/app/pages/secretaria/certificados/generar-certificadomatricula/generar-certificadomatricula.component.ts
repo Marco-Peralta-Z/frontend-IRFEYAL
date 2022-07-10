@@ -64,13 +64,10 @@ export class GenerarCertificadomatriculaComponent implements OnInit {
   }
 
   getMatriculaPorCedula(event: any){
-    console.log(event.value);
     let cedula = event.value.trim();
-    
     if (cedula.length == 0)return;
     this.matriculaService.getMatriculaPorCedula(cedula).subscribe({
       next:(resp)=>{
-        console.log(resp);
         this.matriculas=resp;
       },
       error:(error)=>{
@@ -127,6 +124,7 @@ export class GenerarCertificadomatriculaComponent implements OnInit {
 
   reimprimirCert(imprimir: boolean){
     this._reimprimirCertMat.generarCertificadoMatricula(this.selectCertMatricula!, imprimir);
+    this.cerrarDialog();
   }
 
   verDialog(certificadoMat: CertificadoMatricula){

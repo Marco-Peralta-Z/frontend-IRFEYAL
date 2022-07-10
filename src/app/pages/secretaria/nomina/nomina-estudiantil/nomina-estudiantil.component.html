@@ -2,18 +2,23 @@
     <div class="d-flex page__box p-3 mt-2">Nomina Estudiantil</div>
     <div class="page__content shadow p-3 position-relative">
   
-      <div class="dropdown">
-        <select name="select">
-          <option value="value1">Value</option>
-        </select>
-  
-        <select name="select">
-          <option value="value1">Value</option>
-        </select>
-  
-        <select name="select">
-          <option value="value1">Value</option>
-        </select>
+      <div class="row">
+        <h2>Seleccione parametros de consulta:</h2>
+        <div class="col-12 d-flex justify-content-around">
+          <p-dropdown [options]="cursos" [(ngModel)]="selectCurso" optionLabel="descripcion" [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Seleccione curso">
+          </p-dropdown>
+          <p-dropdown [options]="modalidades" [(ngModel)]="selectModalidad" optionLabel="descripcion" [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Seleccione modalidad">
+          </p-dropdown>
+          <p-dropdown [options]="periodos" [(ngModel)]="selectPeriodo" optionLabel="ano_fin" [filter]="true" filterBy="ano_fin" [showClear]="true" placeholder="Seleccione modalidad">
+            <ng-template let-periodo pTemplate="item">
+              <div class="country-item">
+                  <div>{{periodo.ano_inicio}} - {{periodo.ano_fin}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <p-button label="Buscar" icon="pi pi-search" type="submit" (click)="getRegistrosPorIdCurModPer()">
+          </p-button>
+        </div>
       </div>
   
       <div>

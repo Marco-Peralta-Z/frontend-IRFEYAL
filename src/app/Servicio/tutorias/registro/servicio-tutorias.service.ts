@@ -76,4 +76,8 @@ export class ServiceTutoriasService {
     return this.http.get<RespRegistros>(`${this.url}registro/getRegistros/${id}`);
   }
 
+  getRegistrosByIdCurModPer(idCurso: number, idMod: number, idPer: number) {
+    return this.http.get<RespRegistros>(`${this.url}registro/getRegistrosFilter/${idCurso}/${idMod}/${idPer}`);
+  }
+
 }

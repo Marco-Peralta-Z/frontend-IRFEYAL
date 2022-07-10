@@ -85,33 +85,43 @@ export class GenerarCertificadopromocionComponent implements OnInit {
   getCedulaPorEstudiante(event: any) {
     console.log(event.value);
     let cedula = event.value.trim();
-
-    if (cedula.length == 0) return;
-    this.registroService.getCedulaPorEstudiante(cedula).subscribe({
+    if (cedula.length == 0){};
+    this._matriculaService.getMatriculaPorCedula(cedula).subscribe({
       next: (resp) => {
-        console.log(resp);
-        this.registros = resp;
+        if (resp.length === 0) {
+          this._mensajeSweetService.mensajeError('Upss', `No hay estudiantes con CI: ${cedula}`);
+          return;
+        }
+        this.matriculas = resp;
       },
       error: (error) => {
-        console.log(error)
+        this.matriculas = [];
+        this.getMatriculas();
       }
     })
   }
-
-  // getRegistrosAll() {
-  //   this._certificadoPromocionService.getRegistros()
-  //     .subscribe(certificadoPromo => {
-  //       console.log(certificadoPromo);
-  //       this.registros = certificadoPromo;
-  //     })
-  // }
 
   regresarHome() {
     this.router.navigate(["home"]);
   }
 
   generarPdf(imprimir: boolean) {
-    this._generarPdfService.generarCertificado(this.selectRegistro!, this.selectSecretaria!, this.selectRector!, imprimir, this.certificadoTabla);
+    if (this.selectRector && this.selectSecretaria) {
+      if (this.cursoPromovido.length > 2) {
+        this._generarPdfService.generarCertificado(
+          this.selectMatricula!, 
+          this.selectSecretaria!, 
+          this.selectRector!,
+          imprimir, 
+          this.cursoPromovido, 
+          this.certificadoTabla);
+        this.closeDialog();
+      } else {
+        this._mensajeSweetService.mensajeError('Por favor', 'Ingrese el curso a promover en la caja de texto')
+      }
+    } else {
+      this._mensajeSweetService.mensajeError('Por favor', 'Seleccione al Rector/a y Secretario/a')
+    }
   }
 
   showDialog(matricula: Matricula) {
