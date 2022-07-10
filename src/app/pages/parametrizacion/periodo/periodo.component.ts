@@ -32,7 +32,7 @@ export class PeriodoComponent implements OnInit {
   panelAsingaturas: boolean = false;
   ref!: DynamicDialogRef;
   selectedPeriodo: Periodo[] = [];
-  
+
   ngOnInit(): void {
     localStorage.setItem("id_periodoupdate", "");
     this.llenarTable();
@@ -79,14 +79,28 @@ export class PeriodoComponent implements OnInit {
         this.selectedPeriodo.forEach(element => {
           this.serviceperiodo.deltePeriodo(element).subscribe(data => {
             if (data) {
-              this.messageService.add({ severity: 'success', summary: 'Eliminado', detail: 'Periodo: Eliminado con exito', life: 3000 });
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Eliminado',
+                detail: 'Periodo: Eliminado con exito',
+                life: 5000
+              });
               this.llenarTable();
             }
           },
             err => {
               if (err.status == 500) {
-                this.messageService.add({ severity: 'error', summary: 'No Eliminado', detail: err.error.mensaje });
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Es posible que este PERIODO: ' + element.ano_inicio + '-' + element.ano_fin + ' este siendo ocupado' });
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'No Eliminado',
+                  detail: err.error.mensaje, life: 5000
+                });
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'Error',
+                  detail: 'Es posible que este PERIODO: ' + element.ano_inicio + '-' + element.ano_fin + ' este siendo ocupado',
+                  life: 5000
+                });
               }
             });
         });
