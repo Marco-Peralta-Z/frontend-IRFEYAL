@@ -4,7 +4,7 @@
         <div class="page__content shadow p-3 position-relative">
             <br>
 
-            <p-table #dt [value]="registros" [rows]="10" [paginator]="true" responsiveLayout="scroll" dataKey="id"
+            <p-table #dt [value]="matriculas" [rows]="10" [paginator]="true" responsiveLayout="scroll" dataKey="id"
                 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Certificado de Matricula"
                 [showCurrentPageReport]="true" [globalFilterFields]="['certificados']" [showCurrentPageReport]="true">
 
@@ -30,30 +30,27 @@
                         <th pSortableColumn="codigo">Codigo</th>
                         <th pSortableColumn="estudiante">Estudiante</th>
                         <th>
-                            <p-dropdown pSortableColumn="curso" placeholder="Curso"></p-dropdown>
+                            Curso
                         </th>
                         <th>
-                            <p-dropdown pSortableColumn="modalidad" placeholder="Modalidad"></p-dropdown>
+                            Modalidad
                         </th>
                         <th pSortableColumn="cedula">Cedula</th>
-                        <th style="width: 3rem">
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th>
                         <th></th>
                     </tr>
                 </ng-template>
 
-                <ng-template pTemplate="body" let-certificadoPromo>
+                <ng-template pTemplate="body" let-matricula>
                     <tr>
-                        <td>{{certificadoPromo.id_registro}}</td>
-                        <td>{{certificadoPromo.id_matricula.estudiante?.id_persona.nombre | titlecase}}
-                            {{certificadoPromo.id_matricula.estudiante?.id_persona.apellido| titlecase}}</td>
-                        <td>{{certificadoPromo.id_matricula.curso.descripcion | titlecase}}</td>
-                        <td>{{certificadoPromo.id_matricula.modalidad.descripcion | titlecase}}</td>
-                        <td>{{certificadoPromo.id_matricula.estudiante?.id_persona.cedula }}</td>
+                        <td>{{matricula.id_matricula}}</td>
+                        <td>{{matricula.estudiante?.id_persona.nombre | titlecase}}
+                            {{matricula.estudiante?.id_persona.apellido| titlecase}}</td>
+                        <td>{{matricula.curso.descripcion | titlecase}}</td>
+                        <td>{{matricula.modalidad.descripcion | titlecase}}</td>
+                        <td>{{matricula.estudiante?.id_persona.cedula }}</td>
                         <td>
                             <button type="submit" class="btn btn-primary"
-                                (click)="showDialog(certificadoPromo)">Imprimir</button>
+                                (click)="showDialog(matricula)">Imprimir</button>
                         </td>
                     </tr>
                 </ng-template>
@@ -68,31 +65,104 @@
     <div class="">
         <div class="row">
             <div class="col-6">
-                <p-dropdown [options]="empleados" [(ngModel)]="selectRector" placeholder="Seleccione Rector/a"
+                <p-dropdown [options]="empleados" appendTo="body" [(ngModel)]="selectRector" placeholder="Seleccione Rector/a"
                     optionLabel="cargo" [showClear]="true"></p-dropdown>
             </div>
             <div class="col-6">
-                <p-dropdown [options]="empleados" [(ngModel)]="selectSecretaria" placeholder="Seleccione Secretaria/o"
+                <p-dropdown [options]="empleados" appendTo="body" [(ngModel)]="selectSecretaria" placeholder="Seleccione Secretaria/o"
                     optionLabel="cargo" [showClear]="true"></p-dropdown>
             </div>
         </div>
     </div>
 
-    <div class="" *ngIf="selectRegistro && selectRector && selectSecretaria">
+    <div class="" *ngIf="selectMatricula && selectRector && selectSecretaria">
         <div class="row">
             <div class="col-12 text-center">
                 <img src="../../../../../assets/img/logoMatricula.jpeg" alt="">
             </div>
             <div class="col-12 text-center">
-                <h3>
-                    UNIDAD EDUCATIVA FISCOMISIONAL
+                <h3 class="m-0">
+                    <b>UNIDAD EDUCATIVA FISCOMISIONAL</b>
                 </h3>
-                <h3>
-                    “JOSÉ MARÍA VELAZ, S.J.”
+                <h3 class="m-0">
+                    <b>“JOSÉ MARÍA VELAZ, S.J.”</b>
                 </h3>
+                <h3 class="m-0">
+                    <b>
+                       EXTENSION EDUCATIVA N° {{selectMatricula.estudiante.id_extension.nombre_extension}} - {{selectMatricula.estudiante.id_extension.id_direccion?.canton?.canton}}
+                    </b>
+                </h3>
+                <h3 class="m-0">
+                    <b>
+                        CERTIFICADO DE PROMOCION
+                    </b>
+                </h3>
+                <h3 class="m-0">
+                    <b>
+                        AÑO LECTIVO {{selectMatricula.id_periodo.fecha_inicio | date: 'MMMM y' | uppercase}} - {{ selectMatricula.id_periodo.fecha_fin | date: 'MMMM y' | uppercase }}
+                    </b>
+                </h3>
+                <h4 class="m-0">
+                    <b>
+                        JORNADA MATUTINA
+                    </b>
+                </h4>
             </div>
         </div>
-        
+        <div class="row">
+            <div class="col-12">
+                De conformidad con lo prescrito con el Art. 197 del reglamento General a la Ley Orgánica de Educación Interculural 
+                y normativa educativa vigente, certifica que el/la estudiante <b>{{selectMatricula.estudiante.id_persona.nombre | uppercase}} {{selectMatricula.estudiante.id_persona.apellido | uppercase}}</b> 
+                del <b>{{selectMatricula.curso.descripcion.toUpperCase()}} AÑO DE {{selectMatricula.id_periodo.malla.descripcion.toUpperCase()}}</b>  obtuvo las siguientes calificaciones 
+                durante el presente año lectivo:
+            </div>
+        </div>
+        <div class="row col-12">
+            <p-table [value]="selectRegistros" >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th rowspan="2">Asignaturas</th>
+                        <th colspan="4">Calificaciones</th>
+                    </tr>
+                    <tr>
+                        <th colspan="1">Numero</th>
+                        <th colspan="2">Letras</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-registro>
+                    <tr>
+                        <td>{{registro.asignatura}}</td>
+                        <td>
+                            {{verificarNotaFinal(registro)}}
+                        </td>
+                        <td>
+                            {{convertirNumeroLetras(+numero_a_letras)}}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                        <td>Promedio General</td>
+                        <td>{{promedio}}</td>
+                        <td>{{convertirNumeroLetras(promedio)}}</td>
+                    </tr>
+                    <tr>
+                        <td>Evaluacion de comportamiento</td>
+                        <td>{{tipoConducta?.tipo}}</td>
+                        <td>{{tipoConducta?.desc}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                Por lo tanto, es promovido/a al <input type="text" pInputText [(ngModel)]="cursoPromovido" style="text-transform: uppercase;"> . Para certificar suscriben en unidad de acto
+                el/la Diretor/a - Rector/a con el/la Secretario/a Generak del Plantel.
+            </div>
+            <div class="col-12 text-right">
+                {{selectMatricula.estudiante.id_extension.id_direccion?.canton?.canton}}, {{ fechaActual | date: 'longDate'}}
+            </div>
+        </div>
         <div class="row">
             <div class="col-6 text-center mt-4">
                 <p>________________________________</p>

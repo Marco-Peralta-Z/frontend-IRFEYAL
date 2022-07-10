@@ -8,6 +8,7 @@ import { Modalidad } from 'src/app/Model/Parametrizacion/Modalidad';
 import { Paralelo } from 'src/app/Model/Parametrizacion/Paralelo';
 import { Periodo } from 'src/app/Model/Parametrizacion/Periodo';
 import { Registro } from 'src/app/Model/tutorias/registro';
+import { RespRegistros } from '../../../Model/Parametrizacion/tutor';
 
 @Injectable({
   providedIn: 'root'
@@ -69,4 +70,10 @@ export class ServiceTutoriasService {
   getCedulaPorEstudiante(cedula: string) {
     return this.http.get<Registro[]>(`${this.url}registro/buscarcedulaEstudiante/${cedula}`);
   }
+
+  // metodo para secreatria promo
+  getRegistrosByMatriculaId(id: number) {
+    return this.http.get<RespRegistros>(`${this.url}registro/getRegistros/${id}`);
+  }
+
 }

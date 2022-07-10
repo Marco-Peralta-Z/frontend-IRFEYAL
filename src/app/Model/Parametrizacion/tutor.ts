@@ -12,3 +12,8 @@ export class tutor{
 
     id_paralelo!:Paralelo;
 }
+
+export interface RespRegistros {
+    status?: string;
+    registro?: any;
+}

@@ -51,7 +51,7 @@ export class GenerarCertificadomatriculaComponent implements OnInit {
       console.log(certificado);
       this.matriculas=certificado;
       
-    })
+    });
   }
 
   getEmpleados(){

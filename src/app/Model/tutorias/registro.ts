@@ -18,5 +18,6 @@ export class Registro {
     nota_final: Number = 0;
     id_matricula: Matricula = new Matricula;
     id_asignatura: Asignatura = new Asignatura;
+    asignatura?:           string;
     estado: String = "";
 }

@@ -15,3 +15,9 @@ export class CertificadoPromocion{
     id_registro: Registro = new Registro();
     id_curso: Curso = new Curso();
 }
+
+export interface CertificadoTablaPromocion {
+    asignatura?: string;
+    numero?: string;
+    letras?: string;
+}
