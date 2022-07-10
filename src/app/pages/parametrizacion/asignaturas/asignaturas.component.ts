@@ -58,13 +58,11 @@ export class AsignaturasComponent implements OnInit {
       this.empleados = new Array();
       for (let index = 0; index < data.length; index++) {
         if (data[index].rol.descripcion.toLocaleLowerCase() == "docente") {
-          console.log(data[index])
           this.empleados.push(data[index].usuario.empleado);
         }
       }
       this.empleados.sort();
     })
-
     this.serviceasig.getAllArea().subscribe(data => {
       this.listarea = data.sort();
     })
@@ -100,7 +98,6 @@ export class AsignaturasComponent implements OnInit {
     if (this.asig.descripcion == null) {
       this.submitted = true;
     } else {
-      console.log(this.selecempleadodoc)
       this.selecempleadodoc.forEach(element => {
         this.asig.empleados.push(element)
       });
@@ -135,7 +132,6 @@ export class AsignaturasComponent implements OnInit {
   }
 
   deleteAsig(a: Asignatura, event: Event) {
-
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Estas Seguro Que Deseas Eliminar Esta Asignatura?',
@@ -146,7 +142,6 @@ export class AsignaturasComponent implements OnInit {
             this.selectArea.listaAsignaturas.splice(index, 1);
             this.serviceasig.UpdateArea(this.selectArea).subscribe(data => { })
             break
-
           }
         }
         this.serviceasig.deleteAsig(a).subscribe(data => {
@@ -154,15 +149,18 @@ export class AsignaturasComponent implements OnInit {
             this.cancelar()
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Eliminado' });
           } else {
-
             this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'No se Eliminado' });
           }
         },
           err => {
             if (err.status == 500) {
-              console.log(err)
-              this.messageService.add({ severity: 'error', summary: 'No Eliminado', detail: err.error.mensaje });
-              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Es posible que este ASIGNATURA este siendo ocupado' });
+              this.selectArea.listaAsignaturas.push(a);
+              this.serviceasig.UpdateArea(this.selectArea).subscribe(data => {
+                if (data) {
+                  this.messageService.add({ severity: 'error', summary: 'No Eliminado', detail: err.error.mensaje });
+                  this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Es posible que este ASIGNATURA este siendo ocupado' });
+                }
+              })
             }
           });
       },

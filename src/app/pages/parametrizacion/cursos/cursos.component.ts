@@ -32,8 +32,6 @@ export class CursosComponent implements OnInit {
   selecempleadodoc!: empleado;
   selectcurso: Curso = new Curso;
   submitted: boolean = false;
-  //listparalelo!: Paralelo[];
-  //selectparalelo!: Paralelo;
   update!: Boolean;
   idGlobal!: any;
   descr: String = "";
@@ -49,32 +47,21 @@ export class CursosComponent implements OnInit {
       this.star = false;
       this.listcursos.sort();
     });
-
     this.serviceasig.getRolUsuario().subscribe(data => {
       this.empleados = new Array();
-      console.log(data)
       for (let index = 0; index < data.length; index++) {
         if (data[index].rol.descripcion.toLocaleLowerCase() == "docente") {
-          console.log(data[index])
+          
           this.empleados.push(data[index].usuario.empleado);
         }
       }
       this.empleados.sort();
-      console.log(this.empleados);
     })
-
-
-    /*this.serviceparalelo.getAllParalelo().subscribe(data => {
-      this.listparalelo = data;
-      this.listparalelo.sort();
-    })
-*/
   }
 
   activePanelCurso() {
     this.selecempleadodoc = new empleado;
     this.selectcurso = new Curso
-    //this.selectparalelo = new Paralelo;
     this.descr = "";
     this.panelCursosNuevo = true;
   }
@@ -85,15 +72,12 @@ export class CursosComponent implements OnInit {
   }
 
   saveCurso() {
-
     if (!this.update) {
       if (this.selectcurso.descripcion == "") {
         this.submitted = true;
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Llene todos los campos' });
       } else {
-
         this.submitted = false;
-
         this.servicecursos.postCurso(this.selectcurso).subscribe(data => {
           if (data == null) {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No Se Pudo Guardar ' });
@@ -102,20 +86,15 @@ export class CursosComponent implements OnInit {
           }
           this.cancelar();
         })
-
       }
     } else {
       this.selectcurso.id_curso = this.idGlobal;
-      /*this.selectcurso.id_empleado = this.selecempleadodoc;
-      this.selectcurso.id_paralelo = this.selectparalelo;*/
-      //this.selectcurso.descripcion = this.descr;
       this.servicecursos.putCurso(this.selectcurso).subscribe(data => {
         if (data == null) {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No Se Pudo Guardar ' });
         } else {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Guardado' });
         }
-        console.log(data)
         this.cancelar();
       })
     }
@@ -189,12 +168,10 @@ export class CursosComponent implements OnInit {
         },
         err => {
           if (err.status == 500) {
-            console.log(err)
             this.messageService.add({ severity: 'error', summary: 'No Eliminado', detail: err.error.mensaje });
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Es posible que este CURSO este siendo ocupado' });
           }
         })
-
       },
       reject: () => {
         this.messageService.add({ severity: 'error', summary: 'Cancelado', detail: 'No se elimino' });

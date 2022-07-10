@@ -63,7 +63,6 @@ export class HorarioCreateComponent implements OnInit {
 
     this.servicehorario.getAllHorario().subscribe(data => {
       this.listhorario = data;
-      //console.log(data)
     })
   }
 
@@ -155,7 +154,6 @@ export class HorarioCreateComponent implements OnInit {
     this.horariosave.dia = this.selectdia.id;
     this.horariosave.tiempo_inicio = this.selehoras.inicio;
     this.horariosave.tiempo_fin = this.selehoras.fin;
-    console.log(this.horariosave);
     this.servicehorario.postHorario(this.horariosave).subscribe(data1 => {
       if (data1) {
         this.servicehorario.getIdHorario(data1.horario.id_horario).subscribe(h => {
@@ -164,7 +162,6 @@ export class HorarioCreateComponent implements OnInit {
             if (data) {
               this.selectperiodo = new Periodo;
               this.cancelar();
-              //console.log(data);
             }
           })
         })

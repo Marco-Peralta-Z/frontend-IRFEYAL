@@ -5,7 +5,6 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Asignatura } from 'src/app/Model/Parametrizacion/Asignatura';
 import { Malla } from 'src/app/Model/Parametrizacion/Malla';
 import { Periodo } from 'src/app/Model/Parametrizacion/Periodo';
-import { MallaService } from 'src/app/Servicio/parametrizacion/Service Malla/malla.service';
 import { PeriodoService } from 'src/app/Servicio/parametrizacion/Service Periodo/periodo.service';
 import { AsignaturasComponent } from '../asignaturas/asignaturas.component';
 import { AsignaturaPeriodoComponent } from '../asignaturas/asignatura_periodo/asignatura-periodo/asignatura-periodo.component';
@@ -33,6 +32,7 @@ export class PeriodoComponent implements OnInit {
   panelAsingaturas: boolean = false;
   ref!: DynamicDialogRef;
   selectedPeriodo: Periodo[] = [];
+  
   ngOnInit(): void {
     localStorage.setItem("id_periodoupdate", "");
     this.llenarTable();
@@ -41,7 +41,6 @@ export class PeriodoComponent implements OnInit {
   llenarTable() {
     this.serviceperiodo.getAllPerdiodo().subscribe(data => {
       this.perdiodoList = data;
-      console.log(this.perdiodoList)
     })
   }
 
@@ -86,7 +85,6 @@ export class PeriodoComponent implements OnInit {
           },
             err => {
               if (err.status == 500) {
-                console.log(err)
                 this.messageService.add({ severity: 'error', summary: 'No Eliminado', detail: err.error.mensaje });
                 this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Es posible que este PERIODO: ' + element.ano_inicio + '-' + element.ano_fin + ' este siendo ocupado' });
               }

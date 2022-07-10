@@ -47,15 +47,12 @@ export class TutorComponent implements OnInit {
     let id_curso = localStorage.getItem("id_curso")
     this.serviceasign.getRolUsuario().subscribe(data => {
       this.listempleado = new Array();
-      console.log(data)
       for (let index = 0; index < data.length; index++) {
         if (data[index].rol.descripcion.toLocaleLowerCase() == "docente") {
-          console.log(data[index])
           this.listempleado.push(data[index].usuario.empleado);
         }
       }
       this.listempleado.sort();
-      console.log(this.listempleado);
     })
 
     this.servicecurso.getIdCursos(id_curso).subscribe(data => {

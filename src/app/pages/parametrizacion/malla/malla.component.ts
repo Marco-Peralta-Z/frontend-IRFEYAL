@@ -45,7 +45,6 @@ export class MallaComponent implements OnInit {
   llenartabla() {
     this.servicemalla.getAllMalla().subscribe(data => {
       this.malla = data;
-      console.log(this.malla);
     })
   }
 
@@ -91,7 +90,6 @@ export class MallaComponent implements OnInit {
         },
         err => {
           if (err.status == 500) {
-            console.log(err)
             this.messageService.add({ severity: 'error', summary: 'No Eliminado', detail: err.error.mensaje });
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Es posible que este MALLA este siendo ocupado' });
           }
