@@ -160,7 +160,7 @@ export class UsuarioComponent implements OnInit {
     });
   }
 
-  
+      
 
   eliminarUsuario(usuario: usuario) {
     this.confirmationService.confirm({
@@ -168,10 +168,18 @@ export class UsuarioComponent implements OnInit {
       header: 'Confirma',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this._mensajeSweetService.mensajeOk('Usuario Eliminado');
-        this.usuarios = this.usuarios.filter(val => val.id_usuario !== usuario.id_usuario);
-        this.usuario = { contrasenia: '', id_usuario: 0, estUsuario: true, usuario: '', roles: [] };
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+        this._usuarioService.eliminarUsuarioporId(usuario.id_usuario).subscribe({
+          next: (resp) => {
+            this._mensajeSweetService.mensajeOk('Usuario Eliminado');
+            this.usuarios = this.usuarios.filter(val => val.id_usuario !== usuario.id_usuario);
+            this.usuario = { contrasenia: '', id_usuario: 0, estUsuario: true, usuario: '', roles: [] };
+          },
+          error: (err) => {
+            console.log(err);
+            this._mensajeSweetService.mensajeError('Lo siento', 'no se pudo eliminar el usuario');
+          }
+        })
+       
       }
     });
   }

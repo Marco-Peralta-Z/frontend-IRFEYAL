@@ -7,21 +7,19 @@
         <ng-template pTemplate="left">
             <button pButton pRipple label="Crear Empleado" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
         </ng-template>
-        <ng-template pTemplate="right">
-        <span class="p-input-icon-left" >
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text"  placeholder="Search..." />
-                </span>
-        </ng-template>
     </p-toolbar>
 
  <p-table #dt [value]="empleados" [rows]="10" [paginator]="true" 
         [rowHover]="true" dataKey="id"
+        [globalFilterFields]="['persona.nombre','persona.cedula','persona.apellido']"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
-            <div class="p-d-flex p-ai-center p-jc-between">
-                <h3 class="p-m-0">Tabla Empleados</h3>
-                
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Tabla Empleados</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar cedula o nombre" />
+                </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header">

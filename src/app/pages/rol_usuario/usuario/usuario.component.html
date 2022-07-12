@@ -7,21 +7,19 @@
         <ng-template pTemplate="left">
             <button pButton pRipple label=" Crear Usuario" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
         </ng-template>
-        <ng-template pTemplate="right">
-        <span class="p-input-icon-left" >
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text"  placeholder="Search..." />
-                </span>
-        </ng-template>
     </p-toolbar>
 
     <p-table #dt [value]="usuarios" [rows]="10" [paginator]="true" 
         [rowHover]="true" dataKey="id"
+        [globalFilterFields]="['usuario']"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
-            <div class="p-d-flex p-ai-center p-jc-between">
-                <h3 class="p-m-0">Tabla Usuarios</h3>
-                
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Tabla Usuario</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar usuario" />
+                </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
