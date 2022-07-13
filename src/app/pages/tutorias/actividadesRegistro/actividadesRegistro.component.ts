@@ -46,7 +46,6 @@ export class ActividadesRegistroComponent implements OnInit {
 
   ngOnInit(): void {
     this.idempleados = this.usuarioGuardado().empleado?.id_empleado;
-    console.log(this.idempleados)
     this.llenarperiodos();
   }
 
@@ -145,7 +144,6 @@ export class ActividadesRegistroComponent implements OnInit {
         this.listarBoolean = true;
         this.filtrosBoolean = true;
         this.nuevaconsultaBoolean = false;
-        console.log(this.registro);
       }
     });
   }
@@ -244,7 +242,6 @@ export class ActividadesRegistroComponent implements OnInit {
     this.messageService.add({ severity: 'success', summary: 'Hecho', detail: 'Registro Actualizado', life: 3000 });
     this.validarAprobaciones(this.selectRegistro);
     this.selectRegistro.id_asignatura = this.selectAsignatura;
-    console.log(this.selectRegistro);
     this.servitutorias.setRegistros(this.selectRegistro).subscribe();
     this.registro = [...this.registro];
     this.Dialog = false;
@@ -252,7 +249,7 @@ export class ActividadesRegistroComponent implements OnInit {
   }
 
   imprimirPdf() {
-    this.servitutorias.getPDF(this.selectPeriodo, this.selectMalla, this.selectModalidad, this.selectCurso, this.selectParalelo, this.selectAsignatura).subscribe(
+    this.servitutorias.getPDF(this.idempleados, this.selectPeriodo, this.selectMalla, this.selectModalidad, this.selectCurso, this.selectParalelo, this.selectAsignatura).subscribe(
       (data: any) => {
         const file = new Blob([data], { type: 'application/pdf' });
         const fileURL = URL.createObjectURL(file);

@@ -59,11 +59,11 @@ export class ServiceTutoriasService {
   }
 
   //metodo para realizar pdf.
-  getPDF(periodo: Periodo, malla: Malla, modalidad: Modalidad, curso: Curso, paralelo: Paralelo, asignatura: Asignatura) {
+  getPDF(id_empleado: any, periodo: Periodo, malla: Malla, modalidad: Modalidad, curso: Curso, paralelo: Paralelo, asignatura: Asignatura) {
     const httpOptions = {
       responseType: 'arraybuffer' as 'json'
     };
-    return this.http.get(this.url + "registro/exportInvoice/" + periodo.id_periodo + "/" + malla.id_malla + "/" + modalidad.id_modalidad + "/" + curso.id_curso + "/" + paralelo.id_paralelo + "/" + asignatura.id_asignatura, httpOptions);
+    return this.http.get(this.url + "registro/exportInvoice/" + id_empleado + "/" + periodo.id_periodo + "/" + malla.id_malla + "/" + modalidad.id_modalidad + "/" + curso.id_curso + "/" + paralelo.id_paralelo + "/" + asignatura.id_asignatura, httpOptions);
   }
 
   //metodo para buscar estudiante por cedula del modulo de secertaria
