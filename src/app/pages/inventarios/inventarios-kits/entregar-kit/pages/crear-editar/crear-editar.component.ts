@@ -105,6 +105,7 @@ export class CrearEditarComponent implements OnInit {
         this.actualizarAprobacion(aprobacion);
       } else {
         this.crearAprobacion(aprobacion);
+       
       }
     } else {
       this.entregarKitForm.markAllAsTouched();
@@ -118,6 +119,7 @@ export class CrearEditarComponent implements OnInit {
           this._mensajesSweetService.mensajeOk('Aprobación registrada');
           this.entregarKitForm.reset();
           this.entregarKitForm.get('estadoAproba')?.setValue(false);
+          this._router.navigate(['/inventariosModule/entregar/listar']);
         } else {
           this._mensajesSweetService.mensajeError(
             'Upss!',
@@ -148,16 +150,7 @@ export class CrearEditarComponent implements OnInit {
     this._aprobacionService.getAprobacionPorId(id).subscribe({
       next: (response: ResAprobacion) => {
         if (response.status === 'ok') {
-          const e = new EstudiantePago();
-          e.idEstudiante = 0;
-          e.conceptoPago = 'Kit';
-          e.valorPagado = 20;
-          e.estudiante = response.aprobacion.estudiante;
-          e.idKit = 0;
-          e.kit = undefined;
-          response.aprobacion.estudiantePago = e;
           this.entregarKitForm.patchValue(response.aprobacion);
-          console.log('bbbbbbbbbbbbbbbb------------->', this.entregarKitForm);
         }
       },
       error: (error) => {
