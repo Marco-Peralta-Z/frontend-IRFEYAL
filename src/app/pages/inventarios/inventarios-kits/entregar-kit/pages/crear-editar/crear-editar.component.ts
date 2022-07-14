@@ -16,21 +16,19 @@ import { EstudiantePago } from '../../../../../../Model/Inventarios/EstudiantePa
 @Component({
   selector: 'app-crear-editar',
   templateUrl: './crear-editar.component.html',
-  styleUrls: ['./crear-editar.component.css']
+  styleUrls: ['./crear-editar.component.css'],
 })
 export class CrearEditarComponent implements OnInit {
-
-  
   public entregarKitForm: FormGroup = this._formBuilder.group({
-    tipoAprobacion: [ , [ Validators.required ]],
-    detalleControl: [ , [ Validators.required ]],
-    estadoAproba: [ false , [ Validators.required ]],
-    fechaAprobacion: [ , [ Validators.required ]],
-    estudiantePago: [ , [ Validators.required]],
+    tipoAprobacion: [, [Validators.required]],
+    detalleControl: [, [Validators.required]],
+    estadoAproba: [false, [Validators.required]],
+    fechaAprobacion: [, [Validators.required]],
+    estudiantePago: [, [Validators.required]],
   });
-  public kits: Kit [] = [];
+  public kits: Kit[] = [];
 
-  public estudiantesPago: EstudiantePago [] = [];
+  public estudiantesPago: EstudiantePago[] = [];
 
   public id?: number;
 
@@ -38,12 +36,12 @@ export class CrearEditarComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
-    private _aprobacionService:EntregarKitService,
+    private _aprobacionService: EntregarKitService,
     private _estudianteService: EstudianteService,
     private _kitService: KitService,
     private _authService: AuthService,
-    private _mensajesSweetService: MensajesSweetService,
-  ) { }
+    private _mensajesSweetService: MensajesSweetService
+  ) {}
 
   ngOnInit(): void {
     this.getKits();
@@ -52,110 +50,142 @@ export class CrearEditarComponent implements OnInit {
   }
 
   getAprobacionIdParam = () => {
-    this._activatedRoute.paramMap.subscribe( params => {      
+    this._activatedRoute.paramMap.subscribe((params) => {
       this.id = +params.get('id')!;
-      if ( this.id && !isNaN(this.id)) {
-        this.getAprobacion( this.id );      
+      if (this.id && !isNaN(this.id)) {
+        this.getAprobacion(this.id);
       } else {
         this._router.navigate(['/inventariosModule/entregar/crear']);
       }
     });
-  }
+  };
 
   getKits = () => {
     this._kitService.getKits().subscribe({
-      next: ( resp ) => {
-        this.kits = resp as Kit[];        
-      }
-    })
-  }
+      next: (resp) => {
+        this.kits = resp as Kit[];
+      },
+    });
+  };
 
-  getEstudiantesPago = () => {    
+  getEstudiantesPago = () => {
     this._aprobacionService.getEstudiatesPago().subscribe({
       next: (resp) => {
-        this.estudiantesPago = resp
+        this.estudiantesPago = resp;
       },
       error: (error) => {
         this.estudiantesPago = [];
-      }
+      },
     });
-  }
+  };
 
   realizarAccion = () => {
-    if ( this.entregarKitForm.valid ) {
-      let {tipoAprobacion, detalleControl, estadoAproba, fechaAprobacion, estudiantePago} =  this.entregarKitForm.value;
+    if (this.entregarKitForm.valid) {
+      let {
+        tipoAprobacion,
+        detalleControl,
+        estadoAproba,
+        fechaAprobacion,
+        estudiantePago,
+      } = this.entregarKitForm.value;
       let aprobacion: Aprobacion = {
-        tipoAprobacion, detalleControl, estadoAproba, fechaAprobacion, estudiante: estudiantePago.estudiante, kit: estudiantePago.kit
+        tipoAprobacion,
+        detalleControl,
+        estadoAproba,
+        fechaAprobacion,
+        estudiante: estudiantePago.estudiante,
+        kit: estudiantePago.kit,
       };
       // asigno id del usuario loggeado
-      aprobacion.administrador = new empleado(this._authService.usuario.empleado?.id_empleado);      
-      if ( this.id ) {
+      aprobacion.administrador = new empleado(
+        this._authService.usuario.empleado?.id_empleado
+      );
+      if (this.id) {
         aprobacion.id_aprobacion = this.id;
-        this.actualizarAprobacion( aprobacion );
+        this.actualizarAprobacion(aprobacion);
       } else {
         this.crearAprobacion(aprobacion);
       }
-      
-    } else {      
+    } else {
       this.entregarKitForm.markAllAsTouched();
     }
-  }
+  };
 
-  crearAprobacion = ( aprobacion: Aprobacion ) => {
+  crearAprobacion = (aprobacion: Aprobacion) => {
     this._aprobacionService.crearAprobacion(aprobacion).subscribe({
-      next: (response) => {                
-        if ( response === 'ok') {
+      next: (response) => {
+        if (response === 'ok') {
           this._mensajesSweetService.mensajeOk('Aprobación registrada');
           this.entregarKitForm.reset();
           this.entregarKitForm.get('estadoAproba')?.setValue(false);
         } else {
-          this._mensajesSweetService.mensajeError('Upss!', 'No se pudo registrar la aprobación',);
+          this._mensajesSweetService.mensajeError(
+            'Upss!',
+            'No se pudo registrar la aprobación'
+          );
         }
-      }
-    })
-  }
+      },
+    });
+  };
 
-  actualizarAprobacion = ( aprobacion: Aprobacion ) => {
-    this._aprobacionService.actualizarAprobacion( aprobacion ).subscribe({
-      next: ( response ) => {
-        if ( response === 'ok') {
+  actualizarAprobacion = (aprobacion: Aprobacion) => {
+    this._aprobacionService.actualizarAprobacion(aprobacion).subscribe({
+      next: (response) => {
+        if (response === 'ok') {
           this.entregarKitForm.reset();
           this._mensajesSweetService.mensajeOk('Aprobación Actualizada');
           this._router.navigate(['/inventariosModule/entregar/listar']);
-        } else {            
-          this._mensajesSweetService.mensajeError('Upss!', 'No se pudo actualizar la aprobación',);
-        }
-      }
-    });
-  }
-  getAprobacion = (id: number) => {
-    this._aprobacionService.getAprobacionPorId( id ).subscribe({
-      next: (response: ResAprobacion) => {        
-        if ( response.status === 'ok' ) {
-          this.entregarKitForm.patchValue(response.aprobacion);
+        } else {
+          this._mensajesSweetService.mensajeError(
+            'Upss!',
+            'No se pudo actualizar la aprobación'
+          );
         }
       },
-      error: (error) => {        
+    });
+  };
+  getAprobacion = (id: number) => {
+    this._aprobacionService.getAprobacionPorId(id).subscribe({
+      next: (response: ResAprobacion) => {
+        if (response.status === 'ok') {
+          const e = new EstudiantePago();
+          e.idEstudiante = 0;
+          e.conceptoPago = 'Kit';
+          e.valorPagado = 20;
+          e.estudiante = response.aprobacion.estudiante;
+          e.idKit = 0;
+          e.kit = undefined;
+          response.aprobacion.estudiantePago = e;
+          this.entregarKitForm.patchValue(response.aprobacion);
+          console.log('bbbbbbbbbbbbbbbb------------->', this.entregarKitForm);
+        }
+      },
+      error: (error) => {
         if (error.status === 404) {
-          this._mensajesSweetService.mensajeError('Upss!', 'No se pudo encontrar esa aprobación',);
+          this._mensajesSweetService.mensajeError(
+            'Upss!',
+            'No se pudo encontrar esa aprobación'
+          );
           this._router.navigate(['/inventariosModule/entregar/listar']);
         }
-      }
+      },
     });
-  }
+  };
 
   getValorCheck = () => this.entregarKitForm.controls?.['estadoAproba'].value;
 
-  verificarCampo  = ( campo: string ): boolean => {
-    return ( this.entregarKitForm.controls?.[campo].invalid || false) && ( this.entregarKitForm.controls?.[campo].touched || false );
-  }
+  verificarCampo = (campo: string): boolean => {
+    return (
+      (this.entregarKitForm.controls?.[campo].invalid || false) &&
+      (this.entregarKitForm.controls?.[campo].touched || false)
+    );
+  };
 
-  get identificacionErrorMsg(): string{
-    const errors = this.entregarKitForm.get('estudiantePago')?.errors;    
-    if (errors?.['required']){
+  get identificacionErrorMsg(): string {
+    const errors = this.entregarKitForm.get('estudiantePago')?.errors;
+    if (errors?.['required']) {
       return 'Estudiante es requerido';
     }
     return '';
   }
-
 }
