@@ -32,6 +32,9 @@ export class CrearEditarComponent implements OnInit {
 
   public id?: number;
 
+  public estudPago?: EstudiantePago;
+  public verEstudPago = false;
+
   constructor(
     private _formBuilder: FormBuilder,
     private _activatedRoute: ActivatedRoute,
@@ -105,7 +108,6 @@ export class CrearEditarComponent implements OnInit {
         this.actualizarAprobacion(aprobacion);
       } else {
         this.crearAprobacion(aprobacion);
-       
       }
     } else {
       this.entregarKitForm.markAllAsTouched();
@@ -150,6 +152,8 @@ export class CrearEditarComponent implements OnInit {
     this._aprobacionService.getAprobacionPorId(id).subscribe({
       next: (response: ResAprobacion) => {
         if (response.status === 'ok') {
+          
+          this.getEstudPago(response.aprobacion.estudiante.id_estudiante);
           this.entregarKitForm.patchValue(response.aprobacion);
         }
       },
@@ -163,6 +167,28 @@ export class CrearEditarComponent implements OnInit {
         }
       },
     });
+  };
+
+  getEstudPago = (id: number) => {
+    this._aprobacionService.getEstudPago(id).subscribe({
+      next: (response: ResAprobacion) => {
+        if (response.status === 'ok') {
+          console.log('---->',response.aprobacion);
+          this.estudPago = response.aprobacion;
+        }
+      },
+      
+      error: (error) => {
+        if (error.status === 404) {
+          this._mensajesSweetService.mensajeError(
+            'Upss!',
+            'No se pudo encontrar esa aprobación'
+          );
+          this._router.navigate(['/inventariosModule/entregar/listar']);
+        }
+      },
+    });
+    
   };
 
   getValorCheck = () => this.entregarKitForm.controls?.['estadoAproba'].value;

@@ -4,6 +4,7 @@ import { ConfirmationService } from 'primeng/api';
 import { KitService } from '../../../../../../Servicio/modulo_invetario/kit.service';
 import { Kit } from '../../../../../../Model/Inventarios/Kit';
 import { MensajesSweetService } from '../../../../../../Servicio/modulo_invetario/mensajes-sweet.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listar-kits',
@@ -16,6 +17,7 @@ export class ListarKitsComponent implements OnInit {
   public selectKit?: Kit;
   public displayModulos?: boolean;
   constructor(
+    private _router: Router,
     private _confirmationService: ConfirmationService,
     private _kitService: KitService,
     private _mensajesSweetService: MensajesSweetService,
@@ -44,7 +46,8 @@ export class ListarKitsComponent implements OnInit {
             next: (resp) => {;
               if ( resp === 'ok' ) {
                 this._mensajesSweetService.mensajeOk('Módulo eliminado');
-                this.kits = this.kits.filter(kit => kit.id_kit !== kit.id_kit);
+                //this.kits = this.kits.filter(kit => kit.id_kit !== kit.id_kit);
+                this.getKits();
               } else {
                 this._mensajesSweetService.mensajeError('Upps!', `No se pudo eliminar el kit: ${kit.nombrekit}`);
               }

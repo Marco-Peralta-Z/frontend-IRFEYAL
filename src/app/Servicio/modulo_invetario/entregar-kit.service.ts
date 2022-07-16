@@ -68,4 +68,10 @@ export class EntregarKitService {
     return this._http.get<EstudiantePago[]>(`${this._baseUrl}aprobacionkit/estudiantespagokit`);
   }
 
+  getEstudPago = (idEstudiante: number) => {
+    
+    return this._http.get<ResAprobacion>(`${this._baseUrl}aprobacionkit/estudpago/?id=${idEstudiante}`);
+  }
+
+
 }
