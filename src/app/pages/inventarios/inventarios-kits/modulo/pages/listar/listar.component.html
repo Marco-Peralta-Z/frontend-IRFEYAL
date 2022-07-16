@@ -14,9 +14,9 @@
             <tr>
                 <th pSortableColumn="codModulo">Cod <p-sortIcon field="codModulo"></p-sortIcon></th>
                 <th pSortableColumn="nombreModulo">Nombre <p-sortIcon field="nombreModulo"></p-sortIcon></th>
-                <th pSortableColumn="curso">Curso <p-sortIcon field="curso"></p-sortIcon></th>
+                <!-- <th pSortableColumn="curso">Curso <p-sortIcon field="curso"></p-sortIcon></th> -->
                 <th pSortableColumn="cantidad">Catidad <p-sortIcon field="cantidad"></p-sortIcon></th>
-                <th pSortableColumn="numero">Número <p-sortIcon field="numero"></p-sortIcon></th>
+                <!-- <th pSortableColumn="numero">Número <p-sortIcon field="numero"></p-sortIcon></th> -->
                 <th pSortableColumn="numeroModulo">Número Módulo <p-sortIcon field="numeroModulo"></p-sortIcon></th>
                 <th></th>
             </tr>
@@ -34,9 +34,9 @@
 
                 <td>{{modulo.codModulo}}</td>
                 <td>{{modulo.nombreModulo}}</td>
-                <td>{{modulo.curso}}</td>
+                <!-- <td>{{modulo.curso}}</td> -->
                 <td>{{modulo.cantidad}}</td>
-                <td>{{modulo.numero}}</td>
+                <!-- <td>{{modulo.numero}}</td> -->
                 <td>{{modulo.numeroModulo}}</td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/inventariosModule/modulo/editar/', modulo.id_modulo_libro]"></button>
