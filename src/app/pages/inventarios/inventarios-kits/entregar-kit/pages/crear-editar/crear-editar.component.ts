@@ -153,7 +153,7 @@ export class CrearEditarComponent implements OnInit {
       next: (response: ResAprobacion) => {
         if (response.status === 'ok') {
           
-          this.getEstudPago(response.aprobacion.estudiante.id_estudiante);
+          //.getEstudPago(response.aprobacion.estudiante.id_estudiante);
           this.entregarKitForm.patchValue(response.aprobacion);
         }
       },
