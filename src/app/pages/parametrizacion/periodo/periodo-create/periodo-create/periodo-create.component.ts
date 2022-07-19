@@ -152,24 +152,31 @@ export class PeriodoCreateComponent implements OnInit {
   }
 
   verFecha() {
-    let d1: any;
-    let d2: any;
-    this.initialDate = this.datePipe.transform(this.periodo.fecha_inicio, 'dd-MM-yyyy');
-    d1 = this.initialDate;
+    let a1: any;
+    let a2: any;
+    let m1: any;
+    let m2: any;
+    a1 = this.datePipe.transform(this.periodo.fecha_inicio, 'yyyy');
 
-    this.initialDate = this.datePipe.transform(this.periodo.fecha_fin, 'dd-MM-yyyy');
-    d2 = this.initialDate;
+    a2 = this.datePipe.transform(this.periodo.fecha_fin, 'yyyy');
 
-    if (d1 < d2) {
-      this.validFecha2 = true;
-      this.validFecha1 = true;
+    m1 = this.datePipe.transform(this.periodo.fecha_inicio, 'MM');
+
+    m2 = this.datePipe.transform(this.periodo.fecha_fin, 'MM');
+    if (!this.validFecha1) {
+      this.messageService.add({ severity: 'error', summary: 'Error de fecha', detail: 'Seleccione la Fecha de Inicio' });
     } else {
-      if (this.validFecha1) {
-        this.messageService.add({ severity: 'error', summary: 'Error de fecha', detail: 'La Fecha debe ser mayor a la Fecha de Inicio' });
-
+      if (a1 < a2) {
+        this.validFecha2 = true;
+        this.validFecha1 = true;
       } else {
-        this.messageService.add({ severity: 'error', summary: 'Error de fecha', detail: 'Seleccione la Fecha de Inicio' });
-        this.validFecha1 = false;
+        if (a1 == a2 && m1 < m2) {
+          this.validFecha2 = true;
+          this.validFecha1 = true;
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Error de fecha', detail: 'La Fecha debe ser mayor a la Fecha de Inicio' });
+          this.validFecha1 = false;
+        }
       }
     }
   }

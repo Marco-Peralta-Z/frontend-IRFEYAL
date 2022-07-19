@@ -151,10 +151,10 @@ export class HorarioComponent implements OnInit {
     for (let j = 0; j < this.listhorario.length; j++) {
       for (let i = 0; i < this.listOrHor.length; i++) {
         if (this.listhorario[j].tiempo_inicio == this.listOrHor[i].hora_inicio && this.listhorario[j].dia == 1) {
-          this.listOrHor[i].materia1 = this.listhorario[j].id_asignatura.descripcion + "<br /> Docente: " + this.listhorario[j].id_empleado.persona.apellido + this.listhorario[j].id_empleado.persona.nombre;
+          this.listOrHor[i].materia1 = this.listhorario[j].id_asignatura.descripcion + "<br /> Tutor: " + this.listhorario[j].id_empleado.persona.apellido + this.listhorario[j].id_empleado.persona.nombre;
         }
         if (this.listhorario[j].tiempo_inicio == this.listOrHor[i].hora_inicio && this.listhorario[j].dia == 2) {
-          this.listOrHor[i].materia2 = this.listhorario[j].id_asignatura.descripcion + "<br /> Docente: " + this.listhorario[j].id_empleado.persona.apellido + this.listhorario[j].id_empleado.persona.nombre;
+          this.listOrHor[i].materia2 = this.listhorario[j].id_asignatura.descripcion + "<br /> Tutor: " + this.listhorario[j].id_empleado.persona.apellido + this.listhorario[j].id_empleado.persona.nombre;
         }
       }
     }

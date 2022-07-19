@@ -35,9 +35,10 @@
                                     <br>
                                     <!--Curso-->
                                     <div class="form-group">
-                                        <p-dropdown [options]="listCurso" (onClear)="cerrarC()" (onChange)="llenarParalelo()"
-                                            [(ngModel)]="selectCurso" name="curso" placeholder="Seleccione el Curso"
-                                            optionLabel="descripcion" [showClear]="true">
+                                        <p-dropdown [options]="listCurso" (onClear)="cerrarC()"
+                                            (onChange)="llenarParalelo()" [(ngModel)]="selectCurso" name="curso"
+                                            placeholder="Seleccione el Curso" optionLabel="descripcion"
+                                            [showClear]="true">
                                         </p-dropdown>
                                     </div>
                                     <!--Paralelo-->
@@ -100,17 +101,17 @@
                                     <div class="form-group" *ngIf="selectasignatura">
                                         <p-dropdown [options]="selectasignatura.empleados" [(ngModel)]="selecDocente"
                                             optionLabel="cargo" [filter]="true" filterBy="cargo" [showClear]="true"
-                                            name="emple" placeholder="Seleccione El Docente">
+                                            name="emple" placeholder="Seleccione El Tutor">
                                             <ng-template pTemplate="selectedItem">
                                                 <div class="empleado-item empleado-item-value" *ngIf="selecDocente">
-                                                    <div>{{selecDocente.cargo}}:
+                                                    <div>Tutor:
                                                         {{selecDocente.persona.apellido}}{{selecDocente.persona.nombre}}
                                                     </div>
                                                 </div>
                                             </ng-template>
                                             <ng-template let-em pTemplate="item">
                                                 <div class="empleado-item">
-                                                    {{em.cargo}}: {{em.persona.apellido}}{{em.persona.nombre}}
+                                                    Tutor: {{em.persona.apellido}}{{em.persona.nombre}}
                                                 </div>
                                             </ng-template>
                                         </p-dropdown>

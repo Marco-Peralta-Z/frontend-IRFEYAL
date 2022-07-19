@@ -70,13 +70,13 @@
                                 <p-table [value]="a.empleados" dataKey="persona.cedula">
                                     <ng-template pTemplate="header">
                     <tr>
-                        <th pSortableColumn="persona.cedula">Cedula Docente <p-sortIcon field="persona.cedula">
+                        <th pSortableColumn="persona.cedula">Cédula Tutor <p-sortIcon field="persona.cedula">
                             </p-sortIcon>
                         </th>
 
-                        <th>Nombres del Docente</th>
-                        <th>Correo del Docente</th>
-                        <th>Extension del Docente</th>
+                        <th>Nombres del Tutor</th>
+                        <th>Correo del Tutor</th>
+                        <th>Extension del Tutor</th>
                         <th></th>
                     </tr>
                 </ng-template>
@@ -129,19 +129,19 @@
                     <small class="p-error" *ngIf="submitted && !asig.descripcion">Se requiere el nombre de la
                         Asignatura</small>
                 </div>
-                <p-multiSelect [options]="empleados" [(ngModel)]="selecempleadodoc" defaultLabel="Seleccione empleado"
+                <p-multiSelect [options]="empleados" [(ngModel)]="selecempleadodoc" defaultLabel="Seleccione El Tutor"
                     optionLabel="cargo" class="multiselect-custom">
                     <ng-template let-value pTemplate="selectedItems">
                         <div class="empleado-item empleado-item-value" *ngFor="let empe of selecempleadodoc">
-                            <div>{{empe.cargo}}: {{empe.persona.apellido}} {{empe.persona.nombre}}</div>
+                            <div>Tutor: {{empe.persona.apellido}} {{empe.persona.nombre}}</div>
                         </div>
                         <div *ngIf="!selecempleadodoc || selecempleadodoc.length === 0" class="country-placeholder">
-                            Seleccione El Empleado
+                            Seleccione El Tutor
                         </div>
                     </ng-template>
                     <ng-template let-em pTemplate="item">
                         <div class="empleado-item">
-                            Docente: {{em.cargo}}: {{em.persona.apellido}}{{em.persona.nombre}}
+                            Tutor: {{em.cargo}}: {{em.persona.apellido}}{{em.persona.nombre}}
                         </div>
                     </ng-template>
                 </p-multiSelect>

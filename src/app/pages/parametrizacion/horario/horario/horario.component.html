@@ -63,24 +63,28 @@
 
             </p-toolbar>
 
-            <kendo-pdf-export #pdf paperSize="A2" margin="2cm" [repeatHeaders]="repeatHeaders">
+            <kendo-pdf-export #pdf paperSize="A2" margin="0cm" [repeatHeaders]="repeatHeaders">
                 <div style="font-size: 12px;" *ngIf="b3">
                     <p-table [value]="listOrHor" styleClass="p-datatable-gridlines cal" responsiveLayout="scroll"
                         class="cal">
                         <ng-template pTemplate="caption">
                             <div class="flex align-items-center justify-content-between">
-                                <p-image src="{{path}}/img/logo.png" alt="Image" width="250" class="mr-2"></p-image>
+                                <p-image src="{{path}}/img/logo.png" alt="Image" width="220" class="mr-2"></p-image>
+
+                                EXTENCION: 105
+                                <br>
                                 PERIODO: {{selectperiodo.fecha_inicio| date: 'MM/yyyy'}} - {{selectperiodo.fecha_fin|
                                 date: 'MM/yyyy'}}
                                 <br>
                                 MALLA: {{selectperiodo.malla.descripcion}}
-                                <br>
-                                MODALIDAD: {{selectperiodo.malla.id_modalidad.descripcion}}
+
                                 <div class="ml-auto">
+                                    MODALIDAD: {{selectperiodo.malla.id_modalidad.descripcion}}
+                                    <br>
                                     HORARIO DE CLASES DE: {{seleccursos.descripcion}}
                                     "{{selectParalelo.id_paralelo.descripcion}}"
                                     <br>
-                                    Dirigente: {{selectParalelo.id_empleado.persona.apellido}}
+                                    TUTOR: {{selectParalelo.id_empleado.persona.apellido}}
                                     {{selectParalelo.id_empleado.persona.nombre}}
                                 </div>
                             </div>
@@ -108,9 +112,10 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="summary">
+                            <!--
                             <div class="flex align-items-center justify-content-between">
                                 <caption>CICLO ESCOLAR {{selectperiodo.ano_inicio}}-{{selectperiodo.ano_fin}}</caption>
-                            </div>
+                            </div>-->
                         </ng-template>
                     </p-table>
                 </div>

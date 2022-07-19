@@ -7,7 +7,7 @@
         currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Asignaturas">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Lista de Cursos y Dirigente</h5>
+                <h5 class="m-0">Lista de Cursos y Tutor</h5>
                 <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
                     placeholder="Buscar..." />
             </div>
@@ -24,7 +24,7 @@
             <tr style="text-align: justify;">
                 <td>
                     <button type="button" pButton pRipple [pRowToggler]="c" (click)="buscarParalelo(c)"
-                        class="p-button-text p-button-rounded p-button-plain" pTooltip="Ver Palelos"
+                        class="p-button-text p-button-rounded p-button-plain" pTooltip="Ver Paralelos"
                         [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                 </td>
                 <td>
@@ -47,7 +47,7 @@
                         <p-table [value]="listtutor" dataKey="id_tutor">
                             <ng-template pTemplate="header">
             <tr>
-                <th>Palelo</th>
+                <th>Paralelo</th>
                 <th colspan="6">Tutor</th>
             </tr>
 

@@ -46,7 +46,7 @@ export class SelectMallasComponent implements OnInit {
   verCursos(selectmalla: Malla) {
     localStorage.setItem("id_malla", selectmalla.id_malla.toString())
     this.ref = this.dialogService.open(MallaCursoComponent, {
-      header: 'Listado de Asignaturas',
+      header: 'Listado de Cursos',
       width: '70%',
       contentStyle: { "max-height": "500px", "overflow": "auto" },
       baseZIndex: 10000

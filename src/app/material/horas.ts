@@ -8,7 +8,9 @@ export class Horas_Intensivo {
         { id: 6, inicio: "11:20", fin: "11:40", code: "cl" },
         { id: 7, inicio: "11:40", fin: "12:20", code: "cl" },
         { id: 8, inicio: "12:20", fin: "12:40", code: "cl" },
-        { id: 8, inicio: "12:40", fin: "13:20", code: "cl" },
+        { id: 9, inicio: "12:40", fin: "13:20", code: "cl" },
+        { id: 10, inicio: "13:20", fin: "14:00", code: "cl" },
+        { id: 11, inicio: "14:00", fin: "14:40", code: "cl" }
     ]
 }
 export class Horas_NoIntensivo {
@@ -21,7 +23,9 @@ export class Horas_NoIntensivo {
         { id: 6, inicio: "11:20", fin: "11:40", code: "cl" },
         { id: 7, inicio: "11:40", fin: "12:20", code: "cl" },
         { id: 8, inicio: "12:20", fin: "12:40", code: "cl" },
-        { id: 8, inicio: "12:40", fin: "13:20", code: "cl" },
+        { id: 9, inicio: "12:40", fin: "13:20", code: "cl" },
+        { id: 10, inicio: "13:20", fin: "14:00", code: "cl" },
+        { id: 11, inicio: "14:00", fin: "14:40", code: "cl" }
     ]
 }
 export let dia = {

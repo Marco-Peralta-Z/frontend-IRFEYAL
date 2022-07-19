@@ -7,7 +7,7 @@
         currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Asignaturas">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Lista de Asignaturas y Docentes</h5>
+                <h5 class="m-0">Lista de Asignaturas y Tutor</h5>
                 <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
                     placeholder="Buscar..." />
             </div>
@@ -38,13 +38,13 @@
                         <p-table [value]="a.empleados" dataKey="persona.cedula">
                             <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="persona.cedula">Cedula Docente <p-sortIcon field="persona.cedula">
+                <th pSortableColumn="persona.cedula">Cédula Tutor <p-sortIcon field="persona.cedula">
                     </p-sortIcon>
                 </th>
 
-                <th>Nombres del Docente</th>
-                <th>Correo del Docente</th>
-                <th>Extension del Docente</th>
+                <th>Nombres del Tutor</th>
+                <th>Correo del Tutor</th>
+                <th>Extension del Tutor</th>
                 <th></th>
             </tr>
         </ng-template>
