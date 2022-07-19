@@ -75,7 +75,7 @@ export class ItemsService {
                 ),
                 items: [
                     {
-                        label: 'Crear Empleado',
+                        label: 'Crear Persona',
                         icon: 'fa fa-user',
                         routerLink: 'roles/empleado'
                     },

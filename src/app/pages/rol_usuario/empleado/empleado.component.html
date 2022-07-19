@@ -1,11 +1,11 @@
 <p-toast></p-toast>
 <div class="container-fluid page">
-    <div class="d-flex page__box p-3 mt-2">Registro Empleado</div>
+    <div class="d-flex page__box p-3 mt-2">Registro Persona</div>
     <div class="page__content shadow p-3 ">
 <div class="card">
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="Crear Empleado" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+            <button pButton pRipple label="Crear Persona" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
         </ng-template>
     </p-toolbar>
 
@@ -15,7 +15,7 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Tabla Empleados</h5>
+                <h2 class="m-0">Tabla Personas</h2>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar cedula o nombre" />
