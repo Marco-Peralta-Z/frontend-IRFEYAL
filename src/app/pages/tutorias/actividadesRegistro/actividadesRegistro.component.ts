@@ -162,6 +162,7 @@ export class ActividadesRegistroComponent implements OnInit {
     if (registro.examen_remedial == null) registro.examen_remedial = 0;
     if (registro.examen_gracia == null) registro.examen_gracia = 0;
     if (registro.nota_final == null) registro.nota_final = 0;
+    if (registro.promedio_final == null) registro.promedio_final = 0;
     registro.promedio_Iquimestre = parseFloat(((parseFloat(registro.aporte1.toString()) * this.porcentajeAportes) +
       (parseFloat(registro.aporte2.toString()) * this.porcentajeAportes) +
       (parseFloat(registro.examen_Iquimestre.toString()) * this.porcentajeExamenesQuimestre)).toFixed(2));
@@ -172,29 +173,37 @@ export class ActividadesRegistroComponent implements OnInit {
     if (registro.promedio_Iquimestre >= 4) {
       if (registro.nota_final >= 7) {
         registro.estado = "APROBADO";
+        registro.promedio_final = registro.nota_final;
       } else {
         if (registro.examen_supletorio == 0) {
           registro.estado = "SUPLETORIO";
+          registro.promedio_final = registro.nota_final;
         } else {
           if (registro.examen_supletorio >= 7) {
             registro.estado = "APROBADO";
             registro.examen_supletorio = 7;
+            registro.promedio_final = registro.examen_supletorio;
           } else {
             if (registro.examen_remedial == 0) {
               registro.estado = "REMEDIAL";
+              registro.promedio_final = registro.examen_supletorio;
             } else {
               if (registro.examen_remedial >= 7) {
                 registro.estado = "APROBADO";
                 registro.examen_remedial = 7;
+                registro.promedio_final = registro.examen_remedial;
               } else {
                 if (registro.examen_gracia == 0) {
                   registro.estado = "GRACIA";
+                  registro.promedio_final = registro.examen_remedial;
                 } else {
                   if (registro.examen_gracia >= 7) {
                     registro.estado = "APROBADO";
                     registro.examen_gracia = 7;
+                    registro.promedio_final = registro.examen_gracia;
                   } else {
                     registro.estado = "REPROBADO";
+                    registro.promedio_final = registro.examen_gracia;
                   }
                 }
               }
@@ -205,17 +214,24 @@ export class ActividadesRegistroComponent implements OnInit {
     } else {
       if (registro.examen_remedial == 0) {
         registro.estado = "REMEDIAL";
+        registro.promedio_final = registro.nota_final;
       } else {
         if (registro.examen_remedial >= 7) {
           registro.estado = "APROBADO";
+          registro.examen_remedial = 7;
+          registro.promedio_final = registro.examen_remedial;
         } else {
           if (registro.examen_gracia == 0) {
             registro.estado = "GRACIA";
+            registro.promedio_final = registro.examen_remedial;
           } else {
             if (registro.examen_gracia >= 7) {
               registro.estado = "APROBADO";
+              registro.examen_gracia = 7;
+              registro.promedio_final = registro.examen_gracia;
             } else {
               registro.estado = "REPROBADO";
+              registro.promedio_final = registro.examen_gracia;
             }
           }
         }
