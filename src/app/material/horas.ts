@@ -30,8 +30,12 @@ export class Horas_NoIntensivo {
 }
 export let dia = {
     dia: [
-        { id: 1, dia: "Sabado" },
+        { id: 1, dia: "Sábado" },
         { id: 2, dia: "Domingo" }
+    ],
+
+    dia2: [
+        { id: 1, dia: "Sábado" }
     ]
 }
 

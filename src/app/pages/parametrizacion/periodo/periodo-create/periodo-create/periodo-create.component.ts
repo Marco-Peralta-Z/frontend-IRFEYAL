@@ -30,26 +30,26 @@ export class PeriodoCreateComponent implements OnInit {
   selectMalla: Malla = new Malla;
   ref!: DynamicDialogRef;
   select: String = "Seleccione Una Malla";
-
   public an: Date = new Date();
   update: Boolean = false;
   id_periodo!: any;
   tipo: String = "";
   value1!: any;
   stateOptions!: any[];
+  daten: any;
+  initialDate: any;
+  formattedDate!: Date;
+  validFecha1!: Boolean;
+  validFecha2!: Boolean;
+  ai: any = new Date();
+  veriAI!: Boolean;
 
   ngOnInit(): void {
     this.id_periodo = localStorage.getItem("id_periodoupdate");
     this.selecAll();
   }
 
-  llenarTablas() {
-
-  }
-
   selecAll() {
-
-    this.llenarTablas()
     if (this.id_periodo > 0) {
       this.servicePeriodo.getPeridoId(this.id_periodo).subscribe(data => {
         this.periodo = data;
@@ -58,12 +58,10 @@ export class PeriodoCreateComponent implements OnInit {
         this.periodo.fecha_inicio = new Date(data.fecha_inicio);
         this.selectMalla = this.periodo.malla;
         this.select = this.selectMalla.descripcion.toString();
-        //this.selectModalidad = this.periodo.modalidad;
         this.update = true;
         this.tipo = "ACTUALIZAR PERIODO ACADEMICO";
         this.stateOptions = [{ label: 'Activo', value: true }, { label: 'Inactivo', value: false }];
         this.value1 = this.periodo.vigencia;
-
       })
     } else {
       this.update = false;
@@ -98,16 +96,15 @@ export class PeriodoCreateComponent implements OnInit {
     }
   }
 
-  daten: any;
-  initialDate: any;
-  formattedDate!: Date;
   savePeriodo() {
     if (this.update) {
       this.initialDate = this.datePipe.transform(this.periodo.ano_inicio, 'yyyy');
       this.daten = Number(this.initialDate) + 1;
       this.formattedDate = this.daten;
+      this.periodo.ano_inicio = this.initialDate;
       this.periodo.ano_fin = this.formattedDate;
       this.periodo.vigencia = this.value1;
+      this.periodo.malla = this.selectMalla;
       this.servicePeriodo.putPeriodo(this.periodo).subscribe(data => {
         if (data) {
           this.cancelar();
@@ -125,10 +122,11 @@ export class PeriodoCreateComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Error Al Guardar', detail: 'Llene todos los campos' });
 
       } else {
-        if (this.validFecha1 && this.validFecha2) {
+        if (this.validFecha1 && this.validFecha2 && this.veriAI) {
           this.initialDate = this.datePipe.transform(this.periodo.ano_inicio, 'yyyy');
           this.daten = Number(this.initialDate) + 1;
           this.formattedDate = this.daten;
+          this.periodo.ano_inicio = this.initialDate;
           this.periodo.ano_fin = this.formattedDate;
           this.periodo.malla = this.selectMalla;
           this.periodo.vigencia = true;
@@ -144,11 +142,31 @@ export class PeriodoCreateComponent implements OnInit {
     }
 
   }
-  validFecha1!: Boolean;
-  validFecha2!: Boolean;
 
   veriFecha2() {
-    this.validFecha1 = true;
+   if(this.veriAI){
+    this.initialDate = this.datePipe.transform(this.ai, 'yyyy');
+    let ac: any = this.datePipe.transform(this.periodo.ano_inicio, 'yyyy');
+    let am: any = this.datePipe.transform(this.ai, 'MM');
+    let a1: any = this.datePipe.transform(this.periodo.fecha_inicio, 'yyyy');
+    let m1: any = this.datePipe.transform(this.periodo.fecha_inicio, 'MM');
+    if (ac > a1) {
+      this.messageService.add({ severity: 'error', summary: 'Error de fecha', detail: 'Seleccione una fecha con año o mes Actual o Superior' });
+      this.validFecha1 = false
+    } else {
+      if (this.initialDate == a1) {
+        if (am > m1) {
+          this.messageService.add({ severity: 'error', summary: 'Error de fecha', detail: 'Seleccione una fecha con año o mes Actual o Superior' });
+          this.validFecha1 = false;
+        } else {
+          this.validFecha1 = true;
+        }
+      }
+    }
+   }else{
+    this.messageService.add({ severity: 'error', summary: 'Error de fecha', detail: 'Seleccione el año de Inicio' });
+    this.validFecha1 = false;
+   }
   }
 
   verFecha() {
@@ -164,6 +182,7 @@ export class PeriodoCreateComponent implements OnInit {
 
     m2 = this.datePipe.transform(this.periodo.fecha_fin, 'MM');
     if (!this.validFecha1) {
+      this.validFecha2 = false;
       this.messageService.add({ severity: 'error', summary: 'Error de fecha', detail: 'Seleccione la Fecha de Inicio' });
     } else {
       if (a1 < a2) {
@@ -175,10 +194,20 @@ export class PeriodoCreateComponent implements OnInit {
           this.validFecha1 = true;
         } else {
           this.messageService.add({ severity: 'error', summary: 'Error de fecha', detail: 'La Fecha debe ser mayor a la Fecha de Inicio' });
-          this.validFecha1 = false;
+          this.validFecha2 = false;
         }
       }
     }
   }
 
+  anoInicio() {
+    this.initialDate = this.datePipe.transform(this.ai, 'yyyy');
+    let sel: any = this.datePipe.transform(this.periodo.ano_inicio, 'yyyy');
+    if (this.initialDate > sel) {
+      this.veriAI = false;
+      this.messageService.add({ severity: 'error', summary: 'Error de fecha', detail: 'Seleccione un año Actual o Superior' });
+    } else {
+      this.veriAI = true;
+    }
+  }
 }

@@ -33,16 +33,16 @@ export class HorarioCreateComponent implements OnInit {
   listperiodo: Periodo[] = [];
   selectperiodo: Periodo = new Periodo;
   horas: any[] = [];
-  selehoras: any=null;
+  selehoras: any = null;
   selectasignatura!: Asignatura;
-  selecDocente: empleado=new empleado;
+  selecDocente: empleado = new empleado;
   selectCurso!: Curso;
   listCurso: Curso[] = []
   listParalelo: tutor[] = [];
   selectParalelo!: tutor;
   listhorario: Horario[] = [];
   listAsig: Asignatura[] = [];
-  listdia: any[] = dia.dia;
+  listdia: any[] = [];
   selectdia: any;
   vh: boolean = false;
   value: number = 0;
@@ -52,7 +52,6 @@ export class HorarioCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.llenarTablas();
-
   }
 
   llenarTablas() {
@@ -77,8 +76,12 @@ export class HorarioCreateComponent implements OnInit {
       this.selectParalelo = new tutor;
       this.listCurso = this.selectperiodo.malla.listaCursos;
       this.listAsig = this.selectperiodo.malla.listaAsignaturas;
-
-
+      this.listdia=new Array;
+      if (this.selectperiodo.malla.id_modalidad.descripcion.toLocaleLowerCase() == "intensivo") {
+        this.listdia = dia.dia;
+      } else {
+        this.listdia = dia.dia2;
+      }
     } catch (error) {
 
     }
@@ -179,8 +182,8 @@ export class HorarioCreateComponent implements OnInit {
       //this.listParalelo = data;
       this.selectParalelo = new tutor;
       this.listParalelo = new Array;
-      this.selectdia=new Array;
-      this.selectParalelo=new tutor;
+      this.selectdia = new Array;
+      this.selectParalelo = new tutor;
       this.horas = [];
       for (let i = 0; i < data.length; i++) {
         if (data[i].id_curso.id_curso == this.selectCurso.id_curso) {

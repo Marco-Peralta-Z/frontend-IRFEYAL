@@ -15,6 +15,9 @@
 
                             <div class="card-body text-center">
                                 <form action="">
+                                    <div *ngIf="star">
+                                        <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+                                    </div>
                                     <div class="form-group">
                                         {{curso.descripcion}}
                                     </div>

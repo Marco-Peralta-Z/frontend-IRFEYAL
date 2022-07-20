@@ -27,7 +27,7 @@ export class TutorComponent implements OnInit {
     private serviceasign: AsignaturaService,
     private ruoter: Router
   ) { }
-
+  star!: Boolean;
   tipo = "";
   tutor: tutor = new tutor;
   curso: Curso = new Curso;
@@ -44,6 +44,7 @@ export class TutorComponent implements OnInit {
   }
 
   llenartabla() {
+    this.star = true;
     let id_curso = localStorage.getItem("id_curso")
     this.serviceasign.getRolUsuario().subscribe(data => {
       this.listempleado = new Array();
@@ -53,6 +54,7 @@ export class TutorComponent implements OnInit {
         }
       }
       this.listempleado.sort();
+      this.star = false;
     })
 
     this.servicecurso.getIdCursos(id_curso).subscribe(data => {
