@@ -74,7 +74,7 @@
 
         <div *ngIf="empleado && empleado.id_empleado >0; else noHayEmpleado">
            <div class="row"> 
-                <h2>Empleado seleccionado: <small>{{empleado.persona.nombre}} {{empleado.persona.apellido}} CI: {{empleado.persona.cedula}}</small> </h2>
+                <h2>Persona seleccionada: <small>{{empleado.persona.nombre}} {{empleado.persona.apellido}} CI: {{empleado.persona.cedula}}</small> </h2>
                 <div class="p-field col-6">
                 <label for="name">Nombre Usuario:</label>
                 <input type="text" pInputText id="name" [(ngModel)]="usuario.usuario" required autofocus />

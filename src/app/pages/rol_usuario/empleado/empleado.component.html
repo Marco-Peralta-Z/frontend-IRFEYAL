@@ -15,7 +15,7 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                <h2 class="m-0">Tabla Personas</h2>
+                <h2 class="m-0">Tabla Persona</h2>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Buscar cedula o nombre" />
@@ -49,7 +49,7 @@
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="p-d-flex p-ai-center p-jc-between">
-                En total hay {{empleados ? empleados.length : 0 }} empleados.
+                En total hay {{empleados ? empleados.length : 0 }} personas.
             </div>
         </ng-template>
     </p-table>
@@ -71,7 +71,7 @@
                 <small class="p-error block" *ngIf="verificarCampo('apellido')">{{errorMsg('apellido',3)}}</small>
             </div>
             <div class="p-field col-6">
-                <label for="name">Cedula:</label>
+                <label for="name">Cédula:</label>
                 <input type="text" pInputText formControlName="cedula" />
                 <small class="p-error block" *ngIf="verificarCampo('cedula')">{{errorMsg('cedula',10)}}.</small>
             </div>
@@ -94,7 +94,7 @@
         <!--INICIO DIRECCION-->
         <div class="field">
             <label class="mb-2">
-                <h2>Dirección</h2>
+                <h2>Dirección Domiciliaria</h2>
             </label>
             <div class="formgrid grid">
                 <div class="p-field col-6">
@@ -142,7 +142,7 @@
         <!--INICIO EMPLEADO-->
         <div class="field">
             <label class="mb-2">
-                <h2>Empleado</h2>
+                <h2>Persona</h2>
             </label>
         
             <div class="field">
