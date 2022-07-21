@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { horarioCompleto, Horas_Intensivo, Horas_NoIntensivo } from 'src/app/material/horas';
+import { dia, horarioCompleto, Horas_Intensivo, Horas_NoIntensivo } from 'src/app/material/horas';
 import { Curso } from 'src/app/Model/Parametrizacion/Curso';
 import { Horario } from 'src/app/Model/Parametrizacion/Horario';
 import { Periodo } from 'src/app/Model/Parametrizacion/Periodo';
@@ -36,6 +36,11 @@ export class HorarioComponent implements OnInit {
   b2: boolean = false;
   b3: boolean = false;
   path = Path.url;
+  print: any;
+  listdia:any[]=[];
+  va1!:Boolean;
+  va2!:Boolean;
+
   ngOnInit(): void {
     this.llenarTablas();
   }
@@ -50,7 +55,6 @@ export class HorarioComponent implements OnInit {
     this.router.navigate(['parametrizacion/horario/create']);
   }
 
-
   selecPeriodo() {
     try {
       this.listcursos = new Array;
@@ -60,6 +64,15 @@ export class HorarioComponent implements OnInit {
       this.b1 = true;
       this.b2 = false;
       this.listcursos = this.selectperiodo.malla.listaCursos;
+      if (this.selectperiodo.malla.id_modalidad.descripcion.toLocaleLowerCase() == "intensivo") {
+        this.listdia = dia.dia;
+        this.va1=true;
+        this.va2=true;
+      } else {
+        this.listdia = dia.dia2;
+        this.va1=true;
+        this.va2=false;
+      }
     } catch (error) {
 
     }
@@ -122,7 +135,6 @@ export class HorarioComponent implements OnInit {
     }
     this.listar();
   }
-  print: any;
 
   listar() {
     this.listOrHor = new Array;

@@ -41,7 +41,7 @@ export class AsignaturaService {
   }
 
   getRolUsuario(){
-    return this.http.get<rolUsuario[]>(this.url3+"/rolUsuario")
+    return this.http.get<rolUsuario[]>(this.url+"/rolUsuario")
   }
 
   //Area

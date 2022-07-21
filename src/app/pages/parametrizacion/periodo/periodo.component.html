@@ -14,8 +14,7 @@
                 <ng-template pTemplate="left">
                     <button pButton pRipple label="Nuevo Periodo" icon="pi pi-plus" class="p-button-success mr-2"
                         (click)="nuevoPeriodo()"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-danger"
-                        (click)="deletePeriodo($event)"
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-danger" (click)="deletePeriodo($event)"
                         [disabled]="!selectedPeriodo || !selectedPeriodo.length"></button>
                 </ng-template>
 
@@ -26,7 +25,7 @@
 
             <p-table #dt [value]="perdiodoList" [rows]="10" [paginator]="true" responsiveLayout="scroll"
                 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Periodos Academicos"
-                [showCurrentPageReport]="true" dataKey="id_periodo" [(selection)]="selectedPeriodo"  scrollHeight="400px"
+                [showCurrentPageReport]="true" dataKey="id_periodo" [(selection)]="selectedPeriodo" scrollHeight="400px"
                 [globalFilterFields]="['periodo_academico','ano_inicio']">
                 <ng-template pTemplate="caption">
                     <div class="flex align-items-center justify-content-between">
@@ -49,6 +48,7 @@
                         <th style="font-size: 13px;">Costo Mensualidad</th>
                         <th style="font-size: 13px;">Costo Matricula </th>
                         <th>Malla</th>
+                        <th>Modalidad</th>
                         <th>Materias Asignadas</th>
                         <th>Curso</th>
                         <th></th>
@@ -65,7 +65,7 @@
                         <td>
                             <p-tableCheckbox [value]="p"></p-tableCheckbox>
                         </td>
-                       
+
                         <td>
                             {{p.ano_inicio | date: 'yyyy'}}-{{p.ano_fin | date: 'yyyy'}}
                         </td>
@@ -81,9 +81,12 @@
                         <td>
                             {{p.costo_matricula | currency: 'USD'}}
                         </td>
-                       <td>
-                           {{p.malla.descripcion}}
-                       </td>
+                        <td>
+                            {{p.malla.descripcion}}
+                        </td>
+                        <td>
+                            {{p.malla.id_modalidad.descripcion}}
+                        </td>
                         <td>
                             <div class="flex justify-content-center align-items-center">
                                 <button pButton pRipple type="button" icon="fa fa-eye" (click)=" verAsignaturas(p)"
@@ -102,7 +105,7 @@
 
                         </td>
                         <td class="text-center">
-                            
+
                             <i class="pi"
                                 [ngClass]="{'true-icon pi-check-circle': p.vigencia, 'false-icon pi-times-circle': !p.vigencia}"></i>
                         </td>

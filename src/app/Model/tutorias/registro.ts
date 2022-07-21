@@ -16,8 +16,9 @@ export class Registro {
     examen_remedial: Number = 0;
     examen_gracia: Number = 0;
     nota_final: Number = 0;
+    promedio_final: Number = 0;
     id_matricula: Matricula = new Matricula;
     id_asignatura: Asignatura = new Asignatura;
-    asignatura?:           string;
+    asignatura?: string;
     estado: String = "";
 }

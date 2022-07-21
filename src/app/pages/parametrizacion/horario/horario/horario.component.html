@@ -92,8 +92,7 @@
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>Horas </th>
-                                <th>Sabado</th>
-                                <th>Domingo</th>
+                                <th *ngFor="let d of listdia">{{d.dia}}</th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-h>
@@ -102,11 +101,11 @@
                                 <td class="horas">{{h.hora_inicio}}-{{h.hora_fin}}</td>
 
 
-                                <td class="Lengua">
+                                <td class="Lengua" *ngIf="va1">
                                     <div [innerHTML]="h.materia1"> </div>
 
                                 </td>
-                                <td class="Ingles">
+                                <td class="Ingles" *ngIf="va2">
                                     <div [innerHTML]="h.materia2"> </div>
                                 </td>
                             </tr>
