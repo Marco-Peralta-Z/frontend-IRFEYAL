@@ -12,6 +12,8 @@ import { ServiceTutoriasService } from '../../../../Servicio/tutorias/registro/s
 import { MensajesSweetService } from '../../../../Servicio/modulo_invetario/mensajes-sweet.service';
 import { Nomina } from '../../../../Model/Secretaria/nomina';
 import { Registro } from '../../../../Model/tutorias/registro';
+import { Paralelo } from '../../../../Model/Parametrizacion/Paralelo';
+import { ParaleloeService } from '../../../../Servicio/parametrizacion/Service Paralelo/paraleloe.service';
 
 @Component({
   selector: 'app-nomina-estudiantil',
@@ -27,6 +29,8 @@ export class NominaEstudiantilComponent implements OnInit {
 
   public cursos: Curso [] = [];
   public selectCurso?: Curso;
+  public paralelos: Paralelo [] = [];
+  public selectParalelo?: Paralelo;
   public modalidades: Modalidad [] = [];
   public selectModalidad?: Modalidad;
   public periodos: Periodo [] = [];
@@ -39,6 +43,7 @@ export class NominaEstudiantilComponent implements OnInit {
     private estudianteService: EstudianteService,
     private _registroService: ServiceTutoriasService,
     private _cursoService: CursosService, 
+    private _paraleloService: ParaleloeService,
     private _periodoService: PeriodoService,
     private _mensajeSweetService: MensajesSweetService, 
   ) {
@@ -46,13 +51,9 @@ export class NominaEstudiantilComponent implements OnInit {
   
   ngOnInit(): void {
     this.getCursos();
+    this.getParalelos();
     this.getModalidades();
     this.getPeriodos();
-    this.matriculaService.getMatricula()
-      .subscribe(matriculas => this.matriculas = matriculas);
-
-    this.estudianteService.getEstudiantes()
-      .subscribe(estudiantes => this.estudiantes = estudiantes);
 
   }
 
@@ -65,6 +66,18 @@ export class NominaEstudiantilComponent implements OnInit {
       error: (error) => {
         console.log(error);
         this.cursos = [];
+      }
+    })
+  }
+  getParalelos = () => {
+    this._paraleloService.getAllParalelo().subscribe({
+      next:(resp) => {
+        console.log(resp);
+        this.paralelos = resp;
+      },
+      error: (error) => {
+        console.log(error);
+        this.paralelos = [];
       }
     })
   }
@@ -94,12 +107,13 @@ export class NominaEstudiantilComponent implements OnInit {
   }
 
   getRegistrosPorIdCurModPer = () => {
-    if ( this.selectCurso && this.selectModalidad && this.selectPeriodo ) {
-      this._registroService.getRegistrosByIdCurModPer(this.selectCurso.id_curso, this.selectModalidad.id_modalidad, this.selectPeriodo.id_periodo)
+    if ( this.selectCurso && this.selectParalelo && this.selectModalidad && this.selectPeriodo ) {
+      this._registroService.getRegistrosByIdCurModPer(this.selectCurso.id_curso, this.selectModalidad.id_modalidad, this.selectPeriodo.id_periodo, +this.selectParalelo.id_paralelo)
       .subscribe({
         next:(resp) => {
           console.log(resp);
           this.registros = resp.registro;
+          console.log(resp.registro)
           this.filtarDataNomina();
         },
         error: (error) => {
@@ -112,16 +126,6 @@ export class NominaEstudiantilComponent implements OnInit {
     }
   }
 
-  verificarNotaFinal = (registro: Registro): Number=> {
-    if ( registro.nota_final >= 7) {
-      return registro.nota_final;
-    } else if ( registro.examen_supletorio >= 7) {
-      return registro.examen_supletorio;
-    } else if ( registro.examen_remedial >= 7) {
-      return registro.examen_remedial;
-    } 
-    return registro.examen_gracia;
-  }
   
   filtarDataNomina = () => {
     console.log('proximamanete');
