@@ -7,9 +7,11 @@
         <div class="col-12 d-flex justify-content-around">
           <p-dropdown [options]="cursos" [(ngModel)]="selectCurso" optionLabel="descripcion" [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Seleccione curso">
           </p-dropdown>
+          <p-dropdown [options]="paralelos" [(ngModel)]="selectParalelo" optionLabel="descripcion" [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Seleccione paralelo">
+          </p-dropdown>
           <p-dropdown [options]="modalidades" [(ngModel)]="selectModalidad" optionLabel="descripcion" [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Seleccione modalidad">
           </p-dropdown>
-          <p-dropdown [options]="periodos" [(ngModel)]="selectPeriodo" optionLabel="ano_fin" [filter]="true" filterBy="ano_fin" [showClear]="true" placeholder="Seleccione modalidad">
+          <p-dropdown [options]="periodos" [(ngModel)]="selectPeriodo" optionLabel="ano_fin" [filter]="true" filterBy="ano_fin" [showClear]="true" placeholder="Seleccione periodo">
             <ng-template let-periodo pTemplate="item">
               <div class="country-item">
                   <div>{{periodo.ano_inicio}} - {{periodo.ano_fin}}</div>
