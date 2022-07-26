@@ -54,7 +54,7 @@
                 <td>{{comprobante.idComprobante.idMatricula.estudiante.id_persona.nombre | titlecase}}
                     {{comprobante.idComprobante.idMatricula.estudiante.id_persona.apellido | titlecase}}
                 </td>
-                <td>{{comprobante.idComprobante.tipoComprobante?.id_conceptoPago.descripcion | titlecase}}</td>
+                <td>{{comprobante.idComprobante.tipoComprobante?.concepto_pago | titlecase}}</td>
                 <td>{{comprobante.idComprobante.fecha | date: 'MMMM dd, yyyy'}}</td>
                 <td>
                     <div *ngIf="comprobante.idComprobante.estado && comprobante.idComprobante.saldo === 0 else pendiente">Completo</div>
@@ -112,7 +112,7 @@
                                         </small>
                                     </div>
                                     <label for="tipoPago" class="block">Concepto de Pago</label>
-                                        <p-dropdown formControlName="tipoComprobante" appendTo="body" [options]="conceptosPago" (onChange)="seleccionTipoComp($event.value)" optionLabel="descripcion" [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Seleccione concepto pago">
+                                        <p-dropdown formControlName="tipoComprobante" appendTo="body" [options]="tiposComprobante" (onChange)="seleccionTipoComp($event.value)" optionLabel="concepto_pago" [filter]="true" filterBy="concepto_pago" [showClear]="true" placeholder="Seleccione tipo comprobante">
                                             
                                         </p-dropdown>
                                         <small  class="p-error block"
