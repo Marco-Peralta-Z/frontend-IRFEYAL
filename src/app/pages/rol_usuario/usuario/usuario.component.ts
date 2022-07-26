@@ -20,41 +20,41 @@ import { MensajesSweetService } from 'src/app/Servicio/modulo_invetario/mensajes
 })
 export class UsuarioComponent implements OnInit {
 
-  empleados: empleado[]= [];
-  empleado?:empleado;
-  roles:rol[]= [];
-  rolesUsuario:rolUsuario[]=[];
-  coleccionroles:rol[]= [];
-  modulos:modulo[]= [];
-  coleccionmodulo:modulo[]=[];
-  moduloobj:modulo = new modulo();
+  empleados: empleado[] = [];
+  empleado?: empleado;
+  roles: rol[] = [];
+  rolesUsuario: rolUsuario[] = [];
+  coleccionroles: rol[] = [];
+  modulos: modulo[] = [];
+  coleccionmodulo: modulo[] = [];
+  moduloobj: modulo = new modulo();
   usuarioDialog?: boolean;
   usuarios: usuario[] = [];
   usuario: usuario = new usuario();
   submitted?: boolean;
-  rolUsuario:rolUsuario=new rolUsuario();
-  displayRol:boolean=false;
+  rolUsuario: rolUsuario = new rolUsuario();
+  displayRol: boolean = false;
   selectUsuario?: usuario;
   selectRol?: rol;
-  
+
 
 
   constructor(private _usuarioService: UsuarioService,
-     private _empladoService:EmpleadoService,
-     private _rolService: RolService,
-     private _rolUsuarioService:rolUsuarioService,
-     private _moduloService: ModuloService,
-     private _mensajeSweetService: MensajesSweetService,
-     private messageService: MessageService,
-     private confirmationService: ConfirmationService,
-     private _fb: FormBuilder) { }
+    private _empladoService: EmpleadoService,
+    private _rolService: RolService,
+    private _rolUsuarioService: rolUsuarioService,
+    private _moduloService: ModuloService,
+    private _mensajeSweetService: MensajesSweetService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private _fb: FormBuilder) { }
 
   ngOnInit() {
     this.getUsuarios();
     this.getRoles();
     this.getModulos();
   }
-  getUsuarios(){
+  getUsuarios() {
     this._usuarioService.getUsuarios().subscribe(res => {
       this.usuarios = res as usuario[];
       console.log(this.usuarios)
@@ -62,36 +62,42 @@ export class UsuarioComponent implements OnInit {
 
   }
 
-  getEmpleados(event:any){
+  getEmpleados(event: any) {
     this._empladoService.bucarCedula(event.query.trim()).subscribe({
-      next:(resp)=> {
-        this.empleados=resp;
-        
+      next: (resp) => {
+        this.empleados = resp;
+
       },
-      error:(err)=>{
-        this.empleados=[];
+      error: (err) => {
+        this.empleados = [];
       }
     })
   }
 
-  getRoles(){
+  getRoles() {
     this._rolService.getRoles().subscribe({
-      next:(resp)=>{
-        this.roles=resp;
+      next: (resp) => {
+        this.roles = resp;
+        for (let index in this.roles) {
+          if (this.roles[index].descripcion === 'Docente') {
+            this.roles[index].descripcion ='Tutor';
+          }
+        }
         console.log(resp);
       },
-      error:(err)=>{
-        this.roles=[];
+      error: (err) => {
+        this.roles = [];
       }
     })
   }
-  getModulos(){
+
+  getModulos() {
     this._moduloService.getModulos().subscribe({
-      next:(resp)=>{
-        this.modulos=resp;
+      next: (resp) => {
+        this.modulos = resp;
       },
-      error:(err)=>{
-        this.modulos=[];
+      error: (err) => {
+        this.modulos = [];
       }
     })
   }
@@ -105,28 +111,28 @@ export class UsuarioComponent implements OnInit {
 
   editarUsuario(usuario: usuario) {
     console.log(usuario);
-    this.empleado= usuario.empleado;
-    usuario.contrasenia='';
+    this.empleado = usuario.empleado;
+    usuario.contrasenia = '';
     this.usuario = { ...usuario };
     this.usuarioDialog = true;
   }
 
-  revisarAccion(){
-    if(this.usuario.id_usuario){
+  revisarAccion() {
+    if (this.usuario.id_usuario) {
       this.actualizazrUsuario();
-    }else{
+    } else {
       this.guardarUsuario();
     }
   }
 
   guardarUsuario() {
-    this.usuario.empleado=this.empleado;
-    
-    
+    this.usuario.empleado = this.empleado;
+
+
     this._usuarioService.crearUsuario(this.usuario).subscribe({
-      next:(resp)=>{
+      next: (resp) => {
         console.log(resp);
-        this.usuario=new usuario();
+        this.usuario = new usuario();
         this.getUsuarios();
         this._mensajeSweetService.mensajeOk('Usuario registrado');
 
@@ -134,19 +140,19 @@ export class UsuarioComponent implements OnInit {
       error: (error) => {
         console.log(error);
         this._mensajeSweetService.mensajeError('UPSS!', 'No se pudo registrar el usuario');
-        
+
       }
-      
+
     });
   }
   actualizazrUsuario() {
-    this.usuario.empleado=this.empleado;
-    
-    
-    this._usuarioService.actualizarUsuario(this.usuario.id_usuario,this.usuario).subscribe({
-      next:(resp)=>{
+    this.usuario.empleado = this.empleado;
+
+
+    this._usuarioService.actualizarUsuario(this.usuario.id_usuario, this.usuario).subscribe({
+      next: (resp) => {
         console.log(resp);
-        this.usuario=new usuario();
+        this.usuario = new usuario();
         this.getUsuarios();
         this._mensajeSweetService.mensajeOk('Usuario Actualizado');
         this.hideDialog();
@@ -156,11 +162,11 @@ export class UsuarioComponent implements OnInit {
         console.log(error);
         this._mensajeSweetService.mensajeError('UPSS!', 'No se pudo actualizar el usuario');
       }
-      
+
     });
   }
 
-      
+
 
   eliminarUsuario(usuario: usuario) {
     this.confirmationService.confirm({
@@ -179,7 +185,7 @@ export class UsuarioComponent implements OnInit {
             this._mensajeSweetService.mensajeError('Lo siento', 'no se pudo eliminar el usuario');
           }
         })
-       
+
       }
     });
   }
@@ -187,48 +193,48 @@ export class UsuarioComponent implements OnInit {
   hideDialog() {
     this.usuarioDialog = false;
     this.submitted = false;
-    this.empleado=new empleado();
-    this.rolesUsuario=[];
+    this.empleado = new empleado();
+    this.rolesUsuario = [];
   }
 
-  agregarRol(){
-    if(this.selectRol ){
-      let rolUsuario:rolUsuario ={
-        estado:true,
-        rol:this.selectRol!,
+  agregarRol() {
+    if (this.selectRol) {
+      let rolUsuario: rolUsuario = {
+        estado: true,
+        rol: this.selectRol!,
         usuario: this.selectUsuario!
       }
       this._rolUsuarioService.crearRolUsuario(rolUsuario).subscribe({
-        next:(resp:RespRolUsuario)=>{
+        next: (resp: RespRolUsuario) => {
           console.log(resp);
-          let roles= [...this.selectUsuario!.roles,resp?.rolUsuario];
+          let roles = [...this.selectUsuario!.roles, resp?.rolUsuario];
           //@ts-ignore
           this.selectUsuario.roles = roles;
-          
+
         },
-        error: (error)=>console.log(error)
-        
+        error: (error) => console.log(error)
+
       });
     }
   }
 
-  eliminarRol(rolUsuario : rolUsuario){
+  eliminarRol(rolUsuario: rolUsuario) {
     console.log(rolUsuario);
     this._rolUsuarioService.eliminarRolUsuario(rolUsuario.id_rol_usuario!).subscribe({
-      next:(resp)=>{
+      next: (resp) => {
         console.log(resp);
         //@ts-ignore
-        this.selectUsuario?.roles= this.selectUsuario?.roles.filter(rolU=>rolU.id_rol_usuario !== rolUsuario.id_rol_usuario);
+        this.selectUsuario?.roles = this.selectUsuario?.roles.filter(rolU => rolU.id_rol_usuario !== rolUsuario.id_rol_usuario);
       },
-      error: (error)=>console.log(error)
+      error: (error) => console.log(error)
     })
 
-    
+
   }
 
   showDialogRol(usuario: usuario) {
     console.log(usuario);
-    
+
     this.selectUsuario = usuario;
     this.displayRol = true;
   }

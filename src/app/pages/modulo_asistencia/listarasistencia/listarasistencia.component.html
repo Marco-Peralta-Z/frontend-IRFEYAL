@@ -4,57 +4,10 @@
   <div class="page__content shadow p-3 ">
     <h1>Listado de Alumnos</h1>
     <!--Inicio Contenido-->
-     <section class="py-5">
-      <div class="row gx-4 gx-lg-5 align-items-right">
-          <div class="col-md-6" id="miDiv">
-           
-              <!--mostrar informacion-->
-              <div *ngIf='showDiv'>
-                <h1>Informacion del Estudiante</h1>
-                  <div class="card">
-                      <p-dataView  [value]="Estudiante">
-                          <ng-template let-estudiante pTemplate="listItem">
-                              <div>
-                                  <h2> Nombre:</h2>
-                                  <label class="input-black"> {{estudiante.id_persona.nombre}}</label><br>
-                                  <h2> Apellido:</h2>
-                                  <label class="input-black">  {{estudiante.id_persona.apellido}}</label><br>
-                                  <h2> cedula:</h2>
-                                  <label class="input-black">    {{estudiante.id_persona.cedula}}</label><br>
-                              </div>
-                          </ng-template>
-                      </p-dataView>
-                  </div>
-                    <p-table [value]="fechas" [rows]="5" [paginator]="true" responsiveLayout="scroll" dataKey="id"
-                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Asistencia"
-                    [showCurrentPageReport]="true" [globalFilterFields]="['descripcion']" [showCurrentPageReport]="true">
-                      <ng-template pTemplate="header">
-                        <tr>
-                          <th>asignatura</th>
-                          <th>Fechas</th>
-                          
-                        </tr>
-                      </ng-template>
-                      <ng-template pTemplate="body" let-product>
-                        <tr>
-                          <td>{{ product.idAsignatura.descripcion}}</td>   
-                        <td>{{ product.fecClase}}</td>             
-                        </tr>
-                      </ng-template>
-                      <ng-template pTemplate="summary">
-                        <div class="flex align-items-center justify-content-between">
-                            En total se encontro {{fechas ? fechas.length : 0 }} Faltas
-                        </div>
-                    </ng-template>
-                    </p-table>
+     
 
-
-                    <button pButton pRipple label="Imprimir" icon="pi pi-check" (click)="reportes()"></button>
-                  </div>
-            </div>
-
-            
-              <div [class.col-md-6]="showDiv===true">
+          
+              
                 <div styleClass="p-fluid">
 
                   <p-toolbar styleClass="mb-4">
@@ -117,12 +70,6 @@
                 </p-toolbar>
                   
                 
-
-                  
-                 
-                </div>
-
-
          <p-table #dt2 [value]="estudiantes"  [rows]="10" [paginator]="true"  [globalFilterFields]="['id_persona.cedula','id_persona.nombre','id_persona.apellido']" styleClass="p-datatable-striped" responsiveLayout="scroll"
          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} estudiantes"
           [showCurrentPageReport]="true">
@@ -143,12 +90,63 @@
             </tr>
           </ng-template>
          </p-table>
-         </div>
-         </div>
+         <div *ngIf='botonreportes'>
+         <button pButton pRipple label="Reporte curso" icon="pi pi-user" (click)="reportsecurso()"></button>
+        </div>
+        </div>
+         
       
-        </section>
       
+      
+        <p-dialog [(visible)]="showDiv" [style]="{width: '500px',height: '500px'}" header="Informacion del Estudiante"
+        [modal]="true" styleClass="p-fluid">
 
+        <ng-template pTemplate="content">
+            
+            <div class="card">
+                  <p-dataView  [value]="Estudiante">
+                      <ng-template let-estudiante pTemplate="listItem">
+                          <div>
+                              <h2> Nombre:</h2>
+                              <label class="input-black"> {{estudiante.id_persona.nombre}}</label><br>
+                              <h2> Apellido:</h2>
+                              <label class="input-black">  {{estudiante.id_persona.apellido}}</label><br>
+                              <h2> cedula:</h2>
+                              <label class="input-black">    {{estudiante.id_persona.cedula}}</label><br>
+                          </div>
+                      </ng-template>
+                  </p-dataView>
+              </div>
+                <p-table [value]="fechas" [rows]="5" [paginator]="true" responsiveLayout="scroll" dataKey="id"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Asistencia"
+                [showCurrentPageReport]="true" [globalFilterFields]="['descripcion']" [showCurrentPageReport]="true">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>asignatura</th>
+                      <th>Fechas</th>
+                      
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-product>
+                    <tr>
+                      <td>{{ product.idAsignatura.descripcion}}</td>   
+                    <td>{{ product.fecClase}}</td>             
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        En total se encontro {{fechas ? fechas.length : 0 }} Faltas
+                    </div>
+                </ng-template>
+                </p-table>
+               
+
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <button pButton pRipple label="Reporte Individual" icon="pi pi-user"(click)="reportes()"></button>
+
+        </ng-template>
+    </p-dialog>
     <!--Fin Contenido-->
   </div>
 </div>
