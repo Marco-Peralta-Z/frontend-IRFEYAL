@@ -105,7 +105,7 @@
       <!--Fin Contenido-->
 
 
-      <p-dialog [(visible)]="actualizarDialog" [style]="{width: '450px'}" header="Actualizar Asistencia" [modal]="true" styleClass="p-fluid">
+      <p-dialog [(visible)]="actualizarDialog" [style]="{width: '500px',height: '500px'}" header="Actualizar Asistencia" [modal]="true" styleClass="p-fluid">
         <p-dropdown  [options]="periodosactu" placeholder="Periodo" optionLabel="malla.descripcion" filterBy="malla.descripcion" optionValue="id_periodo"  (onChange)="onperiodoactualizar($event.value)"  [showClear]="true">
           <ng-template let-operatingSystems pTemplate="item">
             <div class="flex align-items-center operatingSystems-item">
