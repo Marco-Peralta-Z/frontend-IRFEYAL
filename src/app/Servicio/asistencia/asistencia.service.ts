@@ -116,19 +116,11 @@ export class AsistenciaService {
   }
 
 
-  exportInvoice(idEstudiante: number, idDocente:number, idasignatura:number){
+  exportInvoice(idEstudiante: number, idDocente:number){
     const httpOptions = {
       responseType: 'arraybuffer' as 'json'
       // 'responseType'  : 'blob' as 'json'        //This also worked
     };
-    return this.rutaconsulta.get(this.url+"/exportInvoice/"+idEstudiante+'/'+idDocente+'/'+idasignatura, httpOptions);  
-  }  
-
-  exportInvoicecurso(idModalidad: number , idPeriodo: number, idParalelo: number,idAsignatura: number, idCurso:number,docente:any){
-    const httpOptions = {
-      responseType: 'arraybuffer' as 'json'
-      // 'responseType'  : 'blob' as 'json'        //This also worked
-    };
-    return this.rutaconsulta.get(this.url+"/exportInvoicecurso/"+idModalidad+'/'+idPeriodo+'/'+idParalelo+'/'+idAsignatura+'/'+idCurso+'/'+docente, httpOptions);  
+    return this.rutaconsulta.get(this.url+"/exportInvoice/"+idEstudiante+'/'+idDocente, httpOptions);  
   }  
 }

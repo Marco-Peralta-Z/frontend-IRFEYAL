@@ -266,9 +266,6 @@ export class ItemsService {
             {
                 label: 'Pagos',
                 icon: 'pi pi-dollar',
-                visible: this.hasRolUser(
-                    ['ROLE_Administrador', 'ROLE_Secretaria']
-                ),
                 items: [
                     {
                         label: 'Comprobantes',

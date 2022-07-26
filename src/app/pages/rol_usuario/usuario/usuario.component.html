@@ -1,5 +1,5 @@
 <p-toast></p-toast>
- class="container-fluid page">
+<div class="container-fluid page">
     <div class="d-flex page__box p-3 mt-2">Registro Usuarios</div>
     <div class="page__content shadow p-3 ">
 <div class="card">
@@ -134,17 +134,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-rolUsuario>
                 <tr>
-                    <td>
-                         <ng-container *ngIf="rolUsuario.rol.descripcion === 'Docente'; else elseTutor">
-                            Tutor
-                        </ng-container>
-                        <ng-template #elseTutor>
-                        {{rolUsuario.rol.descripcion}}
-                        </ng-template>
-                        
-
-                        
-                    </td>
+                    <td>{{rolUsuario.rol.descripcion}}</td>
                     <td>
                         <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarRol(rolUsuario)"></button>
                     </td>
