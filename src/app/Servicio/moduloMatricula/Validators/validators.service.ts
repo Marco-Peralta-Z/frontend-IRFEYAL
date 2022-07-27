@@ -320,7 +320,7 @@ requerimientos=[
   // Inicio para no intensivo
   {
     curso:'octavo',
-    modalidad:'intensivo',
+    modalidad:'no intensivo',
     Listrequisitos:this.octavo
   },
   {
@@ -329,7 +329,7 @@ requerimientos=[
     Listrequisitos:this.noveno
   },
   {
-    curso:'decimo',
+    curso:'décimo',
     modalidad:'no intensivo',
     Listrequisitos:this.decimo
   },
@@ -352,32 +352,47 @@ requerimientos=[
   // Inicio de requerimientos para intensivo
   {
     curso:'octavo',
-    modalidad:'no intensivo',
+    modalidad:'intensivo',
+    Listrequisitos:this.octavo
+  },
+  {
+    curso:'basica superior intensiva',
+    modalidad:'intensivo',
+    Listrequisitos:this.octavo
+  },
+  {
+    curso:'básica superior',
+    modalidad:'intensivo',
+    Listrequisitos:this.octavo
+  },
+  {
+    curso:'básica superior intensiva',
+    modalidad:'intensivo',
     Listrequisitos:this.octavo
   },
   {
     curso:'noveno',
-    modalidad:'no intensivo',
+    modalidad:'intensivo',
     Listrequisitos:this.noveno
   },
   {
-    curso:'decimo',
-    modalidad:'no intensivo',
+    curso:'décimo',
+    modalidad:'intensivo',
     Listrequisitos:this.decimo
   },
   {
     curso:'primero de bachillerato',
-    modalidad:'no intensivo',
+    modalidad:'intensivo',
     Listrequisitos:this.primero
   },
   {
     curso:'segundo de bachillerato',
-    modalidad:'no intensivo',
+    modalidad:'intensivo',
     Listrequisitos:this.segundo
   },
   {
     curso:'tercero de bachillerato',
-    modalidad:'no intensivo',
+    modalidad:'intensivo',
     Listrequisitos:this.tercero
   }
 ];
