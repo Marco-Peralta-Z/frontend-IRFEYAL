@@ -255,6 +255,7 @@ export class AgregarMatriculaComponent implements OnInit {
 
   cargarRequisitos(curso: string, modalidad: string){
     this.documentosRequeridos=[];
+    this.selectedRequerimientos=[];
     for (let i = 0; i < this.validatorsService.requerimientos.length; i++) {
      if (curso.toLowerCase() == this.validatorsService.requerimientos[i].curso && modalidad.toLowerCase() ==  this.validatorsService.requerimientos[i].modalidad) {
         for (let r = 0; r < this.validatorsService.requerimientos[i].Listrequisitos.length; r++) {

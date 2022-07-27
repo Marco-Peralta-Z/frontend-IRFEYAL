@@ -334,6 +334,11 @@ requerimientos=[
     Listrequisitos:this.decimo
   },
   {
+    curso:'decimo',
+    modalidad:'no intensivo',
+    Listrequisitos:this.decimo
+  },
+  {
     curso:'primero de bachillerato',
     modalidad:'no intensivo',
     Listrequisitos:this.primero
@@ -377,6 +382,11 @@ requerimientos=[
   },
   {
     curso:'décimo',
+    modalidad:'intensivo',
+    Listrequisitos:this.decimo
+  },
+  {
+    curso:'decimo',
     modalidad:'intensivo',
     Listrequisitos:this.decimo
   },
