@@ -62,25 +62,20 @@ export class AgregarMatriculaComponent implements OnInit {
   listRequerimientos: string = "";
   campo: string = "Cedula incompleta!";
 
-
-
   constructor(private estudianteService: EstudianteService,
     private matriculaService: MatriculaService,
     private messageService: MessageService,
     private fb: FormBuilder,
     private authService: AuthService,
     private validatorsService: ValidatorsService) { }
-
+    
   ngOnInit(): void {
     this.cargarMallas();
-    //  console.log("tiene algo?:",this.mallas);
     this.refreshMatriculas();
     this.estudianteService.getEstudiantePersonas()
       .subscribe(persona => this.personas = persona);
-
     console.log(this.validatorsService.requerimientos);
   }
-
   matriculaFormulario: FormGroup = this.fb.group({
     cedula: [],
     nameComplete: ['', [Validators.required]],
