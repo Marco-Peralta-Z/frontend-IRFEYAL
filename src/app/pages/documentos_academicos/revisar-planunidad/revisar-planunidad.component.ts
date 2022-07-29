@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlanunidadService } from './../../../Servicio/documentacion_academica/planunidadServices/planunidad.service';
 import { PlanUnidad } from '../../../Model/DocumentosAcademicos/plan-unidad';
+import { AuthService } from './../../../Servicio/auth/auth.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,6 +12,10 @@ import Swal from 'sweetalert2';
 })
 export class RevisarPlanunidadComponent implements OnInit {
   revisar_planunidadForm: FormGroup = this.fb.group({});
+  id_usuario: number = 0;
+  id_empleado: number = 0;
+  NombreApellidoEmpleado: String = "";
+  usuario: any;
   planunidadpendientes: PlanUnidad[] = [];
   //Variables para guardar los campos
   id: any;
@@ -22,27 +27,33 @@ export class RevisarPlanunidadComponent implements OnInit {
   btnRegresarEnviar: boolean = false;
   mostrarmsg: boolean = false;
 
+  today: Date = new Date();
+
   //Tamaño de textarea
   autoResize: boolean = true;
 
+  verCoorAcademico: any;
+  verFechaRevision: any;
   //Variables para mostrar los datos en los labels
   verObservaciones: any;
   verUnidad: any;
+  verFechaCreacion: any;
   verEmpleado: String = "";
   verPeriodoFinicio: any;
   verPeriodoFfin: any;
   verModalidad: any;
   verPeriodoMalla: any;
   verAsigNom: any;
-  verAsigId: any;
+  area: any;
   verCurso: any;
   verParalelo: any;
-
+  verNumPeriodos: any;
 
 
   constructor(
     public fb: FormBuilder,
     public planunidadService: PlanunidadService,
+    public authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -53,14 +64,27 @@ export class RevisarPlanunidadComponent implements OnInit {
     this.revisar_planunidadForm = this.fb.group({
       id_plan_unidad: ['', Validators.required],
       titulo_unidad: ['', Validators.required],
-      objetivos: ['', Validators.required],
-      contenidos: ['', Validators.required],
-      criterios_evaluacion: ['', Validators.required],
-      destrezas: ['', Validators.required],
+      fecha_creacion: ['', Validators.required],
       fecha_inicio: ['', Validators.required],
       fecha_fin: ['', Validators.required],
+      num_periodos: ['', Validators.required],
+      objetivos: ['', Validators.required],
+      criterios_evaluacion: ['', Validators.required],
+      destrezas: ['', Validators.required],
+      act_experiencia: ['', Validators.required],
+      act_reflexion: ['', Validators.required],
+      act_conceptualizacion: ['', Validators.required],
+      act_aplicacion: ['', Validators.required],
+      recursos: ['', Validators.required],
+      indicadores: ['', Validators.required],
+      tecnicas: ['', Validators.required],
+      adaptaciones_curriculares: ['', Validators.required],
+      adap_necesidad_educativa: ['', Validators.required],
+      especificacion_nesesidad: ['', Validators.required],
       estado: ['', Validators.required],
       observaciones: ['', Validators.required],
+      coor_academico: ['', Validators.required],
+      fecha_revision: ['', Validators.required],
       unidad: ['', Validators.required],
       empleado: ['', Validators.required],
       asignatura: ['', Validators.required],
@@ -69,8 +93,18 @@ export class RevisarPlanunidadComponent implements OnInit {
       modalidad: ['', Validators.required],
       periodo: ['', Validators.required],
     });
-    //this.revisar_planunidadForm?.disable();
-    //this.revisar_planunidadForm.get("observaciones")?.enable();
+
+
+    //Cosumiendo el id del usuario desde auth.service
+    this.id_usuario = this.authService.usuario.id_usuario;
+
+    this.planunidadService.getUsuario(this.id_usuario).subscribe(resp => {
+      this.usuario = resp;
+      //this.id_empleado = this.usuario.empleado.id_empleado;
+      this.NombreApellidoEmpleado = this.usuario.empleado.persona.nombre + " " + this.usuario.empleado.persona.apellido;
+    },
+      error => { console.error(error) }
+    );
 
     this.planunidadService.getAllPlanUnidadesPendientes().subscribe(resp => {
       this.planunidadpendientes = resp;
@@ -83,21 +117,34 @@ export class RevisarPlanunidadComponent implements OnInit {
     this.revisar_planunidadForm.setValue({
       id_plan_unidad: plan_unidad.id_plan_unidad,
       titulo_unidad: plan_unidad.titulo_unidad,
-      objetivos: plan_unidad.objetivos,
-      contenidos: plan_unidad.contenidos,
-      criterios_evaluacion: plan_unidad.criterios_evaluacion,
-      destrezas: plan_unidad.destrezas,
+      fecha_creacion: plan_unidad.fecha_creacion,
       fecha_inicio: plan_unidad.fecha_inicio,
       fecha_fin: plan_unidad.fecha_fin,
+      num_periodos: plan_unidad.num_periodos,
+      objetivos: plan_unidad.objetivos,
+      criterios_evaluacion: plan_unidad.criterios_evaluacion,
+      destrezas: plan_unidad.destrezas,
+      act_experiencia: plan_unidad.act_experiencia,
+      act_reflexion: plan_unidad.act_reflexion,
+      act_conceptualizacion: plan_unidad.act_conceptualizacion,
+      act_aplicacion: plan_unidad.act_aplicacion,
+      recursos: plan_unidad.recursos,
+      indicadores: plan_unidad.indicadores,
+      tecnicas: plan_unidad.tecnicas,
+      adaptaciones_curriculares: plan_unidad.adaptaciones_curriculares,
+      adap_necesidad_educativa: plan_unidad.adap_necesidad_educativa,
+      especificacion_nesesidad: plan_unidad.especificacion_nesesidad,
       estado: plan_unidad.estado,
       observaciones: "",
+      coor_academico: plan_unidad.coor_academico,
+      fecha_revision: plan_unidad.fecha_revision,
       unidad: plan_unidad.unidad,
       empleado: plan_unidad.empleado,
-      asignatura: plan_unidad.asignatura,
       curso: plan_unidad.curso,
       paralelo: plan_unidad.paralelo,
       modalidad: plan_unidad.modalidad,
-      periodo: plan_unidad.periodo
+      periodo: plan_unidad.periodo,
+      asignatura: plan_unidad.asignatura
     });
     //Mostramos el formulario y ocultamos la tabla
     this.mostrarForm = true;
@@ -107,15 +154,24 @@ export class RevisarPlanunidadComponent implements OnInit {
     //Cargamos los labels
     this.verObservaciones = plan_unidad.observaciones;
     this.verUnidad = plan_unidad.unidad.idUnidad;
+    this.verFechaCreacion = plan_unidad.fecha_creacion;
+    this.verCoorAcademico = plan_unidad.coor_academico;
+    this.verFechaRevision = plan_unidad.fecha_revision;
     this.verEmpleado = plan_unidad.empleado.persona.nombre + " " + plan_unidad.empleado.persona.apellido;
     this.verPeriodoFinicio = plan_unidad.periodo.fecha_inicio;
     this.verPeriodoFfin = plan_unidad.periodo.fecha_fin;
     this.verModalidad = plan_unidad.modalidad.descripcion;
     this.verPeriodoMalla = plan_unidad.periodo.malla.descripcion;
     this.verAsigNom = plan_unidad.asignatura.descripcion;
-    this.verAsigId = plan_unidad.asignatura.id_asignatura;
     this.verCurso = plan_unidad.curso.descripcion;
     this.verParalelo = plan_unidad.paralelo.descripcion;
+    this.verNumPeriodos = plan_unidad.num_periodos;
+
+    this.planunidadService.getAllAreaByAsignatura(plan_unidad.asignatura.id_asignatura).subscribe(resp => {
+      this.area = resp.descripcion;
+    },
+      error => { console.error(error) }
+    );
 
     if (this.verObservaciones != "Sin observaciones") {
       this.mostrarObservacionesAnt = true;
@@ -136,6 +192,8 @@ export class RevisarPlanunidadComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.revisar_planunidadForm.value.estado = "Aprobado";
+        this.revisar_planunidadForm.value.coor_academico = this.NombreApellidoEmpleado;
+        this.revisar_planunidadForm.value.fecha_revision = this.today;
         this.revisar_planunidadForm.value.observaciones = "Sin observaciones";
         this.planunidadService.updatePlanUnidad(this.id, this.revisar_planunidadForm.value).subscribe(resp => {
           this.revisar_planunidadForm.reset();
@@ -181,6 +239,8 @@ export class RevisarPlanunidadComponent implements OnInit {
       }).then((result) => {
         if (result.isConfirmed) {
           this.revisar_planunidadForm.value.estado = "Rechazado";
+          this.revisar_planunidadForm.value.coor_academico = this.NombreApellidoEmpleado;
+          this.revisar_planunidadForm.value.fecha_revision = this.today;
           this.planunidadService.updatePlanUnidad(this.id, this.revisar_planunidadForm.value).subscribe(resp => {
             this.revisar_planunidadForm.reset();
             //Ocultamos el formulario y mostramos la tabla

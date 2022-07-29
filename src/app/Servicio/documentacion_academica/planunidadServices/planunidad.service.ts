@@ -71,6 +71,10 @@ export class PlanunidadService {
     return this.httpClient.get(this.API_SERVER + "asignaturas/malla/" + idMalla);
   }
 
+  public getAllAreaByAsignatura(idAsignatura: any): Observable<any> {
+    return this.httpClient.get(this.API_SERVER + "area/asignatura/" + idAsignatura);
+  }
+
   public getAllCurso(): Observable<any> {
     return this.httpClient.get(this.API_SERVER + "cursos");
   }
