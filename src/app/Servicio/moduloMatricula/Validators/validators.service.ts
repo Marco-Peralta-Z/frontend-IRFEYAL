@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+
+
 @Injectable({
   providedIn: 'root',
   })
 export class ValidatorsService {
 
   constructor() { }
+
   // variables de metodo para validar la cedula
   tama: number = 0;
   error?: boolean;
@@ -19,6 +22,9 @@ export class ValidatorsService {
   suma?: number;
   num1?: number;
   p?: number;
+
+
+
   // Array de valores de caracteres
 
 valores=[
@@ -131,6 +137,7 @@ valores=[
     valor: 35
   }
 ];
+
 multiplos=[
   {
     valor: 0,
@@ -168,245 +175,6 @@ multiplos=[
     weight:1
   }
 ];
-octavo=[
-  {
-    nombre:'Copia de cédula',
-  },
-  {
-    nombre:'Certificado de terminación de primaria o Certificado de promoción de 7mo legalizado'
-  }
-];
-noveno=[
-  {
-    nombre:'Copia de cédula',
-  },
-  {
-    nombre:'Certificado de terminación de primaria o Certificado de promoción de 7mo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 8vo'
-  },
-  {
-    nombre:'Certificado de promoción de 8vo legalizado'
-  }
-];
-decimo=[
-  {
-    nombre:'Copia de cédula',
-  },
-  {
-    nombre:'Certificado de terminación de primaria o Certificado de promoción de 7mo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 8vo'
-  },
-  {
-    nombre:'Certificado de promoción de 8vo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 9vo'
-  },
-  {
-    nombre:'Certificado de promoción de 9vo legalizado'
-  }
-];
-primero=[
-  {
-    nombre:'Copia de cédula',
-  },
-  {
-    nombre:'Certificado de terminación de primaria o Certificado de promoción de 7mo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 8vo'
-  },
-  {
-    nombre:'Certificado de promoción de 8vo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 9vo'
-  },
-  {
-    nombre:'Certificado de promoción de 9vo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 10vo'
-  },
-  {
-    nombre:'Certificado de promoción de 10vo legalizado'
-  }
-];
-segundo=[
-  {
-    nombre:'Copia de cédula',
-  },
-  {
-    nombre:'Certificado de terminación de primaria o Certificado de promoción de 7mo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 8vo'
-  },
-  {
-    nombre:'Certificado de promoción de 8vo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 9vo'
-  },
-  {
-    nombre:'Certificado de promoción de 9vo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 10vo'
-  },
-  {
-    nombre:'Certificado de promoción de 10vo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 1ro de bachilleraro'
-  },
-  {
-    nombre:'Certificado de promoción de 1ro de bachillerato legalizado'
-  },
-  {
-    nombre:'Certificado de 120 horas de participación estudiantil(primero de bachillerato)'
-  }
-];
-tercero=[
-  {
-    nombre:'Copia de cédula',
-  },
-  {
-    nombre:'Certificado de terminación de primaria o Certificado de promoción de 7mo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 8vo'
-  },
-  {
-    nombre:'Certificado de promoción de 8vo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 9vo'
-  },
-  {
-    nombre:'Certificado de promoción de 9vo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 10vo'
-  },
-  {
-    nombre:'Certificado de promoción de 10vo legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 1ro de bachilleraro'
-  },
-  {
-    nombre:'Certificado de promoción de 1ro de bachillerato legalizado'
-  },
-  {
-    nombre:'Certificado de matrícula de 2ro de bachilleraro'
-  },
-  {
-    nombre:'Certificado de promoción de 2ro de bachillerato legalizado'
-  },
-  {
-    nombre:'Certificado de 120 horas de participación estudiantil(primero de bachillerato)'
-  },
-  {
-    nombre:'Certificado de 80 horas de participación estudiantil (segundo de bachillerato).'
-  }
-];
-//Array con requerimientos por cursos
-requerimientos=[
-  // Inicio para no intensivo
-  {
-    curso:'octavo',
-    modalidad:'no intensivo',
-    Listrequisitos:this.octavo
-  },
-  {
-    curso:'noveno',
-    modalidad:'no intensivo',
-    Listrequisitos:this.noveno
-  },
-  {
-    curso:'décimo',
-    modalidad:'no intensivo',
-    Listrequisitos:this.decimo
-  },
-  {
-    curso:'decimo',
-    modalidad:'no intensivo',
-    Listrequisitos:this.decimo
-  },
-  {
-    curso:'primero de bachillerato',
-    modalidad:'no intensivo',
-    Listrequisitos:this.primero
-  },
-  {
-    curso:'segundo de bachillerato',
-    modalidad:'no intensivo',
-    Listrequisitos:this.segundo
-  },
-  {
-    curso:'tercero de bachillerato',
-    modalidad:'no intensivo',
-    Listrequisitos:this.tercero
-  },
-  // Fin de no intensivo
-  // Inicio de requerimientos para intensivo
-  {
-    curso:'octavo',
-    modalidad:'intensivo',
-    Listrequisitos:this.octavo
-  },
-  {
-    curso:'basica superior intensiva',
-    modalidad:'intensivo',
-    Listrequisitos:this.octavo
-  },
-  {
-    curso:'básica superior',
-    modalidad:'intensivo',
-    Listrequisitos:this.octavo
-  },
-  {
-    curso:'básica superior intensiva',
-    modalidad:'intensivo',
-    Listrequisitos:this.octavo
-  },
-  {
-    curso:'noveno',
-    modalidad:'intensivo',
-    Listrequisitos:this.noveno
-  },
-  {
-    curso:'décimo',
-    modalidad:'intensivo',
-    Listrequisitos:this.decimo
-  },
-  {
-    curso:'decimo',
-    modalidad:'intensivo',
-    Listrequisitos:this.decimo
-  },
-  {
-    curso:'primero de bachillerato',
-    modalidad:'intensivo',
-    Listrequisitos:this.primero
-  },
-  {
-    curso:'segundo de bachillerato',
-    modalidad:'intensivo',
-    Listrequisitos:this.segundo
-  },
-  {
-    curso:'tercero de bachillerato',
-    modalidad:'intensivo',
-    Listrequisitos:this.tercero
-  }
-];
-
 patters=[{
   expresion:/^[A-Z]{1}\d{7}$/
 },

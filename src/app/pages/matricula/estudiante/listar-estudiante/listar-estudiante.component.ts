@@ -86,7 +86,8 @@ export class ListarEstudianteComponent implements OnInit {
       }
       return null;
     }
-    
+
+
   ngOnInit() {
     this.estudianteService.getEstudiantes()
     .subscribe(estudiantes => this.estudiantes= estudiantes);

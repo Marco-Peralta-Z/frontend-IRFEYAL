@@ -82,8 +82,8 @@ postMatricula(matricula: Matricula): Observable<Matricula>{
   );
 }
 
-sendEmail(matricula: Matricula,requeridos: string, list: string): Observable<any>{
-  return this.http.put<any>(`${this.baseUrl}api/sendMail/${requeridos}/${list}`, matricula).pipe(
+sendEmail(matricula: Matricula, list: string): Observable<any>{
+  return this.http.put<any>(`${this.baseUrl}api/sendMail/${list}`, matricula).pipe(
     map((response:any)=>
     response.mensaje as string)
   );

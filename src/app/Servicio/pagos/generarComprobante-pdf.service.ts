@@ -32,7 +32,7 @@ export class GenerarComprobantePdfService {
     docPdf.text(`CEDULA: ${detalleComprobante.idComprobante.idMatricula.estudiante.id_persona.cedula}`,125,95);
     docPdf.text(`CURSO: ${detalleComprobante.idComprobante.idMatricula.curso.descripcion}`,20,100);
     docPdf.text(`MODALIDAD: ${detalleComprobante.idComprobante.idMatricula.modalidad.descripcion}`,20,105);
-    docPdf.text(`CONCEPTO DE PAGO: ${detalleComprobante.idComprobante.tipoComprobante.concepto_pago}`,20,130);
+    docPdf.text(`CONCEPTO DE PAGO: ${detalleComprobante.idComprobante.tipoComprobante.id_conceptoPago?.descripcion}`,20,130);
     docPdf.text(`COSTO: ${detalleComprobante.valor}`,45,135);
     docPdf.text(`MONTO INGRESADO: ${detalleComprobante.idComprobante.valor_total}`,20 ,140);
     docPdf.text(`TOTAL: ${detalleComprobante.valor}`,45,145);

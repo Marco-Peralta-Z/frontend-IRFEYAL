@@ -163,7 +163,7 @@ export class ItemsService {
                         icon: 'pi pi-list',
                         items: [
                             {
-                                label: 'Crear',
+                                label: 'crear',
                                 icon: 'pi pi-plus',
                                 routerLink: 'matriculaModule/agregarMatricula',
                             },

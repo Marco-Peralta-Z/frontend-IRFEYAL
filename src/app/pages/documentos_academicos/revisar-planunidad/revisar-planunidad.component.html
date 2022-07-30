@@ -75,9 +75,7 @@
             <div *ngIf="mostrarForm">
                 <form [formGroup]="revisar_planunidadForm">
                     <div *ngIf="mostrarObservacionesAnt" class="border bg-light">
-                        <h3>Anteriormente revisado por {{verCoorAcademico}} Coor. Academico, el {{verFechaRevision |
-                            date:'longDate'}}.</h3>
-                        <label style="font-size:17px;">Observaciones a corregir:</label>
+                        <h3>Observaciones anteriores</h3>
                         <input type="text" class="form-control" style="border: 0px;" name="observacionesant"
                             value={{verObservaciones}} disabled><br>
                     </div><br>
@@ -94,9 +92,7 @@
                                     <label style="font-size:23px; font-weight:bold;">
                                         PLAN DE UNIDAD No {{verUnidad}}</label>
                                 </div>
-                                <div class="col" style="text-align:right;">
-                                    <br>
-                                    <label style="font-size:17px;">{{verFechaCreacion | date:'longDate'}}</label>
+                                <div class="col">
                                 </div>
                             </div>
                             <!-- Implementacion del Grid para el diseño del formulario -->
@@ -131,9 +127,9 @@
                                     <label style="font-size:18px; margin-left: 10px;">
                                         {{verCurso}} {{verParalelo}}</label><br>
                                     <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                        Area:</label>
+                                        Codigo de Asignatura:</label>
                                     <label style="font-size:18px; margin-left: 10px;">
-                                        {{area}}</label><br>
+                                        {{verAsigId}}</label><br>
                                 </div>
                             </div>
                             <br>
@@ -149,9 +145,6 @@
                                         readonly>
                                 </div>
                                 <div class="col-sm-4">
-                                    <h2>N° de periodos:</h2>
-                                    <input type="text" class="form-control" formControlName="num_periodos" pInputText
-                                        readonly>
                                 </div>
                             </div><br>
                             <div class="row">
@@ -174,125 +167,26 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
+                                        <h2>Contenidos de la unidad</h2>
+                                        <textarea class="form-control" formControlName="contenidos" [rows]="3"
+                                            pInputTextarea [autoResize]="autoResize" readonly></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
                                         <h2>Criterios de evaluacion</h2>
                                         <textarea class="form-control" formControlName="criterios_evaluacion" [rows]="3"
                                             pInputTextarea [autoResize]="autoResize" readonly></textarea>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-12">
                                     <div class="form-group">
                                         <h2>Destrezas con criterio de desempeño</h2>
                                         <textarea class="form-control" formControlName="destrezas" [rows]="3"
                                             pInputTextarea [autoResize]="autoResize" readonly></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="container-fluid border">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group" style="text-align:center;">
-                                            <label style="font-size:17px;">ACTIVIDADES DE
-                                                APRENDIZAJE</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <h2>Experiencia.</h2>
-                                                <textarea class="form-control" formControlName="act_experiencia"
-                                                    [rows]="3" pInputTextarea [autoResize]="true" readonly></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <h2>Conceptualización.</h2>
-                                                <textarea class="form-control" formControlName="act_conceptualizacion"
-                                                    [rows]="3" pInputTextarea [autoResize]="true" readonly></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <h2>Reflexión.</h2>
-                                                <textarea class="form-control" formControlName="act_reflexion"
-                                                    [rows]="3" pInputTextarea [autoResize]="true" readonly></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <h2>Aplicación.</h2>
-                                                <textarea class="form-control" formControlName="act_aplicacion"
-                                                    [rows]="3" pInputTextarea [autoResize]="true" readonly></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="container-fluid border">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group" style="text-align:center;">
-                                            <label style="font-size:17px;">EVALUACIÓN SUMATIVA</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <h2>Indicadores para evaluación del criterio.</h2>
-                                                <textarea class="form-control" formControlName="indicadores" [rows]="3"
-                                                    pInputTextarea [autoResize]="true" readonly></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <h2>Técnicas e instrumentos.</h2>
-                                                <textarea class="form-control" formControlName="tecnicas" [rows]="3"
-                                                    pInputTextarea [autoResize]="true" readonly></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><br>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="form-group">
-                                            <h2>Recursos.</h2>
-                                            <textarea class="form-control" formControlName="recursos" [rows]="3"
-                                                pInputTextarea [autoResize]="true" readonly></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group">
-                                            <h2>Adaptación de la necesidad educativa.</h2>
-                                            <textarea class="form-control" formControlName="adap_necesidad_educativa"
-                                                [rows]="3" pInputTextarea [autoResize]="true" readonly></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="form-group">
-                                            <h2>Adaptaciones curriculares.</h2>
-                                            <textarea class="form-control" formControlName="adaptaciones_curriculares"
-                                                [rows]="3" pInputTextarea [autoResize]="true" readonly></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group">
-                                            <h2>Especificación de la nesesidad a ser aplicada.</h2>
-                                            <textarea class="form-control" formControlName="especificacion_nesesidad"
-                                                [rows]="3" pInputTextarea [autoResize]="true" readonly></textarea>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -15,7 +15,6 @@ import { AuthService } from '../../../../Servicio/auth/auth.service';
 import { Malla } from '../../../../Model/Parametrizacion/Malla';
 import { persona } from '../../../../Model/rolesTS/persona';
 import { ControlMatricula } from '../../../../Model/Matriculas/controlMatricula';
-import { ValidatorsService } from '../../../../Servicio/moduloMatricula/Validators/validators.service';
 
 
 
@@ -47,7 +46,6 @@ export class AgregarMatriculaComponent implements OnInit {
   periodos: Periodo[] = [];
   paralelos: Paralelo[] = [];
   errores: string[] = [];
-  documentosRequeridos: string [] = [];
   fecha: Date = new Date();
   activeIndex1: number = 0;
   cedula: string = "";
@@ -62,20 +60,22 @@ export class AgregarMatriculaComponent implements OnInit {
   listRequerimientos: string = "";
   campo: string = "Cedula incompleta!";
 
+
+
   constructor(private estudianteService: EstudianteService,
     private matriculaService: MatriculaService,
     private messageService: MessageService,
     private fb: FormBuilder,
-    private authService: AuthService,
-    private validatorsService: ValidatorsService) { }
-    
+    private authService: AuthService) { }
+
   ngOnInit(): void {
     this.cargarMallas();
+    //  console.log("tiene algo?:",this.mallas);
     this.refreshMatriculas();
     this.estudianteService.getEstudiantePersonas()
       .subscribe(persona => this.personas = persona);
-    console.log(this.validatorsService.requerimientos);
   }
+
   matriculaFormulario: FormGroup = this.fb.group({
     cedula: [],
     nameComplete: ['', [Validators.required]],
@@ -95,8 +95,11 @@ export class AgregarMatriculaComponent implements OnInit {
     telefono: ['', [Validators.required]],
     celular: ['', [Validators.required]],
     email: ['', [Validators.required]],
+    inscripcion: [],
+    copCedula: [],
+    copVotacion: [],
+    certMatricula: [],
     periodo: [[], [Validators.required]],
-    requerimientos:[],
     malla: [[],],
     curso: [[], [Validators.required]],
     paralelo: [[], [Validators.required]],
@@ -175,11 +178,8 @@ export class AgregarMatriculaComponent implements OnInit {
     } else {
       this.listRequerimientos = "vacio";
     }
-    let documents: string ='';
-    for (let r = 0; r < this.documentosRequeridos.length; r++) {
-      documents+= this.documentosRequeridos[r]+ "-";      
-    }
-    this.matriculaService.sendEmail(matricula,documents,  this.listRequerimientos)
+
+    this.matriculaService.sendEmail(matricula, this.listRequerimientos)
       .subscribe(res => console.log(res));
 
   }
@@ -214,10 +214,6 @@ export class AgregarMatriculaComponent implements OnInit {
     if (this.cursoSelectd != null && this.peridoSelectd !=null) {
       this.contadorDeMatriculasByParalelos(this.matricula.curso.id_curso, this.matricula.modalidad.id_modalidad, this.matricula.id_periodo.id_periodo);
     }
-
-    if (this.cursoSelectd != null) {
-      this.cargarRequisitos(this.cursoSelectd.descripcion.toString(), this.modalidadSelectd.descripcion.toString());
-    }
   }
   obtenerParalelo() {
     this.matricula.id_paralelo = this.paraleloSelectd;
@@ -227,9 +223,6 @@ export class AgregarMatriculaComponent implements OnInit {
     this.matricula.curso = this.cursoSelectd;
     if (this.modalidadSelectd != null && this.peridoSelectd !=null) {
       this.contadorDeMatriculasByParalelos(this.matricula.curso.id_curso, this.matricula.modalidad.id_modalidad, this.matricula.id_periodo.id_periodo);
-    }
-    if (this.modalidadSelectd != null) {
-      this.cargarRequisitos(this.cursoSelectd.descripcion.toString(), this.modalidadSelectd.descripcion.toString());
     }
 
     this.matriculaService.getParalelosPorCurso(this.matricula.curso.id_curso)
@@ -245,23 +238,10 @@ export class AgregarMatriculaComponent implements OnInit {
         next: (periodo) => {
           this.periodos = periodo;   
         },
-      });  
-  }
+      });
 
-  cargarRequisitos(curso: string, modalidad: string){
-    this.documentosRequeridos=[];
-    this.selectedRequerimientos=[];
-    for (let i = 0; i < this.validatorsService.requerimientos.length; i++) {
-     if (curso.toLowerCase() == this.validatorsService.requerimientos[i].curso && modalidad.toLowerCase() ==  this.validatorsService.requerimientos[i].modalidad) {
-        for (let r = 0; r < this.validatorsService.requerimientos[i].Listrequisitos.length; r++) {
-          this.documentosRequeridos.push(this.validatorsService.requerimientos[i].Listrequisitos[r].nombre);          
-        }
-        return;
-     }
-    }
-    
+      
   }
-
   limpiarFormulario() {
     this.activeIndex1 = 0;
     this.selectedRequerimientos = [];

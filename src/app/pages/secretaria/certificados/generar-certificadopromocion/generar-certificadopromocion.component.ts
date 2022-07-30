@@ -147,6 +147,10 @@ export class GenerarCertificadopromocionComponent implements OnInit {
   }
 
   convertirNumeroLetras = (num: number) => {
+    if (num >= 10) {
+      return 'DIEZ'
+    }
+    
     if (num % Math.trunc(num) === 0 ) {
       let strUnidad: string = new ConvertirNumerosLetras().Unidades(num);
       return `${strUnidad} `;

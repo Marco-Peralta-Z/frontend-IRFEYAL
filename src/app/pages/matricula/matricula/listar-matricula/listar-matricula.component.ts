@@ -35,7 +35,19 @@ export class ListarMatriculaComponent implements OnInit {
     private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
-     this.matriculaService.getMatriculasActivas()
+    // this.matriculaService.getMatricula()
+    // .subscribe(matriculas => {
+    //   let soloActivos: any[]=[];
+    //  for (const matricula of matriculas) {
+    //   if (matricula.id_periodo.vigencia==true) {
+    //     soloActivos.push(matricula);
+    //   }
+    //  }
+    //   this.matriculas=soloActivos;
+    //   console.log(this.matriculas);
+    // });
+
+    this.matriculaService.getMatriculasActivas()
     .subscribe(matriculasActivas => {
       this.matriculas=matriculasActivas;
     });
