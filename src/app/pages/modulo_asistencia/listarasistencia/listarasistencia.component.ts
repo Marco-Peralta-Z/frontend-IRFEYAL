@@ -320,7 +320,7 @@ if(this.idAsignatura==0){
 
         reportes(){
           console.log("llego"+ this.idestudiante);
-          this.appService.exportInvoice(this.idestudiante,this.idempleados,this.idAsignatura).subscribe(
+          this.appService.exportInvoice(this.idestudiante,this.idempleados,this.idAsignatura,this.idususarios).subscribe(
             (data:any) => {
               const file = new Blob([data], { type: 'application/pdf' });
     const fileURL = URL.createObjectURL(file);
@@ -329,7 +329,7 @@ if(this.idAsignatura==0){
         
         }
         reportsecurso(){
-          this.appService.exportInvoicecurso(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso,this.idempleados).subscribe(
+          this.appService.exportInvoicecurso(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso,this.idempleados,this.idususarios).subscribe(
             (data:any) => {
               const file = new Blob([data], { type: 'application/pdf' });
     const fileURL = URL.createObjectURL(file);
