@@ -53,8 +53,12 @@ export class PlanunidadService {
     return this.httpClient.get(this.API_SERVER + id_unidad + "/" + id_asignatura + "/" + id_curso + "/" + id_paralelo + "/" + id_periodo + "/" + id_modalidad);
   }
 
-  public createPDFplanunidad(planunidad: any): Observable<any> {
-    return this.httpClient.post(this.API_SERVER + "pdfPlanUnidad", planunidad);
+  public createPDFplanunidad(planunidad: any, coorPedagogico: string): Observable<any> {
+    return this.httpClient.post(this.API_SERVER + "pdfPlanUnidad/" + coorPedagogico, planunidad);
+  }
+
+  public getNomUsuariosByRolCoorPedagogico(): Observable<any> {
+    return this.httpClient.get(this.API_SERVER + "coorpedagogico");
   }
 
   //Consumido de parametrizacion

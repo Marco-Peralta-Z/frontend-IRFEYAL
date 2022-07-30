@@ -35,6 +35,8 @@ export class GenerarPlanunidadComponent implements OnInit {
   cursos: any;
   paralelos: any;
   itemsNumPeriodos: any;
+  coorPedagogico: any;
+  NomApellidoCoorPedagogico: any;
 
   today: Date = new Date();
   //zona = new DatePipe('en-US');
@@ -56,7 +58,9 @@ export class GenerarPlanunidadComponent implements OnInit {
   panelEncabezado: boolean = true;
   mostrarBtnsEstados: boolean = true;
   showSelectAsig: boolean = true;
+  showbtnDescargar: boolean = true;
   mostrarBtnCancelGenerarPlan: boolean = false;
+  mostrarSelectCoorPedagogico: boolean = false;
 
   verCoorAcademico: any;
   verFechaRevision: any;
@@ -82,6 +86,8 @@ export class GenerarPlanunidadComponent implements OnInit {
   verSelectParalelo: String = "";
   // Variables para capturar el select de No Periodos
   opcionSelectNumPeriodos: any;
+
+  opcionSelectCoorPedagogico: any;
 
   constructor(
     public fb: FormBuilder,
@@ -248,6 +254,15 @@ export class GenerarPlanunidadComponent implements OnInit {
     // Pasamos el id y descripcion del valor seleccionado a la variable verSeleccion verSelectAsigId y verSelectAsigNom
     if (this.opcionSelectAsig != null) {
       this.verSelectAsigNom = this.opcionSelectAsig.descripcion;
+    }
+  }
+
+  capturarSelectCoorPedagogico() {
+    if (this.opcionSelectCoorPedagogico != null) {
+      this.NomApellidoCoorPedagogico = this.opcionSelectCoorPedagogico.nombre + " " + this.opcionSelectCoorPedagogico.apellido;
+      this.showbtnDescargar = false;
+    } else {
+      this.showbtnDescargar = true;
     }
   }
 
@@ -576,8 +591,20 @@ export class GenerarPlanunidadComponent implements OnInit {
     );
   }
 
-  reportePDFplanUnidad(planUnidad: any) {
-    this.planunidadService.createPDFplanunidad(planUnidad).subscribe(resp => {
+  abrirSelectCoorPedagogico() {
+    this.mostrarSelectCoorPedagogico = true;
+    this.planunidadService.getNomUsuariosByRolCoorPedagogico().subscribe(resp => {
+      this.coorPedagogico = resp;
+    },
+      error => { console.error(error) }
+    );
+  }
+
+  reportePDFplanUnidad(planUnidad: any, coorPedagogico: string) {
+    this.planunidadService.createPDFplanunidad(planUnidad, coorPedagogico).subscribe(resp => {
+      this.mostrarSelectCoorPedagogico = false;
+      this.opcionSelectCoorPedagogico = null;
+      this.showbtnDescargar = true;
       //Alerta success
       Swal.fire({
         position: 'center',
