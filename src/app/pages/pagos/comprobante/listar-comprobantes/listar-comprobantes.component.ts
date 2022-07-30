@@ -13,10 +13,10 @@ import { MensajesSweetService } from 'src/app/Servicio/modulo_invetario/mensajes
 import { ComprobanteService } from 'src/app/Servicio/pagos/comprobante.service';
 import { DetalleComprobanteService } from 'src/app/Servicio/pagos/detalleComprobante.service';
 import { GenerarComprobantePdfService } from 'src/app/Servicio/pagos/generarComprobante-pdf.service';
+import { TipoComprobanteService } from 'src/app/Servicio/pagos/tipoComprobante.service';
 import { TipoPagoService } from 'src/app/Servicio/pagos/tipoPago.service';
 import { TipoPagokit } from '../../../../Model/Pagos/tipoPago';
 import { Comprobante } from '../../../../Model/Pagos/comprobante';
-import { ConceptoPago } from '../../../../Model/Pagos/conceptoPago';
 
 
 @Component({
@@ -36,10 +36,8 @@ export class ListarComprobantesComponent implements OnInit {
   kit: Kit = new Kit;
   precioKit?: TipoPagokit;
   tiposComprobante: TipoComprobante[] = [];
-  conceptosPago: ConceptoPago[] = [];
   tiposPago: TipoPago[]=[];
   
-  tipoComprobante?: TipoComprobante;
   peridoActual = 0;
 
   selectComprobante?: DetalleComprobante| null;
@@ -55,7 +53,9 @@ export class ListarComprobantesComponent implements OnInit {
 
       tipoPago: [ , [Validators.required]],
       tipoComprobante: [ , [Validators.required]],
+     // kit: [,[Validators.required]],
       valor_total: [ , [Validators.required]], /* Lo que el estudiante entrega de dinero a pagar*/
+
       valor: [ , [Validators.required]], /* */
       detalle: [],
       
@@ -67,6 +67,7 @@ export class ListarComprobantesComponent implements OnInit {
     private _matriculaService: MatriculaService,
     private _kitListService: KitService,
     private _tipoPagoService: TipoPagoService,
+    private _tipoComprobanteService: TipoComprobanteService,
     private _detalleComprobanteService: DetalleComprobanteService,
     private _genearComprobanteService: GenerarComprobantePdfService,
     private _mensajeSweetService: MensajesSweetService,
@@ -75,9 +76,10 @@ export class ListarComprobantesComponent implements OnInit {
   date?:Date;
   ngOnInit(): void {
     this.getComprobantes();
+    this.getTipoComprobante();
     this.getTipoPago();
     this.getListaKits(this.peridoActual);
-    this.getConceptosPago();
+    
     
   }
 
@@ -87,11 +89,13 @@ export class ListarComprobantesComponent implements OnInit {
     this.esTipoKit = false;
     this._matriculaService.getMatriculaPorCedula(event.query.trim()).subscribe({
       next:(resp)=>{
+        console.log(resp);
         this.comprobanteForm.reset();
         this.matriculas=resp;
         this.getListaKits(this.matriculas[0].id_periodo.id_periodo);    
       },
       error:(err)=>{
+        console.log(err);
         this.matriculas=[];
       }
     });
@@ -101,6 +105,7 @@ export class ListarComprobantesComponent implements OnInit {
     if (peridoActual==0) {
       this._kitListService.getKits().subscribe({
         next: (resp) => {
+          console.log(resp);        
           this.kits = resp as Kit[];
         }
       })  
@@ -117,13 +122,18 @@ export class ListarComprobantesComponent implements OnInit {
     }
   }
 
-  getConceptosPago(){
-    this._tipoPagoService.getConceptoPago().subscribe({
-      next:(resp)=>{        
-        this.conceptosPago=resp;         
+  
+
+  getTipoComprobante(){
+    this._tipoComprobanteService.getTipoComprobante().subscribe({
+      next:(resp)=>{
+        console.log(resp);
+        
+        this.tiposComprobante=resp; 
       },
       error:(err)=>{
-        this.conceptosPago=[];
+        console.log(err);
+        this.tiposComprobante=[];
       }
     });
   }
@@ -131,9 +141,11 @@ export class ListarComprobantesComponent implements OnInit {
   getTipoPago(){
     this._tipoPagoService.getTipoPago().subscribe({
       next:(resp)=>{
+        console.log(resp);
         this.tiposPago=resp; 
       },
       error:(err)=>{
+        console.log(err);
         this.tiposPago=[];
       }
     });
@@ -142,34 +154,32 @@ export class ListarComprobantesComponent implements OnInit {
   getComprobantes(){
     this.comprobanteService.getAllComprobante()
     .subscribe(comprobante => {
+      console.log(comprobante);
       this.detalleComprobantes=comprobante});
   }
 
-  seleccionTipoComp(conceptoPago: ConceptoPago){
+  seleccionTipoComp(tipoComprobante: TipoComprobante){
     this.comporbanteSaldo = undefined;
-    switch (conceptoPago.descripcion) {
+    switch (tipoComprobante.concepto_pago) {
       case 'Matricula':
         this.esTipoMatricula = true;
         this.esTipoMensual = false;
         this.esTipoKit = false;
-        this.tipoComprobante = { id_conceptoPago: conceptoPago, id_periodo: this.matricula.id_periodo };
-        this.comprobanteForm.patchValue({valor: this.matricula.id_periodo.costo_matricula});
-        this.getComprobanteSaldo(this.matricula.id_matricula!, conceptoPago.id_conceptoPago!);
+        this.comprobanteForm.patchValue({valor: tipoComprobante.id_periodo.costo_matricula});
+        this.getComprobanteSaldo(this.matricula.id_matricula!, tipoComprobante.idTipoComprobante!);
         break;
       case 'Mensual':
         this.esTipoMensual = true;
         this.esTipoMatricula = false;
         this.esTipoKit = false;
-        this.tipoComprobante = { id_conceptoPago: conceptoPago, id_periodo: this.matricula.id_periodo };
-        this.comprobanteForm.patchValue({valor: this.matricula.id_periodo.costo_mensualidad});
-        this.getComprobanteSaldo(this.matricula.id_matricula!, conceptoPago.id_conceptoPago!);
+        this.comprobanteForm.patchValue({valor: tipoComprobante.id_periodo.costo_mensualidad});
+        this.getComprobanteSaldo(this.matricula.id_matricula!, tipoComprobante.idTipoComprobante!);
         break;
       case 'Kit':
         this.esTipoMensual = false;
         this.esTipoMatricula = false;
         this.esTipoKit = true;
-        this.tipoComprobante = { id_conceptoPago: conceptoPago, id_periodo: this.matricula.id_periodo };
-        this.getComprobanteSaldo(this.matricula.id_matricula!, conceptoPago.id_conceptoPago!);
+        this.getComprobanteSaldo(this.matricula.id_matricula!, tipoComprobante.idTipoComprobante!);
         this.getPrecioKit();
         break;
       default:
@@ -191,6 +201,7 @@ export class ListarComprobantesComponent implements OnInit {
   getComprobanteSaldo = (idMatricula: number, idTipoCom: number) => {
     this._comprobanteService.getcomprobateSaldo(idMatricula,idTipoCom).subscribe({
       next: (resp) => {
+        console.log(resp);
         this.comporbanteSaldo = resp.comprobante;
         
       },
@@ -223,7 +234,7 @@ export class ListarComprobantesComponent implements OnInit {
         estado,
         fecha: new Date(),
         idMatricula: this.matricula,
-        tipoComprobante: this.tipoComprobante!,
+        tipoComprobante,
         empleado: this._authService.usuario.empleado!,
         tipoPago,
         imagen: '',
@@ -241,10 +252,10 @@ export class ListarComprobantesComponent implements OnInit {
         this.esTipoMensual=false;
         this.esTipoKit = false;
         this.matricula=new Matricula();
-        this.tipoComprobante = new TipoComprobante();
         this._mensajeSweetService.mensajeOk('Comprobante registrado');
       },
       error: (error)=>{
+        console.log(error);
         this._mensajeSweetService.mensajeError('Ups!', 'No se puedo registrar el comprobante');
       }
       
@@ -260,7 +271,6 @@ export class ListarComprobantesComponent implements OnInit {
     this.matricula=new Matricula();
     this.precioKit = {};
     this.comporbanteSaldo = undefined;
-    this.tipoComprobante = new TipoComprobante();
   }
 
   verificarCampo  = ( campo: string ): boolean => {
@@ -281,6 +291,7 @@ export class ListarComprobantesComponent implements OnInit {
               this.detalleComprobantes = this.detalleComprobantes.filter(detalle => detalleComprobante.idDetalleComprobante !== detalle.idDetalleComprobante);
             },
             error:(error)=>{
+              console.log(error);
               this._mensajeSweetService.mensajeError('Upps!', `No se pudo eliminar el comprobante de pago de: ${nombre}`);
             }
           });

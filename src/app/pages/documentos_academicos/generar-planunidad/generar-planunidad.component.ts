@@ -7,6 +7,7 @@ import { PlanUnidad } from '../../../Model/DocumentosAcademicos/plan-unidad';
 import { Modalidad } from '../../../Model/Parametrizacion/Modalidad';
 import { Periodo } from '../../../Model/Parametrizacion/Periodo';
 import { AuthService } from './../../../Servicio/auth/auth.service';
+import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 
 
@@ -24,6 +25,8 @@ export class GenerarPlanunidadComponent implements OnInit {
   usuario: any;
   unidades: Unidad[] = [];
   asignaturas: any;
+  area: any;
+  des_area: any;
   modalidades: Modalidad[] = [];
   periodos: Periodo[] = [];
   planunidadaprobados: PlanUnidad[] = [];
@@ -31,11 +34,19 @@ export class GenerarPlanunidadComponent implements OnInit {
   planunidadpendientes: PlanUnidad[] = [];
   cursos: any;
   paralelos: any;
+  itemsNumPeriodos: any;
+  coorPedagogico: any;
+  NomApellidoCoorPedagogico: any;
+
+  today: Date = new Date();
+  //zona = new DatePipe('en-US');
+  //fecha_actual: any;
 
   aprobado: String = "Aprobado";
   rechazado: String = "Rechazado";
   pendiente: String = "Pendiente";
   id: any;
+  items: any;
 
   mostrarFormGenerar: boolean = false;
   mostrarAprobados: boolean = true;
@@ -47,8 +58,12 @@ export class GenerarPlanunidadComponent implements OnInit {
   panelEncabezado: boolean = true;
   mostrarBtnsEstados: boolean = true;
   showSelectAsig: boolean = true;
+  showbtnDescargar: boolean = true;
   mostrarBtnCancelGenerarPlan: boolean = false;
+  mostrarSelectCoorPedagogico: boolean = false;
 
+  verCoorAcademico: any;
+  verFechaRevision: any;
   // Variables para capturar el select de Unidad
   opcionSelectUnidad: any;
   verSelectUnidad: any;
@@ -57,7 +72,6 @@ export class GenerarPlanunidadComponent implements OnInit {
   verSelectModalidad: String = "";
   // Variables para capturar el select de Asignaturas
   opcionSelectAsig: any;
-  verSelectAsigId: any;
   verSelectAsigNom: String = "";
   // Variables para capturar el select de Periodos
   opcionSelectPeriodo: any;
@@ -70,13 +84,22 @@ export class GenerarPlanunidadComponent implements OnInit {
   // Variables para capturar el select de paralelos
   opcionSelectParalelo: any;
   verSelectParalelo: String = "";
+  // Variables para capturar el select de No Periodos
+  opcionSelectNumPeriodos: any;
+
+  opcionSelectCoorPedagogico: any;
 
   constructor(
     public fb: FormBuilder,
     public planunidadService: PlanunidadService,
     public unidadService: UnidadService,
     public authService: AuthService,
-  ) { }
+  ) {
+    this.items = [];
+    for (let i = 1; i <= 10; i++) {
+      this.items.push({ label: i, value: i });
+    }
+  }
 
   ngOnInit(): void {
     this.cargarDatos();
@@ -85,14 +108,27 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.generar_planunidadForm = this.fb.group({
       id_plan_unidad: ['', Validators.required],
       titulo_unidad: ['', Validators.required],
-      objetivos: ['', Validators.required],
-      contenidos: ['', Validators.required],
-      criterios_evaluacion: ['', Validators.required],
-      destrezas: ['', Validators.required],
+      fecha_creacion: ['', Validators.required],
       fecha_inicio: ['', Validators.required],
       fecha_fin: ['', Validators.required],
+      num_periodos: ['', Validators.required],
+      objetivos: ['', Validators.required],
+      criterios_evaluacion: ['', Validators.required],
+      destrezas: ['', Validators.required],
+      act_experiencia: ['', Validators.required],
+      act_reflexion: ['', Validators.required],
+      act_conceptualizacion: ['', Validators.required],
+      act_aplicacion: ['', Validators.required],
+      recursos: ['', Validators.required],
+      indicadores: ['', Validators.required],
+      tecnicas: ['', Validators.required],
+      adaptaciones_curriculares: ['', Validators.required],
+      adap_necesidad_educativa: ['', Validators.required],
+      especificacion_nesesidad: ['', Validators.required],
       estado: ['', Validators.required],
       observaciones: ['', Validators.required],
+      coor_academico: ['', Validators.required],
+      fecha_revision: ['', Validators.required],
       unidad: ['', Validators.required],
       empleado: ['', Validators.required],
       asignatura: ['', Validators.required],
@@ -162,6 +198,18 @@ export class GenerarPlanunidadComponent implements OnInit {
       }
     });
 
+    this.generar_planunidadForm.get("asignatura")?.valueChanges.subscribe(value => {
+      if (value != null) {
+        this.planunidadService.getAllAreaByAsignatura(value.id_asignatura).subscribe(resp => {
+          this.area = resp;
+          this.des_area = this.area.descripcion;
+        },
+          error => { console.error(error) }
+        );
+      } else if (value == null) {
+        this.opcionSelectAsig = null;
+      }
+    });
   }
 
   capturarSelectUnidad() {
@@ -205,8 +253,16 @@ export class GenerarPlanunidadComponent implements OnInit {
   capturarSelectAsig() {
     // Pasamos el id y descripcion del valor seleccionado a la variable verSeleccion verSelectAsigId y verSelectAsigNom
     if (this.opcionSelectAsig != null) {
-      this.verSelectAsigId = this.opcionSelectAsig.id_asignatura;
       this.verSelectAsigNom = this.opcionSelectAsig.descripcion;
+    }
+  }
+
+  capturarSelectCoorPedagogico() {
+    if (this.opcionSelectCoorPedagogico != null) {
+      this.NomApellidoCoorPedagogico = this.opcionSelectCoorPedagogico.nombre + " " + this.opcionSelectCoorPedagogico.apellido;
+      this.showbtnDescargar = false;
+    } else {
+      this.showbtnDescargar = true;
     }
   }
 
@@ -270,6 +326,9 @@ export class GenerarPlanunidadComponent implements OnInit {
           if (resp == false) {
             this.generar_planunidadForm.value.empleado = this.id_empleado;
             this.generar_planunidadForm.value.estado = "Pendiente";
+            this.generar_planunidadForm.value.fecha_creacion = this.today;
+            this.generar_planunidadForm.value.coor_academico = null;
+            this.generar_planunidadForm.value.fecha_revision = null;
             this.generar_planunidadForm.value.observaciones = "Sin observaciones";
             this.planunidadService.savePlanUnidad(this.generar_planunidadForm.value).subscribe(resp => {
               this.cleanForm();
@@ -340,6 +399,7 @@ export class GenerarPlanunidadComponent implements OnInit {
       })
     } else {
       this.generar_planunidadForm.value.estado = "Pendiente";
+      this.generar_planunidadForm.value.fecha_creacion = this.today;
       this.planunidadService.updatePlanUnidad(this.id, this.generar_planunidadForm.value).subscribe(resp => {
         this.cleanForm();
         //Mostramos el btn Enviar y ocultamos btn Guardar Cambios y  btn Cancelar
@@ -422,14 +482,27 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.generar_planunidadForm.setValue({
       id_plan_unidad: plan_unidad.id_plan_unidad,
       titulo_unidad: plan_unidad.titulo_unidad,
-      objetivos: plan_unidad.objetivos,
-      contenidos: plan_unidad.contenidos,
-      criterios_evaluacion: plan_unidad.criterios_evaluacion,
-      destrezas: plan_unidad.destrezas,
+      fecha_creacion: plan_unidad.fecha_creacion,
       fecha_inicio: plan_unidad.fecha_inicio,
       fecha_fin: plan_unidad.fecha_fin,
+      num_periodos: plan_unidad.num_periodos,
+      objetivos: plan_unidad.objetivos,
+      criterios_evaluacion: plan_unidad.criterios_evaluacion,
+      destrezas: plan_unidad.destrezas,
+      act_experiencia: plan_unidad.act_experiencia,
+      act_reflexion: plan_unidad.act_reflexion,
+      act_conceptualizacion: plan_unidad.act_conceptualizacion,
+      act_aplicacion: plan_unidad.act_aplicacion,
+      recursos: plan_unidad.recursos,
+      indicadores: plan_unidad.indicadores,
+      tecnicas: plan_unidad.tecnicas,
+      adaptaciones_curriculares: plan_unidad.adaptaciones_curriculares,
+      adap_necesidad_educativa: plan_unidad.adap_necesidad_educativa,
+      especificacion_nesesidad: plan_unidad.especificacion_nesesidad,
       estado: plan_unidad.estado,
       observaciones: plan_unidad.observaciones,
+      coor_academico: plan_unidad.coor_academico,
+      fecha_revision: plan_unidad.fecha_revision,
       unidad: plan_unidad.unidad,
       empleado: plan_unidad.empleado,
       curso: plan_unidad.curso,
@@ -438,6 +511,8 @@ export class GenerarPlanunidadComponent implements OnInit {
       periodo: plan_unidad.periodo,
       asignatura: plan_unidad.asignatura
     });
+    this.verCoorAcademico = plan_unidad.coor_academico;
+    this.verFechaRevision = plan_unidad.fecha_revision;
     //Pasamos el id del plan a la variable (id) 
     this.id = plan_unidad.id_plan_unidad;
     //ngModel de los select
@@ -447,6 +522,7 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.opcionSelectPeriodo = plan_unidad.periodo;
     this.opcionSelectCurso = plan_unidad.curso;
     this.opcionSelectParalelo = plan_unidad.paralelo;
+    this.opcionSelectNumPeriodos = plan_unidad.num_periodos;
     //Cargamos los labels
     this.verSelectUnidad = plan_unidad.unidad.idUnidad;
     this.verSelectPeriodoFinicio = plan_unidad.periodo.fecha_inicio;
@@ -454,7 +530,7 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.verSelectModalidad = plan_unidad.modalidad.descripcion;
     this.verSelectPeriodoMalla = plan_unidad.periodo.malla.descripcion;
     this.verSelectAsigNom = plan_unidad.asignatura.descripcion;
-    this.verSelectAsigId = plan_unidad.asignatura.id_asignatura;
+    //this.des_area = plan_unidad.asignatura.id_asignatura;
     this.verSelectCurso = plan_unidad.curso.descripcion;
     this.verSelectParalelo = plan_unidad.paralelo.descripcion;
     //Mostramos el btn Guardar Cambios y ocultamos btn Enviar
@@ -515,8 +591,20 @@ export class GenerarPlanunidadComponent implements OnInit {
     );
   }
 
-  reportePDFplanUnidad(planUnidad: any) {
-    this.planunidadService.createPDFplanunidad(planUnidad).subscribe(resp => {
+  abrirSelectCoorPedagogico() {
+    this.mostrarSelectCoorPedagogico = true;
+    this.planunidadService.getNomUsuariosByRolCoorPedagogico().subscribe(resp => {
+      this.coorPedagogico = resp;
+    },
+      error => { console.error(error) }
+    );
+  }
+
+  reportePDFplanUnidad(planUnidad: any, coorPedagogico: string) {
+    this.planunidadService.createPDFplanunidad(planUnidad, coorPedagogico).subscribe(resp => {
+      this.mostrarSelectCoorPedagogico = false;
+      this.opcionSelectCoorPedagogico = null;
+      this.showbtnDescargar = true;
       //Alerta success
       Swal.fire({
         position: 'center',
@@ -565,7 +653,6 @@ export class GenerarPlanunidadComponent implements OnInit {
       this.generar_planunidadForm.get("fecha_fin")?.value == "" ||
       this.generar_planunidadForm.get("titulo_unidad")?.value == "" ||
       this.generar_planunidadForm.get("objetivos")?.value == "" ||
-      this.generar_planunidadForm.get("contenidos")?.value == "" ||
       this.generar_planunidadForm.get("criterios_evaluacion")?.value == "" ||
       this.generar_planunidadForm.get("destrezas")?.value == "") {
       return false;

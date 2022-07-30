@@ -43,8 +43,8 @@ export class ComprobanteService {
     return this.http.get<Matricula[]>(`${this.baseUrl}/matricula`);
   }
 
-  getcomprobateSaldo = (idMa: number, idConcepto: number) => {
-    return this.http.get<StatusComprobante>(`${this.url}/comprobante/${idMa}/${idConcepto}`);
+  getcomprobateSaldo = (idMa: number, idTipoCom: number) => {
+    return this.http.get<StatusComprobante>(`${this.url}/comprobante/${idMa}/${idTipoCom}`);
   }
 
   actualizarComprobante = (id: number) => {
