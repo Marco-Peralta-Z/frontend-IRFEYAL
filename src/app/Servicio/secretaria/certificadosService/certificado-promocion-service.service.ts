@@ -21,4 +21,8 @@ export class CertificadoPromocionServiceService {
     return this._http.get<Registro[]>(`${this._baseUrl}registro/ListarRegistros`);
   }
   
+
+  getRegistrosByIdCurModPer(idCurso: number, idMod: number, idPer: number, idPar: number) {
+    return this._http.get<string[]>(`${this._baseUrl}api/certificadoPromocion/${idPer}/${idMod}/${idCurso}/${idPar}`);
+  }
 }
