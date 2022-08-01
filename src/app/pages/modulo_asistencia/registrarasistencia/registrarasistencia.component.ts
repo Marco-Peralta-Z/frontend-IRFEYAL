@@ -711,8 +711,11 @@ pipe = new DatePipe('en-EC');
             this.cursoactu=[];
             this.paralelosactu=[];
             this.asistenciaactualizar=[]; 
+            this.idModalidadactu=0;
+            this.idAsignaturaactu=0;
+            this.IdPeriodoactu= id;
             this.validarfiltrosactu();
-          this.IdPeriodoactu= id;
+          
          
           this.showmodalidadactu=false;
           for(let i=0; i<this.usuarioGuardado().roles.length; i++){
