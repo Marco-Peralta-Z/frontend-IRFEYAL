@@ -7,12 +7,40 @@ import { AuthService } from 'src/app/Servicio/auth/auth.service';
 import { Paralelo } from 'src/app/Model/Parametrizacion/Paralelo';
 
 import swal from 'sweetalert2'; 
+import { FormControl } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-listarasistencia',
   templateUrl: './listarasistencia.component.html',
-  styleUrls: ['./listarasistencia.component.scss']
+  styleUrls: ['./listarasistencia.component.scss'],
+  providers: [MessageService]
 })
 export class ListarasistenciaComponent implements OnInit {
+  //reporte cursos validar fehcas
+auxinicio:Date=new Date();
+auxfinal:Date=new Date();
+  validarfecharango:boolean=false;
+  fechacontroliniciostring:string='';
+  fechacontrolfinstring: string='';
+  fechacontrolinicio=new FormControl('');
+  fechacontrolfin=new FormControl('');
+  //reporte individual valdiar fechas
+  auxinicioindi:Date=new Date();
+auxfinalindi:Date=new Date();
+  validarfecharangoindi:boolean=false;
+  fechacontroliniciostringindi:string='';
+  fechacontrolfinstringindi: string='';
+  fechacontrolinicioindi=new FormControl('');
+  fechacontrolfinindi=new FormControl('');
+  showbotonfechafinindi:boolean=false;
+  fechainicioreporteindi:any;
+  fechafinreporteindi: any;
+
+  //
+ 
+  showbotonfechafin:boolean=false;
+  fechainicioreporte:any;
+  fechafinreporte: any;
   showDiv:boolean=false;
   botonreportes:boolean=false;
   fechas:any[]=[];
@@ -46,8 +74,8 @@ export class ListarasistenciaComponent implements OnInit {
   showasignatura:boolean=true;
   idempleados:any;
   idususarios:any;
-  constructor(private appService:AsistenciaService, private auth:AuthService){
-   
+  constructor(private appService:AsistenciaService, private auth:AuthService,private messageService: MessageService){
+
    }
 
   ngOnInit(): void {
@@ -319,27 +347,161 @@ if(this.idAsignatura==0){
 
 
         reportes(){
+          if(this.validarfecharangoindi==true){
+            const dateinicioauxindi = new Date(this.fechacontroliniciostringindi);
+            const datefinauxindi = new Date(this.fechacontrolfinstringindi);
           console.log("llego"+ this.idestudiante);
-          this.appService.exportInvoice(this.idestudiante,this.idempleados,this.idAsignatura,this.idususarios).subscribe(
+          this.appService.exportInvoice(this.idestudiante,this.idempleados,this.idAsignatura,this.idususarios,dateinicioauxindi, datefinauxindi).subscribe(
             (data:any) => {
               const file = new Blob([data], { type: 'application/pdf' });
     const fileURL = URL.createObjectURL(file);
     window.open(fileURL);
             });
+          }else{
+            swal.fire(
+              {
+                icon: 'error',
+                title: 'Oops...',
+                text: 'seleccione una fecha nuevamente!',
+               
+              })
+
+          }
         
         }
         reportsecurso(){
-          this.appService.exportInvoicecurso(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso,this.idempleados,this.idususarios).subscribe(
+          if(this.validarfecharango==true){
+          
+          const dateinicioaux = new Date(this.fechacontroliniciostring);
+          const datefinaux = new Date(this.fechacontrolfinstring);
+          console.log(dateinicioaux,datefinaux);
+          this.appService.exportInvoicecurso(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso,this.idempleados,this.idususarios, dateinicioaux, datefinaux).subscribe(
             (data:any) => {
               const file = new Blob([data], { type: 'application/pdf' });
     const fileURL = URL.createObjectURL(file);
     window.open(fileURL);
             });
+          }else{
+
+            swal.fire(
+              {
+                icon: 'error',
+                title: 'Oops...',
+                text: 'seleccione una fecha nuevamente!',
+               
+              })
+
+          }
+
         }
 
 
-        
+        showaparecerfechafin(){
+          this.fechacontrolfinstring=this.fechacontrolfin.value;
+          this.fechacontroliniciostring=this.fechacontrolinicio.value;
+        this.auxinicio = new Date(this.fechacontroliniciostring);
+          this.auxfinal = new Date(this.fechacontrolfinstring);
+          if(this.auxinicio>this.auxfinal && this.showbotonfechafin==true ){
+            this.validarfecharango=false;
+            setTimeout(() => {
+              this.messageService.add({
+                severity: "error",
+                summary: "Fecha Incorrecta",
+                detail: "La fecha debeser  menor a la fecha final"
+              });
+            }, 500);
+          }
+          
+          this.showbotonfechafin=true;
+          console.log(this.fechainicioreporte);
+          console.log(this.fechafinreporte);
+          
+        }
+        rangofecha(){
+          this.showbotonfechafin=true;
+          console.log(this.fechainicioreporte);
+          console.log(this.fechafinreporte);
+          this.fechacontrolfinstring=this.fechacontrolfin.value;
+          this.fechacontroliniciostring=this.fechacontrolinicio.value;
+        this.auxinicio = new Date(this.fechacontroliniciostring);
+          this.auxfinal = new Date(this.fechacontrolfinstring);
+      
+          if(this.auxinicio>this.auxfinal){
+            this.validarfecharango=false;
+          ///  swal.fire(
+          //    {
+            //    icon: 'error',
+            //    title: 'Oops...',
+           //     text: 'La fecha debe ser mayor a la fecha de inicio!',
+               
+           //   })
+           setTimeout(() => {
+            this.messageService.add({
+              severity: "error",
+              summary: "Fecha Incorrecta",
+              detail: "La fecha deber mayor a la fecha inicial"
+            });
+          }, 500);
+            this.messageService.add({ key: 'tc', severity: 'error', summary: 'Fecha incorrecta', detail: 'La fecha deber mayor a la fecha inicial' , life: 3000});
+
+          }else{
+            this.validarfecharango=true;
+          }
+        }
       
         
 
+
+
+
+        showaparecerfechafinindividual(){
+          this.fechacontrolfinstringindi=this.fechacontrolfinindi.value;
+          this.fechacontroliniciostringindi=this.fechacontrolinicioindi.value;
+        this.auxinicioindi = new Date(this.fechacontroliniciostringindi);
+          this.auxfinalindi = new Date(this.fechacontrolfinstringindi);
+          if(this.auxinicioindi>this.auxfinalindi && this.showbotonfechafinindi==true ){
+            this.validarfecharangoindi=false;
+
+
+            setTimeout(() => {
+              this.messageService.add({
+                severity: "error",
+                summary: "Fecha Incorrecta",
+                detail: "La fecha debe ser  menor a la fecha final"
+              });
+            }, 500);
+            
+          }
+          
+          this.showbotonfechafinindi=true;
+          console.log(this.fechainicioreporte);
+          console.log(this.fechafinreporte);
+          
+        }
+        rangofechaindividual(){
+          this.showbotonfechafinindi=true;
+         
+          this.fechacontrolfinstringindi=this.fechacontrolfinindi.value;
+          this.fechacontroliniciostringindi=this.fechacontrolinicioindi.value;
+        this.auxinicioindi = new Date(this.fechacontroliniciostringindi);
+          this.auxfinalindi = new Date(this.fechacontrolfinstringindi);
+       
+           
+          if(this.auxinicioindi>this.auxfinalindi){
+            this.validarfecharangoindi=false;
+            setTimeout(() => {
+              this.messageService.add({
+                severity: "error",
+                summary: "Fecha Incorrecta",
+                detail: "La fecha debe ser  mayor a la fecha inicial"
+              });
+            }, 500);
+
+
+
+          }else{
+            this.validarfecharangoindi=true;
+          }
+        }
+      
 }

@@ -48,6 +48,13 @@ export class RegistrarasistenciaComponent implements OnInit {
   clases: Clase= new Clase();
   clasevalidar : Clase[]=[];
  
+
+  idModalidadactu: number = 0;
+  idAsignaturaactu: number = 0;
+  IdPeriodoactu: number =0;
+  IdParaleloactu: number =0;
+  IdCursoactu: number =0;
+  showDivactu:boolean=false;
   // asistenciaService
   asistenciaactualizar: Asistencia []=[];
   asistenciaclase: Asistencia []=[];
@@ -194,6 +201,7 @@ pipe = new DatePipe('en-EC');
   //-----------fin de evento  asignatura-----------//
   //-------------------- evento modalidad--------------------//
     onmodalidad(id: any){
+     console.log(this.IdPeriodo);
       this.cursosfaltas=[];
       this.curso=[];
       this.paralelos=[];
@@ -206,6 +214,24 @@ pipe = new DatePipe('en-EC');
       this.showcurso=true;
       this.showparalelo=true;
       this.validarfiltros();
+      if(this.idModalidad==0){
+
+        this.showmodalidad=true;
+        this.IdPeriodo==0;
+        this.periodos=[];
+
+        for(let i=0; i<this.usuarioGuardado().roles.length; i++){
+          if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
+       
+           this.appService.getAllPeriodo().subscribe((data:any)=>this.periodos=data);
+           
+           return;
+         }else{
+           this.appService.listarperiodos(this.idempleados).subscribe((data:any)=>this.periodos=data);
+         }
+       }
+        
+       }
   
       this.showcurso=false;
       
@@ -241,6 +267,9 @@ pipe = new DatePipe('en-EC');
     //---------------------fin de evento modalidad----------------//
     //------------------------evento periodo-----------------------//
       onperiodo(id: any){
+
+      
+        
         this.cursosfaltas=[];
         this.showasignatura=true;
         this.showmodalidad=true;
@@ -594,6 +623,31 @@ pipe = new DatePipe('en-EC');
 
       }
 
+      validarfiltrosactu(){
+        if(this.idAsignaturaactu==null){
+          this.idAsignaturaactu=0;
+          this.showDivactu=false;
+       }
+       if(this.IdParaleloactu==null){
+        this.showDivactu=false;
+        this.IdParaleloactu=0;
+       }
+       if(this.IdPeriodoactu==null){
+        this.showDivactu=false;
+           this.IdPeriodoactu=0;
+       }
+       if(this.idModalidadactu==null){
+        this.showDivactu=false;
+        this.idModalidadactu=0;
+       }
+       if(this.IdCursoactu==null){
+        this.showDivactu=false;
+        this.IdCursoactu=0;
+       }
+
+
+      }
+
       //****************fin de validar filtros*****************/
       //---------------------habilita el panel de actualizar-------//
       actualizar(){
@@ -603,28 +657,30 @@ pipe = new DatePipe('en-EC');
 
     //*******evento asignatura actualizar**********//
       asignaturaactualizar(id: any){
-        this.idAsignatura= id;
-        this.validarfiltros();
+        this.idAsignaturaactu= id;
+        this.validarfiltrosactu();
     
-        if(this.idAsignatura==0){
+        if(this.idAsignaturaactu==0){
           this.asistenciaactualizar=[]; 
 
         }
+        
        }
        // **** fin evento asignatura actualizar*****//
            //*******evento modalidad actualizar**********//
         onmodalidadactualizar(id: any){
-          this.idModalidad= id;
+          this.idModalidadactu= id;
 
-          this.validarfiltros();
+          this.validarfiltrosactu();
           this.showcursoactu=false;
-          if(this.idModalidad==0){
+          if(this.idModalidadactu==0){
             this.showasignaturaactu=true;
             this.showcursoactu=true;
             this.showparaleloactu=true;
             this.asignaturasactu=[];
             this.cursoactu=[];
             this.paralelosactu=[];
+            
             this.asistenciaactualizar=[]; 
            }
            for(let i=0; i<this.usuarioGuardado().roles.length; i++){
@@ -634,7 +690,7 @@ pipe = new DatePipe('en-EC');
   
              return;
            }else{
-            this.appService.listarcursos(this.idempleados,this.IdPeriodo ,this.idModalidad).subscribe((data:any)=>this.cursoactu=data);
+            this.appService.listarcursos(this.idempleados,this.IdPeriodoactu ,this.idModalidadactu).subscribe((data:any)=>this.cursoactu=data);
   
            }
          }
@@ -646,23 +702,33 @@ pipe = new DatePipe('en-EC');
 
           //*******evento periodo actualizar**********//
           onperiodoactualizar(id: any){
-          this.IdPeriodo= id;
-          this.validarfiltros();
-
+            this.showasignaturaactu=true;
+            this.showmodalidadactu=true;
+            this.showcursoactu=true;
+            this.showparaleloactu=true;
+            this.asignaturasactu=[];
+            this.modalidadesactu=[];
+            this.cursoactu=[];
+            this.paralelosactu=[];
+            this.asistenciaactualizar=[]; 
+            this.validarfiltrosactu();
+          this.IdPeriodoactu= id;
+         
+          this.showmodalidadactu=false;
           for(let i=0; i<this.usuarioGuardado().roles.length; i++){
             if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
          
               this.appService.getAllModalidad().subscribe((data:any)=>this.modalidadesactu=data);
-              this.showmodalidadactu=false;
+             
              return;
            }else{
-            this.appService.listarmodalidad(this.idempleados,this.IdPeriodo).subscribe((data:any)=>this.modalidadesactu=data);
+            this.appService.listarmodalidad(this.idempleados,this.IdPeriodoactu).subscribe((data:any)=>this.modalidadesactu=data);
   
            }
          };
           //this.appService.listarmodalidad(this.idempleados,this.IdPeriodo).subscribe((data:any)=>this.modalidadesactu=data);
-          this.showmodalidadactu=false;
-          if(this.IdPeriodo==0){
+          
+          if(this.IdPeriodoactu==0){
             this.showasignaturaactu=true;
             this.showmodalidadactu=true;
             this.showcursoactu=true;
@@ -681,11 +747,11 @@ pipe = new DatePipe('en-EC');
 
           //*******  evento paralelo actualizar**********//
           onparaleloactualizar(id: any){
-          this.IdParalelo= id;
-          this.validarfiltros();
+          this.IdParaleloactu= id;
+          this.validarfiltrosactu();
           this.showasignaturaactu=false;
 
-          if(this.IdParalelo==0){
+          if(this.IdParaleloactu==0){
             this.showasignaturaactu=true;
             this.asignaturasactu=[];
             this.asistenciaactualizar=[]; 
@@ -698,7 +764,7 @@ pipe = new DatePipe('en-EC');
   
              return;
            }else{
-            this.appService.listarAsignatura(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso,this.IdParalelo).subscribe((data:any)=>this.asignaturasactu=data);
+            this.appService.listarAsignatura(this.idempleados,this.IdPeriodoactu,this.idModalidadactu,this.IdCursoactu,this.IdParaleloactu).subscribe((data:any)=>this.asignaturasactu=data);
   
            }
          }
@@ -709,10 +775,10 @@ pipe = new DatePipe('en-EC');
 
       //***************  evento curso actualizar****************//
           onCursoactualizar(id: any){
-            this.IdCurso= id;
-            this.validarfiltros();
+            this.IdCursoactu= id;
+            this.validarfiltrosactu();
             this.showparaleloactu=false;
-            if(this.IdCurso==0){
+            if(this.IdCursoactu==0){
               this.showasignaturaactu=true;
               this.showparaleloactu=true;
               this.paralelosactu=[];
@@ -727,7 +793,7 @@ pipe = new DatePipe('en-EC');
   
                return;
              }else{
-              this.appService.listarparalelo(this.idempleados,this.IdPeriodo,this.idModalidad,this.IdCurso).subscribe((data:any)=>this.paralelosactu=data);
+              this.appService.listarparalelo(this.idempleados,this.IdPeriodoactu,this.idModalidadactu,this.IdCursoactu).subscribe((data:any)=>this.paralelosactu=data);
   
              }
            }
@@ -738,18 +804,18 @@ pipe = new DatePipe('en-EC');
         //**************  fin evento curso actualizar*************//
        //*********************boton filtrar actualizar**********************************/
             buscaractualizar(){
-              if(this.idModalidad==0||this.IdPeriodo==0||this.IdParalelo==0||this.idAsignatura==0 || this.IdCurso==0 || this.valiadarfechaact==0){
-                swal.fire(
-                  {
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Por favor ingrese fecha y especifique los filtros!',
-                   
-                  }
-                )
+              if(this.idModalidadactu==0||this.IdPeriodoactu==0||this.IdParaleloactu==0||this.idAsignaturaactu==0 || this.IdCursoactu==0 || this.valiadarfechaact==0){
+              
+                setTimeout(() => {
+                  this.messageService.add({
+                    severity: "error",
+                    summary: "Ingrese todos los campos",
+                    detail: "Por favor ingrese fecha y especifique los filtros!"
+                  });
+                }, 500);
             }else{
               this.fechastring=this.fechacontrol.value;
-              this.appService.getfiltrosactualizar(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso,this.fechastring,this.idempleados).subscribe((data:any)=> {
+              this.appService.getfiltrosactualizar(this.idModalidadactu,this.IdPeriodoactu,this.IdParaleloactu,this.idAsignaturaactu,this.IdCursoactu,this.fechastring,this.idempleados).subscribe((data:any)=> {
                 this.asistenciaactualizar=data
                 if (data.length == 0) {
                   swal.fire(
@@ -805,14 +871,13 @@ pipe = new DatePipe('en-EC');
                this.convertidor=document.getElementById("fechas1");
              if ( this.convertidor.value== null || this.convertidor.value=='' ){
                this.clearfech();
-              swal.fire(
-                {
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'ingrese una fecha nuevamente!',
-                 
-                }
-              );
+               setTimeout(() => {
+                this.messageService.add({
+                  severity: "error",
+                  summary: "Fecha Incorrecta",
+                  detail: "ingrese una fecha !"
+                });
+              }, 500);
               this.valiadarfecha=0;
             
           } else {
@@ -835,15 +900,14 @@ pipe = new DatePipe('en-EC');
 
                if(this.anon < this.ano1 || this.anon > this.ano1||this.mesn<this.mes1||this.mesn>this.mes1||this.dia1>this.dian||this.dia1<this.dian){
                this.clearfech();
-                swal.fire(
-                  {
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'ingrese fecha nuevamente ingrese otra fecha !',
-                   
-                  }
-
-                );
+               setTimeout(() => {
+                this.messageService.add({
+                  severity: "error",
+                  summary: "Fecha Incorrecta",
+                  detail: "ingrese fecha !"
+                });
+              }, 500);
+               
                
                 this.valiadarfecha=0;
                  

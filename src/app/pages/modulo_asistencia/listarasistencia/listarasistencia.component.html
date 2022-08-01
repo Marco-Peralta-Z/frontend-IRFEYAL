@@ -1,13 +1,12 @@
+
+
 <div class="container-fluid page">
   <div class="d-flex page__box p-3 mt-2">Asistencia</div>
- 
+  <p-toast></p-toast>
   <div class="page__content shadow p-3 ">
+    
     <h1>Listado de Alumnos</h1>
-    <!--Inicio Contenido-->
-     
-
-          
-              
+    <!--Inicio Contenido-->       
                 <div styleClass="p-fluid">
 
                   <p-toolbar styleClass="mb-4">
@@ -92,6 +91,21 @@
          </p-table>
          <div *ngIf='botonreportes'>
          <button pButton pRipple label="Reporte curso" icon="pi pi-user" (click)="reportsecurso()"></button>
+         
+         <div class="p-fluid grid formgrid">
+
+        <div class="field col-12 md:col-4">
+        
+          <p-calendar   placeholder="fecha inicial"(onSelect)="showaparecerfechafin()"[formControl]="fechacontrolinicio" [(ngModel)]="fechainicioreporte" [showIcon]="true" dateFormat="yy/mm/dd" inputId="icon"></p-calendar>
+        </div>
+        <div class="field col-12 md:col-4">
+          <div *ngIf='showbotonfechafin'>
+          
+          <p-calendar placeholder="fecha final"(onSelect)="rangofecha()" [formControl]="fechacontrolfin"  [(ngModel)]="fechafinreporte" [showIcon]="true" dateFormat="yy/mm/dd" inputId="icon"></p-calendar>
+        </div>
+        </div>
+        </div>
+         
         </div>
         </div>
          
@@ -139,11 +153,27 @@
                     </div>
                 </ng-template>
                 </p-table>
+                
                
 
         </ng-template>
         <ng-template pTemplate="footer">
-          <button pButton pRipple label="Reporte Individual" icon="pi pi-user"(click)="reportes()"></button>
+          <div class="p-fluid grid formgrid">
+
+            <div class="field col-12 md:col-4">
+              
+              <p-calendar placeholder="fecha inicial" (onSelect)="showaparecerfechafinindividual()"[formControl]="fechacontrolinicioindi" [(ngModel)]="fechainicioreporteindi" [showIcon]="true" dateFormat="yy/mm/dd" inputId="icon"></p-calendar>
+
+            </div>
+            <div class="field col-12 md:col-4">
+              <div *ngIf='showbotonfechafinindi'>
+              
+              <p-calendar placeholder="fecha final" (onSelect)="rangofechaindividual()" [formControl]="fechacontrolfinindi"  [(ngModel)]="fechafinreporteindi" [showIcon]="true" dateFormat="yy/mm/dd" inputId="icon"></p-calendar>
+            </div>
+            </div>
+            <button pButton pRipple label="Reporte Individual" icon="pi pi-user"(click)="reportes()"></button>
+
+            </div>
 
         </ng-template>
     </p-dialog>

@@ -116,19 +116,19 @@ export class AsistenciaService {
   }
 
 
-  exportInvoice(idEstudiante: number, idDocente:number, idasignatura:number,idusuario:any){
+  exportInvoice(idEstudiante: number, idDocente:number, idasignatura:number,idusuario:any,fechainicio: any,fechafin: any){
     const httpOptions = {
       responseType: 'arraybuffer' as 'json'
       // 'responseType'  : 'blob' as 'json'        //This also worked
     };
-    return this.rutaconsulta.get(this.url+"/exportInvoice/"+idEstudiante+'/'+idDocente+'/'+idasignatura+'/'+idusuario, httpOptions);  
+    return this.rutaconsulta.get(this.url+"/exportInvoice/"+idEstudiante+'/'+idDocente+'/'+idasignatura+'/'+idusuario+'/'+fechainicio+'/'+fechafin, httpOptions);  
   }  
 
-  exportInvoicecurso(idModalidad: number , idPeriodo: number, idParalelo: number,idAsignatura: number, idCurso:number,docente:any,idusuario:any){
+  exportInvoicecurso(idModalidad: number , idPeriodo: number, idParalelo: number,idAsignatura: number, idCurso:number,docente:any,idusuario:any,fechainicio: any,fechafin: any){
     const httpOptions = {
       responseType: 'arraybuffer' as 'json'
       // 'responseType'  : 'blob' as 'json'        //This also worked
     };
-    return this.rutaconsulta.get(this.url+"/exportInvoicecurso/"+idModalidad+'/'+idPeriodo+'/'+idParalelo+'/'+idAsignatura+'/'+idCurso+'/'+docente+'/'+idusuario, httpOptions);  
+    return this.rutaconsulta.get(this.url+"/exportInvoicecurso/"+idModalidad+'/'+idPeriodo+'/'+idParalelo+'/'+idAsignatura+'/'+idCurso+'/'+docente+'/'+idusuario+'/'+fechainicio+'/'+fechafin, httpOptions);  
   }  
 }
