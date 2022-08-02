@@ -38,7 +38,8 @@
 
         <form *ngIf="mostrarFormGenerar" [formGroup]="generar_planunidadForm" (ngSubmit)="enviar()">
             <div *ngIf="mostrarObservaciones" class="border bg-light">
-                <h3>Observaciones a corregir</h3>
+                <h3>Revisado por {{verCoorAcademico}} Coor. Academico, el {{verFechaRevision | date:'longDate'}}.</h3>
+                <label style="font-size:17px;">Observaciones a corregir:</label>
                 <input type="text" class="form-control" style="border: 0px;" name="observaciones"
                     formControlName="observaciones" readonly><br>
             </div><br>
@@ -118,7 +119,9 @@
                                     [hidden]="opcionSelectUnidad == null">
                                     {{verSelectUnidad}}</label>
                             </div>
-                            <div class="col">
+                            <div class="col" style="text-align:right;">
+                                <br>
+                                <label>{{today | date:'longDate'}}</label>
                             </div>
                         </div>
                         <!-- Implementacion Parte 2 Contenido-->
@@ -159,9 +162,9 @@
                                     [hidden]="opcionSelectParalelo == null">
                                     {{verSelectParalelo}}</label><br>
                                 <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                    Codigo de Asignatura:</label>
+                                    Area:</label>
                                 <label style="font-size:18px; margin-left: 10px;" [hidden]="opcionSelectAsig == null">
-                                    {{verSelectAsigId}}</label><br>
+                                    {{des_area}}</label><br>
                             </div>
                         </div>
                         <br>
@@ -186,6 +189,14 @@
                                 </span>
                             </div>
                             <div class="col-sm-4">
+                                <h2>N° de periodos:</h2>
+                                <p-dropdown [options]="items" [(ngModel)]="opcionSelectNumPeriodos"
+                                    formControlName="num_periodos" placeholder="Select" [virtualScroll]="true">
+                                </p-dropdown>
+                                <span class="form-text text-danger" style="font-size:10px;"
+                                    *ngIf="validarCampo('num_periodos')">
+                                    Campo obligatorio!
+                                </span>
                             </div>
                         </div>
                         <br>
@@ -219,17 +230,6 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <h2>Contenidos de la unidad</h2>
-                                    <textarea class="form-control" formControlName="contenidos" [rows]="3"
-                                        pInputTextarea [autoResize]="true"></textarea>
-                                    <span class="form-text text-danger" style="font-size:10px;"
-                                        *ngIf="validarCampo('contenidos')">
-                                        Campo obligatorio!
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
                                     <h2>Criterios de evaluacion</h2>
                                     <textarea class="form-control" formControlName="criterios_evaluacion" [rows]="3"
                                         pInputTextarea [autoResize]="true"></textarea>
@@ -239,11 +239,7 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>
-                        <br>
-                        <!-- Dentro de Parte 2, 1 columana (Destrezas)-->
-                        <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <h2>Destrezas con criterio de desempeño</h2>
                                     <textarea class="form-control" formControlName="destrezas" [rows]="3" pInputTextarea
@@ -252,6 +248,155 @@
                                         *ngIf="validarCampo('destrezas')">
                                         Campo obligatorio!
                                     </span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- Dentro de Parte 2, 1 columana (Actividades)-->
+                        <div class="container-fluid border">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group" style="text-align:center;">
+                                        <label style="font-size:17px;">ACTIVIDADES DE
+                                            APRENDIZAJE</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <h2>Experiencia.</h2>
+                                            <textarea class="form-control" formControlName="act_experiencia" [rows]="3"
+                                                pInputTextarea [autoResize]="true"></textarea>
+                                            <span class="form-text text-danger" style="font-size:10px;"
+                                                *ngIf="validarCampo('act_experiencia')">
+                                                Campo obligatorio!
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <h2>Conceptualización.</h2>
+                                            <textarea class="form-control" formControlName="act_conceptualizacion"
+                                                [rows]="3" pInputTextarea [autoResize]="true"></textarea>
+                                            <span class="form-text text-danger" style="font-size:10px;"
+                                                *ngIf="validarCampo('act_conceptualizacion')">
+                                                Campo obligatorio!
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <h2>Reflexión.</h2>
+                                            <textarea class="form-control" formControlName="act_reflexion" [rows]="3"
+                                                pInputTextarea [autoResize]="true"></textarea>
+                                            <span class="form-text text-danger" style="font-size:10px;"
+                                                *ngIf="validarCampo('act_reflexion')">
+                                                Campo obligatorio!
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <h2>Aplicación.</h2>
+                                            <textarea class="form-control" formControlName="act_aplicacion" [rows]="3"
+                                                pInputTextarea [autoResize]="true"></textarea>
+                                            <span class="form-text text-danger" style="font-size:10px;"
+                                                *ngIf="validarCampo('act_aplicacion')">
+                                                Campo obligatorio!
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div class="container-fluid border">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group" style="text-align:center;">
+                                        <label style="font-size:17px;">EVALUACIÓN SUMATIVA</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <h2>Indicadores para evaluación del criterio.</h2>
+                                            <textarea class="form-control" formControlName="indicadores" [rows]="3"
+                                                pInputTextarea [autoResize]="true"></textarea>
+                                            <span class="form-text text-danger" style="font-size:10px;"
+                                                *ngIf="validarCampo('indicadores')">
+                                                Campo obligatorio!
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <h2>Técnicas e instrumentos.</h2>
+                                            <textarea class="form-control" formControlName="tecnicas" [rows]="3"
+                                                pInputTextarea [autoResize]="true"></textarea>
+                                            <span class="form-text text-danger" style="font-size:10px;"
+                                                *ngIf="validarCampo('tecnicas')">
+                                                Campo obligatorio!
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <h2>Recursos.</h2>
+                                        <textarea class="form-control" formControlName="recursos" [rows]="3"
+                                            pInputTextarea [autoResize]="true"></textarea>
+                                        <span class="form-text text-danger" style="font-size:10px;"
+                                            *ngIf="validarCampo('recursos')">
+                                            Campo obligatorio!
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <h2>Adaptación de la necesidad educativa.</h2>
+                                        <textarea class="form-control" formControlName="adap_necesidad_educativa"
+                                            [rows]="3" pInputTextarea [autoResize]="true"></textarea>
+                                        <span class="form-text text-danger" style="font-size:10px;"
+                                            *ngIf="validarCampo('adap_necesidad_educativa')">
+                                            Campo obligatorio!
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <h2>Adaptaciones curriculares.</h2>
+                                        <textarea class="form-control" formControlName="adaptaciones_curriculares"
+                                            [rows]="3" pInputTextarea [autoResize]="true"></textarea>
+                                        <span class="form-text text-danger" style="font-size:10px;"
+                                            *ngIf="validarCampo('adaptaciones_curriculares')">
+                                            Campo obligatorio!
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <h2>Especificación de la nesesidad a ser aplicada.</h2>
+                                        <textarea class="form-control" formControlName="especificacion_nesesidad"
+                                            [rows]="3" pInputTextarea [autoResize]="true"></textarea>
+                                        <span class="form-text text-danger" style="font-size:10px;"
+                                            *ngIf="validarCampo('especificacion_nesesidad')">
+                                            Campo obligatorio!
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -319,9 +464,38 @@
                         <td>{{item.estado}}</td>
                         <td>
                             <button pButton pRipple icon="pi pi-download" class="p-button-rounded p-button-success mr-2"
-                                (click)="reportePDFplanUnidad(item)"></button>
+                                (click)="abrirSelectCoorPedagogico()"></button>
+                            <p-dialog [(visible)]="mostrarSelectCoorPedagogico"
+                                [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}"
+                                position="center" [closable]="true" [modal]="true" [draggable]="false">
+                                <div class="container-fluid border bg-light"><br>
+                                    <h2>Seleccione el Coordinador Pedagogico:</h2>
+                                    <p-dropdown [options]="coorPedagogico" [(ngModel)]="opcionSelectCoorPedagogico"
+                                        placeholder="Select" [style]="{'width':'200px','border': '1px solid #C0C0C0'}"
+                                        [showClear]="true" optionLabel="apellido"
+                                        (onChange)="capturarSelectCoorPedagogico()">
+                                        <ng-template let-coorPedagogico pTemplate="item">
+                                            <div class="operatingSystems-item">
+                                                <div>{{coorPedagogico.nombre}} {{coorPedagogico.apellido}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </p-dropdown><br><br>
+                                    <!-- <span class="form-text text-danger" style="font-size:10px;" *ngIf="mostrarmsg">
+                                                    Campo obligatorio!
+                                                </span><br> -->
+                                </div><br><br>
+                                <div align="center">
+                                    <button type="submit" class="btn btn-primary" [disabled]="showbtnDescargar"
+                                        (click)="reportePDFplanUnidad(item, NomApellidoCoorPedagogico)">Descargar</button>
+                                </div><br>
+                            </p-dialog>
                         </td>
                     </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        In total there are {{planunidadaprobados ? planunidadaprobados.length : 0 }} planes de unidad.
+                    </div>
                 </ng-template>
             </p-table>
         </div>
@@ -373,6 +547,11 @@
                         <td>{{item.fecha_inicio | date:'MMMdd,yyyy'}} a {{item.fecha_fin | date:'MMMdd,yyyy'}}</td>
                         <td>{{item.estado}}</td>
                     </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        In total there are {{planunidadpendientes ? planunidadpendientes.length : 0 }} planes de unidad.
+                    </div>
                 </ng-template>
             </p-table>
         </div>
