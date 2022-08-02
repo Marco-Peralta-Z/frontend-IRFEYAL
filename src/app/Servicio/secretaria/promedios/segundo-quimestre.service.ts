@@ -34,7 +34,6 @@ export class SegundoQuimestreService {
     for (const i in materias) {      
       materias[i] = materias[i].split('').join('\n');
     }
-    notas = [...notas, ...notas, ...notas,]
     let headers: RowInput = [...headersInicio, ...materias,  ...headersFin ];
     // tabla
     autoTable(docPdf, {
