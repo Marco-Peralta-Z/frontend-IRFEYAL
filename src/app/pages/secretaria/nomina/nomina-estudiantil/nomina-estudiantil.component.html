@@ -25,10 +25,10 @@
   
       <div class="row">
         <div class="col-12">
-          <div class="d-flex justify-content-around">
-            <button pButton pRipple type="button" label="Primer Quimestre" (click)="showDialog()"></button>
-            <button pButton pRipple type="button" label="Segundo Quimestre" class="p-button-secondary"></button>
-            <button pButton pRipple type="button" label="Cuadro Final" class="p-button-success"></button>
+          <div class="d-flex justify-content-around" *ngIf="registros.length > 0">
+            <button pButton pRipple type="button" label="Primer Quimestre" (click)="showDialog('q1')"></button>
+            <button pButton pRipple type="button" label="Segundo Quimestre" (click)="showDialog('q2')" class="p-button-secondary"></button>
+            <button pButton pRipple type="button" label="Cuadro Final" (click)="showDialog('cn')" class="p-button-success"></button>
           </div>
         </div>
       </div>
@@ -57,8 +57,8 @@
     <ng-template pTemplate="footer">
       <div class="" >
           <p-button icon="pi pi-check" (click)="closeDialog()" label="Cancelar" styleClass="p-button-text"></p-button>
-          <button type="button" class="btn btn-primary" *ngIf="selectedAll" (click)="generarPrimerQuimestre(false)">Descargar</button>
-          <button type="button" class="btn btn-primary" *ngIf="selectedAll" (click)="generarPrimerQuimestre(true)">Imprimir</button>
+          <button type="button" class="btn btn-primary" *ngIf="selectedAll" (click)="generarPDF(false)">Descargar</button>
+          <button type="button" class="btn btn-primary" *ngIf="selectedAll" (click)="generarPDF(true)">Imprimir</button>
         </div>
     </ng-template>
 

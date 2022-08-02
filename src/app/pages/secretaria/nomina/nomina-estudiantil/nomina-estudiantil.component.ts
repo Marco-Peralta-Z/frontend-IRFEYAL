@@ -17,6 +17,7 @@ import { ParaleloeService } from '../../../../Servicio/parametrizacion/Service P
 import { CertificadoPromocionServiceService } from '../../../../Servicio/secretaria/certificadosService/certificado-promocion-service.service';
 import { empleado } from '../../../../Model/rolesTS/empleado';
 import { PrimerQuimestreService } from '../../../../Servicio/secretaria/promedios/primer-quimestre.service';
+import { SegundoQuimestreService } from '../../../../Servicio/secretaria/promedios/segundo-quimestre.service';
 
 
 @Component({
@@ -32,15 +33,17 @@ export class NominaEstudiantilComponent implements OnInit {
   estudiantes: Estudiante[] = [];
 
   public cursos: Curso [] = [];
-  public selectCurso?: Curso;
+  public selectCurso?: Curso | null;
   public paralelos: Paralelo [] = [];
-  public selectParalelo?: Paralelo;
+  public selectParalelo?: Paralelo | null;
   public modalidades: Modalidad [] = [];
-  public selectModalidad?: Modalidad;
+  public selectModalidad?: Modalidad | null;
   public periodos: Periodo [] = [];
-  public selectPeriodo?: Periodo;
-  public registros: Registro [] = [];
+  public selectPeriodo?: Periodo | null;
+  public registros: string [] = [];
   public dataNomina: Nomina [] = [];
+
+  public tipoPDF: string = 'q1';
 
   public empleados: empleado[] = [];
   public selectSecretaria?: empleado | null;
@@ -56,6 +59,7 @@ export class NominaEstudiantilComponent implements OnInit {
     private _certificadoPromocionService: CertificadoPromocionServiceService,
     private _certificadoPromocion: CertificadoPromocionServiceService,
     private _primerQuimestreService: PrimerQuimestreService,
+    private _segundoQuimestreService: SegundoQuimestreService,
     private _cursoService: CursosService, 
     private _paraleloService: ParaleloeService,
     private _periodoService: PeriodoService,
@@ -135,6 +139,7 @@ export class NominaEstudiantilComponent implements OnInit {
       this._certificadoPromocion.getRegistrosByIdCurModPer(this.selectCurso.id_curso, this.selectModalidad.id_modalidad, this.selectPeriodo.id_periodo, +this.selectParalelo.id_paralelo)
       .subscribe({
         next:(resp) => {
+          this.registros = resp;
           let notas: Notas []  = [];
           let cedulas: string[] = [];
           let materias: string[] = [];
@@ -149,15 +154,13 @@ export class NominaEstudiantilComponent implements OnInit {
           for (const i in materias) {
             materias[i] = materias[i].toUpperCase();
           }
-          materias.unshift('ORD.','APELLIDOS Y NOMBRES')
-          materias.push('CONDUCTA', 'PROMEDIO', 'OBSERVACIONES');
           console.log(materias);
           
           cedulas = [...new Set( data.map(est => est[4]))];
 
           for (const i in cedulas) {
             let est = data.find(es => es[4] === cedulas[i]);
-            estNotas = {nombre: `${est[1]} ${est[0]}`, cedula: cedulas[i], materias: [], notas: [], conductas: []}
+            estNotas = {nombre: `${est[1]} ${est[0]}`, cedula: cedulas[i], materias: [], notasQ1: [], conductas: []}
             notas.push(estNotas);
             
           }
@@ -181,7 +184,8 @@ export class NominaEstudiantilComponent implements OnInit {
             for (const i in data) {
               if (notas[k].cedula === data[i][4]) {
                 notas[k].materias?.push(data[i][3]);
-                notas[k].notas?.push(+data[i][5]);
+                notas[k].notasQ1?.push(+data[i][5]);
+                notas[k].notasQ2?.push(+data[i][6]);
                 notas[k].conductas?.push(+data[i][9]);
               }
             }
@@ -204,30 +208,49 @@ export class NominaEstudiantilComponent implements OnInit {
   }
 
   
-  generarPrimerQuimestre = (imprimir: boolean) => {
-    if (this.selectRector && this.selectSecretaria) {
-      this._primerQuimestreService
-        .generarCertificado(this.selectSecretaria, this.selectRector, imprimir, this.selectPeriodo!,this.selectCurso!, this.notasPdf, this.materias);
-    } else {
-      this._mensajeSweetService.mensajeError('Por favor', 'Seleccione al rector y secretaria')
+  generarPDF= (imprimir: boolean) => {
+    switch (this.tipoPDF) {
+      case 'q1':
+        if (this.selectRector && this.selectSecretaria) {
+          this._primerQuimestreService
+            .generarCertificado(this.selectSecretaria, this.selectRector, imprimir, this.selectPeriodo!,this.selectCurso!, this.notasPdf, this.materias);
+          this.closeDialog();
+        } else {
+          this._mensajeSweetService.mensajeError('Por favor', 'Seleccione al rector y secretaria')
+        }
+        break;
+      case 'q2':
+        if (this.selectRector && this.selectSecretaria) {
+          this._segundoQuimestreService
+            .generarCertificado(this.selectSecretaria, this.selectRector, imprimir, this.selectPeriodo!,this.selectCurso!, this.notasPdf, this.materias);
+          this.closeDialog();
+        } else {
+          this._mensajeSweetService.mensajeError('Por favor', 'Seleccione al rector y secretaria')
+        }
+        break;
+      case 'cn':
+        break;
+      default:
+        break;
     }
     
   }
-  generarSegundoQuimestre = () => {
-    console.log('sa');
-    
-  }
-  generarCuadroFinal = () => {
-    console.log('sa');
-    
-  }
-  showDialog() {
+
+  showDialog(tipoPDF: string) {
     this.displayEmpleados = true;
+    this.tipoPDF = tipoPDF;
   }
   closeDialog() {
     this.displayEmpleados = false;
+    this.materias = [];
+    this.registros = [];
     this.selectedAll = false;
     this.selectRector = null;
     this.selectSecretaria= null;
+    this.selectParalelo = null;
+    this.selectCurso= null;
+    this.selectPeriodo = null;
+    this.selectModalidad = null;
+    this.tipoPDF = 'q1';
   }
 }

@@ -23,4 +23,12 @@ export class Registro {
     estado: String = "";
 }
 
-export interface Notas { ord?: number, nombre?: string, cedula?:string,  materias?: string[], notas?: number[], conductas?: number[]}
+export interface Notas { 
+    ord?: number, 
+    nombre?: string, 
+    cedula?:string,  
+    materias?: string[], 
+    notasQ1?: number[], 
+    notasQ2?: number[], 
+    conductas?: number[]
+}

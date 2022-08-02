@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { empleado } from '../../../Model/rolesTS/empleado';
-import jsPDF, { CellConfig, TableConfig, TextOptionsLight } from 'jspdf';
+import jsPDF from 'jspdf';
 import { formatDate } from '@angular/common';
 import { Periodo } from '../../../Model/Parametrizacion/Periodo';
 import { Curso } from '../../../Model/Parametrizacion/Curso';
 import { Notas } from '../../../Model/tutorias/registro';
-import autoTable from 'jspdf-autotable';
+import autoTable, { RowInput } from 'jspdf-autotable';
 
 @Injectable({
   providedIn: 'root'
@@ -28,24 +28,27 @@ export class PrimerQuimestreService {
     let fechaFin = formatDate(periodo.fecha_fin, 'Y', 'es-EC').toUpperCase();
     console.log(fechaInicio, fechaFin);
     docPdf.text(`AÑO LECTIVO ${fechaInicio} - ${fechaFin}`, 105, 65, {align:"center"});
-    docPdf.setFont("times", "normal");
-    
-    
-    
+    docPdf.setFont("times", "normal");    
     docPdf.text(`${curso.descripcion.toUpperCase()}`, 20, 80, {align:"left"});
-
+    let headersInicio: RowInput = ['O\nR\nD', 'APELLIDOS NOMBRES'];
+    let headersFin: RowInput = ['P\nR\nO\nM\nE\nD\nI\nO', 'C\nO\nM\nP\nO\nR\nT\nA\nM\nI\nE\nN\nT\nO', 'OBSERVACIONES'];
+    for (const i in materias) {      
+      materias[i] = materias[i].split('').join('\n');
+    }
+    notas = [...notas, ...notas, ...notas,]
+    let headers: RowInput = [...headersInicio, ...materias,  ...headersFin ];
     // tabla
     autoTable(docPdf, {
-      styles:{},
-      head: [materias],
-      body: [
-        ['David', 'david@example.com', 'Sweden'],
-        ['Castille', 'castille@example.com', 'Spain'],
-        // ...
-      ],
-    })
-  
-    // 
+      startY: 85,
+      margin:{vertical: 20},
+      styles: {lineColor: '#000000'},
+      tableLineColor: '#000000',
+      tableLineWidth: 0.25,
+      headStyles: {halign: 'center', valign:'middle', fillColor: '#fff', textColor:'#000000',lineWidth: 0.25},
+      head: [headers],
+      body: this.dataInput(notas),
+      theme: 'grid',
+    });
 
 
     let numCaracteresRec = (rector.persona?.nombre + rector.persona?.apellido).length;    
@@ -61,13 +64,21 @@ export class PrimerQuimestreService {
       xSec = xSec-(numCaracteresSec - 15);
     } else if ( numCaracteresSec < 15 ) {
       xSec = xSec + ( 15 - numCaracteresSec);
-    }   
-    docPdf.text("________________________________", 25, 250);
-    docPdf.text(`${rector.persona?.nombre.toUpperCase()} ${rector.persona?.apellido.toUpperCase()}`, xRector, 260);
-    docPdf.text("RECTORA", 45, 270);
-    docPdf.text("________________________________", 115, 250);
-    docPdf.text(`${secretaria.persona?.nombre.toUpperCase()} ${secretaria.persona?.apellido.toUpperCase()}`, xSec, 260);
-    docPdf.text("SECRETARIA", 135, 270);
+    }
+
+    let altura =  260
+
+    if (notas.length >= 13 && notas.length <= 16) {
+      docPdf.addPage()
+      altura = 50;
+    }
+    
+    docPdf.text("________________________________", 25, (altura));
+    docPdf.text(`${rector.persona?.nombre.toUpperCase()} ${rector.persona?.apellido.toUpperCase()}`, xRector, (altura + 10));
+    docPdf.text("RECTORA", 45, (altura+20));
+    docPdf.text("________________________________", 115, (altura));
+    docPdf.text(`${secretaria.persona?.nombre.toUpperCase()} ${secretaria.persona?.apellido.toUpperCase()}`, xSec, (altura + 10));
+    docPdf.text("SECRETARIA", 135, (altura+20));
 
 
     if (imprimir) {
@@ -76,6 +87,31 @@ export class PrimerQuimestreService {
     } else {
       docPdf.save(`${curso.id_curso}_${curso.descripcion}_primerQuimestre.pdf`);
     }
+
+  } 
+
+  dataInput = (notas: Notas[]): RowInput[] => {
+    let data: RowInput [] = [];
+    for (const i in notas) {
+      let conducta = (notas[i].conductas!.reduce((a, b) => a + b, 0)) / notas[i].conductas!.length;
+      let promedio = (notas[i].notasQ1!.reduce((a, b) => a + b, 0)) / notas[i].notasQ1!.length;
+      let observacion = promedio === 0 ? 'RETIRADO' : ''; 
+      data.push([notas[i].ord!, notas[i].nombre!, ...notas[i].notasQ1!, promedio.toFixed(2), this.verifivarTipoconducta(conducta), observacion])
+    }
+    return data;
+  }
+
+  verifivarTipoconducta (promedioConducta: number) {
+    if ( promedioConducta >= 9) {
+      return 'A'
+    } else if ( promedioConducta >= 7 && promedioConducta < 9) {
+      return 'B'
+    } else if ( promedioConducta >= 5 && promedioConducta < 7) {
+      return 'C'
+    } else if ( promedioConducta >= 3 && promedioConducta < 5) {
+      return 'D'
+    } 
+    return 'E'
 
   }
 
