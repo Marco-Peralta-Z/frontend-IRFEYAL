@@ -16,7 +16,7 @@ import { MessageService } from 'primeng/api';
   providers: [MessageService]
 })
 export class ListarasistenciaComponent implements OnInit {
-  //reporte cursos validar fehcas
+  //reporte cursos validar fehchas
 auxinicio:Date=new Date();
 auxfinal:Date=new Date();
   validarfecharango:boolean=false;
@@ -24,7 +24,7 @@ auxfinal:Date=new Date();
   fechacontrolfinstring: string='';
   fechacontrolinicio=new FormControl('');
   fechacontrolfin=new FormControl('');
-  //reporte individual valdiar fechas
+  //reporte individual validar fechas
   auxinicioindi:Date=new Date();
 auxfinalindi:Date=new Date();
   validarfecharangoindi:boolean=false;
@@ -36,14 +36,16 @@ auxfinalindi:Date=new Date();
   fechainicioreporteindi:any;
   fechafinreporteindi: any;
 
-  //
- 
+  //fin validar reporte
+ // variables  de fechas de reporte
   showbotonfechafin:boolean=false;
   fechainicioreporte:any;
   fechafinreporte: any;
   showDiv:boolean=false;
   botonreportes:boolean=false;
   fechas:any[]=[];
+  // fin variables de fechas
+  //variable
   mostrarinformacion: Estudiante[] = [];
   //filtros 
   modalidades: any[] = [];

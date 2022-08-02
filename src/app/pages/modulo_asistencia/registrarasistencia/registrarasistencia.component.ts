@@ -65,6 +65,7 @@ export class RegistrarasistenciaComponent implements OnInit {
   filterValue:any;
   actualizarDialog:boolean=false;
   fechacontrol=new FormControl('');
+  fechacontrolactu=new FormControl('');
   controladorfecha=new FormControl('');
   fechastring: string = 'yyyy-MM-dd';
   ntrfecha:any;
@@ -93,6 +94,7 @@ export class RegistrarasistenciaComponent implements OnInit {
   public fechaactualstring:any;
 
   convertidor:any;
+  convertidoractu:any;
   public fechaminima:Date= new Date();
    fechastrminima:string='';
  fechausuario:Date=new Date();
@@ -817,7 +819,7 @@ pipe = new DatePipe('en-EC');
                   });
                 }, 500);
             }else{
-              this.fechastring=this.fechacontrol.value;
+              this.fechastring=this.fechacontrolactu.value;
               this.appService.getfiltrosactualizar(this.idModalidadactu,this.IdPeriodoactu,this.IdParaleloactu,this.idAsignaturaactu,this.IdCursoactu,this.fechastring,this.idempleados).subscribe((data:any)=> {
                 this.asistenciaactualizar=data
                 if (data.length == 0) {
@@ -866,7 +868,22 @@ pipe = new DatePipe('en-EC');
             //*******************fin de   actualizar asistencia*****************/
             
             valiadarfechaactualizar() {
-              this.valiadarfechaact=1;
+              console.log(this.fechacontrolactu.value);
+              if ( this.fechacontrolactu.value== null || this.fechacontrolactu.value=='' ){
+                this.valiadarfechaact=0;
+                setTimeout(() => {
+                  this.messageService.add({
+                    severity: "error",
+                    summary: "Ingrese la fecha",
+                    detail: "Por favor ingrese fecha !"
+                  });
+                }, 500);
+              }else{
+                this.valiadarfechaact=1;
+              }
+             
+            
+           
             }
 
             //******************validar fecha**************************** */
