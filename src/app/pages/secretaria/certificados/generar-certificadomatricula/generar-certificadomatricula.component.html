@@ -31,6 +31,7 @@
                         <th pSortableColumn="estudiante">Estudiante</th>
                         <th pSortableColumn="curso" >Curso</th>
                         <th pSortableColumn="modalidad">Modalidad</th>
+                        <th pSortableColumn="periodo">Periodo</th>
                         <th pSortableColumn="cedula">Cedula</th>
                         
                     </tr>
@@ -43,6 +44,7 @@
                             {{certificado.estudiante?.id_persona.apellido| titlecase}}</td>
                         <td>{{certificado.curso.descripcion | titlecase}}</td>
                         <td>{{certificado.modalidad.descripcion | titlecase}}</td>
+                        <td>{{certificado.id_periodo.ano_inicio | date: 'yyyy'}} - {{certificado.id_periodo.ano_fin | date: 'yyyy'}}</td>
                         <td>{{certificado.estudiante?.id_persona.cedula }}</td>
                         <td>
                             <button type="submit" class="btn btn-primary" (click)="showDialog(certificado)">Generar</button>
@@ -51,48 +53,6 @@
                 </ng-template>
             </p-table>
             <br>
-            <!-- <p-table #dt [value]="certificadoMatricula" [rows]="10" [paginator]="true" 
-                     responsiveLayout="scroll" dataKey="id"
-                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Certificado de Matricula"
-                    [showCurrentPageReport]="true" [globalFilterFields]="['certificados']" [showCurrentPageReport]="true">
-                
-                
-                <ng-template pTemplate="caption">
-
-                    <div class="col-sm-12 col-md-4" style="margin-left: auto;margin-right: auto;">
-                        <span class="p-input-icon-left">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text" id="search" placeholder="Ingresar cedula" #txtCedula/> 
-                        </span>
-                        <br><br>
-                        <p-button label="Buscar" icon="pi pi-search" type="submit" (click)="getCertificadoMatriculaPorCedula(txtCedula)"></p-button>
-                    </div>
-
-                </ng-template>
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th pSortableColumn="codigo">Codigo</th>
-                        <th pSortableColumn="estudiante">Estudiante</th>
-                        <th pSortableColumn="curso" >Curso</th>
-                        <th pSortableColumn="modalidad">Modalidad</th>
-                        <th pSortableColumn="cedula">Cedula</th>
-                    </tr>
-                </ng-template>
-
-                <ng-template pTemplate="body" let-certificadoMatri>
-                    <tr>
-                        <td>{{certificadoMatri.id_generar_certificado_matricula}}</td>
-                        <td>{{certificadoMatri.matricula.estudiante?.id_persona.nombre | titlecase}} 
-                            {{certificadoMatri.matricula.estudiante?.id_persona.apellido| titlecase}}</td>
-                        <td>{{certificadoMatri.matricula.curso.descripcion | titlecase}}</td>
-                        <td>{{certificadoMatri.matricula.modalidad.descripcion | titlecase}}</td>
-                        <td>{{certificadoMatri.matricula.estudiante?.id_persona.cedula }}</td>
-                        <td>
-                            <button type="submit" class="btn btn-primary" (click)="verDialog(certificadoMatri)">Reimprimir</button>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table> -->
 
         </div>
     </div>
@@ -150,7 +110,7 @@
                     CERTIFICADO DE MATRÍCULA
                 </h3>
                 <h5>
-                    AÑO LECTIVO: {{selectMatricula.id_periodo.ano_inicio}} - {{selectMatricula.id_periodo.ano_fin}}
+                    AÑO LECTIVO: {{selectMatricula.id_periodo.ano_inicio | date: 'yyyy'}} - {{selectMatricula.id_periodo.ano_fin | date: 'yyyy'}}
                 </h5>
             </div>
         </div>

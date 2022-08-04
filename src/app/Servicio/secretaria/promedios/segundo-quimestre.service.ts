@@ -25,7 +25,6 @@ export class SegundoQuimestreService {
     docPdf.text(`CUADRO DE CALIFICACIONES SEGUNDO QUIMESTRE`, 105, 60, {align:"center"});
     let fechaInicio = formatDate(periodo.fecha_inicio, 'Y', 'es-EC').toUpperCase();
     let fechaFin = formatDate(periodo.fecha_fin, 'Y', 'es-EC').toUpperCase();
-    console.log(fechaInicio, fechaFin);
     docPdf.text(`AÑO LECTIVO ${fechaInicio} - ${fechaFin}`, 105, 65, {align:"center"});
     docPdf.setFont("times", "normal");    
     docPdf.text(`${curso.descripcion.toUpperCase()}`, 20, 80, {align:"left"});

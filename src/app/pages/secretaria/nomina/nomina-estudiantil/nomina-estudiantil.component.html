@@ -1,9 +1,9 @@
 <div class="container-fluid page">
-    <div class="d-flex page__box p-3 mt-2">Nomina Estudiantil</div>
+    <div class="d-flex page__box p-3 mt-2">Generar Reportes</div>
     <div class="page__content shadow p-3 position-relative">
   
       <div class="row">
-        <h2>Seleccione parametros de consulta:</h2>
+        <h1>Seleccione parametros de consulta:</h1>
         <div class="col-12 d-flex justify-content-around">
           <p-dropdown [options]="cursos" [(ngModel)]="selectCurso" optionLabel="descripcion" [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Seleccione curso">
           </p-dropdown>
@@ -24,18 +24,101 @@
       </div>
   
       <div class="row">
-        <div class="col-12">
-          <div class="d-flex justify-content-around" *ngIf="registros.length > 0">
+        <div class="col-12 mb-2" *ngIf="registros.length > 0">
+          <h2>Generar Reporte PDF de:</h2>
+          <div class="d-flex justify-content-around" >
             <button pButton pRipple type="button" label="Primer Quimestre" (click)="showDialog('q1')"></button>
             <button pButton pRipple type="button" label="Segundo Quimestre" (click)="showDialog('q2')" class="p-button-secondary"></button>
             <button pButton pRipple type="button" label="Cuadro Final" (click)="showDialog('cn')" class="p-button-success"></button>
           </div>
         </div>
       </div>
-  
-    </div>
+      <!-- cuadro final -->
+      <div id="htmlData" *ngIf="selectedAll && tipoPDF == 'cn'" class="p-5 ">
+        <div class="row mt-5">
+          <div class="col-12 text-right">
+            <img src="../../../../../assets/img/logoMatricula.jpeg" alt="">
+          </div>
+          <div class="col-12 text-left">
+            <h2 class="mb-0">
+              UNIDAD EDUCATIVA FISCOMISIONAL “JOSÉ MARÍA VELAZ, S.J.”
+            </h2>
+          </div>
+          <div class="col-12">
+            <h2 class="mb-0">EXTENSIÓN EDUCATIVA Nº 105 {{selectRector?.extension?.id_direccion?.canton?.canton}}</h2>
+          </div>
+          <div class="col-12 text-right">
+            <h2 class="mb-0">
+              CUADRO FINAL DE CALIFICACIONES
+            </h2>
+          </div>
+          <div class="col-12 text-left">
+            <h2 class="mb-0">
+              {{selectCurso?.descripcion?.toUpperCase()}}
+            </h2>
+          </div>
+          <div class="col-12 text-right p-0">
+            <h2>
+              AÑO LECTIVO {{selectPeriodo?.ano_inicio | date: 'yyyy'}} - {{selectPeriodo?.ano_fin | date: 'yyyy'}}
+            </h2>
+          </div>
+        </div>
+      
+        <div class="d-flex justify-content-center">
+          <table class=" table-cuadro mr-0">
+            <thead>
+              <tr>
+                <td rowspan="3">ORD</td>
+                <td rowspan="3">APELLIDOS Y NOMBRES</td>
+              </tr>
+              <tr>
+                <td colspan="3" *ngFor="let asignatura of materias">{{asignatura}}</td>
+              </tr>
+              <tr id="subHeader">
+              </tr>
+            </thead>
+            <tbody>
+              <tr [id]="'notasTabla'+i" *ngFor="let nota of notasPdf;let i = index">
+                <td>{{nota.ord}}</td>
+                <td>{{nota.nombre}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table-cuadro ml-0 mr-0">
+            <tr>
+              <td rowspan="2"><b>PROM.</b></td>
+              <td rowspan="2"><b>CON.</b></td>
+              <td rowspan="2">OBSERVACIONES</td>
+            </tr>
+            <tbody>
+              <tr *ngFor="let nota of notasPdf">
+                <td>{{calcularPromedio(nota)}}</td>
+                <td>{{calcularConducta(nota)}}</td>
+                <td>{{tipoObservacion(nota)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row p-5">
+          <div class="col-6 text-center mt-6" style="font-size:20 ;">
+            <p>_____________________________</p>
+            <h2>{{selectRector?.persona?.nombre | uppercase}} {{selectRector?.persona?.apellido | uppercase}}</h2>
+            <h3>RECTORA</h3>
+      
+          </div>
+          <div class="col-6 text-center mt-6">
+            <p>____________________________</p>
+            <h2>{{selectSecretaria?.persona?.nombre | uppercase}} {{selectSecretaria?.persona?.apellido | uppercase}}</h2>
+            <h3>SECRETARIA</h3>
+      
+          </div>
+        </div>
+      </div>
   </div>
-  <p-dialog header="Certificado" [(visible)]="displayEmpleados" [style]="{width: '50vw'}" (onHide)="closeDialog()">
+  
+</div>
+
+  <p-dialog header="Generar Reporte" [(visible)]="displayEmpleados" [style]="{width: '50vw'}" (onHide)="closeDialog()">
     <div class="" *ngIf="selectedAll; else nullos">
         <div class="row">
             <div class="col-6" >
@@ -53,12 +136,14 @@
         Seleccione los datos
       </div>
     </ng-template>
+
+    
     
     <ng-template pTemplate="footer">
       <div class="" >
           <p-button icon="pi pi-check" (click)="closeDialog()" label="Cancelar" styleClass="p-button-text"></p-button>
           <button type="button" class="btn btn-primary" *ngIf="selectedAll" (click)="generarPDF(false)">Descargar</button>
-          <button type="button" class="btn btn-primary" *ngIf="selectedAll" (click)="generarPDF(true)">Imprimir</button>
+          <button type="button" class="btn btn-primary" *ngIf="selectedAll && tipoPDF!== 'cn'" (click)="generarPDF(true)">Imprimir</button>
         </div>
     </ng-template>
 

@@ -29,6 +29,9 @@ export interface Notas {
     cedula?:string,  
     materias?: string[], 
     notasQ1?: number[], 
-    notasQ2?: number[], 
+    notasQ2?: number[],
+    notasPQ?: number[],
+    notasEG?: number[],
+    notasPF?: number[],
     conductas?: number[]
 }

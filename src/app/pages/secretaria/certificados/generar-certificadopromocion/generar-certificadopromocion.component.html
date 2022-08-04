@@ -35,6 +35,7 @@
                         <th>
                             Modalidad
                         </th>
+                        <th pSortableColumn="periodo">Periodo</th>
                         <th pSortableColumn="cedula">Cedula</th>
                         <th></th>
                     </tr>
@@ -47,6 +48,7 @@
                             {{matricula.estudiante?.id_persona.apellido| titlecase}}</td>
                         <td>{{matricula.curso.descripcion | titlecase}}</td>
                         <td>{{matricula.modalidad.descripcion | titlecase}}</td>
+                        <td>{{matricula.id_periodo.ano_inicio | date: 'yyyy'}} - {{matricula.id_periodo.ano_fin | date: 'yyyy'}}</td>
                         <td>{{matricula.estudiante?.id_persona.cedula }}</td>
                         <td>
                             <button type="submit" class="btn btn-primary"

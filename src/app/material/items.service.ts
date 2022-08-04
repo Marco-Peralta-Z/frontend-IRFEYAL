@@ -304,11 +304,11 @@ export class ItemsService {
                         ]
                     },
                     {
-                        label: 'Nomina',
+                        label: 'Reportes',
                         icon: 'pi pi-folder',
                         items: [
                             {
-                                label: 'Nomina Estudiantil',
+                                label: 'Reportes',
                                 icon: 'fa fa-plus-square',
                                 routerLink: 'secretaria/nominaEstudiantil'
                             }

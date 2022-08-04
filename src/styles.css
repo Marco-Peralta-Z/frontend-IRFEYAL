@@ -2,3 +2,17 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/
+.texto-vertical {
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+}
+.table-cuadro{
+    font-size: 22px;
+    text-align: center;
+    border: 1px solid black;
+
+}
+.table-cuadro th,td{
+    padding: 5px;
+    border: 1px solid black;
+}

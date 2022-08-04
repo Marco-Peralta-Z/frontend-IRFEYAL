@@ -20,4 +20,29 @@ export class MensajesSweetService {
     title,
     text
   });
+  mensajeInfo = (title: string, text: string) => Swal.fire({
+    icon: 'info',
+    title,
+    text
+  });
+
+  showLoading = (close: boolean, title: string, text: string) => {
+    Swal.fire({
+        title ,
+        text,
+        width: 600,
+        padding: '3em',
+        color: '#716add',
+        allowOutsideClick: close,
+        showConfirmButton: false,
+        backdrop: `
+          rgba(0,0,126,0.5)
+          left top
+          no-repeat
+        `,
+        didOpen: () => {
+            Swal.showLoading()
+        }
+      })
+  }
 }

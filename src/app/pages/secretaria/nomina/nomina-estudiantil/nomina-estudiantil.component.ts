@@ -19,7 +19,9 @@ import { empleado } from '../../../../Model/rolesTS/empleado';
 import { PrimerQuimestreService } from '../../../../Servicio/secretaria/promedios/primer-quimestre.service';
 import { SegundoQuimestreService } from '../../../../Servicio/secretaria/promedios/segundo-quimestre.service';
 
-
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-nomina-estudiantil',
   templateUrl: './nomina-estudiantil.component.html',
@@ -55,6 +57,7 @@ export class NominaEstudiantilComponent implements OnInit {
 
   public notasPdf: Notas [] = [];
   public materias: string [] = []; 
+  cols: any[] = [];
   constructor(
     private _certificadoPromocionService: CertificadoPromocionServiceService,
     private _certificadoPromocion: CertificadoPromocionServiceService,
@@ -68,21 +71,28 @@ export class NominaEstudiantilComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    this.cols = [
+      { field: '1', header: 'Code' },
+      { field: '2', header: 'Name' },
+      { field: '3', header: 'Category' },
+      { field: '4', header: 'Quantity' }
+  ];
     this.getCursos();
     this.getParalelos();
     this.getModalidades();
     this.getPeriodos();
     this.getEmpleados();
+
   }
+
+  
 
   getCursos = () => {
     this._cursoService.getAllCursos().subscribe({
       next:(resp) => {
-        console.log(resp);
         this.cursos = resp;
       },
       error: (error) => {
-        console.log(error);
         this.cursos = [];
       }
     })
@@ -90,11 +100,9 @@ export class NominaEstudiantilComponent implements OnInit {
   getParalelos = () => {
     this._paraleloService.getAllParalelo().subscribe({
       next:(resp) => {
-        console.log(resp);
         this.paralelos = resp;
       },
       error: (error) => {
-        console.log(error);
         this.paralelos = [];
       }
     })
@@ -102,11 +110,9 @@ export class NominaEstudiantilComponent implements OnInit {
   getModalidades = () => {
     this._periodoService.getAllModalidad().subscribe({
       next:(resp) => {
-        console.log(resp);
         this.modalidades = resp;
       },
       error: (error) => {
-        console.log(error);
         this.modalidades = [];
       }
     })
@@ -114,11 +120,9 @@ export class NominaEstudiantilComponent implements OnInit {
   getPeriodos = () => {
     this._periodoService.getAllPerdiodo().subscribe({
       next:(resp) => {
-        console.log(resp);
         this.periodos = resp;
       },
       error: (error) => {
-        console.log(error);
         this.periodos = [];
       }
     })
@@ -127,7 +131,6 @@ export class NominaEstudiantilComponent implements OnInit {
   getEmpleados() {
     this._certificadoPromocionService.getEmpleados().subscribe({
       next: (resp) => {
-        console.log(resp);
         this.empleados = resp;
       }
     })
@@ -140,6 +143,12 @@ export class NominaEstudiantilComponent implements OnInit {
       .subscribe({
         next:(resp) => {
           this.registros = resp;
+          if (this.registros.length === 0) {
+            this._mensajeSweetService.mensajeInfo('', 'No se encontraron datos con esos parametros')
+            this.closeDialog();
+            return;
+          }
+          
           let notas: Notas []  = [];
           let cedulas: string[] = [];
           let materias: string[] = [];
@@ -153,16 +162,13 @@ export class NominaEstudiantilComponent implements OnInit {
           materias = [...new Set( data.map(est => est[3]))];
           for (const i in materias) {
             materias[i] = materias[i].toUpperCase();
-          }
-          console.log(materias);
-          
+          }          
           cedulas = [...new Set( data.map(est => est[4]))];
 
           for (const i in cedulas) {
             let est = data.find(es => es[4] === cedulas[i]);
             estNotas = {nombre: `${est[1]} ${est[0]}`, cedula: cedulas[i], materias: [], notasQ1: [], conductas: []}
             notas.push(estNotas);
-            
           }
 
           notas = notas.sort((a, b) => {
@@ -174,31 +180,35 @@ export class NominaEstudiantilComponent implements OnInit {
             if (nameA > nameB) {
               return 1;
             }
-          
-            // names must be equal
             return 0;
           });
 
           for (const k in notas) {
             notas[k].ord = +k+1;
+            notas[k].notasPQ = [];
+            notas[k].notasEG = [];
+            notas[k].notasPF = [];
             for (const i in data) {
               if (notas[k].cedula === data[i][4]) {
                 notas[k].materias?.push(data[i][3]);
                 notas[k].notasQ1?.push(+data[i][5]);
                 notas[k].notasQ2?.push(+data[i][6]);
-                notas[k].conductas?.push(+data[i][9]);
+                notas[k].notasPQ?.push(+data[i][7]);
+                notas[k].notasEG?.push(+data[i][8]);
+                if(data[i][7] >= 7){
+                  notas[k].notasPF?.push(+data[i][7]);
+                } else {
+                  notas[k].notasPF?.push(+data[i][8]);
+                }
+                notas[k].notasPF?.push();
+                notas[k].conductas?.push(+data[i][9]);                
               }
             }
           }
-          console.log(data);
-          console.log(notas);
           this.notasPdf = notas;
           this.materias = materias;
-          
-          
         },
         error: (error) => {
-          console.log(error);
           this.registros = [];
         }
       })
@@ -229,6 +239,14 @@ export class NominaEstudiantilComponent implements OnInit {
         }
         break;
       case 'cn':
+        if (this.selectRector && this.selectSecretaria) {
+          this._mensajeSweetService.showLoading(false, 'Espere por favor', 'Generando reporte')
+          this.cargarNotas();
+          this.downloadPDF(imprimir);
+        } else {
+          this._mensajeSweetService.mensajeError('Por favor', 'Seleccione al rector y secretaria')
+        }
+        
         break;
       default:
         break;
@@ -252,5 +270,92 @@ export class NominaEstudiantilComponent implements OnInit {
     this.selectPeriodo = null;
     this.selectModalidad = null;
     this.tipoPDF = 'q1';
+  }
+
+  cargarNotas = () => {
+    let headers = document.getElementById('subHeader');
+    for (const i in this.materias) {
+      let thPQ = document.createElement('th');
+      thPQ.textContent = 'PQ';
+      let thEG = document.createElement('th');
+      thEG.textContent = 'EG';
+      let thPF = document.createElement('th');
+      thPF.textContent = 'PF';
+      headers?.appendChild(thPQ)
+      headers?.appendChild(thEG)
+      headers?.appendChild(thPF)
+    }
+
+    for (const j in this.notasPdf) {
+      let id = `notasTabla${j}`
+
+      let notasTabla = document.getElementById(id);
+      for (const i in this.materias) {
+        let tdPQ = document.createElement('td');
+        //@ts-ignore
+        tdPQ.textContent = this.notasPdf[j].notasPQ[i].toString();
+        let tdEG = document.createElement('td');
+        //@ts-ignore
+        tdEG.textContent = this.notasPdf[j].notasEG[i].toString();
+        let tdPF = document.createElement('td');
+        //@ts-ignore
+        tdPF.textContent = this.notasPdf[j].notasPF[i].toString();
+
+        notasTabla?.appendChild(tdPQ)
+        notasTabla?.appendChild(tdEG)
+        notasTabla?.appendChild(tdPF)
+      }
+    }
+  }
+
+  calcularPromedio = (nota: Notas) => {  
+    let promedio = (nota.notasPF!.reduce((a, b) => a + b, 0)) / nota.notasPF!.length;
+    return promedio.toFixed(2);
+  }
+  tipoObservacion = (nota: Notas) => {  
+    let promedio = (nota.notasPF!.reduce((a, b) => a + b, 0)) / nota.notasPF!.length;
+    let observacion = 'RETIRADO';
+      if (promedio >= 7) {
+        observacion = 'APROBADO';
+      } else if( promedio > 0 && promedio < 7 ) {
+        observacion = 'REPROBADO';
+      }
+    return observacion;
+  }
+  calcularConducta = (nota: Notas) => {  
+    let promedio = (nota.conductas!.reduce((a, b) => a + b, 0)) / nota.conductas!.length;
+    return this._segundoQuimestreService.verifivarTipoconducta(promedio);
+  }
+
+  downloadPDF( imprimir: boolean) {
+    // Extraemos el
+    const DATA = document.getElementById('htmlData');
+    const doc = new jsPDF('landscape');
+    const options = {
+      background: 'white',
+      scale: 3
+    };
+    html2canvas(DATA!, options).then((canvas) => {
+
+      const img = canvas.toDataURL('image/PNG');
+
+      // Add image Canvas to PDF
+      const bufferX = 15;
+      const bufferY = 15;
+      const imgProps = (doc as any).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+      return doc;
+    }).then((docResult) => {
+      Swal.close();
+      this.closeDialog();
+      if (imprimir) {
+        docResult.autoPrint();
+        docResult.output('dataurlnewwindow');
+      } else {
+        docResult.save(`${new Date().toISOString()}_cuadro_final.pdf`);
+      }
+    });
   }
 }
