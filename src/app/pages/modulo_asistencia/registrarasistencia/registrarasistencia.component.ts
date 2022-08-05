@@ -869,7 +869,7 @@ pipe = new DatePipe('en-EC');
             
             valiadarfechaactualizar() {
               this.asistenciaactualizar=[];
-              console.log(this.fechacontrolactu.value);
+              
               if ( this.fechacontrolactu.value== null || this.fechacontrolactu.value=='' ){
                 this.valiadarfechaact=0;
                 setTimeout(() => {
@@ -906,8 +906,7 @@ pipe = new DatePipe('en-EC');
          
             this.fechaactualnew = new Date(this.fecha);
             this.fechaactualnew.setMinutes(this.fechaactual.getHours()+this.fechaactual.getMinutes()+this.fechaactual.getSeconds()+this.fechaactual.getTimezoneOffset());
-             console.log(this.fechaactualnew);
-             console.log(this.fechaactual);  
+             
             this.convertidor=this.controlfecha.value;
            this.anon=this.fechaactualnew.getFullYear();
            this.mesn=this.fechaactualnew.getMonth();
@@ -915,8 +914,7 @@ pipe = new DatePipe('en-EC');
            this.ano1=this.fechaactual.getFullYear();
            this.mes1=this.fechaactual.getMonth();
            this.dia1=this.fechaactual.getDay();
-           console.log(this.anon,this.mesn,this.dian);
-           console.log(this.ano1,this.mes1,this.dia1);
+          
              
 
                if(this.anon < this.ano1 || this.anon > this.ano1||this.mesn<this.mes1||this.mesn>this.mes1||this.dia1>this.dian||this.dia1<this.dian){

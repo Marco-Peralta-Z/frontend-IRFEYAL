@@ -351,7 +351,7 @@ if(this.idAsignatura==0){
           if(this.validarfecharangoindi==true){
             const dateinicioauxindi = new Date(this.fechacontroliniciostringindi);
             const datefinauxindi = new Date(this.fechacontrolfinstringindi);
-          console.log("llego"+ this.idestudiante);
+          
           this.appService.exportInvoice(this.idestudiante,this.idempleados,this.idAsignatura,this.idususarios,dateinicioauxindi, datefinauxindi).subscribe(
             (data:any) => {
               const file = new Blob([data], { type: 'application/pdf' });
@@ -375,7 +375,7 @@ if(this.idAsignatura==0){
           
           const dateinicioaux = new Date(this.fechacontroliniciostring);
           const datefinaux = new Date(this.fechacontrolfinstring);
-          console.log(dateinicioaux,datefinaux);
+          
           this.appService.exportInvoicecurso(this.idModalidad,this.IdPeriodo,this.IdParalelo,this.idAsignatura,this.IdCurso,this.idempleados,this.idususarios, dateinicioaux, datefinaux).subscribe(
             (data:any) => {
               const file = new Blob([data], { type: 'application/pdf' });
@@ -403,6 +403,7 @@ if(this.idAsignatura==0){
         this.auxinicio = new Date(this.fechacontroliniciostring);
           this.auxfinal = new Date(this.fechacontrolfinstring);
           if(this.auxinicio>this.auxfinal && this.showbotonfechafin==true ){
+            
             this.validarfecharango=false;
             setTimeout(() => {
               this.messageService.add({
@@ -411,17 +412,17 @@ if(this.idAsignatura==0){
                 detail: "La fecha debe ser  menor a la fecha final"
               });
             }, 500);
+          }else{
+            this.validarfecharango=true;
           }
           
           this.showbotonfechafin=true;
-          console.log(this.fechainicioreporte);
-          console.log(this.fechafinreporte);
+       
           
         }
         rangofecha(){
           this.showbotonfechafin=true;
-          console.log(this.fechainicioreporte);
-          console.log(this.fechafinreporte);
+         
           this.fechacontrolfinstring=this.fechacontrolfin.value;
           this.fechacontroliniciostring=this.fechacontrolinicio.value;
         this.auxinicio = new Date(this.fechacontroliniciostring);
@@ -472,11 +473,12 @@ if(this.idAsignatura==0){
               });
             }, 500);
             
+          }else{
+            this.validarfecharangoindi=true;
           }
           
           this.showbotonfechafinindi=true;
-          console.log(this.fechainicioreporte);
-          console.log(this.fechafinreporte);
+          
           
         }
         rangofechaindividual(){
