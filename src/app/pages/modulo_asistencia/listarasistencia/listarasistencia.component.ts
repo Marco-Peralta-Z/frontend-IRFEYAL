@@ -83,7 +83,7 @@ auxfinalindi:Date=new Date();
   ngOnInit(): void {
     this.idempleados=this.usuarioGuardado().empleado?.id_empleado;
     this.idususarios=this.usuarioGuardado().id_usuario
-    console.log(this.usuarioGuardado());
+   
     for(let i=0; i<this.usuarioGuardado().roles.length; i++){
    if(this.usuarioGuardado().roles[i]=="ROLE_Administrador"){ 
 
@@ -110,7 +110,7 @@ auxfinalindi:Date=new Date();
   
     }
     // ---------------- evento asignatura-----------------
-    onSelect(id: any){
+    onAsignatura(id: any){
    
       this.botonreportes=true;
       this.showDiv=false;
@@ -206,7 +206,6 @@ if(this.idAsignatura==0){
         //------------ evento  periodo---------------------//
         onperiodo(id: any){
           this.botonreportes=false;
-          console.log(this.periodos);
           this.showDiv=false;
           this.IdCurso=0;
           this.idAsignatura=0;

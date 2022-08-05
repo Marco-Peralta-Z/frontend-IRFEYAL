@@ -16,7 +16,7 @@
                   <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="malla.descripcion" filterBy="malla.descripcion" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  [showClear]="true">
                     <ng-template let-operatingSystems pTemplate="item">
                       <div class="flex align-items-center operatingSystems-item">
-                        <div>{{operatingSystems.malla.descripcion}}||{{operatingSystems.ano_inicio | date: 'yyyy-MM-dd'}}</div>
+                        <div>{{operatingSystems.malla.descripcion}}||{{operatingSystems.fecha_inicio | date: 'yyyy-MM-dd'}} {{operatingSystems.fecha_fin | date: 'yyyy-MM-dd'}}</div>
             
                       </div>
                     </ng-template>

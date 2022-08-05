@@ -203,7 +203,7 @@ pipe = new DatePipe('en-EC');
   //-----------fin de evento  asignatura-----------//
   //-------------------- evento modalidad--------------------//
     onmodalidad(id: any){
-     console.log(this.IdPeriodo);
+    
       this.cursosfaltas=[];
       this.curso=[];
       this.paralelos=[];
@@ -868,6 +868,7 @@ pipe = new DatePipe('en-EC');
             //*******************fin de   actualizar asistencia*****************/
             
             valiadarfechaactualizar() {
+              this.asistenciaactualizar=[];
               console.log(this.fechacontrolactu.value);
               if ( this.fechacontrolactu.value== null || this.fechacontrolactu.value=='' ){
                 this.valiadarfechaact=0;

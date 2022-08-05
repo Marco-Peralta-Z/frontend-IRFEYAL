@@ -13,18 +13,15 @@
                   
                     <div class="col-4">
                       <h3>Periodo :</h3>
-                      <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="malla.descripcion" filterBy="malla.descripcion" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"  autoWidth="false" [style]="{'width':'70%'}" [showClear]="true">
+                      <p-dropdown  [options]="periodos" placeholder="Periodo" optionLabel="malla.descripcion" filterBy="malla.descripcion" optionValue="id_periodo"  (onChange)="onperiodo($event.value)"   [showClear]="true">
                         <ng-template let-operatingSystems pTemplate="item">
                           <div class="flex align-items-center operatingSystems-item">
-                            <div>{{operatingSystems.malla.descripcion}}||{{operatingSystems.ano_inicio | date: 'yyyy-MM-dd'}}</div>
+                            <div>{{operatingSystems.malla.descripcion}}||{{operatingSystems.fecha_inicio | date: 'yyyy-MM-dd'}} {{operatingSystems.fecha_fin | date: 'yyyy-MM-dd'}}</div>
                 
                           </div>
                         </ng-template>
                        
-                      </p-dropdown>
-
-                    
-                    
+                      </p-dropdown>  
                     </div>
                     <div class="col-4">
                       <h3>Modalidad :</h3>
@@ -53,7 +50,7 @@
                     
                     <div class="col-4">
                       <h3>Asignaturas :</h3>
-                      <p-dropdown [disabled]="showasignatura" [options]="asignaturas" placeholder="Asignatura" optionLabel="descripcion" filterBy="descripcion" optionValue="id_asignatura"  (onChange)="onSelect($event.value)" [showClear]="true">
+                      <p-dropdown [disabled]="showasignatura" [options]="asignaturas" placeholder="Asignatura" optionLabel="descripcion" filterBy="descripcion" optionValue="id_asignatura"  (onChange)="onAsignatura($event.value)" [showClear]="true">
 
                       </p-dropdown>
 
