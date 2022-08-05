@@ -408,7 +408,7 @@ if(this.idAsignatura==0){
               this.messageService.add({
                 severity: "error",
                 summary: "Fecha Incorrecta",
-                detail: "La fecha debeser  menor a la fecha final"
+                detail: "La fecha debe ser  menor a la fecha final"
               });
             }, 500);
           }
@@ -440,7 +440,7 @@ if(this.idAsignatura==0){
             this.messageService.add({
               severity: "error",
               summary: "Fecha Incorrecta",
-              detail: "La fecha deber mayor a la fecha inicial"
+              detail: "La fecha deber ser mayor a la fecha inicial"
             });
           }, 500);
             this.messageService.add({ key: 'tc', severity: 'error', summary: 'Fecha incorrecta', detail: 'La fecha deber mayor a la fecha inicial' , life: 3000});
