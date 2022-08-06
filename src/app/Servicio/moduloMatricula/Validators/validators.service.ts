@@ -376,6 +376,11 @@ requerimientos=[
     Listrequisitos:this.octavo
   },
   {
+    curso:'básica',
+    modalidad:'intensivo',
+    Listrequisitos:this.octavo
+  },
+  {
     curso:'noveno',
     modalidad:'intensivo',
     Listrequisitos:this.noveno
