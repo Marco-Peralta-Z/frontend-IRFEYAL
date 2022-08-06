@@ -234,7 +234,7 @@ export class ItemsService {
                 ]
             },
             {
-                label: 'Documentos Academicos (Docente)',
+                label: 'Documentos Academicos (Tutor)',
                 icon: 'pi pi-paperclip',
                 // si tiene el rol de acceso
                 visible: this.hasRolUser(
@@ -272,7 +272,7 @@ export class ItemsService {
                         icon: 'fa fa-book',
                         routerLink: 'pagos/listarComprobante'
                     }
-                    
+
                 ]
             },
             {

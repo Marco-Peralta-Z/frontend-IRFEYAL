@@ -13,7 +13,7 @@
                     [showCurrentPageReport]="true">
                     <ng-template pTemplate="caption">
                         <div class="flex align-items-center justify-content-between">
-                            <h5 class="m-0">Administrar Planes de unidad por (Asignatura, Apellido del docente, Unidad o
+                            <h5 class="m-0">Administrar Planes de unidad por (Asignatura, Apellido del tutor, Unidad o
                                 Titulo)</h5>
                             <span class="p-input-icon-left">
                                 <i class="pi pi-search"></i>
@@ -30,7 +30,7 @@
                             <th pSortableColumn="asignatura.descripcion">Asignatura
                                 <p-sortIcon field="asignatura.descripcion"></p-sortIcon>
                             </th>
-                            <th pSortableColumn="empleado.persona.apellido">Docente
+                            <th pSortableColumn="empleado.persona.apellido">Tutor
                                 <p-sortIcon field="empleado.persona.apellido">
                                 </p-sortIcon>
                             </th>
@@ -77,7 +77,7 @@
                     <div *ngIf="mostrarObservacionesAnt" class="border bg-light">
                         <h3>Anteriormente revisado por {{verCoorAcademico}} Coor. Academico, el {{verFechaRevision |
                             date:'longDate'}}.</h3>
-                        <label style="font-size:17px;">Observaciones a corregir:</label>
+                        <label style="font-size:17px;">Observaciones anteriores a corregir:</label>
                         <input type="text" class="form-control" style="border: 0px;" name="observacionesant"
                             value={{verObservaciones}} disabled><br>
                     </div><br>
@@ -102,7 +102,7 @@
                             <!-- Implementacion del Grid para el diseño del formulario -->
                             <!-- Dentro de Parte 2, Etiquetas para mostrar algunos datos-->
                             <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                                Docente:</label>
+                                Tutor:</label>
                             <label style="font-size:18px; margin-left: 10px;">
                                 {{verEmpleado}}</label><br>
                             <div class="row">
@@ -150,8 +150,8 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <h2>N° de periodos:</h2>
-                                    <input type="text" class="form-control" formControlName="num_periodos" pInputText
-                                        readonly>
+                                    <input type="text" class="form-control" formControlName="num_periodos"
+                                        [style]="{'width':'150px'}" pInputText readonly>
                                 </div>
                             </div><br>
                             <div class="row">

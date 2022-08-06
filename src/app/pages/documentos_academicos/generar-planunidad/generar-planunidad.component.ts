@@ -46,7 +46,6 @@ export class GenerarPlanunidadComponent implements OnInit {
   rechazado: String = "Rechazado";
   pendiente: String = "Pendiente";
   id: any;
-  items: any;
 
   mostrarFormGenerar: boolean = false;
   mostrarAprobados: boolean = true;
@@ -61,6 +60,7 @@ export class GenerarPlanunidadComponent implements OnInit {
   showbtnDescargar: boolean = true;
   mostrarBtnCancelGenerarPlan: boolean = false;
   mostrarSelectCoorPedagogico: boolean = false;
+  mostrarMsgCoorPedagogico: boolean = false;
 
   verCoorAcademico: any;
   verFechaRevision: any;
@@ -84,8 +84,6 @@ export class GenerarPlanunidadComponent implements OnInit {
   // Variables para capturar el select de paralelos
   opcionSelectParalelo: any;
   verSelectParalelo: String = "";
-  // Variables para capturar el select de No Periodos
-  opcionSelectNumPeriodos: any;
 
   opcionSelectCoorPedagogico: any;
 
@@ -95,10 +93,6 @@ export class GenerarPlanunidadComponent implements OnInit {
     public unidadService: UnidadService,
     public authService: AuthService,
   ) {
-    this.items = [];
-    for (let i = 1; i <= 10; i++) {
-      this.items.push({ label: i, value: i });
-    }
   }
 
   ngOnInit(): void {
@@ -522,7 +516,6 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.opcionSelectPeriodo = plan_unidad.periodo;
     this.opcionSelectCurso = plan_unidad.curso;
     this.opcionSelectParalelo = plan_unidad.paralelo;
-    this.opcionSelectNumPeriodos = plan_unidad.num_periodos;
     //Cargamos los labels
     this.verSelectUnidad = plan_unidad.unidad.idUnidad;
     this.verSelectPeriodoFinicio = plan_unidad.periodo.fecha_inicio;
@@ -595,6 +588,11 @@ export class GenerarPlanunidadComponent implements OnInit {
     this.mostrarSelectCoorPedagogico = true;
     this.planunidadService.getNomUsuariosByRolCoorPedagogico().subscribe(resp => {
       this.coorPedagogico = resp;
+      if (this.coorPedagogico == 0) {
+        this.mostrarMsgCoorPedagogico = true;
+      } else {
+        this.mostrarMsgCoorPedagogico = false;
+      }
     },
       error => { console.error(error) }
     );
@@ -651,10 +649,21 @@ export class GenerarPlanunidadComponent implements OnInit {
       this.opcionSelectAsig == null ||
       this.generar_planunidadForm.get("fecha_inicio")?.value == "" ||
       this.generar_planunidadForm.get("fecha_fin")?.value == "" ||
+      this.generar_planunidadForm.get("num_periodos")?.value == "" ||
       this.generar_planunidadForm.get("titulo_unidad")?.value == "" ||
       this.generar_planunidadForm.get("objetivos")?.value == "" ||
       this.generar_planunidadForm.get("criterios_evaluacion")?.value == "" ||
-      this.generar_planunidadForm.get("destrezas")?.value == "") {
+      this.generar_planunidadForm.get("destrezas")?.value == "" ||
+      this.generar_planunidadForm.get("act_experiencia")?.value == "" ||
+      this.generar_planunidadForm.get("act_reflexion")?.value == "" ||
+      this.generar_planunidadForm.get("act_conceptualizacion")?.value == "" ||
+      this.generar_planunidadForm.get("act_aplicacion")?.value == "" ||
+      this.generar_planunidadForm.get("recursos")?.value == "" ||
+      this.generar_planunidadForm.get("indicadores")?.value == "" ||
+      this.generar_planunidadForm.get("tecnicas")?.value == "" ||
+      this.generar_planunidadForm.get("adaptaciones_curriculares")?.value == "" ||
+      this.generar_planunidadForm.get("adap_necesidad_educativa")?.value == "" ||
+      this.generar_planunidadForm.get("especificacion_nesesidad")?.value == "") {
       return false;
     } else {
       return true;

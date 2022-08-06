@@ -127,7 +127,7 @@
                         <!-- Implementacion Parte 2 Contenido-->
                         <!-- Dentro de Parte 2, Etiquetas para mostrar algunos datos-->
                         <label style="font-size:18px; font-size:18px; font-weight:bold;">
-                            Docente:</label>
+                            Tutor:</label>
                         <label style="font-size:18px; margin-left: 10px;">
                             {{NombreApellidoEmpleado}}</label><br>
                         <div class="row">
@@ -190,9 +190,11 @@
                             </div>
                             <div class="col-sm-4">
                                 <h2>N° de periodos:</h2>
-                                <p-dropdown [options]="items" [(ngModel)]="opcionSelectNumPeriodos"
+                                <input type="number" class="form-control" formControlName="num_periodos" min="1"
+                                    [style]="{'width':'150px'}" pInputText>
+                                <!-- <p-dropdown [options]="items" [(ngModel)]="opcionSelectNumPeriodos"
                                     formControlName="num_periodos" placeholder="Select" [virtualScroll]="true">
-                                </p-dropdown>
+                                </p-dropdown> -->
                                 <span class="form-text text-danger" style="font-size:10px;"
                                     *ngIf="validarCampo('num_periodos')">
                                     Campo obligatorio!
@@ -468,6 +470,7 @@
                             <p-dialog [(visible)]="mostrarSelectCoorPedagogico"
                                 [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}"
                                 position="center" [closable]="true" [modal]="true" [draggable]="false">
+                                <h2 style="text-align: center;">Descargar Plan de Unidad.</h2>
                                 <div class="container-fluid border bg-light"><br>
                                     <h2>Seleccione el Coordinador Pedagogico:</h2>
                                     <p-dropdown [options]="coorPedagogico" [(ngModel)]="opcionSelectCoorPedagogico"
@@ -480,9 +483,10 @@
                                             </div>
                                         </ng-template>
                                     </p-dropdown><br><br>
-                                    <!-- <span class="form-text text-danger" style="font-size:10px;" *ngIf="mostrarmsg">
-                                                    Campo obligatorio!
-                                                </span><br> -->
+                                    <span class="form-text text-danger" style="font-size:10px; text-align: center;"
+                                        *ngIf="mostrarMsgCoorPedagogico">
+                                        El rol Coordinador Pedagogico no esta asignado a ningun usuario.
+                                    </span><br>
                                 </div><br><br>
                                 <div align="center">
                                     <button type="submit" class="btn btn-primary" [disabled]="showbtnDescargar"
