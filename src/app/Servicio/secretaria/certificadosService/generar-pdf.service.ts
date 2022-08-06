@@ -40,7 +40,9 @@ export class GenerarPdfService {
     docPdf.setFont("times", "bold");
     docPdf.text("CERTIFICADO DE MATRÍCULA", 105, 120,{align:"center"});
     docPdf.setFont("times", "normal");
-    docPdf.text(`AÑO LECTIVO: ${matricula.id_periodo.ano_inicio.getFullYear()} - ${matricula.id_periodo.ano_fin.getFullYear()}`, 105, 130, {align:"center"});
+    let anioInicio = formatDate(matricula.id_periodo.ano_inicio!, 'y','es-EC');
+    let anioFin = formatDate(matricula.id_periodo.ano_fin!, 'y','es-EC');
+    docPdf.text(`AÑO LECTIVO: ${anioInicio} - ${anioFin}`, 105, 130, {align:"center"});
     docPdf.setFontSize(11);
     docPdf.text(`MATRÍCULA Nº: ${matricula.id_matricula}`, 20, 140);
     docPdf.setFontSize(11);
