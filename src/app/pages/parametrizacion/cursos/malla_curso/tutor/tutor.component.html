@@ -36,14 +36,14 @@
                                             placeholder="Seleccione el Tutor">
                                             <ng-template pTemplate="selectedItem">
                                                 <div class="empleado-item empleado-item-value" *ngIf="selectdocente">
-                                                    <div>Tutor:
+                                                    <div>Dirigente:
                                                         {{selectdocente.persona.apellido}}{{selectdocente.persona.nombre}}
                                                     </div>
                                                 </div>
                                             </ng-template>
                                             <ng-template let-empleado pTemplate="item">
                                                 <div class="empleado-item">
-                                                    <div>Tutor:
+                                                    <div>Dirigente:
                                                         {{empleado.persona.apellido}} {{empleado.persona.nombre}}</div>
                                                 </div>
                                             </ng-template>
