@@ -117,7 +117,7 @@
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 </div>
 
-<p-dialog header="Roles" (onHide)="closeDialogRol()" [(visible)]="displayRol" [style]="{width: '50vw', height: '50vh'}">
+<p-dialog header="Roles" (onHide)="closeDialogRol()" [(visible)]="displayRol" [style]="{width: '50vw', height: '70vh'}">
     <p-dropdown [options]="roles" [(ngModel)]="selectRol" optionLabel="descripcion" [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Seleccion un rol">
         
     </p-dropdown>
@@ -134,7 +134,14 @@
             </ng-template>
             <ng-template pTemplate="body" let-rolUsuario>
                 <tr>
-                    <td>{{rolUsuario.rol.descripcion}}</td>
+                    <td>
+                         <ng-container *ngIf="rolUsuario.rol.descripcion === 'Docente'; else elseTutor">
+                            Tutor
+                        </ng-container>
+                        <ng-template #elseTutor>
+                        {{rolUsuario.rol.descripcion}}
+                        </ng-template>
+                    </td>
                     <td>
                         <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminarRol(rolUsuario)"></button>
                     </td>

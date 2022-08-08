@@ -234,7 +234,7 @@ export class ItemsService {
                 ]
             },
             {
-                label: 'Documentos Academicos (Tutor)',
+                label: 'Documentos Academicos (Docente)',
                 icon: 'pi pi-paperclip',
                 // si tiene el rol de acceso
                 visible: this.hasRolUser(

@@ -24,7 +24,6 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <!-- <th pSortableColumn="id_empleado">ID <p-sortIcon field="id_empleado"></p-sortIcon></th> -->
                 <th pSortableColumn="persona.nombre">Nombre <p-sortIcon field="persona.nombre"></p-sortIcon></th>
                 <th pSortableColumn="persona.apellido">Apellido <p-sortIcon field="persona.apellido"></p-sortIcon></th>
                 <th pSortableColumn="persona.cedula">Cedula <p-sortIcon field="persona.cedula"></p-sortIcon></th>
@@ -35,7 +34,6 @@
         </ng-template>
         <ng-template pTemplate="body" let-empleado>
             <tr>
-                <!-- <td>{{empleado.id_empleado}}</td> -->
                 <td>{{empleado.persona.nombre}}</td>
                 <td>{{empleado.persona.apellido}}</td>
                 <td>{{empleado.persona.cedula}}</td>
@@ -55,7 +53,7 @@
     </p-table>
 </div> 
 
-<p-dialog [(visible)]="empleadoDialog" (onHide)="hideDialog()" [style]="{width: '650px'}" header="Agregar empleado" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="empleadoDialog" (onHide)="hideDialog()" [style]="{width: '850px', height: '850px'}" header="Agregar empleado" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content" >
        <form [formGroup]="empleadoForm">
         <!-- PERSONA -->
