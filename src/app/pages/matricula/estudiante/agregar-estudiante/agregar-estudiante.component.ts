@@ -56,9 +56,9 @@ export class AgregarEstudianteComponent implements OnInit {
     calleFirts: [, [Validators.required]],
     calleSecond: [, [Validators.required]],
     extension: [, [Validators.required]],
-    telefono: [, [Validators.required]],
-    celular: [, [Validators.required]],
-    email: [, [Validators.required, Validators.pattern(this.emailPattern)]]
+    telefono: [''],
+    celular: [''],
+    email: ['ejemplo@gmail.com', [Validators.pattern(this.emailPattern)]]
   })
 
   constructor(private estudianteService: EstudianteService,

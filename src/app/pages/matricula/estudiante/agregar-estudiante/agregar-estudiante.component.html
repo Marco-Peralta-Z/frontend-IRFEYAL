@@ -170,26 +170,19 @@
                         <div class="form-group row ml-4 ">
                             <div class="col">
                                 <label for="float-input" >Telefono:</label><br>
-                                <p-inputMask mask="(99)-999-9999" [(ngModel)]="estudiante.telefono.telefono"
-                                        name="telefono" formControlName="telefono" placeholder="(99) 999-9999" ></p-inputMask>
-                                <span class="form-text text-danger" *ngIf="campoValido('telefono')">
-                                    Este campo es obligatorio!
-                                </span><br>
+                                <p-inputMask  [(ngModel)]="estudiante.telefono.telefono"
+                                        name="telefono" formControlName="telefono" placeholder="072456321" ></p-inputMask>
+                                  <br>
 
                                 <label for="float-input" class="mt-1">Celular:</label><br>
                                 <p-inputMask [(ngModel)]="estudiante.telefono.numCelular" 
-                                    name="celular" formControlName="celular" mask="999-999-9999"  placeholder="999-999-9999" ></p-inputMask>
-                                   
-                                <span class="form-text text-danger" *ngIf="campoValido('celular')">
-                                    Este campo es obligatorio!
-                                </span><br>
+                                    name="celular" formControlName="celular"  placeholder="0914520145" ></p-inputMask>
+                                    <br>
 
                                 <label for="float-input" class="mt-1">Correo Electronico:</label><br>
                                     <input class="lowercase" id="float-input" type="text" [(ngModel)]="estudiante.correo.correo" pInputText
                                     name="email" formControlName="email" placeholder="ejemplo@gmail.com" >
-                                <span class="form-text text-danger" *ngIf="campoValido('email')">
-                                    Este campo es obligatorio!
-                                </span>
+
                             </div>
                             
                         </div>

@@ -10,6 +10,8 @@ import { genero } from '../../../../Model/rolesTS/genero';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ValidatorsService } from '../../../../Servicio/moduloMatricula/Validators/validators.service';
+import { ImportExcel } from '../../../../Model/Matriculas/importExcel';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-listar-estudiante',
   templateUrl: './listar-estudiante.component.html',
@@ -19,6 +21,7 @@ import { ValidatorsService } from '../../../../Servicio/moduloMatricula/Validato
 export class ListarEstudianteComponent implements OnInit {
 
   estudiantes: Estudiante[]=[];
+  importExcelEstudents: ImportExcel[]=[];
   filteredProvincia: provincia[] = [];
   filteredCanton: canton[] = [];
   filteredParroquia: parroquia[] = [];
@@ -233,5 +236,39 @@ CalculateAge() {
  campoValido(valor: string): boolean {
   return this.editEstudiante.controls[valor].errors!
     && this.editEstudiante.controls[valor].touched
+}
+
+exportExcel() {
+  this.importExcelEstudents = [];
+  for (let i = 0; i < this.estudiantes.length; i++) {
+    this.importExcelEstudents.push({
+      Cedula: this.estudiantes[i].id_persona.cedula,
+      Nombres: this.estudiantes[i].id_persona.nombre,
+      Apellidos: this.estudiantes[i].id_persona.apellido,
+      Correo: this.estudiantes[i].correo.correo,
+      Telefono: this.estudiantes[i].telefono.telefono,
+      Celular: this.estudiantes[i].telefono.numCelular,
+      Genero: this.estudiantes[i].id_persona.genero.genero,
+      Direccion: this.estudiantes[i].direccion.avPrincipal + ' y '+ this.estudiantes[i].direccion.avSecundaria,
+      Provincia:this.estudiantes[i].direccion.provincia.provincia,
+      Ciudad:this.estudiantes[i].direccion.canton.canton,
+      Parroquia:this.estudiantes[i].direccion.parroquia.parroquia,
+      Fecha_Nacimiento: String(this.estudiantes[i].id_persona.fechaNacimiento),
+   });
+  }
+  import("xlsx").then(xlsx => {
+    const worksheet = xlsx.utils.json_to_sheet(this.importExcelEstudents);
+    const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, "listadoEstudiantes");
+  });
+}
+saveAsExcelFile(buffer: any, fileName: string): void {
+  let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  let EXCEL_EXTENSION = '.xlsx';
+  const data: Blob = new Blob([buffer], {
+    type: EXCEL_TYPE
+  });
+  FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
 }
 }

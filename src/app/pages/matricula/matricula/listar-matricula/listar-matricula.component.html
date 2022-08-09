@@ -20,6 +20,9 @@
                                 placeholder="Buscar..." />
                         </span>
                     </div>
+                    <div class="flex">
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2"  pTooltip="Importar a Excel" tooltipPosition="bottom"></button>
+                    </div>
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
