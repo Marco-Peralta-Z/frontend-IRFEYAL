@@ -195,13 +195,13 @@ export class EmpleadoComponent implements OnInit {
       let { apellido, cedula, fechaNacimiento, nombre, genero } = this.empleadoForm.value;
       this.empleado.persona = { apellido, cedula, fechaNacimiento, nombre, genero };
 
-      console.log(this.empleado);
-
       if (this._empleadoSeleccionado?.id_empleado > 0 && this._empleadoSeleccionado) {
         this.actualizarEmpleado();
       } else {
         this.crearEmpleado();
       }
+      this.empleadoDialog = false;
+      this.submitted = false;
     } else {
       this.empleadoForm.markAllAsTouched();
     }

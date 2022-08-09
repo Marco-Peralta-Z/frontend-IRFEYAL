@@ -55,7 +55,7 @@
     </p-table>
 </div> 
 
-<p-dialog [(visible)]="empleadoDialog" (onHide)="hideDialog()" [style]="{width: '650px'}" header="Agregar empleado" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="empleadoDialog" (onHide)="hideDialog()" [style]="{width: '850px'}" header="Agregar persona" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content" >
        <form [formGroup]="empleadoForm">
         <!-- PERSONA -->
@@ -82,7 +82,7 @@
         
             </div>
             <div class="p-field col-6">
-                <label for="name">Genero:</label>
+                <label for="name">Género:</label>
                 <p-dropdown [options]="generos" placeholder="Seleccione Genero" optionLabel="genero" [showClear]="true"
                 formControlName="genero">
                 </p-dropdown>
@@ -141,10 +141,6 @@
         <hr>
         <!--INICIO EMPLEADO-->
         <div class="field">
-            <label class="mb-2">
-                <h2>Persona</h2>
-            </label>
-        
             <div class="field">
                 <div class="formgrid grid">
                     <div class="p-field col-6">
@@ -178,7 +174,7 @@
                     <small class="p-error block" *ngIf="verificarCampo('numCelular')">requiere celular.</small>
                 </div>
                 <div class="p-field col-6">
-                    <label for="name">Telefono</label>
+                    <label for="name">Teléfono</label>
                     <input type="text" pInputText formControlName="telefono" />
                     <small class="p-error block" *ngIf="verificarCampo('telefono')">requiere telefono.</small>
                 </div>

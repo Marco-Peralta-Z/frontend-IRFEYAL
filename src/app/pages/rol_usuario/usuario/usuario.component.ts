@@ -76,9 +76,13 @@ export class UsuarioComponent implements OnInit {
 
   getRoles(){
     this._rolService.getRoles().subscribe({
-      next:(resp)=>{
-        this.roles=resp;
-        console.log(resp);
+      next: (resp) => {
+        this.roles = resp;
+        for (let index in this.roles) {
+          if (this.roles[index].descripcion === 'Docente') {
+            this.roles[index].descripcion ='Tutor';
+          }
+        }
       },
       error:(err)=>{
         this.roles=[];
