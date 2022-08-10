@@ -35,8 +35,8 @@ export class GenerarPlanunidadComponent implements OnInit {
   cursos: any;
   paralelos: any;
   itemsNumPeriodos: any;
-  coorPedagogico: any;
-  NomApellidoCoorPedagogico: any;
+  coorAcademico: any;
+  NomApellidoCoorAcademico: any;
 
   today: Date = new Date();
   //zona = new DatePipe('en-US');
@@ -57,12 +57,14 @@ export class GenerarPlanunidadComponent implements OnInit {
   panelEncabezado: boolean = true;
   mostrarBtnsEstados: boolean = true;
   showSelectAsig: boolean = true;
+  showSelectCursos: boolean = true;
+  showSelectParalelo: boolean = true;
   showbtnDescargar: boolean = true;
   mostrarBtnCancelGenerarPlan: boolean = false;
-  mostrarSelectCoorPedagogico: boolean = false;
-  mostrarMsgCoorPedagogico: boolean = false;
+  mostrarSelectCoorAcademico: boolean = false;
+  mostrarMsgCoorAcademico: boolean = false;
 
-  verCoorAcademico: any;
+  verCoorArea: any;
   verFechaRevision: any;
   // Variables para capturar el select de Unidad
   opcionSelectUnidad: any;
@@ -85,7 +87,7 @@ export class GenerarPlanunidadComponent implements OnInit {
   opcionSelectParalelo: any;
   verSelectParalelo: String = "";
 
-  opcionSelectCoorPedagogico: any;
+  opcionSelectCoorAcademico: any;
 
   constructor(
     public fb: FormBuilder,
@@ -121,7 +123,7 @@ export class GenerarPlanunidadComponent implements OnInit {
       especificacion_nesesidad: ['', Validators.required],
       estado: ['', Validators.required],
       observaciones: ['', Validators.required],
-      coor_academico: ['', Validators.required],
+      coor_area: ['', Validators.required],
       fecha_revision: ['', Validators.required],
       unidad: ['', Validators.required],
       empleado: ['', Validators.required],
@@ -164,18 +166,6 @@ export class GenerarPlanunidadComponent implements OnInit {
       error => { console.error(error) }
     );
 
-    this.planunidadService.getAllCurso().subscribe(resp => {
-      this.cursos = resp;
-    },
-      error => { console.error(error) }
-    );
-
-    this.planunidadService.getAllParalelo().subscribe(resp => {
-      this.paralelos = resp;
-    },
-      error => { console.error(error) }
-    );
-
     //Captura los cambios en el select de periodo para luego mostrar la asignaturar de acuerdo a la Malla
     this.generar_planunidadForm.get("periodo")?.valueChanges.subscribe(value => {
       if (value != null) {
@@ -185,10 +175,34 @@ export class GenerarPlanunidadComponent implements OnInit {
         },
           error => { console.error(error) }
         );
+        this.planunidadService.getAllCursosByMalla(value.malla.id_malla).subscribe(resp => {
+          this.cursos = resp;
+          this.showSelectCursos = false;
+        },
+          error => { console.error(error) }
+        );
       } else if (value == null) {
+        this.cursos = null;
         this.asignaturas = null;
+        this.opcionSelectCurso = null;
         this.opcionSelectAsig = null;
+        this.showSelectCursos = true;
         this.showSelectAsig = true;
+      }
+    });
+
+    this.generar_planunidadForm.get("curso")?.valueChanges.subscribe(value => {
+      if (value != null) {
+        this.planunidadService.getAllParalelosByCurso(value.id_curso, this.id_empleado).subscribe(resp => {
+          this.paralelos = resp;
+          this.showSelectParalelo = false;
+        },
+          error => { console.error(error) }
+        );
+      } else if (value == null) {
+        this.paralelos = null;
+        this.opcionSelectParalelo = null;
+        this.showSelectParalelo = true;
       }
     });
 
@@ -251,9 +265,9 @@ export class GenerarPlanunidadComponent implements OnInit {
     }
   }
 
-  capturarSelectCoorPedagogico() {
-    if (this.opcionSelectCoorPedagogico != null) {
-      this.NomApellidoCoorPedagogico = this.opcionSelectCoorPedagogico.nombre + " " + this.opcionSelectCoorPedagogico.apellido;
+  capturarSelectCoorAcademico() {
+    if (this.opcionSelectCoorAcademico != null) {
+      this.NomApellidoCoorAcademico = this.opcionSelectCoorAcademico.nombre + " " + this.opcionSelectCoorAcademico.apellido;
       this.showbtnDescargar = false;
     } else {
       this.showbtnDescargar = true;
@@ -321,7 +335,7 @@ export class GenerarPlanunidadComponent implements OnInit {
             this.generar_planunidadForm.value.empleado = this.id_empleado;
             this.generar_planunidadForm.value.estado = "Pendiente";
             this.generar_planunidadForm.value.fecha_creacion = this.today;
-            this.generar_planunidadForm.value.coor_academico = null;
+            this.generar_planunidadForm.value.coor_area = null;
             this.generar_planunidadForm.value.fecha_revision = null;
             this.generar_planunidadForm.value.observaciones = "Sin observaciones";
             this.planunidadService.savePlanUnidad(this.generar_planunidadForm.value).subscribe(resp => {
@@ -495,7 +509,7 @@ export class GenerarPlanunidadComponent implements OnInit {
       especificacion_nesesidad: plan_unidad.especificacion_nesesidad,
       estado: plan_unidad.estado,
       observaciones: plan_unidad.observaciones,
-      coor_academico: plan_unidad.coor_academico,
+      coor_area: plan_unidad.coor_area,
       fecha_revision: plan_unidad.fecha_revision,
       unidad: plan_unidad.unidad,
       empleado: plan_unidad.empleado,
@@ -505,7 +519,7 @@ export class GenerarPlanunidadComponent implements OnInit {
       periodo: plan_unidad.periodo,
       asignatura: plan_unidad.asignatura
     });
-    this.verCoorAcademico = plan_unidad.coor_academico;
+    this.verCoorArea = plan_unidad.coor_area;
     this.verFechaRevision = plan_unidad.fecha_revision;
     //Pasamos el id del plan a la variable (id) 
     this.id = plan_unidad.id_plan_unidad;
@@ -584,24 +598,24 @@ export class GenerarPlanunidadComponent implements OnInit {
     );
   }
 
-  abrirSelectCoorPedagogico() {
-    this.mostrarSelectCoorPedagogico = true;
-    this.planunidadService.getNomUsuariosByRolCoorPedagogico().subscribe(resp => {
-      this.coorPedagogico = resp;
-      if (this.coorPedagogico == 0) {
-        this.mostrarMsgCoorPedagogico = true;
+  abrirSelectCoorAcademico() {
+    this.mostrarSelectCoorAcademico = true;
+    this.planunidadService.getNomUsuariosByRolCoorAcademico().subscribe(resp => {
+      this.coorAcademico = resp;
+      if (this.coorAcademico == 0) {
+        this.mostrarMsgCoorAcademico = true;
       } else {
-        this.mostrarMsgCoorPedagogico = false;
+        this.mostrarMsgCoorAcademico = false;
       }
     },
       error => { console.error(error) }
     );
   }
 
-  reportePDFplanUnidad(planUnidad: any, coorPedagogico: string) {
-    this.planunidadService.createPDFplanunidad(planUnidad, coorPedagogico).subscribe(resp => {
-      this.mostrarSelectCoorPedagogico = false;
-      this.opcionSelectCoorPedagogico = null;
+  reportePDFplanUnidad(planUnidad: any, coorAcademico: string) {
+    this.planunidadService.createPDFplanunidad(planUnidad, coorAcademico).subscribe(resp => {
+      this.mostrarSelectCoorAcademico = false;
+      this.opcionSelectCoorAcademico = null;
       this.showbtnDescargar = true;
       //Alerta success
       Swal.fire({

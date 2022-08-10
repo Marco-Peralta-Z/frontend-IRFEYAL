@@ -249,11 +249,11 @@ export class ItemsService {
                 ]
             },
             {
-                label: 'Documentos Academicos (Coord. Academico)',
+                label: 'Documentos Academicos (Coord. de Area)',
                 icon: 'pi pi-paperclip',
                 // si tiene el rol de acceso
                 visible: this.hasRolUser(
-                    ['ROLE_Coordinador academico']
+                    ['ROLE_Coordinador de area']
                 ),
                 items: [
                     {

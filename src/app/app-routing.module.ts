@@ -83,21 +83,21 @@ const routes: Routes = [
     path: 'documentosacademicos',
     loadChildren: () => import('./Routing/documentacion-academicos/documentacion-academicos.module').then(m => m.DocumentacionAcademicosModule),
     canActivate: [AuthGuard, RolGuard],
-    data: { role: ['ROLE_Administrador', 'ROLE_Docente', 'ROLE_Coordinador academico'] }
+    data: { role: ['ROLE_Administrador', 'ROLE_Docente', 'ROLE_Coordinador de area'] }
   },
 
   {
     path: 'pagos',
-    loadChildren: () => import('./Routing/pagos/pagos.module').then( m => m.PagosModule),
-    canActivate: [ AuthGuard, RolGuard ],
-    data: { role: [ 'ROLE_Administrador', 'ROLE_Secretaria' ] }
+    loadChildren: () => import('./Routing/pagos/pagos.module').then(m => m.PagosModule),
+    canActivate: [AuthGuard, RolGuard],
+    data: { role: ['ROLE_Administrador', 'ROLE_Secretaria'] }
   },
 
   {
     path: 'secretaria',
-    loadChildren: () => import('./Routing/secretaria/secretaria.module').then( m => m.SecretariaModule),
-    canActivate: [ AuthGuard, RolGuard ],
-    data: { role: [ 'ROLE_Administrador', 'ROLE_Secretaria' ] }
+    loadChildren: () => import('./Routing/secretaria/secretaria.module').then(m => m.SecretariaModule),
+    canActivate: [AuthGuard, RolGuard],
+    data: { role: ['ROLE_Administrador', 'ROLE_Secretaria'] }
   },
 
   { path: 'login', component: LoginComponent },

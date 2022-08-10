@@ -57,8 +57,8 @@ export class PlanunidadService {
     return this.httpClient.post(this.API_SERVER + "pdfPlanUnidad/" + coorPedagogico, planunidad);
   }
 
-  public getNomUsuariosByRolCoorPedagogico(): Observable<any> {
-    return this.httpClient.get(this.API_SERVER + "coorpedagogico");
+  public getNomUsuariosByRolCoorAcademico(): Observable<any> {
+    return this.httpClient.get(this.API_SERVER + "cooracademico");
   }
 
   //Consumido de parametrizacion
@@ -79,8 +79,12 @@ export class PlanunidadService {
     return this.httpClient.get(this.API_SERVER + "area/asignatura/" + idAsignatura);
   }
 
-  public getAllCurso(): Observable<any> {
-    return this.httpClient.get(this.API_SERVER + "cursos");
+  public getAllCursosByMalla(idMalla: any): Observable<any> {
+    return this.httpClient.get(this.API_SERVER + "cursos/malla/" + idMalla);
+  }
+
+  public getAllParalelosByCurso(idCurso: any, idEmpleado: any): Observable<any> {
+    return this.httpClient.get(this.API_SERVER + "paralelos/curso/" + idCurso + "/empleado/" + idEmpleado);
   }
 
   public getAllParalelo(): Observable<any> {

@@ -32,7 +32,7 @@ export class RevisarPlanunidadComponent implements OnInit {
   //Tamaño de textarea
   autoResize: boolean = true;
 
-  verCoorAcademico: any;
+  verCoorArea: any;
   verFechaRevision: any;
   //Variables para mostrar los datos en los labels
   verObservaciones: any;
@@ -83,7 +83,7 @@ export class RevisarPlanunidadComponent implements OnInit {
       especificacion_nesesidad: ['', Validators.required],
       estado: ['', Validators.required],
       observaciones: ['', Validators.required],
-      coor_academico: ['', Validators.required],
+      coor_area: ['', Validators.required],
       fecha_revision: ['', Validators.required],
       unidad: ['', Validators.required],
       empleado: ['', Validators.required],
@@ -136,7 +136,7 @@ export class RevisarPlanunidadComponent implements OnInit {
       especificacion_nesesidad: plan_unidad.especificacion_nesesidad,
       estado: plan_unidad.estado,
       observaciones: "",
-      coor_academico: plan_unidad.coor_academico,
+      coor_area: plan_unidad.coor_area,
       fecha_revision: plan_unidad.fecha_revision,
       unidad: plan_unidad.unidad,
       empleado: plan_unidad.empleado,
@@ -155,7 +155,7 @@ export class RevisarPlanunidadComponent implements OnInit {
     this.verObservaciones = plan_unidad.observaciones;
     this.verUnidad = plan_unidad.unidad.idUnidad;
     this.verFechaCreacion = plan_unidad.fecha_creacion;
-    this.verCoorAcademico = plan_unidad.coor_academico;
+    this.verCoorArea = plan_unidad.coor_area;
     this.verFechaRevision = plan_unidad.fecha_revision;
     this.verEmpleado = plan_unidad.empleado.persona.nombre + " " + plan_unidad.empleado.persona.apellido;
     this.verPeriodoFinicio = plan_unidad.periodo.fecha_inicio;
@@ -192,7 +192,7 @@ export class RevisarPlanunidadComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.revisar_planunidadForm.value.estado = "Aprobado";
-        this.revisar_planunidadForm.value.coor_academico = this.NombreApellidoEmpleado;
+        this.revisar_planunidadForm.value.coor_area = this.NombreApellidoEmpleado;
         this.revisar_planunidadForm.value.fecha_revision = this.today;
         this.revisar_planunidadForm.value.observaciones = "Sin observaciones";
         this.planunidadService.updatePlanUnidad(this.id, this.revisar_planunidadForm.value).subscribe(resp => {
@@ -239,7 +239,7 @@ export class RevisarPlanunidadComponent implements OnInit {
       }).then((result) => {
         if (result.isConfirmed) {
           this.revisar_planunidadForm.value.estado = "Rechazado";
-          this.revisar_planunidadForm.value.coor_academico = this.NombreApellidoEmpleado;
+          this.revisar_planunidadForm.value.coor_area = this.NombreApellidoEmpleado;
           this.revisar_planunidadForm.value.fecha_revision = this.today;
           this.planunidadService.updatePlanUnidad(this.id, this.revisar_planunidadForm.value).subscribe(resp => {
             this.revisar_planunidadForm.reset();

@@ -38,7 +38,7 @@
 
         <form *ngIf="mostrarFormGenerar" [formGroup]="generar_planunidadForm" (ngSubmit)="enviar()">
             <div *ngIf="mostrarObservaciones" class="border bg-light">
-                <h3>Revisado por {{verCoorAcademico}} Coor. Academico, el {{verFechaRevision | date:'longDate'}}.</h3>
+                <h3>Revisado por {{verCoorArea}} Coor. de Area, el {{verFechaRevision | date:'longDate'}}.</h3>
                 <label style="font-size:17px;">Observaciones a corregir:</label>
                 <input type="text" class="form-control" style="border: 0px;" name="observaciones"
                     formControlName="observaciones" readonly><br>
@@ -59,7 +59,7 @@
                                 <label>Curso:</label> <br>
                                 <p-dropdown [options]="cursos" [(ngModel)]="opcionSelectCurso" placeholder="Select"
                                     [style]="{'width':'200px','border': '1px solid #C0C0C0'}" [showClear]="true"
-                                    optionLabel="descripcion" formControlName="curso"
+                                    optionLabel="descripcion" formControlName="curso" [disabled]="showSelectCursos"
                                     (onChange)="capturarSelectCurso()">
                                 </p-dropdown>
                                 <br><br>
@@ -83,7 +83,7 @@
                                 <p-dropdown [options]="paralelos" [(ngModel)]="opcionSelectParalelo"
                                     placeholder="Select" [style]="{'width':'200px','border': '1px solid #C0C0C0'}"
                                     [showClear]="true" optionLabel="descripcion" formControlName="paralelo"
-                                    (onChange)="capturarSelectParalelo()">
+                                    [disabled]="showSelectParalelo" (onChange)="capturarSelectParalelo()">
                                 </p-dropdown>
                                 <br><br>
                             </div>
@@ -466,31 +466,31 @@
                         <td>{{item.estado}}</td>
                         <td>
                             <button pButton pRipple icon="pi pi-download" class="p-button-rounded p-button-success mr-2"
-                                (click)="abrirSelectCoorPedagogico()"></button>
-                            <p-dialog [(visible)]="mostrarSelectCoorPedagogico"
+                                (click)="abrirSelectCoorAcademico()"></button>
+                            <p-dialog [(visible)]="mostrarSelectCoorAcademico"
                                 [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}"
                                 position="center" [closable]="true" [modal]="true" [draggable]="false">
                                 <h2 style="text-align: center;">Descargar Plan de Unidad.</h2>
                                 <div class="container-fluid border bg-light"><br>
-                                    <h2>Seleccione el Coordinador Pedagogico:</h2>
-                                    <p-dropdown [options]="coorPedagogico" [(ngModel)]="opcionSelectCoorPedagogico"
+                                    <h2>Seleccione el Coordinador Academico:</h2>
+                                    <p-dropdown [options]="coorAcademico" [(ngModel)]="opcionSelectCoorAcademico"
                                         placeholder="Select" [style]="{'width':'200px','border': '1px solid #C0C0C0'}"
                                         [showClear]="true" optionLabel="apellido"
-                                        (onChange)="capturarSelectCoorPedagogico()">
-                                        <ng-template let-coorPedagogico pTemplate="item">
+                                        (onChange)="capturarSelectCoorAcademico()">
+                                        <ng-template let-coorAcademico pTemplate="item">
                                             <div class="operatingSystems-item">
-                                                <div>{{coorPedagogico.nombre}} {{coorPedagogico.apellido}}</div>
+                                                <div>{{coorAcademico.nombre}} {{coorAcademico.apellido}}</div>
                                             </div>
                                         </ng-template>
                                     </p-dropdown><br><br>
                                     <span class="form-text text-danger" style="font-size:10px; text-align: center;"
-                                        *ngIf="mostrarMsgCoorPedagogico">
-                                        El rol Coordinador Pedagogico no esta asignado a ningun usuario.
+                                        *ngIf="mostrarMsgCoorAcademico">
+                                        El rol Coordinador Academico no esta asignado a ningun usuario.
                                     </span><br>
                                 </div><br><br>
                                 <div align="center">
                                     <button type="submit" class="btn btn-primary" [disabled]="showbtnDescargar"
-                                        (click)="reportePDFplanUnidad(item, NomApellidoCoorPedagogico)">Descargar</button>
+                                        (click)="reportePDFplanUnidad(item, NomApellidoCoorAcademico)">Descargar</button>
                                 </div><br>
                             </p-dialog>
                         </td>
