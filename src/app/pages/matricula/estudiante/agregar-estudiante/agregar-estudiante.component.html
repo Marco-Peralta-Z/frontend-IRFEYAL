@@ -170,13 +170,13 @@
                         <div class="form-group row ml-4 ">
                             <div class="col">
                                 <label for="float-input" >Telefono:</label><br>
-                                <p-inputMask  [(ngModel)]="estudiante.telefono.telefono"
-                                        name="telefono" formControlName="telefono" placeholder="072456321" ></p-inputMask>
+                                <input  [(ngModel)]="estudiante.telefono.telefono"
+                                        name="telefono" formControlName="telefono" placeholder="072456321" pInputText/>
                                   <br>
 
                                 <label for="float-input" class="mt-1">Celular:</label><br>
-                                <p-inputMask [(ngModel)]="estudiante.telefono.numCelular" 
-                                    name="celular" formControlName="celular"  placeholder="0914520145" ></p-inputMask>
+                                <input [(ngModel)]="estudiante.telefono.numCelular" 
+                                    name="celular" formControlName="celular"  placeholder="0914520145" pInputText/>
                                     <br>
 
                                 <label for="float-input" class="mt-1">Correo Electronico:</label><br>

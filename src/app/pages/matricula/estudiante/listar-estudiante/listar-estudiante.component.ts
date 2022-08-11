@@ -62,9 +62,9 @@ export class ListarEstudianteComponent implements OnInit {
     parroquia: [[], [Validators.required]],
     calleFirts: [, [Validators.required]],
     calleSecond: [, [Validators.required]],
-    telefono: [, [Validators.required]],
-    celular: [, [Validators.required]],
-    email: [, [Validators.required, Validators.pattern(this.emailPattern)]]
+    telefono: [,],
+    celular: [],
+    email: [, [ Validators.pattern(this.emailPattern)]]
   });
 
   constructor(private estudianteService: EstudianteService, 

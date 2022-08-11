@@ -56,8 +56,8 @@ export class AgregarEstudianteComponent implements OnInit {
     calleFirts: [, [Validators.required]],
     calleSecond: [, [Validators.required]],
     extension: [, [Validators.required]],
-    telefono: [''],
-    celular: [''],
+    telefono: [],
+    celular: [],
     email: ['ejemplo@gmail.com', [Validators.pattern(this.emailPattern)]]
   })
 

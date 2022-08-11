@@ -116,21 +116,19 @@
                         <div class="formgrid grid">
                             <div class="fiel col-6">
                                 <label for="telfUpdate">Telefono</label>
-                                <p-inputMask mask="(99)-999-9999" id="telfUpdate" [(ngModel)]="estudiante.telefono.telefono"
-                                    [readonly]="esditable" formControlName="telefono" name="telefono"></p-inputMask>
-                                    <small class="p-error" *ngIf="campoValido('telefono')">Campo requerido.</small>
+                                <input pInputText id="telfUpdate" [(ngModel)]="estudiante.telefono.telefono"
+                                    [readonly]="esditable" formControlName="telefono" name="telefono"/>
                             </div>
                             <div class="fiel col-6">
                                 <label for="celUpdate">Celular</label>
-                                <p-inputMask mask="999-999-9999" id="celUpdate"
-                                    [(ngModel)]="estudiante.telefono.numCelular " name="celular" [readonly]="esditable" formControlName="celular"></p-inputMask>
-                                    <small class="p-error" *ngIf="campoValido('celular')">Campo requerido.</small>    
+                                <input pInputText id="celUpdate"
+                                    [(ngModel)]="estudiante.telefono.numCelular " name="celular" [readonly]="esditable" formControlName="celular"/>
+  
                             </div>
                             <div class="fiel col-8">
                                 <label for="emailUpdate">Correo</label>
                                 <input class="lowercase" type="text" pInputText id="emailUpdate" [(ngModel)]="estudiante.correo.correo"
                                     [readonly]="esditable" formControlName="email" name="email" />
-                                    <small class="p-error" *ngIf="campoValido('email')">Campo requerido.</small>
                             </div>
                         </div>
                     </div>
