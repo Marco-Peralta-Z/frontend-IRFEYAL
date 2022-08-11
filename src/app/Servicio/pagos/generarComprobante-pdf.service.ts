@@ -24,6 +24,7 @@ export class GenerarComprobantePdfService {
     docPdf.text("JOSÉ MARÍA VELAZ, S.J.", 105, 70, {align:"center"});
     docPdf.setFontSize(11);
     docPdf.setFont("times", "normal");
+    docPdf.text("EXTENSIÓN Nº 105", 105, 75, {align:"center"});
     docPdf.text("COMPROBANTE DE PAGO", 105, 80, {align:"center"});
     docPdf.text(`CODIGO COMPROBANTE: ${detalleComprobante.idDetalleComprobante}`, 20,90);
     let fecha = formatDate(detalleComprobante.idComprobante.fecha!,'MMMM-d-y','es-EC')

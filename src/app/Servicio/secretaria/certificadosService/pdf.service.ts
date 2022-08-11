@@ -27,7 +27,7 @@ export class PdfService {
     docPdf.setFontSize(11);
     docPdf.text("UNIDAD EDUCATIVA FISCOMISIONAL", 105, 50, {align:"center"} );
     docPdf.text("JOSÉ MARÍA VELAZ, S.J.", 105, 55, {align:"center"});
-    docPdf.text(`EXTENSION EDUCATIVA N° ${matricula.estudiante.id_extension.nombre_extension} - ${matricula.estudiante.id_extension.id_direccion?.canton?.canton}`, 105, 60, {align:"center"});
+    docPdf.text(`EXTENSION EDUCATIVA N° 105 CUENCA`, 105, 60, {align:"center"});
     docPdf.text(`CERTIFICADO DE PROMOCION`, 105, 65, {align:"center"});
     console.log(matricula);
     let fechaInicio = formatDate(matricula.id_periodo.fecha_inicio, 'MMMM Y', 'es-EC').toUpperCase();
@@ -36,7 +36,7 @@ export class PdfService {
     
     
     docPdf.text(`AÑO LECTIVO ${fechaInicio} - ${fechaFin}`, 105, 70, {align:"center"});
-    docPdf.text(`JORNADA MATUTINA`, 105, 75, {align:"center"});
+    docPdf.text(``, 105, 75, {align:"center"});
     docPdf.setFont("times", "normal");
 
     let lMargin=17; //left margin in mm

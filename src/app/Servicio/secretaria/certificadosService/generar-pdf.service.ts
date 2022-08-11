@@ -32,9 +32,9 @@ export class GenerarPdfService {
     docPdf.text("JOSÉ MARÍA VELAZ, S.J.", 105, 70, {align:"center"});
     docPdf.setFontSize(11);
     docPdf.setFont("times", "normal");
-    docPdf.text(`Extensión Educativa ${matricula.estudiante.id_extension.nombre_extension}`, 20, 80);
+    docPdf.text(`Extensión Educativa`, 20, 80);
     docPdf.text("Nº 105", 105, 80);
-    docPdf.text(`Provincia: ${matricula.estudiante.id_extension.id_direccion?.provincia?.provincia}`, 20, 90);
+    docPdf.text(`Provincia: ${matricula.estudiante.id_extension.id_direccion?.provincia?.provincia.toUpperCase()}`, 20, 90);
     docPdf.text(`Cantón: ${matricula.estudiante.id_extension.id_direccion?.canton?.canton}`, 105, 90);
     docPdf.text(`Lugar: ${matricula.estudiante.id_extension.id_direccion?.canton?.canton}`, 20, 100);
     docPdf.setFont("times", "bold");

@@ -211,7 +211,7 @@ export class GenerarCertificadopromocionComponent implements OnInit {
     this.promedio = +(this.sumaNotas / this.selectRegistros.length).toFixed(2)
     this.certificadoTabla.push({asignatura:'PROMEDIO GENERAL', numero: this.promedio.toString(), letras: this.convertirNumeroLetras(this.promedio)})
     this.promedioConducta = +(this.sumaConducta / this.selectRegistros.length).toFixed(2)
-    this.certificadoTabla.push({asignatura:'EVALUCACION DEL COMPORTAMIENTO', numero: this.verifivarTipoconducta().tipo, letras: this.verifivarTipoconducta().desc})
+    this.certificadoTabla.push({asignatura:'EVALUACION DEL COMPORTAMIENTO', numero: this.verifivarTipoconducta().tipo, letras: this.verifivarTipoconducta().desc})
   }
 
 

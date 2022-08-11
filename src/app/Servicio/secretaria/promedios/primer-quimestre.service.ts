@@ -22,7 +22,7 @@ export class PrimerQuimestreService {
     docPdf.setFont("times", "bold");
     docPdf.setFontSize(11);
     docPdf.text('UNIDAD EDUCATIVA FISCOMISIONAL "JOSÉ MARÍA VELAZ, S.J."', 105, 50, {align:"center"} );
-    docPdf.text(`EXTENSION EDUCATIVA N° ${rector.extension.nombre_extension} - ${rector.extension.id_direccion?.canton?.canton}`, 105, 55, {align:"center"});
+    docPdf.text(`EXTENSION EDUCATIVA N° 105 CUENCA`, 105, 55, {align:"center"});
     docPdf.text(`CUADRO DE CALIFICACIONES PRIMER QUIMESTRE`, 105, 60, {align:"center"});
     let fechaInicio = formatDate(periodo.fecha_inicio, 'Y', 'es-EC').toUpperCase();
     let fechaFin = formatDate(periodo.fecha_fin, 'Y', 'es-EC').toUpperCase();
@@ -94,7 +94,7 @@ export class PrimerQuimestreService {
     for (const i in notas) {
       let conducta = (notas[i].conductas!.reduce((a, b) => a + b, 0)) / notas[i].conductas!.length;
       let promedio = (notas[i].notasQ1!.reduce((a, b) => a + b, 0)) / notas[i].notasQ1!.length;
-      let observacion = promedio === 0 ? 'RETIRADO' : ''; 
+      let observacion = promedio === 0 ? '' : ''; 
       data.push([notas[i].ord!, notas[i].nombre!, ...notas[i].notasQ1!, promedio.toFixed(2), this.verifivarTipoconducta(conducta), observacion])
     }
     return data;
