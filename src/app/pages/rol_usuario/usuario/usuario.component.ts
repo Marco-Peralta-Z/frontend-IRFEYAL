@@ -230,15 +230,16 @@ export class UsuarioComponent implements OnInit {
       },
       error: (error)=>console.log(error)
     })
-
-    
   }
 
   showDialogRol(usuario: usuario) {
-    console.log(usuario);
-    
-    this.selectUsuario = usuario;
-    this.displayRol = true;
+    if(usuario.id_usuario==1){
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se puede editar el Administrator', life: 3000 });
+    }else{
+      console.log(usuario);
+      this.selectUsuario = usuario;
+      this.displayRol = true;
+    }
   }
   closeDialogRol() {
     this.selectUsuario = new usuario();
