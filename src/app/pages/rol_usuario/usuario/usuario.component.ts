@@ -108,11 +108,15 @@ export class UsuarioComponent implements OnInit {
 
 
   editarUsuario(usuario: usuario) {
-    console.log(usuario);
-    this.empleado= usuario.empleado;
-    usuario.contrasenia='';
-    this.usuario = { ...usuario };
-    this.usuarioDialog = true;
+    if(usuario.id_usuario==1){
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se puede editar el Administrator', life: 3000 });
+    }else{
+      this.empleado= usuario.empleado;
+      usuario.contrasenia='';
+      this.usuario = { ...usuario };
+  /*     ABRE EL MODAL */
+      this.usuarioDialog = true;
+    }
   }
 
   revisarAccion(){
@@ -132,39 +136,35 @@ export class UsuarioComponent implements OnInit {
         console.log(resp);
         this.usuario=new usuario();
         this.getUsuarios();
-        this._mensajeSweetService.mensajeOk('Usuario registrado');
-
+        this.messageService.add({ severity: 'success', summary: 'Correcto', detail: 'Usuario Registrado', life: 3000 });
+        this.hideDialog();
       },
       error: (error) => {
         console.log(error);
-        this._mensajeSweetService.mensajeError('UPSS!', 'No se pudo registrar el usuario');
-        
+       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Al registrar usuarios', life: 3000 });
       }
       
     });
   }
   actualizazrUsuario() {
     this.usuario.empleado=this.empleado;
-    
-    
-    this._usuarioService.actualizarUsuario(this.usuario.id_usuario,this.usuario).subscribe({
-      next:(resp)=>{
-        console.log(resp);
-        this.usuario=new usuario();
-        this.getUsuarios();
-        this._mensajeSweetService.mensajeOk('Usuario Actualizado');
-        this.hideDialog();
 
-      },
-      error: (error) => {
-        console.log(error);
-        this._mensajeSweetService.mensajeError('UPSS!', 'No se pudo actualizar el usuario');
-      }
-      
-    });
+      this._usuarioService.actualizarUsuario(this.usuario.id_usuario,this.usuario).subscribe({
+        next:(resp)=>{
+          console.log(resp);
+          this.usuario=new usuario();
+          this.getUsuarios();
+          this.messageService.add({ severity: 'success', summary: 'Actualizado', detail: 'Usuario Actualizado', life: 3000 });
+          this.hideDialog();
+  
+        },
+        error: (error) => {
+          console.log(error);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Al actualizar usuario', life: 3000 });
+        }
+        
+      });
   }
-
-      
 
   eliminarUsuario(usuario: usuario) {
     this.confirmationService.confirm({
@@ -172,17 +172,21 @@ export class UsuarioComponent implements OnInit {
       header: 'Confirma',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this._usuarioService.eliminarUsuarioporId(usuario.id_usuario).subscribe({
-          next: (resp) => {
-            this._mensajeSweetService.mensajeOk('Usuario Eliminado');
-            this.usuarios = this.usuarios.filter(val => val.id_usuario !== usuario.id_usuario);
-            this.usuario = { contrasenia: '', id_usuario: 0, estUsuario: true, usuario: '', roles: [] };
-          },
-          error: (err) => {
-            console.log(err);
-            this._mensajeSweetService.mensajeError('Lo siento', 'no se pudo eliminar el usuario');
-          }
-        })
+        if(usuario.id_usuario==1){
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se puede eliminar el Administrator', life: 3000 });
+        }else{
+          this._usuarioService.eliminarUsuarioporId(usuario.id_usuario).subscribe({
+            next: (resp) => {
+              this.messageService.add({ severity: 'success', summary: 'Correcto', detail: 'Usuario Eliminado', life: 3000 });
+              this.usuarios = this.usuarios.filter(val => val.id_usuario !== usuario.id_usuario);
+              this.usuario = { contrasenia: '', id_usuario: 0, estUsuario: true, usuario: '', roles: [] };
+            },
+            error: (err) => {
+              console.log(err);
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Al eliminar usuario', life: 3000 });
+            }
+          })
+        }
        
       }
     });
